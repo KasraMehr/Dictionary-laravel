@@ -43,6 +43,10 @@
             return '';
         }
     });
+    const isTeamPage = computed(() => {
+      return window.location.pathname.includes("team");
+    });
+    console.log(isTeamPage);
 </script>
 
 <template>
@@ -52,7 +56,26 @@
     <AppLayout title="کلمات">
 
         <template #header dir="rtl">
-            <div class="flex flex-col gap-4 sm:gap-6 lg:grid lg:grid-cols-3 items-center">
+            <div class="flex flex-col gap-4 sm:gap-6 lg:grid lg:grid-cols-3 items-center relative" @mousemove="handleMouseMove">
+                <!-- لایه موس -->
+                <div
+                v-if="mouse.x !== null && mouse.y !== null && isTeamPage"
+                :style="{
+                  top: `${mouse.y - 85}px`,
+                  left: `${mouse.x - 70}px`,
+                  transform: 'translate(-50%, -50%)'
+                  }">
+                </div>
+
+                <div v-for="(cursor, userId) in cursors" :key="userId"
+                class="absolute w-4 h-4 rounded-full pointer-events-none"
+                :style="{
+                  top: `${cursor.y - 85}px`,
+                  left: `${cursor.x - 70}px`,
+                  backgroundColor: cursor.color
+                }">
+                </div>
+
                 <!-- Title -->
                 <h2 class="font-semibold text-xl dark:dark:text-white text-black leading-tight rounded-lg">
                     {{ $t('words') }} - {{ teamTitle }}
@@ -136,7 +159,8 @@
                     </div>
 
                     <!-- Words List -->
-                    <div class="dark:text-white text-black p-4 md:px-10 xl:px-24 2xl:px-4 py-10">
+                    <div class="dark:text-white text-black p-4 md:px-10 xl:px-24 2xl:px-4 py-10 relative"
+                      @mousemove="handleMouseMove">
                         <h1 class="text-xl lg:text-2xl font-bold mb-6">{{ $t('word_list') }}</h1>
 
                         <div v-if="words.length > 0" class="space-y-2 border border-gray-700/50 rounded-xl max-w-7xl mx-auto">
@@ -507,6 +531,7 @@
 
 <script>
     import axios from "axios";
+    import { io } from "socket.io-client";
 
     export default {
         props: {
@@ -559,7 +584,32 @@
                 mediaRecorder: null,
                 audioChunks: [],
                 audioUrl: null,
+                socket: null,
+                mouse: { x: null, y: null },
+                cursors: {},
             };
+        },
+        created() {
+          this.socket = io("http://localhost:3000");
+
+          if (!this.socket) {
+            console.error("Socket failed to initialize!");
+            return;
+          }
+          else {
+            console.log("Socket connected.");
+          }
+
+          this.socket.on("mouse-move", (data) => {
+            console.log("📩 Received mouse move from other user:", data);
+            if (data.userId !== this.userId) {
+              this.cursors[data.userId] = {
+                  x: data.position.x,
+                  y: data.position.y,
+                  color: data.color
+              };
+            }
+          });
         },
         methods: {
             openSearchModal() {
@@ -843,6 +893,25 @@
                     console.error('خطا در ذخیره‌سازی:', error.response?.data || error.message);
                 }
             },
+            handleMouseMove(event) {
+                const { clientX, clientY } = event;
+                this.mouse = { x: clientX, y: clientY };
+
+                const userId = this.$page.props.auth?.user?.id || localStorage.getItem("userId") || "guest";
+                const teamId = this.$page.props.team?.id || localStorage.getItem("teamId") || "team";
+
+                // ارسال مختصات موس به سرور
+                this.socket.emit("mouse_move", {
+                  userId,
+                  teamId,
+                  position: { x: clientX, y: clientY }
+                });
+            },
+        },
+        beforeUnmount() {
+            if (this.socket) {
+                this.socket.disconnect();
+            }
         },
         computed: {
             // فیلتر کلمات بر اساس کلمه یا معنی
@@ -857,6 +926,13 @@
             },
         },
         mounted() {
+            this.socket = io("http://localhost:3000"); // اگر هاست جدا داری، آدرس رو عوض کن
+
+            // گوش دادن به رویدادهای سرور (مثلاً نمایش موس دیگران)
+            this.socket.on("mouse_move", (data) => {
+              console.log("Mouse move received:", data);
+            });
+
             // بستن ماژول در صورت کلیک بیرون
             window.addEventListener("click", this.handleClickOutside);
         },

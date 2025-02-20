@@ -18,3 +18,13 @@ Route::post('/set-locale', function (Illuminate\Http\Request $request) {
     }
     return response()->json(['message' => 'Language changed to ' . app()->getLocale()]);
 });
+
+use App\Http\Controllers\WebSocketController;
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/online-users/{team}', [WebSocketController::class, 'getOnlineUsers']);
+    Route::post('/set-online/{team}', [WebSocketController::class, 'setOnline']);
+    Route::post('/mouse-position', [WebSocketController::class, 'sendMousePosition']);
+    Route::post('/words/{word}/update', [WebSocketController::class, 'updateWord']);
+    Route::get('/words/{word}/history', [WebSocketController::class, 'getHistory']);
+});

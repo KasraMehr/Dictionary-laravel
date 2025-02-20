@@ -95,7 +95,9 @@ class TeamController extends Controller
         $team->words()->attach($request->word_id);
       }
 
-        return response()->json(['message' => 'Word added to team successfully']);
+      event(new WordAdded($team->id, $request->word_id));
+
+      return response()->json(['message' => 'Word added to team successfully']);
     }
 
     public function team_categories(Team $team)
@@ -124,6 +126,8 @@ class TeamController extends Controller
         if (!$team->categories()->where('categories.id', $request->category_id)->exists()) {
           $team->categories()->attach($request->category_id);
         }
+
+        event(new CategoryAdded($team->id, $request->category_id));
 
         return response()->json(['message' => 'Category added to team successfully']);
       }
