@@ -56,25 +56,41 @@
     <AppLayout title="کلمات">
 
         <template #header dir="rtl">
-            <div class="flex flex-col gap-4 sm:gap-6 lg:grid lg:grid-cols-3 items-center relative" @mousemove="handleMouseMove">
-                <!-- لایه موس -->
-                <div
-                v-if="mouse.x !== null && mouse.y !== null && isTeamPage"
-                :style="{
-                  top: `${mouse.y - 85}px`,
-                  left: `${mouse.x - 70}px`,
-                  transform: 'translate(-50%, -50%)'
-                  }">
-                </div>
 
-                <div v-for="(cursor, userId) in cursors" :key="userId"
-                class="absolute w-4 h-4 rounded-full pointer-events-none"
-                :style="{
-                  top: `${cursor.y - 85}px`,
-                  left: `${cursor.x - 70}px`,
-                  backgroundColor: cursor.color
-                }">
-                </div>
+          <div>
+            <!-- بخش نمایش کاربران آنلاین، به عنوان مثال در گوشه صفحه -->
+            <div class="fixed bottom-4 right-4 bg-gray-200 dark:bg-gray-800 text-black dark:text-white p-4 rounded-lg shadow-lg">
+              <h3 class="font-semibold mb-2">کاربران آنلاین:</h3>
+              <ul>
+                <li v-for="user in onlineUsers" :key="user">
+                  <!-- اینجا اگر بخواهید نام کاربر رو هم نمایش بدید، باید از طریق API یا اطلاعات موجود پیدا کنید -->
+                  {{ user }}
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- لایه موس -->
+          <div
+          v-if="mouse.x !== null && mouse.y !== null && isTeamPage"
+          :style="{
+            top: `${mouse.y - 85}px`,
+            left: `${mouse.x - 70}px`,
+            transform: 'translate(-50%, -50%)'
+            }">
+          </div>
+
+          <div v-for="(cursor, userId) in cursors" :key="userId"
+          class="absolute w-4 h-4 rounded-full pointer-events-none"
+          :style="{
+            top: `${cursor.y - 85}px`,
+            left: `${cursor.x - 70}px`,
+            backgroundColor: cursor.color
+          }">
+          </div>
+
+            <div class="flex flex-col gap-4 sm:gap-6 lg:grid lg:grid-cols-3 items-center relative" @mousemove="handleMouseMove">
+
 
                 <!-- Title -->
                 <h2 class="font-semibold text-xl dark:dark:text-white text-black leading-tight rounded-lg">
@@ -544,6 +560,7 @@
                 required: true,
             },
         },
+        name: "OnlineUsers",
         data() {
             return {
                 allCategories: [],
@@ -587,10 +604,11 @@
                 socket: null,
                 mouse: { x: null, y: null },
                 cursors: {},
+                onlineUsers: [],
             };
         },
         created() {
-          this.socket = io("http://localhost:3000");
+          this.socket = io(`${window.location.origin}`);
 
           if (!this.socket) {
             console.error("Socket failed to initialize!");
@@ -602,7 +620,7 @@
 
           this.socket.on("mouse-move", (data) => {
             console.log("📩 Received mouse move from other user:", data);
-            if (data.userId !== this.userId) {
+            if (data.userId !== this.$page.props.auth.user.id) {
               this.cursors[data.userId] = {
                   x: data.position.x,
                   y: data.position.y,
@@ -908,34 +926,70 @@
                 });
             },
         },
-        beforeUnmount() {
-            if (this.socket) {
-                this.socket.disconnect();
-            }
-        },
         computed: {
-            // فیلتر کلمات بر اساس کلمه یا معنی
-            filteredWords() {
-                const term = this.searchTerm.trim().toLowerCase();
-                if (!term) return this.words;
-                return this.words.filter(
-                    (word) =>
-                    word.word.toLowerCase().includes(term) ||
-                    word.meaning.toLowerCase().includes(term)
-                );
-            },
-        },
-        mounted() {
-            this.socket = io("http://localhost:3000"); // اگر هاست جدا داری، آدرس رو عوض کن
+    // فیلتر کلمات بر اساس کلمه یا معنی
+    filteredWords() {
+      const term = this.searchTerm.trim().toLowerCase();
+      if (!term) return this.words;
+      return this.words.filter(
+        (word) =>
+          word.word.toLowerCase().includes(term) ||
+          word.meaning.toLowerCase().includes(term)
+      );
+    },
+  },
+  mounted() {
+    // اتصال به سرور Socket.IO
+    this.socket = io(`${window.location.origin}`, {
+      transports: ["websocket"],
+      autoConnect: true,
+    });
 
-            // گوش دادن به رویدادهای سرور (مثلاً نمایش موس دیگران)
-            this.socket.on("mouse_move", (data) => {
-              console.log("Mouse move received:", data);
-            });
+    this.socket.on("connect", () => {
+      console.log("✅ Socket connected.");
 
-            // بستن ماژول در صورت کلیک بیرون
-            window.addEventListener("click", this.handleClickOutside);
-        },
+      // ارسال رویداد عضویت در تیم به سرور
+      const teamId = this.$page.props.team?.id;
+      const userId = this.$page.props.auth?.user?.id;
+      if (teamId && userId) {
+        this.socket.emit("join-team", { teamId, userId });
+      }
+    });
+
+    // دریافت رویداد حرکت موس
+    this.socket.on("mouse_move", (data) => {
+      console.log("Mouse move received:", data);
+      // کدهای مربوط به حرکت موس در اینجا می‌توانند قرار بگیرند
+    });
+
+    // دریافت رویدادهای مربوط به کاربران آنلاین
+    this.socket.on("user-joined", (data) => {
+      console.log("📥 User joined:", data);
+      this.onlineUsers = data.onlineUsers;
+    });
+
+    this.socket.on("user-left", (data) => {
+      console.log("📥 User left:", data);
+      this.onlineUsers = data.onlineUsers;
+    });
+
+    this.socket.on("update-online-users", (data) => {
+      console.log("📥 Update online users:", data);
+      this.onlineUsers = data.onlineUsers;
+    });
+
+    // دیباگ: دریافت هر رویداد برای بررسی
+    this.socket.onAny((event, ...args) => {
+      console.log("📩 Received event:", event, args);
+    });
+
+    // اضافه کردن رویداد کلیک بیرون (برای بستن ماژول یا عملکرد دیگر)
+    window.addEventListener("click", this.handleClickOutside);
+  },
+  beforeUnmount() {
+
+    window.removeEventListener("click", this.handleClickOutside);
+  },
         beforeDestroy() {
             window.removeEventListener("click", this.handleClickOutside);
         },
