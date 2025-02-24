@@ -4,12 +4,12 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\GeneralController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use App\Http\Controllers\WordController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\TeamController;
-use App\Http\Controllers\S3Controller;
 
 
 
@@ -50,3 +50,14 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
         ->name('dashboard.chart-data');
 
 });
+
+Route::get('/{file?}', function ($file = 'index.html') {
+    $path = "docs/{$file}";
+
+    if (!Storage::disk('local')->exists($path)) {
+        abort(404);
+    }
+
+    return response()->file(storage_path("app/{$path}"));
+})->where('file', '.*');
+
