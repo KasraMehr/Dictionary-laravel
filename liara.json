@@ -10,7 +10,7 @@
   "disks": [
       {
           "name": "docs",
-          "mountTo": "docs/dist"
+          "mountTo": "docs"
       }
   ]
 }
