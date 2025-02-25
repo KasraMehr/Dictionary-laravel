@@ -46,11 +46,12 @@ const setLanguage = (lang) => {
                     <div class="flex justify-between h-16">
                         <div class="flex items-center">
                             <!-- لوگو -->
-                            <div class="shrink-0 mb-4 flex items-center">
+                            <div class="shrink-0 flex items-center h-full">
                                 <Link :href="route('landing')">
-                                    <ApplicationMark class="block h-9 w-auto" />
+                                    <img src="/logo.png" alt="logo" class="h-full w-auto max-h-16 object-contain" />
                                 </Link>
                             </div>
+
                             <div class="hidden sm:flex items-center sm:items-stretch overflow-x-auto sm:overflow-x-visible ms-4 text-black dark:text-white">
                                 <div class="flex gap-2 sm:gap-8 ">
                                     <NavLink v-if="$page.props.auth.user" :href="route('dashboard')" :active="route().current('dashboard')" class="text-black dark:text-white">
