@@ -7,5 +7,10 @@
    "laravel": {
        "phpVersion": "8.3"
    },
-  "disks": []
+  "disks": [
+      {
+          "name": "docs",
+          "mountTo": "docs"
+      }
+  ]
 }
