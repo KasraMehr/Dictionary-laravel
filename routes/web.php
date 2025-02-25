@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\GeneralController;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WordController;
 use App\Http\Controllers\DashboardController;
@@ -48,8 +47,4 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
         ->name('dashboard.chart-data');
 
 });
-
-Route::get('/docs/{any?}', function () {
-    return File::get(public_path('docs/index.html'));
-})->where('any', '.*');
 
