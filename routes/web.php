@@ -2,10 +2,8 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\GeneralController;
-use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Storage;
-use Inertia\Inertia;
 use App\Http\Controllers\WordController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ReportController;
@@ -51,13 +49,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
 
 });
 
-Route::get('/{file?}', function ($file = 'index.html') {
-    $path = "docs/{$file}";
-
-    if (!Storage::disk('local')->exists($path)) {
-        abort(404);
-    }
-
-    return response()->file(storage_path("app/{$path}"));
-})->where('file', '.*');
+Route::get('/docs/{any?}', function () {
+    return File::get(public_path('docs/index.html'));
+})->where('any', '.*');
 
