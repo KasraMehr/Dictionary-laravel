@@ -60,8 +60,6 @@
     "search": "Search",
     "register": "Register",
     "login": "Login",
-    "logout": "Logout",
-    "email": "Email",
     "password": "Password",
     "confirm_password": "Confirm Password",
     "forgot_password": "Forgot Password?",
@@ -75,6 +73,7 @@
     "team_name": "Team Name",
     "users": "Users",
     "date": "Date",
-    "created_by": "Created and configured by Kasra Mehralizadeh and Mojtaba Allam"
+    "created_by": "Created and configured by Kasra Mehralizadeh and Mojtaba Allam",
+    "documentation": "Documentation"
 
 }
