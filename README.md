@@ -1,66 +1,113 @@
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## About Laravel
+# Modern Dictionary (main part)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Introduction
+This project is part of a larger system that consists of multiple interconnected services, ensuring high scalability and modularity. This specific module focuses on handling core application functionalities using Laravel for the backend and Vue.js for the frontend. The architecture allows seamless integration with other microservices within the ecosystem.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+This project has been primarily developed by **Kasra Mehr**.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Core Functionalities
+### Backend (Laravel)
+Laravel handles the core functionalities of the dictionary system, including:
+- Word management (CRUD operations on dictionary entries)
+- User account management and authentication
+- API development for seamless frontend integration
+- Real-time updates and caching
 
-## Learning Laravel
+### Database
+We use:
+- **MySQL** for relational data storage
+- **Redis** for caching and real-time messaging
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Frontend (Vue.js + Vite)
+The frontend is built with Vue.js and Vite, focusing on fast rendering and high modularity for easier scalability.
+- **Vue.js** handles the user interface and integrates seamlessly with the backend API for real-time data fetching and updates.
+- **Vite** ensures fast bundling and hot-reloading during development.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Teams & Collaboration
+This project is developed by a dedicated team of backend, frontend, and DevOps engineers who work collaboratively to maintain and improve the system. Our team follows agile methodologies and uses CI/CD pipelines to ensure smooth deployments.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Technologies Used
+- **Backend:** Laravel 10.x
+- **Frontend:** Vue.js 3
+- **Database:** MySQL / PostgreSQL / Redis
+- **Authentication:** Laravel Sanctum / JWT
+- **Styling:** Tailwind CSS / Bootstrap
+- **State Management:** Pinia / Vuex
 
-## Laravel Sponsors
+## Installation & Setup
+### Prerequisites
+Ensure you have the following installed on your system:
+- PHP 8.x
+- Composer
+- Node.js & npm / yarn
+- MySQL / PostgreSQL
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Backend Setup
+```bash
+# Clone the repository
+git clone https://github.com/your-repo.git
+cd your-repo
 
-### Premium Partners
+# Install dependencies
+composer install
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+# Copy environment file
+cp .env.example .env
+
+# Generate application key
+php artisan key:generate
+
+# Configure database in .env and migrate
+php artisan migrate --seed
+
+# Start the development server
+php artisan serve
+```
+
+### Frontend Setup
+```bash
+# Navigate to frontend folder
+cd frontend
+
+# Install dependencies
+npm install
+
+# Run the development server
+npm run dev
+```
+
+## Usage
+Once both backend and frontend servers are running, you can access the application at:
+```
+http://localhost:8000
+```
+
+## API Documentation
+For detailed API documentation, please refer to our main documentation at:
+```
+https://docs.modern-dictionary.com
+```
+Additionally, you can test available API endpoints locally at:
+```
+http://localhost:8000/api/documentation
+```
+
+## Deployment
+### Backend
+```bash
+php artisan config:cache
+php artisan route:cache
+php artisan migrate --force
+```
+
+### Frontend
+```bash
+npm run build
+```
 
 ## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+We welcome contributions! If you'd like to contribute, please follow the contribution guidelines outlined in the main documentation. (not done yet)
