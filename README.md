@@ -1,4 +1,4 @@
-![logo](https://github.com/user-attachments/assets/ef4fc983-ebca-480e-8f2c-29904c90662a)
+![logo](https://github.com/user-attachments/assets/1acda134-22d7-4651-b476-8a054ffb5225)
 
 # Modern Dictionary (main part)
 
