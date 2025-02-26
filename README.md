@@ -1,6 +1,4 @@
-<p align="center"><a href="https://laravel.com" target="_blank">![logo](https://github.com/user-attachments/assets/ef4fc983-ebca-480e-8f2c-29904c90662a)</a></p>
-
-</p>
+![logo](https://github.com/user-attachments/assets/ef4fc983-ebca-480e-8f2c-29904c90662a)
 
 # Modern Dictionary (main part)
 
