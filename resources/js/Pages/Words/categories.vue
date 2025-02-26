@@ -56,6 +56,38 @@ const teamTitle = computed(() => {
     <AppLayout title="دسته بندی">
 
         <template #header dir="rtl">
+            <div>
+                <!-- بخش نمایش کاربران آنلاین، به عنوان مثال در گوشه صفحه -->
+                <div class="fixed bottom-4 right-4 bg-gray-200 dark:bg-gray-800 text-black dark:text-white p-4 rounded-lg shadow-lg">
+                    <h3 class="font-semibold mb-2">کاربران آنلاین:</h3>
+                    <ul>
+                        <li v-for="user in onlineUsers" :key="user">
+                            <!-- اینجا اگر بخواهید نام کاربر رو هم نمایش بدید، باید از طریق API یا اطلاعات موجود پیدا کنید -->
+                            {{ user }}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- لایه موس -->
+            <div
+                v-if="mouse.x !== null && mouse.y !== null && isTeamPage"
+                :style="{
+            top: `${mouse.y - 85}px`,
+            left: `${mouse.x - 70}px`,
+            transform: 'translate(-50%, -50%)'
+            }">
+            </div>
+
+            <div v-for="(cursor, userId) in cursors" :key="userId"
+                 class="absolute w-4 h-4 rounded-full pointer-events-none"
+                 :style="{
+            top: `${cursor.y - 85}px`,
+            left: `${cursor.x - 70}px`,
+            backgroundColor: cursor.color
+          }">
+            </div>
+
             <div class="flex flex-col gap-4 sm:gap-6 md:grid md:grid-cols-2 lg:grid-cols-3 items-center">
                 <!-- Title -->
                 <h2 class="font-semibold text-xl dark:text-white text-black leading-tight rounded-lg">
@@ -394,6 +426,7 @@ const teamTitle = computed(() => {
 
 <script>
 import axios from "axios";
+import {io} from "socket.io-client";
 
 export default {
     props: {
@@ -419,7 +452,33 @@ export default {
             },
             showModal: false,
             selectedCategory: {},
+            socket: null,
+            mouse: { x: null, y: null },
+            cursors: {},
+            onlineUsers: [],
         };
+    },
+    created() {
+        this.socket = io(`${window.location.origin}`);
+
+        if (!this.socket) {
+            console.error("Socket failed to initialize!");
+            return;
+        }
+        else {
+            console.log("Socket connected.");
+        }
+
+        this.socket.on("mouse-move", (data) => {
+            console.log("📩 Received mouse move from other user:", data);
+            if (data.userId !== this.$page.props.auth.user.id) {
+                this.cursors[data.userId] = {
+                    x: data.position.x,
+                    y: data.position.y,
+                    color: data.color
+                };
+            }
+        });
     },
     methods: {
         openSearchModal() {
@@ -549,6 +608,20 @@ export default {
           }, 500);
         },
 
+        handleMouseMove(event) {
+            const { clientX, clientY } = event;
+            this.mouse = { x: clientX, y: clientY };
+
+            const userId = this.$page.props.auth?.user?.id || localStorage.getItem("userId") || "guest";
+            const teamId = this.$page.props.team?.id || localStorage.getItem("teamId") || "team";
+
+            // ارسال مختصات موس به سرور
+            this.socket.emit("mouse_move", {
+                userId,
+                teamId,
+                position: { x: clientX, y: clientY }
+            });
+        },
     },
     computed: {
         // فیلتر کلمات بر اساس کلمه یا معنی
@@ -562,7 +635,51 @@ export default {
         },
     },
     mounted() {
-        // بستن ماژول در صورت کلیک بیرون
+        // اتصال به سرور Socket.IO
+        this.socket = io(`${window.location.origin}`, {
+            transports: ["websocket"],
+            autoConnect: true,
+        });
+
+        this.socket.on("connect", () => {
+            console.log("✅ Socket connected.");
+
+            // ارسال رویداد عضویت در تیم به سرور
+            const teamId = this.$page.props.team?.id;
+            const userId = this.$page.props.auth?.user?.id;
+            if (teamId && userId) {
+                this.socket.emit("join-team", { teamId, userId });
+            }
+        });
+
+        // دریافت رویداد حرکت موس
+        this.socket.on("mouse_move", (data) => {
+            console.log("Mouse move received:", data);
+            // کدهای مربوط به حرکت موس در اینجا می‌توانند قرار بگیرند
+        });
+
+        // دریافت رویدادهای مربوط به کاربران آنلاین
+        this.socket.on("user-joined", (data) => {
+            console.log("📥 User joined:", data);
+            this.onlineUsers = data.onlineUsers;
+        });
+
+        this.socket.on("user-left", (data) => {
+            console.log("📥 User left:", data);
+            this.onlineUsers = data.onlineUsers;
+        });
+
+        this.socket.on("update-online-users", (data) => {
+            console.log("📥 Update online users:", data);
+            this.onlineUsers = data.onlineUsers;
+        });
+
+        // دیباگ: دریافت هر رویداد برای بررسی
+        this.socket.onAny((event, ...args) => {
+            console.log("📩 Received event:", event, args);
+        });
+
+        // اضافه کردن رویداد کلیک بیرون (برای بستن ماژول یا عملکرد دیگر)
         window.addEventListener("click", this.handleClickOutside);
     },
     beforeDestroy() {

@@ -990,8 +990,5 @@
 
     window.removeEventListener("click", this.handleClickOutside);
   },
-        beforeDestroy() {
-            window.removeEventListener("click", this.handleClickOutside);
-        },
-    };
+};
 </script>
