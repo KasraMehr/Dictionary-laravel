@@ -4,7 +4,6 @@ import DeleteTeamForm from '@/Pages/Teams/Partials/DeleteTeamForm.vue';
 import SectionBorder from '@/Components/SectionBorder.vue';
 import TeamMemberManager from '@/Pages/Teams/Partials/TeamMemberManager.vue';
 import UpdateTeamNameForm from '@/Pages/Teams/Partials/UpdateTeamNameForm.vue';
-import TeamCategories from "@/Pages/Teams/Partials/TeamCategories.vue";
 
 defineProps({
     team: Object,
@@ -30,14 +29,6 @@ defineProps({
                 <TeamMemberManager
                     class="mt-10 sm:mt-0"
                     :team="team"
-                    :available-roles="availableRoles"
-                    :user-permissions="permissions"
-                />
-
-                <TeamCategories
-                    :team="team"
-                    :categories="team.categories"
-                    :all-categories="allCategories"
                     :available-roles="availableRoles"
                     :user-permissions="permissions"
                 />

@@ -251,9 +251,9 @@ const displayableRole = (role) => {
                                     {{ displayableRole(user.membership.role) }}
                                 </button>
 
-                                <div v-else-if="availableRoles.length" class="me-2 text-sm text-gray-400">
+                                <!-- <div v-else-if="availableRoles.length" class="me-2 text-sm text-gray-400">
                                     {{ displayableRole(user.membership.role) }}
-                                </div>
+                                </div> -->
 
                                 <button
                                     v-if="$page.props.auth.user.id === user.id"
