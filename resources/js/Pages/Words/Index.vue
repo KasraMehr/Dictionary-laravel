@@ -46,7 +46,6 @@
     const isTeamPage = computed(() => {
       return window.location.pathname.includes("team");
     });
-    console.log(isTeamPage);
 </script>
 
 <template>
@@ -959,7 +958,6 @@
     // دریافت رویداد حرکت موس
     this.socket.on("mouse_move", (data) => {
       console.log("Mouse move received:", data);
-      // کدهای مربوط به حرکت موس در اینجا می‌توانند قرار بگیرند
     });
 
     // دریافت رویدادهای مربوط به کاربران آنلاین
@@ -990,5 +988,8 @@
 
     window.removeEventListener("click", this.handleClickOutside);
   },
-};
+        beforeDestroy() {
+            window.removeEventListener("click", this.handleClickOutside);
+        },
+    };
 </script>
