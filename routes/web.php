@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\TeamMemberMiddleware;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\GeneralController;
 use Illuminate\Support\Facades\Route;
@@ -37,14 +38,16 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
     Route::get('/teams', [TeamController::class, 'index'])->name('teams.index');
     Route::post('/teams/{team}/join-request', [TeamController::class, 'sendJoinRequest'])->name('teams.join-request');
     Route::delete('/teams/{team}/leave-team', [TeamController::class, 'leave'])->name('teams.leave-team');
-    Route::get('/team/{team}/words', [TeamController::class, 'team_words'])->name('team.words');
-    Route::post('/team/{team}/words/add-word', [TeamController::class, 'addWordToTeam'])->name('team.addWord');
-    Route::get('/team/{team}/categories', [TeamController::class, 'team_categories'])->name('team.categories');
-    Route::post('/team/{team}/categories/add-category', [TeamController::class, 'addCategory'])->name('team.addCategory');
+
+    Route::middleware([TeamMemberMiddleware::class])->group(function () {
+        Route::get('/team/{team}/words', [TeamController::class, 'team_words'])->name('team.words');
+        Route::post('/team/{team}/words/add-word', [TeamController::class, 'addWordToTeam'])->name('team.addWord');
+        Route::get('/team/{team}/categories', [TeamController::class, 'team_categories'])->name('team.categories');
+        Route::post('/team/{team}/categories/add-category', [TeamController::class, 'addCategory'])->name('team.addCategory');
+    });
 
     // Chart data
     Route::get('/dashboard/chart-data', [DashboardController::class, 'getChartData'])
         ->name('dashboard.chart-data');
 
 });
-
