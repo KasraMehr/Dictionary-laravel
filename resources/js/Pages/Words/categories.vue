@@ -48,6 +48,10 @@ const teamTitle = computed(() => {
         return '';
     }
 });
+
+const isTeamPage = computed(() => {
+  return window.location.pathname.includes("team");
+});
 </script>
 
 <template>
@@ -459,7 +463,7 @@ export default {
         };
     },
     created() {
-        this.socket = io(`${window.location.origin}`);
+        this.socket = io("http://localhost:3000");
 
         if (!this.socket) {
             console.error("Socket failed to initialize!");
@@ -616,10 +620,12 @@ export default {
             const teamId = this.$page.props.team?.id || localStorage.getItem("teamId") || "team";
 
             // ارسال مختصات موس به سرور
+            console.log("📌 Mouse moved:", { x: clientX, y: clientY, userId, teamId });
+
             this.socket.emit("mouse_move", {
-                userId,
-                teamId,
-                position: { x: clientX, y: clientY }
+              userId,
+              teamId,
+              position: { x: clientX, y: clientY }
             });
         },
     },
@@ -636,7 +642,7 @@ export default {
     },
     mounted() {
         // اتصال به سرور Socket.IO
-        this.socket = io(`${window.location.origin}`, {
+        this.socket = io("http://localhost:3000", {
             transports: ["websocket"],
             autoConnect: true,
         });
@@ -654,9 +660,11 @@ export default {
 
         // دریافت رویداد حرکت موس
         this.socket.on("mouse_move", (data) => {
-            console.log("Mouse move received:", data);
-            // کدهای مربوط به حرکت موس در اینجا می‌توانند قرار بگیرند
+          console.log("🎯 Mouse move received:", data);
         });
+
+        // ثبت رویداد حرکت موس
+        window.addEventListener("mousemove", this.handleMouseMove);
 
         // دریافت رویدادهای مربوط به کاربران آنلاین
         this.socket.on("user-joined", (data) => {
