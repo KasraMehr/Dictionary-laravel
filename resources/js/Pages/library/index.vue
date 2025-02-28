@@ -34,7 +34,7 @@ import axios from "axios";
 
                                     <button
                                     @click="searchWords"
-                                    class="ml-2 px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700 transition"
+                                    class="mx-2 px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700 transition"
                                     >
                                       {{ $t('search') }}
                                     </button>
@@ -67,7 +67,7 @@ import axios from "axios";
 
                                 <!-- تیم‌ها -->
                                 <div class="flex justify-start gap-2">
-                                  <span v-for="team in (word.user && word.user.teams ? word.user.teams.slice(0, 2) : [])"
+                                  <span v-for="team in (word.user && word.user.teams ? word.user.teams.slice(0, 1) : [])"
                                   :key="team.id"
                                   class="bg-green-600 dark:text-white text-xs px-3 py-1 rounded-xl">
                                   {{ team.name }}
@@ -146,7 +146,7 @@ import axios from "axios";
                                     {{ word . meaning }}
                                 </div>
                                 <div class="flex hidden lg:block truncate xl:pr-4 justify-start gap-3 xl:gap-2 w-full ml-auto">
-                                    <span v-for="category in (word.categories ? word.categories.slice(0, 3) : [])"
+                                    <span v-for="category in (word.categories ? word.categories.slice(0, 1) : [])"
                                         :key="category.id"
                                         class="bg-gray-600 dark:text-white text-black text-xs px-3 py-1 rounded-xl">
                                         {{ category . name }}
@@ -160,7 +160,7 @@ import axios from "axios";
 
                                 <!-- تیم‌ها -->
                                 <div class="flex hidden lg:block truncate xl:pr-4 justify-start gap-2">
-                                  <span v-for="team in (word.user && word.user.teams ? word.user.teams.slice(0, 2) : [])"
+                                  <span v-for="team in (word.user && word.user.teams ? word.user.teams.slice(0, 1) : [])"
                                   :key="team.id"
                                   class="bg-green-600 dark:text-white text-xs px-3 py-1 rounded-xl">
                                   {{ team.name }}
