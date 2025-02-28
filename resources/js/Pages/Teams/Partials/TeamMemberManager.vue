@@ -236,14 +236,15 @@ const displayableRole = (role) => {
                     <div class="space-y-6" dir="rtl">
                         <div v-for="user in team.users" :key="user.id" class="flex items-center justify-between">
                             <div class="flex items-center">
-                                <div class="me-4 dark:dark:text-white text-black">
+                              <img class="size-8 rounded-full object-cover" :src="user.profile_photo_url" :alt="user.name">
+                                <div class="mx-4 dark:dark:text-white text-black">
                                     {{ user.name }}
                                 </div>
-                                <img class="size-8 rounded-full object-cover" :src="user.profile_photo_url" :alt="user.name">
+
                             </div>
 
                             <div class="flex items-center">
-                                <button
+                                <!-- <button
                                     v-if="userPermissions.canUpdateTeamMembers && availableRoles.length"
                                     class="me-2 text-sm text-gray-400 underline"
                                     @click="manageRole(user)"
@@ -251,7 +252,7 @@ const displayableRole = (role) => {
                                     {{ displayableRole(user.membership.role) }}
                                 </button>
 
-                                <!-- <div v-else-if="availableRoles.length" class="me-2 text-sm text-gray-400">
+                                <div v-else-if="availableRoles.length" class="me-2 text-sm text-gray-400">
                                     {{ displayableRole(user.membership.role) }}
                                 </div> -->
 
