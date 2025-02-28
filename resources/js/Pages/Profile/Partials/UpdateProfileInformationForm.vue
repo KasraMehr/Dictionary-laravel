@@ -76,13 +76,13 @@ const clearPhotoFileInput = () => {
 </script>
 
 <template>
-    <FormSection @submitted="updateProfileInformation" class="p-5 rounded-lg hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 hover:bg-gray-700/50 slide-up">
+    <FormSection @submitted="updateProfileInformation" class="p-5 rounded-lg hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 bg-gray-700/50 slide-up">
         <template #title>
-            <span class="text-white">اطلاعات پروفایل</span>
+            <span class="text-black dark:text-white">اطلاعات پروفایل</span>
         </template>
 
         <template #description>
-            <span class="text-white">به‌روزرسانی اطلاعات پروفایل و آدرس ایمیل حساب کاربری شما.</span>
+            <span class="text-black dark:text-white">به‌روزرسانی اطلاعات پروفایل و آدرس ایمیل حساب کاربری شما.</span>
         </template>
 
         <template #form>
@@ -97,7 +97,7 @@ const clearPhotoFileInput = () => {
                     @change="updatePhotoPreview"
                 >
 
-                <InputLabel for="photo" value="عکس" class="text-white" />
+                <InputLabel for="photo" value="عکس" class="text-black dark:text-white" />
 
                 <!-- عکس پروفایل فعلی -->
                 <div v-show="! photoPreview" class="mt-2">
@@ -117,7 +117,7 @@ const clearPhotoFileInput = () => {
                     type="button"
                     @click.prevent="selectNewPhoto"
                 >
-                    <span class="text-white">انتخاب عکس جدید</span>
+                    <span class="text-black dark:text-white">انتخاب عکس جدید</span>
                 </SecondaryButton>
 
                 <SecondaryButton
@@ -126,7 +126,7 @@ const clearPhotoFileInput = () => {
                     class="mt-2 rounded-lg hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 hover:bg-gray-700/50"
                     @click.prevent="deletePhoto"
                 >
-                    <span class="text-white">حذف عکس</span>
+                    <span class="text-black dark:text-white">حذف عکس</span>
                 </SecondaryButton>
 
                 <InputError :message="form.errors.photo" class="mt-2" />
@@ -134,7 +134,7 @@ const clearPhotoFileInput = () => {
 
             <!-- نام -->
             <div class="col-span-6 sm:col-span-4" dir="rtl">
-                <InputLabel for="name" value="نام" class="text-white" />
+                <InputLabel for="name" value="نام" class="text-black dark:text-white" />
                 <TextInput
                     id="name"
                     v-model="form.name"
@@ -148,7 +148,7 @@ const clearPhotoFileInput = () => {
 
             <!-- ایمیل -->
             <div class="col-span-6 sm:col-span-4" dir="rtl">
-                <InputLabel for="email" value="ایمیل" class="text-white" />
+                <InputLabel for="email" value="ایمیل" class="text-black dark:text-white" />
                 <TextInput
                     id="email"
                     v-model="form.email"
@@ -160,21 +160,21 @@ const clearPhotoFileInput = () => {
                 <InputError :message="form.errors.email" class="mt-2" />
 
                 <div v-if="$page.props.jetstream.hasEmailVerification && user.email_verified_at === null">
-                    <p class="text-sm mt-2 text-white">
+                    <p class="text-sm mt-2 text-black dark:text-white">
                         آدرس ایمیل شما تایید نشده است.
 
                         <Link
                             :href="route('verification.send')"
                             method="post"
                             as="button"
-                            class="underline text-sm text-white transition duration-300 focus:outline-none"
+                            class="underline text-sm text-black dark:text-white transition duration-300 focus:outline-none"
                             @click.prevent="sendEmailVerification"
                         >
                             برای ارسال مجدد ایمیل تایید اینجا کلیک کنید.
                         </Link>
                     </p>
 
-                    <div v-show="verificationLinkSent" class="mt-2 font-medium text-sm text-white">
+                    <div v-show="verificationLinkSent" class="mt-2 font-medium text-sm text-black dark:text-white">
                         لینک تایید جدید به آدرس ایمیل شما ارسال شد.
                     </div>
                 </div>
@@ -182,14 +182,14 @@ const clearPhotoFileInput = () => {
         </template>
 
         <template #actions>
-            <ActionMessage :on="form.recentlySuccessful" class="p-2 ms-3 text-white">
+            <ActionMessage :on="form.recentlySuccessful" class="p-2 ms-3 text-black dark:text-white">
                 ذخیره شد.
             </ActionMessage>
 
             <PrimaryButton
                 :class="{ 'opacity-25': form.processing }"
                 :disabled="form.processing"
-                class="rounded-lg hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 hover:bg-gray-700/50"
+                class="rounded-lg hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 bg-gray-700/50"
             >
                 <span class="black-white">ذخیره</span>
             </PrimaryButton>

@@ -43,19 +43,19 @@ const closeModal = () => {
 </script>
 
 <template>
-    <ActionSection class="p-5 rounded-lg hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 hover:bg-gray-700/50 slide-up">
+    <ActionSection class="p-5 rounded-lg hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 bg-gray-700/50 slide-up">
         <template #title>
-            <span class="text-white">نشست‌های مرورگر</span>
+            <span class="text-black dark:text-white">نشست‌های مرورگر</span>
         </template>
 
         <template #description>
-            <div class="text-white" dir="rtl">
+            <div class="text-black dark:text-white" dir="rtl">
                 مدیریت و خروج از نشست‌های فعال خود در مرورگرها و دستگاه‌های دیگر.
             </div>
         </template>
 
         <template #content>
-            <div class="max-w-xl text-sm text-white" dir="rtl">
+            <div class="max-w-xl text-sm text-black dark:text-white" dir="rtl">
                 در صورت لزوم، می‌توانید از تمام نشست‌های مرورگر دیگر خود در تمام دستگاه‌ها خارج شوید. برخی از نشست‌های اخیر شما در زیر فهرست شده است؛ با این حال، این لیست ممکن است کامل نباشد. اگر احساس می‌کنید حساب شما به خطر افتاده است، باید رمز عبور خود را نیز به‌روز کنید.
             </div>
 
@@ -63,12 +63,12 @@ const closeModal = () => {
             <div v-if="sessions.length > 0" class="mt-5 space-y-6" dir="rtl">
                 <div v-for="(session, i) in sessions" :key="i" class="flex items-center rounded-lg hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 hover:bg-gray-700/50 transform hover:-translate-y-1 p-4">
                     <div class="ms-3">
-                        <div class="text-sm text-white">
+                        <div class="text-sm text-black dark:text-white">
                             {{ session.agent.platform ? session.agent.platform : 'ناشناخته' }} - {{ session.agent.browser ? session.agent.browser : 'ناشناخته' }}
                         </div>
 
                         <div>
-                            <div class="text-xs text-white">
+                            <div class="text-xs text-black dark:text-white">
                                 {{ session.ip_address }}،
 
                                 <span v-if="session.is_current_device" class="text-green-500 font-semibold">این دستگاه</span>
@@ -102,7 +102,7 @@ const closeModal = () => {
             <!-- مودال تایید خروج از سایر دستگاه‌ها -->
             <DialogModal :show="confirmingLogout" @close="closeModal">
                 <template #title>
-                    <span class="text-white">خروج از سایر نشست‌های مرورگر</span>
+                    <span class="text-black dark:text-white">خروج از سایر نشست‌های مرورگر</span>
                 </template>
 
                 <template #content>
@@ -127,7 +127,7 @@ const closeModal = () => {
 
                 <template #footer>
                     <SecondaryButton @click="closeModal" class="rounded-lg hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 hover:bg-gray-700/50 transform hover:-translate-y-1">
-                        <span class="text-white">انصراف</span>
+                        <span class="text-black dark:text-white">انصراف</span>
                     </SecondaryButton>
 
                     <PrimaryButton
@@ -136,7 +136,7 @@ const closeModal = () => {
                         :disabled="form.processing"
                         @click="logoutOtherBrowserSessions"
                     >
-                        <span class="text-white">خروج از سایر نشست‌های مرورگر</span>
+                        <span class="text-black dark:text-white">خروج از سایر نشست‌های مرورگر</span>
                     </PrimaryButton>
                 </template>
             </DialogModal>

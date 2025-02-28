@@ -38,13 +38,13 @@ const closeModal = () => {
 </script>
 
 <template>
-    <ActionSection class="p-5 rounded-lg hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 hover:bg-gray-700/50 transform hover:-translate-y-1">
+    <ActionSection class="p-5 rounded-lg hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 bg-gray-700/50 transform hover:-translate-y-1">
         <template #title>
-            <span class="text-white">حذف حساب کاربری</span>
+            <span class="text-black dark:text-white">حذف حساب کاربری</span>
         </template>
 
         <template #description>
-            <span class="text-white">حذف دائمی حساب کاربری شما.</span>
+            <span class="text-black dark:text-white">حذف دائمی حساب کاربری شما.</span>
         </template>
 
         <template #content>
@@ -62,11 +62,11 @@ const closeModal = () => {
             <!-- مودال تایید حذف حساب کاربری -->
             <DialogModal :show="confirmingUserDeletion" @close="closeModal">
                 <template #title>
-                    <span class="text-white">حذف حساب کاربری</span>
+                    <span class="text-black dark:text-white">حذف حساب کاربری</span>
                 </template>
 
                 <template #content>
-                    <div class="text-white rounded-lg hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 hover:bg-gray-700/50 transform hover:-translate-y-1" dir="rtl">
+                    <div class="text-black dark:text-white rounded-lg hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 hover:bg-gray-700/50 transform hover:-translate-y-1" dir="rtl">
                         آیا مطمئن هستید که می‌خواهید حساب کاربری خود را حذف کنید؟ پس از حذف حساب کاربری شما، تمام منابع و داده‌های آن به طور دائمی حذف خواهند شد. لطفاً برای تایید حذف دائمی حساب کاربری خود، رمز عبور خود را وارد کنید.
 
                         <div class="mt-4">
@@ -74,13 +74,13 @@ const closeModal = () => {
                                 ref="passwordInput"
                                 v-model="form.password"
                                 type="password"
-                                class="mt-1 block w-3/4 text-white rounded-lg hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 hover:bg-gray-700/50 transform hover:-translate-y-1"
+                                class="mt-1 block w-3/4 text-black dark:text-white rounded-lg hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 hover:bg-gray-700/50 transform hover:-translate-y-1"
                                 placeholder="رمز عبور"
                                 autocomplete="current-password"
                                 @keyup.enter="deleteUser"
                             />
 
-                            <InputError :message="form.errors.password" class="mt-2 text-white" />
+                            <InputError :message="form.errors.password" class="mt-2 text-black dark:text-white" />
                         </div>
                     </div>
                 </template>
@@ -88,7 +88,7 @@ const closeModal = () => {
                 <template #footer>
                     <SecondaryButton @click="closeModal"
                         class="rounded-lg hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 hover:bg-gray-700/50 transform hover:-translate-y-1">
-                        <span class="text-white">انصراف</span>
+                        <span class="text-black dark:text-white">انصراف</span>
                     </SecondaryButton>
 
                     <DangerButton
@@ -97,7 +97,7 @@ const closeModal = () => {
                         :disabled="form.processing"
                         @click="deleteUser"
                     >
-                        <span class="text-white">حذف حساب کاربری</span>
+                        <span class="text-black dark:text-white">حذف حساب کاربری</span>
                     </DangerButton>
                 </template>
             </DialogModal>

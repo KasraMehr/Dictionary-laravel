@@ -12,7 +12,7 @@ defineProps({
 <template>
     <AppLayout title="توکن‌های API">
         <template #header>
-            <h2 class="font-semibold text-xl text-white/90 leading-tight" dir="rtl">
+            <h2 class="font-semibold text-xl text-black dark:text-white/90 leading-tight" dir="rtl">
                 توکن‌های API
             </h2>
         </template>
