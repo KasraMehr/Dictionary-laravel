@@ -98,7 +98,7 @@ const displayableRole = (role) => {
             <SectionBorder />
 
             <!-- افزودن عضو تیم -->
-            <FormSection @submitted="addTeamMember" class="p-5 rounded-lg hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 hover:bg-gray-700/50">
+            <FormSection @submitted="addTeamMember" class="p-5 rounded-lg hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 bg-gray-700/50">
                 <template #title>
                     <span class="dark:text-white text-black">افزودن عضو تیم</span>
                 </template>
@@ -182,7 +182,7 @@ const displayableRole = (role) => {
             <SectionBorder />
 
             <!-- دعوت‌نامه‌های اعضای تیم -->
-            <ActionSection class="mb-5 p-5 mt-10 sm:mt-0 rounded-lg hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 hover:bg-gray-700/50 slide-up">
+            <ActionSection class="mb-5 p-5 mt-10 sm:mt-0 rounded-lg hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 bg-gray-700/50 slide-up">
                 <template #title>
                     <span class="dark:text-white text-black">دعوت‌نامه‌های در انتظار تیم</span>
                 </template>
@@ -198,7 +198,7 @@ const displayableRole = (role) => {
                     <div class="space-y-6" dir="rtl">
                         <div v-for="invitation in team.team_invitations"
                             :key="invitation.id"
-                            class="flex items-center justify-between p-4 rounded-lg hover:ring-white/20 hover:shadow-xl transition duration-300 hover:bg-gray-700/50">
+                            class="flex items-center justify-between p-4 rounded-lg hover:ring-white/20 hover:shadow-xl transition duration-300 bg-gray-700/50">
                             <div class="dark:text-white text-black">
                                 {{ invitation.email }}
                             </div>
@@ -206,7 +206,7 @@ const displayableRole = (role) => {
                             <div class="flex items-center">
                                 <button
                                     v-if="userPermissions.canRemoveTeamMembers"
-                                    class="rounded-lg hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 bg-white p-2 text-black"
+                                    class="rounded-lg hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 bg-gray-200 p-2 text-black"
                                     @click="cancelTeamInvitation(invitation)"
                                 >
                                     لغو
@@ -222,7 +222,7 @@ const displayableRole = (role) => {
             <SectionBorder />
 
             <!-- مدیریت اعضای تیم -->
-            <ActionSection class="mt-10 sm:mt-0">
+            <ActionSection class="mt-10 sm:mt-0 bg-gray-700/50 rounded p-6">
                 <template #title>
                     اعضای تیم
                 </template>
@@ -237,7 +237,7 @@ const displayableRole = (role) => {
                         <div v-for="user in team.users" :key="user.id" class="flex items-center justify-between">
                             <div class="flex items-center">
                               <img class="size-8 rounded-full object-cover" :src="user.profile_photo_url" :alt="user.name">
-                                <div class="mx-4 dark:dark:text-white text-black">
+                                <div class="mx-4 dark:text-white text-black">
                                     {{ user.name }}
                                 </div>
 

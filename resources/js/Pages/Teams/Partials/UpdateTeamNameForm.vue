@@ -25,7 +25,7 @@ const updateTeamName = () => {
 </script>
 
 <template>
-    <FormSection @submitted="updateTeamName" class="p-5 rounded-lg hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 hover:bg-gray-700/50">
+    <FormSection @submitted="updateTeamName" class="p-5 rounded-lg hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 bg-gray-700/50">
         <template #title>
             <span class="dark:text-white text-black">نام تیم</span>
         </template>

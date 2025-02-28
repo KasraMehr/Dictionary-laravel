@@ -19,7 +19,7 @@ const createTeam = () => {
 </script>
 
 <template>
-    <FormSection @submitted="createTeam" class="p-5 rounded-lg hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 hover:bg-gray-700/50 slide-up">
+    <FormSection @submitted="createTeam" class="p-5 rounded-lg hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 bg-gray-700/50 slide-up">
         <template #title>
             <span class="dark:text-white text-black">جزئیات تیم</span>
         </template>
@@ -33,13 +33,13 @@ const createTeam = () => {
                 <InputLabel value="مالک تیم" class="dark:text-white text-black" />
 
                 <div class="flex items-center mt-2">
-                    <div class="me-4 leading-tight">
+                  <img class="object-cover size-12 rounded-full" :src="$page.props.auth.user.profile_photo_url" :alt="$page.props.auth.user.name">
+                    <div class="mx-4 leading-tight">
                         <div class="dark:text-white text-black">{{ $page.props.auth.user.name }}</div>
                         <div class="text-sm dark:text-white text-black">
                             {{ $page.props.auth.user.email }}
                         </div>
                     </div>
-                    <img class="object-cover size-12 rounded-full" :src="$page.props.auth.user.profile_photo_url" :alt="$page.props.auth.user.name">
                 </div>
             </div>
 
@@ -62,7 +62,7 @@ const createTeam = () => {
                 :disabled="form.processing"
                 class="rounded-lg hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 hover:bg-gray-700/50"
             >
-                <span class="text-black">ایجاد</span>
+                <span class="text-white dark:text-black">ایجاد</span>
             </PrimaryButton>
         </template>
     </FormSection>

@@ -6,7 +6,7 @@ import CreateTeamForm from '@/Pages/Teams/Partials/CreateTeamForm.vue';
 <template>
     <AppLayout title="ایجاد تیم">
         <template #header>
-            <h2 class="font-semibold text-xl text-white/90 leading-tight" dir="rtl">
+            <h2 class="font-semibold text-xl text-black dark:text-white/90 leading-tight" dir="rtl">
                 ایجاد تیم جدید
             </h2>
         </template>
