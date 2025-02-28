@@ -103,7 +103,7 @@ const closeModal = () => {
 
             <template #footer>
                 <SecondaryButton @click="closeModal" class="rounded-lg hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 hover:bg-gray-700/50">
-                    <span class="text-white">انصراف</span>
+                    <span class="text-white">{{ $t('cancel') }}</span>
                 </SecondaryButton>
 
                 <PrimaryButton

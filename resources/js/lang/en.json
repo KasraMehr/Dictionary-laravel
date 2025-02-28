@@ -74,6 +74,25 @@
     "users": "Users",
     "date": "Date",
     "created_by": "Created and configured by Kasra Mehralizadeh and Mojtaba Allam",
-    "documentation": "Documentation"
+    "documentation": "Documentation",
+    "confirm_password": "Confirm Password",
+    "confirm_password_message": "For your security, please confirm your password to continue.",
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "create_api_token": "Create API Token",
+    "api_token_description": "API tokens allow third-party services to authenticate with our application on your behalf.",
+    "created": "Created.",
+    "manage_tokens": "Manage Tokens",
+    "delete_token_info": "You can delete any of your existing tokens if they are no longer needed.",
+    "last_used": "Last Used",
+    "permissions": "Permissions",
+    "delete": "Delete",
+    "api_token": "API Token",
+    "copy_api_token": "Please copy your new API token. For security reasons, it will not be shown again.",
+    "api_token_permissions": "API Token Permissions",
+    "save": "Save",
+    "delete_api_token": "Delete API Token",
+    "confirm_delete_api_token": "Are you sure you want to delete this API token?",
+    "api_tokens": "API Tokens"
 
 }

@@ -13,7 +13,7 @@ defineProps({
     <AppLayout title="توکن‌های API">
         <template #header>
             <h2 class="font-semibold text-xl text-black dark:text-white/90 leading-tight" dir="rtl">
-                توکن‌های API
+                {{ $t('api_tokens') }}
             </h2>
         </template>
 

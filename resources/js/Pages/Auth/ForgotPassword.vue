@@ -21,7 +21,7 @@ const submit = () => {
 </script>
 
 <template>
-    <Head title="فراموشی رمز عبور" />
+    <Head title="forgot password" />
     <div class="bg-gradient-to-br from-gray-900 to-gray-800 min-h-screen">
         <img
             class="fixed inset-0 w-full h-full object-cover opacity-10"

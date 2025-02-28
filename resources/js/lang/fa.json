@@ -74,6 +74,25 @@
     "users": "مخاطبان",
     "date": "تاریخ",
     "created_by": "ساخته و تنظیم شده توسط کسری مهرعلی زاده و مجتبی علام",
-    "documentation": "مستندات"
+    "documentation": "مستندات",
+    "confirm_password": "تایید رمز عبور",
+    "confirm_password_message": "برای امنیت شما، لطفاً رمز عبور خود را برای ادامه تایید کنید.",
+    "confirm": "تایید",
+    "cancel": "انصراف",
+    "create_api_token": "ایجاد توکن API",
+    "api_token_description": "توکن‌های API به سرویس‌های شخص ثالث اجازه می‌دهند تا از طرف شما با برنامه ما احراز هویت کنند.",
+    "created": "ایجاد شد.",
+    "manage_tokens": "مدیریت توکن‌ها",
+    "delete_token_info": "در صورت عدم نیاز می‌توانید هر یک از توکن‌های موجود خود را حذف کنید.",
+    "last_used": "آخرین استفاده",
+    "permissions": "دسترسی‌ها",
+    "delete": "حذف",
+    "api_token": "توکن API",
+    "copy_api_token": "لطفاً توکن API جدید خود را کپی کنید. برای امنیت شما، این توکن دوباره نمایش داده نخواهد شد.",
+    "api_token_permissions": "دسترسی‌های توکن API",
+    "save": "ذخیره",
+    "delete_api_token": "حذف توکن API",
+    "confirm_delete_api_token": "آیا مطمئن هستید که می‌خواهید این توکن API را حذف کنید؟",
+    "api_tokens": "توکن‌های API"
 
 }
