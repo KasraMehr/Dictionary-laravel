@@ -93,6 +93,10 @@
     "save": "Save",
     "delete_api_token": "Delete API Token",
     "confirm_delete_api_token": "Are you sure you want to delete this API token?",
-    "api_tokens": "API Tokens"
-
+    "api_tokens": "API Tokens",
+    "forgot_password": "Forgot your password?",
+    "forgot_password_message": "No problem. Just let us know your email address, and we will send you a password reset link that will allow you to choose a new password.",
+    "email": "Email",
+    "back_to_login": "Back to Login",
+    "send_reset_link": "Send Password Reset Link"
 }
