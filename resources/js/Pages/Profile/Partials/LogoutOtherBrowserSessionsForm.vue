@@ -64,7 +64,7 @@ const closeModal = () => {
                 <div v-for="(session, i) in sessions" :key="i" class="flex items-center rounded-lg hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 hover:bg-gray-700/50 transform hover:-translate-y-1 p-4">
                     <div class="ms-3">
                         <div class="text-sm text-black dark:text-white">
-                            {{ session.agent.platform ? session.agent.platform : 'ناشناخته' }} - {{ session.agent.browser ? session.agent.browser : 'ناشناخته' }}
+                            {{ session.agent.platform ? session.agent.platform : 'unknown' }} - {{ session.agent.browser ? session.agent.browser : 'unknown' }}
                         </div>
 
                         <div>
@@ -115,7 +115,7 @@ const closeModal = () => {
                                 v-model="form.password"
                                 type="password"
                                 class="mt-1 block w-3/4 rounded-lg hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 hover:bg-gray-700/50 transform hover:-translate-y-1"
-                                placeholder="رمز عبور"
+                                placeholder="password عبور"
                                 autocomplete="current-password"
                                 @keyup.enter="logoutOtherBrowserSessions"
                             />

@@ -134,5 +134,19 @@
   "team_name_info": "Team name and owner information.",
   "saved": "Saved.",
   "create_new_team": "Create New Team",
-  "team_settings": "Team Settings"
+  "team_settings": "Team Settings",
+  "delete_user_account": "Delete User Account",
+  "delete_user_account_permanently": "Permanently delete your user account.",
+  "delete_account": "Delete Account",
+  "delete_account_confirmation": "Are you sure you want to delete your account? Once your account is deleted, all its resources and data will be permanently erased. Please enter your password to confirm the permanent deletion of your account.",
+  "delete_account_warning": "Once your account is deleted, all its resources and data will be permanently removed. Before deleting your account, please download any data or information you want to keep.",
+  "browser_sessions": "Browser Sessions",
+  "manage_and_logout_sessions": "Manage and log out of your active sessions in browsers and other devices.",
+  "logout_other_sessions_info": "If necessary, you can log out of all other browser sessions on all devices. Some of your recent sessions are listed below; however, this list may not be complete. If you believe your account has been compromised, you should also update your password.",
+  "this_device": "This Device",
+  "last_activity": "Last Activity",
+  "logout_other_sessions": "Log Out of Other Browser Sessions",
+  "completed": "Completed.",
+  "confirm_logout_other_sessions": "Please enter your password to confirm logging out of other browser sessions on all your devices."
+
 }
