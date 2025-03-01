@@ -21,16 +21,16 @@ const createTeam = () => {
 <template>
     <FormSection @submitted="createTeam" class="p-5 rounded-lg hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 bg-gray-700/50 slide-up">
         <template #title>
-            <span class="dark:text-white text-black">جزئیات تیم</span>
+            <span class="dark:text-white text-black">{{ $t('team_details') }}</span>
         </template>
 
         <template #description>
-            <span class="dark:text-white text-black">یک تیم جدید برای همکاری با دیگران در پروژه‌ها ایجاد کنید.</span>
+            <span class="dark:text-white text-black">{{ $t('create_team') }}</span>
         </template>
 
         <template #form>
             <div class="col-span-6" dir="rtl">
-                <InputLabel value="مالک تیم" class="dark:text-white text-black" />
+                <InputLabel value="team owner" class="dark:text-white text-black" />
 
                 <div class="flex items-center mt-2">
                   <img class="object-cover size-12 rounded-full" :src="$page.props.auth.user.profile_photo_url" :alt="$page.props.auth.user.name">
@@ -44,7 +44,7 @@ const createTeam = () => {
             </div>
 
             <div class="col-span-6 sm:col-span-4" dir="rtl">
-                <InputLabel for="name" value="نام تیم" class="dark:text-white text-black" />
+                <InputLabel for="name" value="team name" class="dark:text-white text-black" />
                 <TextInput
                     id="name"
                     v-model="form.name"
@@ -62,7 +62,7 @@ const createTeam = () => {
                 :disabled="form.processing"
                 class="rounded-lg hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 hover:bg-gray-700/50"
             >
-                <span class="text-white dark:text-black">ایجاد</span>
+                <span class="text-white dark:text-black">{{ $t('create') }}</span>
             </PrimaryButton>
         </template>
     </FormSection>

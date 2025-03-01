@@ -27,37 +27,37 @@ const deleteTeam = () => {
 <template>
     <ActionSection>
         <template #title>
-            حذف تیم
+            {{ $t('delete_team') }}
         </template>
 
         <template #description>
-            بخش حذف کردن تیم
+            {{ $t('delete_team_section') }}
         </template>
 
         <template #content>
             <div class="max-w-xl text-sm text-gray-600 dark:text-gray-400">
-                پس از حذف یک تیم، تمام منابع و داده های آن برای همیشه حذف می شوند. قبل از حذف این تیم، لطفاً هر گونه داده یا اطلاعات مربوط به این تیم را که می‌خواهید حفظ کنید، دانلود کنید.
+                {{ $t('delete_team_warning') }}
             </div>
 
             <div class="mt-5">
                 <DangerButton @click="confirmTeamDeletion">
-                    حذف تیم
+                    {{ $t('delete_team') }}
                 </DangerButton>
             </div>
 
             <!-- Delete Team Confirmation Modal -->
             <ConfirmationModal :show="confirmingTeamDeletion" @close="confirmingTeamDeletion = false">
                 <template #title>
-                    Delete Team
+                    {{ $t('delete_team') }}
                 </template>
 
                 <template #content>
-                    Are you sure you want to delete this team? Once a team is deleted, all of its resources and data will be permanently deleted.
+                    {{ $t('delete_team_confirmation') }}
                 </template>
 
                 <template #footer>
                     <SecondaryButton @click="confirmingTeamDeletion = false">
-                        Cancel
+                        {{ $t('cancel') }}
                     </SecondaryButton>
 
                     <DangerButton
@@ -66,7 +66,7 @@ const deleteTeam = () => {
                         :disabled="form.processing"
                         @click="deleteTeam"
                     >
-                        Delete Team
+                        {{ $t('delete_team') }}
                     </DangerButton>
                 </template>
             </ConfirmationModal>

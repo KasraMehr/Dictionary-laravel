@@ -4,10 +4,10 @@ import CreateTeamForm from '@/Pages/Teams/Partials/CreateTeamForm.vue';
 </script>
 
 <template>
-    <AppLayout title="ایجاد تیم">
+    <AppLayout title="create team">
         <template #header>
             <h2 class="font-semibold text-xl text-black dark:text-white/90 leading-tight" dir="rtl">
-                ایجاد تیم جدید
+                {{ $t('create_new_team') }}
             </h2>
         </template>
 

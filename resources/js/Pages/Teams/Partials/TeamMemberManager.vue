@@ -100,23 +100,23 @@ const displayableRole = (role) => {
             <!-- افزودن عضو تیم -->
             <FormSection @submitted="addTeamMember" class="p-5 rounded-lg hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 bg-gray-700/50">
                 <template #title>
-                    <span class="dark:text-white text-black">افزودن عضو تیم</span>
+                    <span class="dark:text-white text-black">{{ $t('add_team_member') }}</span>
                 </template>
 
                 <template #description>
-                    <span class="dark:text-white text-black">افزودن یک عضو جدید به تیم شما، به آنها اجازه همکاری با شما را می‌دهد.</span>
+                    <span class="dark:text-white text-black">{{ $t('add_team_member_desc') }}</span>
                 </template>
 
                 <template #form>
                     <div class="col-span-6" dir="rtl">
                         <div class="max-w-xl text-sm dark:text-white text-black">
-                            لطفاً آدرس ایمیل شخصی که می‌خواهید به این تیم اضافه کنید را وارد نمایید.
+                            {{ $t('enter_email') }}
                         </div>
                     </div>
 
                     <!-- ایمیل عضو -->
                     <div class="col-span-6 sm:col-span-4" dir="rtl">
-                        <InputLabel for="email" value="ایمیل" class="dark:text-white text-black" />
+                        <InputLabel for="email" value="email" class="dark:text-white text-black" />
                         <TextInput
                             id="email"
                             v-model="addTeamMemberForm.email"
@@ -128,7 +128,7 @@ const displayableRole = (role) => {
 
                     <!-- نقش -->
                     <div v-if="availableRoles.length > 0" class="col-span-6 lg:col-span-4" dir="rtl">
-                        <InputLabel for="roles" value="نقش" class="dark:text-white text-black" />
+                        <InputLabel for="roles" value="role" class="dark:text-white text-black" />
                         <InputError :message="addTeamMemberForm.errors.role" class="mt-2" />
 
                         <div class="relative z-0 mt-1 border border-gray-200 dark:border-gray-700 rounded-lg cursor-pointer">
@@ -164,7 +164,7 @@ const displayableRole = (role) => {
 
                 <template #actions>
                     <ActionMessage :on="addTeamMemberForm.recentlySuccessful" class="me-3 dark:text-white text-black">
-                        اضافه شد.
+                        {{ $t('added') }}
                     </ActionMessage>
 
                     <PrimaryButton
@@ -172,7 +172,7 @@ const displayableRole = (role) => {
                         :disabled="addTeamMemberForm.processing"
                         class="rounded-lg hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 hover:bg-gray-700/50"
                     >
-                        افزودن
+                        {{ $t('add') }}
                     </PrimaryButton>
                 </template>
             </FormSection>
@@ -184,12 +184,12 @@ const displayableRole = (role) => {
             <!-- دعوت‌نامه‌های اعضای تیم -->
             <ActionSection class="mb-5 p-5 mt-10 sm:mt-0 rounded-lg hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 bg-gray-700/50 slide-up">
                 <template #title>
-                    <span class="dark:text-white text-black">دعوت‌نامه‌های در انتظار تیم</span>
+                    <span class="dark:text-white text-black">{{ $t('pending_invitations') }}</span>
                 </template>
 
                 <template #description>
                     <span class="dark:text-white text-black">
-                        این افراد به تیم شما دعوت شده‌اند و ایمیل دعوت‌نامه برای آنها ارسال شده است. آنها می‌توانند با پذیرش دعوت‌نامه به تیم بپیوندند.
+                        {{ $t('team_pending_invitations') }}
                     </span>
                 </template>
 
@@ -209,7 +209,7 @@ const displayableRole = (role) => {
                                     class="rounded-lg hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 bg-gray-200 p-2 text-black"
                                     @click="cancelTeamInvitation(invitation)"
                                 >
-                                    لغو
+                                    {{ $t('cancel') }}
                                 </button>
                             </div>
                         </div>
@@ -224,11 +224,11 @@ const displayableRole = (role) => {
             <!-- مدیریت اعضای تیم -->
             <ActionSection class="mt-10 sm:mt-0 bg-gray-700/50 rounded p-6">
                 <template #title>
-                    اعضای تیم
+                    {{ $t('team_members') }}
                 </template>
 
                 <template #description>
-                    تمام افرادی که عضو این تیم هستند.
+                    {{ $t('team_members_desc') }}
                 </template>
 
                 <!-- لیست اعضای تیم -->
@@ -261,7 +261,7 @@ const displayableRole = (role) => {
                                     class="cursor-pointer me-6 text-sm text-red-500"
                                     @click="confirmLeavingTeam"
                                 >
-                                    خروج
+                                    {{ $t('leave') }}
                                 </button>
 
                                 <button
@@ -269,7 +269,7 @@ const displayableRole = (role) => {
                                     class="cursor-pointer me-6 text-sm text-red-500"
                                     @click="confirmTeamMemberRemoval(user)"
                                 >
-                                    حذف
+                                    {{ $t('remove') }}
                                 </button>
                             </div>
                         </div>
@@ -281,7 +281,7 @@ const displayableRole = (role) => {
         <!-- مودال مدیریت نقش -->
         <DialogModal :show="currentlyManagingRole" @close="currentlyManagingRole = false">
             <template #title>
-                مدیریت نقش
+                {{ $t('manage_roles') }}
             </template>
 
             <template #content>
@@ -319,7 +319,7 @@ const displayableRole = (role) => {
 
             <template #footer>
                 <SecondaryButton @click="currentlyManagingRole = false">
-                    انصراف
+                    {{ $t('cancel') }}
                 </SecondaryButton>
 
                 <PrimaryButton
@@ -328,7 +328,7 @@ const displayableRole = (role) => {
                     :disabled="updateRoleForm.processing"
                     @click="updateRole"
                 >
-                    ذخیره
+                    {{ $t('save') }}
                 </PrimaryButton>
             </template>
         </DialogModal>
@@ -336,16 +336,16 @@ const displayableRole = (role) => {
         <!-- مودال تایید خروج از تیم -->
         <ConfirmationModal :show="confirmingLeavingTeam" @close="confirmingLeavingTeam = false">
             <template #title>
-                خروج از تیم
+                {{ $t('leave_team') }}
             </template>
 
             <template #content>
-                آیا مطمئن هستید که می‌خواهید از این تیم خارج شوید؟
+                {{ $t('leave_team_confirmation') }}
             </template>
 
             <template #footer>
                 <SecondaryButton @click="confirmingLeavingTeam = false">
-                    انصراف
+                    {{ $t('cancel') }}
                 </SecondaryButton>
 
                 <DangerButton
@@ -354,7 +354,7 @@ const displayableRole = (role) => {
                     :disabled="leaveTeamForm.processing"
                     @click="leaveTeam"
                 >
-                    خروج
+                    {{ $t('leave') }}
                 </DangerButton>
             </template>
         </ConfirmationModal>
@@ -362,16 +362,16 @@ const displayableRole = (role) => {
         <!-- مودال تایید حذف عضو تیم -->
         <ConfirmationModal :show="teamMemberBeingRemoved" @close="teamMemberBeingRemoved = null">
             <template #title>
-                حذف عضو تیم
+                {{ $t('remove_team_member') }}
             </template>
 
             <template #content>
-                آیا مطمئن هستید که می‌خواهید این شخص را از تیم حذف کنید؟
+              {{ $t('remove_team_member') }}
             </template>
 
             <template #footer>
                 <SecondaryButton @click="teamMemberBeingRemoved = null">
-                    انصراف
+                    {{ $t('cancel') }}
                 </SecondaryButton>
 
                 <DangerButton
@@ -380,7 +380,7 @@ const displayableRole = (role) => {
                     :disabled="removeTeamMemberForm.processing"
                     @click="removeTeamMember"
                 >
-                    حذف
+                    {{ $t('remove') }}
                 </DangerButton>
             </template>
         </ConfirmationModal>

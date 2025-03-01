@@ -15,10 +15,10 @@ defineProps({
 </script>
 
 <template>
-    <AppLayout title="تنظیمات تیم">
+    <AppLayout title="team settings">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight" dir="rtl">
-                تنظیمات تیم
+                {{ $t('team_settings') }}
             </h2>
         </template>
 

@@ -27,17 +27,17 @@ const updateTeamName = () => {
 <template>
     <FormSection @submitted="updateTeamName" class="p-5 rounded-lg hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 bg-gray-700/50">
         <template #title>
-            <span class="dark:text-white text-black">نام تیم</span>
+            <span class="dark:text-white text-black">{{ $t('team_name') }}</span>
         </template>
 
         <template #description>
-            <span class="dark:text-white text-black">اطلاعات نام تیم و مالک آن.</span>
+            <span class="dark:text-white text-black">{{ $t('team_name_info') }}</span>
         </template>
 
         <template #form>
             <!-- اطلاعات مالک تیم -->
             <div class="col-span-6" dir="rtl">
-                <InputLabel value="مالک تیم" class="dark:text-white text-black" />
+                <InputLabel value="team owner" class="dark:text-white text-black" />
 
                 <div class="flex items-center mt-2">
                     <img class="me-4 size-12 rounded-full object-cover" :src="team.owner.profile_photo_url" :alt="team.owner.name">
@@ -52,7 +52,7 @@ const updateTeamName = () => {
 
             <!-- نام تیم -->
             <div class="col-span-6 sm:col-span-4" dir="rtl">
-                <InputLabel for="name" value="نام تیم" class="dark:text-white text-black" />
+                <InputLabel for="name" value="team name" class="dark:text-white text-black" />
 
                 <TextInput
                     id="name"
@@ -68,7 +68,7 @@ const updateTeamName = () => {
 
         <template v-if="permissions.canUpdateTeam" #actions>
             <ActionMessage :on="form.recentlySuccessful" class="me-3 dark:text-white text-black">
-                ذخیره شد.
+                {{ $t('saved') }}
             </ActionMessage>
 
             <PrimaryButton
@@ -76,7 +76,7 @@ const updateTeamName = () => {
                 :disabled="form.processing"
                 class="rounded-lg hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 hover:bg-gray-700/50"
             >
-                ذخیره
+                {{ $t('save') }}
             </PrimaryButton>
         </template>
     </FormSection>
