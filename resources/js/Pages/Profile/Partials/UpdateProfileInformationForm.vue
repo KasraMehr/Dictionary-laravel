@@ -97,7 +97,7 @@ const clearPhotoFileInput = () => {
                     @change="updatePhotoPreview"
                 >
 
-                <InputLabel for="photo" value="عکس" class="text-black dark:text-white" />
+                <InputLabel for="photo" value="photo" class="text-black dark:text-white" />
 
                 <!-- عکس پروفایل فعلی -->
                 <div v-show="! photoPreview" class="mt-2">
@@ -134,7 +134,7 @@ const clearPhotoFileInput = () => {
 
             <!-- نام -->
             <div class="col-span-6 sm:col-span-4" dir="rtl">
-                <InputLabel for="name" value="نام" class="text-black dark:text-white" />
+                <InputLabel for="name" value="name" class="text-black dark:text-white" />
                 <TextInput
                     id="name"
                     v-model="form.name"
@@ -148,7 +148,7 @@ const clearPhotoFileInput = () => {
 
             <!-- ایمیل -->
             <div class="col-span-6 sm:col-span-4" dir="rtl">
-                <InputLabel for="email" value="ایمیل" class="text-black dark:text-white" />
+                <InputLabel for="email" value="email" class="text-black dark:text-white" />
                 <TextInput
                     id="email"
                     v-model="form.email"
