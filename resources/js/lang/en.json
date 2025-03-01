@@ -98,5 +98,10 @@
     "forgot_password_message": "No problem. Just let us know your email address, and we will send you a password reset link that will allow you to choose a new password.",
     "email": "Email",
     "back_to_login": "Back to Login",
-    "send_reset_link": "Send Password Reset Link"
+    "send_reset_link": "Send Password Reset Link",
+    "remember_me": "Remember Me",
+    "forgot_password": "Forgot your password?",
+    "sign_in": "Sign In",
+    "no_account": "Don't have an account?",
+    "register_now": "Sign Up"
 }

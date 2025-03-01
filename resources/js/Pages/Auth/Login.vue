@@ -35,7 +35,7 @@ const submit = () => {
 </script>
 
 <template>
-    <Head title="ورود به سیستم" />
+    <Head title="login" />
     <div class="bg-gray-200 dark:bg-gray-800 min-h-screen">
         <img
             class="fixed inset-0 w-full h-full object-cover opacity-10"
@@ -60,7 +60,7 @@ const submit = () => {
 
                     <form @submit.prevent="submit" class="space-y-4">
                         <div dir="rtl">
-                            <InputLabel for="email" value="ایمیل" class="text-black dark:text-white/90 text-lg" />
+                            <InputLabel for="email" value="email" class="text-black dark:text-white/90 text-lg" />
                             <TextInput
                                 id="email"
                                 v-model="form.email"
@@ -75,7 +75,7 @@ const submit = () => {
                         </div>
 
                         <div dir="rtl">
-                            <InputLabel for="password" value="رمز عبور" class="text-black dark:text-white/90 text-lg" />
+                            <InputLabel for="password" value="password" class="text-black dark:text-white/90 text-lg" />
                             <TextInput
                                 id="password"
                                 v-model="form.password"
@@ -91,7 +91,7 @@ const submit = () => {
                         <div class="flex items-center">
                             <label class="flex items-center">
                                 <Checkbox v-model:checked="form.remember" name="remember" class="bg-gray-700/50 border-gray-700" />
-                                <span class="ml-4 me-2 text-sm text-black dark:text-white/70 hover:text-black dark:text-white/90">مرا به خاطر بسپار</span>
+                                <span class="ml-4 me-2 text-sm text-black dark:text-white/70 hover:text-black dark:text-white/90">{{ $t('remember_me') }}</span>
                             </label>
                         </div>
 
@@ -101,7 +101,7 @@ const submit = () => {
                                 :href="route('password.request')"
                                 class="p-4 text-sm text-black dark:text-white/70 hover:text-black dark:text-white/90 rounded-md transition-all duration-300 hover:scale-105"
                             >
-                                رمز عبور خود را فراموش کرده‌اید؟
+                                {{ $t('forgot_password') }}
                             </Link>
 
                             <PrimaryButton
@@ -109,7 +109,7 @@ const submit = () => {
                                 :class="{ 'opacity-25': form.processing }"
                                 :disabled="form.processing"
                             >
-                                ورود
+                                {{ $t('sign_in') }}
                             </PrimaryButton>
                         </div>
                     </form>
@@ -118,7 +118,7 @@ const submit = () => {
                             :href="route('register')"
                             class="inline-flex items-center justify-center px-6 py-3 bg-gray-700/50 text-black dark:text-white/90 rounded-lg hover:bg-gray-600/50 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-[#FF2D20]/10"
                         >
-                            <span>حساب کاربری ندارید؟ ثبت نام کنید</span>
+                            <span>{{ $t('no_account') }} {{ $t('register_now') }}</span>
                             <svg xmlns="http://www.w3.org/2000/svg" class="ml-2  h-5 w-5 mr-2 rtl:rotate-180" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
                             </svg>
