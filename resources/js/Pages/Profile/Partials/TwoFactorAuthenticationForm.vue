@@ -107,29 +107,29 @@ const disableTwoFactorAuthentication = () => {
 <template>
     <ActionSection class="p-5 rounded-lg hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 bg-gray-700/50 slide-up">
         <template #title>
-            <span class="text-black dark:text-white">احراز هویت دو مرحله‌ای</span>
+            <span class="text-black dark:text-white">{{ $t('two_factor_authentication') }}</span>
         </template>
 
         <template #description>
-            <span class="text-black dark:text-white">با استفاده از احراز هویت دو مرحله‌ای، امنیت بیشتری به حساب خود اضافه کنید.</span>
+            <span class="text-black dark:text-white">{{ $t('two_factor_auth_description') }}</span>
         </template>
 
         <template #content>
             <h3 v-if="twoFactorEnabled && ! confirming" class="text-lg font-medium text-black dark:text-white" dir="rtl">
-                شما احراز هویت دو مرحله‌ای را فعال کرده‌اید.
+              {{ $t('two_factor_enabled') }}
             </h3>
 
             <h3 v-else-if="twoFactorEnabled && confirming" class="text-lg font-medium text-black dark:text-white" dir="rtl">
-                فعال‌سازی احراز هویت دو مرحله‌ای را تکمیل کنید.
+              {{ $t('complete_two_factor_setup') }}
             </h3>
 
             <h3 v-else class="text-lg font-medium text-black dark:text-white" dir="rtl">
-                شما احراز هویت دو مرحله‌ای را فعال نکرده‌اید.
+              {{ $t('two_factor_disabled') }}
             </h3>
 
             <div class="mt-3 max-w-xl text-sm text-black dark:text-white" dir="rtl">
                 <p>
-                    زمانی که احراز هویت دو مرحله‌ای فعال باشد، در هنگام ورود از شما یک توکن امن و تصادفی درخواست می‌شود. این توکن را می‌توانید از برنامه Google Authenticator تلفن همراه خود دریافت کنید.
+                  {{ $t('two_factor_info') }}
                 </p>
             </div>
 
@@ -137,11 +137,11 @@ const disableTwoFactorAuthentication = () => {
                 <div v-if="qrCode">
                     <div class="mt-4 max-w-xl text-sm text-black dark:text-white" dir="rtl">
                         <p v-if="confirming" class="font-semibold">
-                            برای تکمیل فعال‌سازی احراز هویت دو مرحله‌ای، کد QR زیر را با استفاده از برنامه احراز هویت تلفن همراه خود اسکن کنید یا کلید راه‌اندازی را وارد کرده و کد OTP تولید شده را ارائه دهید.
+                          {{ $t('two_factor_setup_instructions') }}
                         </p>
 
                         <p v-else>
-                            احراز هویت دو مرحله‌ای اکنون فعال است. کد QR زیر را با استفاده از برنامه احراز هویت تلفن همراه خود اسکن کنید یا کلید راه‌اندازی را وارد کنید.
+                          {{ $t('two_factor_now_active') }}
                         </p>
                     </div>
 
@@ -149,7 +149,7 @@ const disableTwoFactorAuthentication = () => {
 
                     <div v-if="setupKey" class="mt-4 max-w-xl text-sm text-black dark:text-white" dir="rtl">
                         <p class="font-semibold">
-                            کلید راه‌اندازی: <span v-html="setupKey"></span>
+                            {{ $t('setup_key') }} <span v-html="setupKey"></span>
                         </p>
                     </div>
 
@@ -175,7 +175,7 @@ const disableTwoFactorAuthentication = () => {
                 <div v-if="recoveryCodes.length > 0 && ! confirming" dir="rtl">
                     <div class="mt-4 max-w-xl text-sm text-black dark:text-white">
                         <p class="font-semibold">
-                            این کدهای بازیابی را در یک مدیریت‌کننده رمز عبور امن ذخیره کنید. در صورت گم شدن دستگاه احراز هویت دو مرحله‌ای، می‌توان از آنها برای بازیابی دسترسی به حساب شما استفاده کرد.
+                          {{ $t('store_recovery_codes') }}
                         </p>
                     </div>
 
@@ -196,7 +196,7 @@ const disableTwoFactorAuthentication = () => {
                             :disabled="enabling"
                             class="rounded-lg hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 hover:bg-gray-700/50"
                         >
-                            <span class="black-white">فعال‌سازی</span>
+                            <span class="black-white">{{ $t('activate') }}</span>
                         </PrimaryButton>
                     </ConfirmsPassword>
                 </div>
@@ -210,7 +210,7 @@ const disableTwoFactorAuthentication = () => {
                             :class="{ 'opacity-25': enabling }"
                             :disabled="enabling"
                         >
-                            <span class="text-black dark:text-white">تایید</span>
+                            <span class="text-black dark:text-white">{{ $t('confirm') }}</span>
                         </PrimaryButton>
                     </ConfirmsPassword>
 
@@ -219,7 +219,7 @@ const disableTwoFactorAuthentication = () => {
                             v-if="recoveryCodes.length > 0 && ! confirming"
                             class="ms-3 rounded-lg hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 hover:bg-gray-700/50"
                         >
-                            <span class="text-black dark:text-white">تولید مجدد کدهای بازیابی</span>
+                            <span class="text-black dark:text-white">{{ $t('regenerate_recovery_codes') }}</span>
                         </SecondaryButton>
                     </ConfirmsPassword>
 
@@ -228,7 +228,7 @@ const disableTwoFactorAuthentication = () => {
                             v-if="recoveryCodes.length === 0 && ! confirming"
                             class="ms-3 rounded-lg hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 hover:bg-gray-700/50"
                         >
-                            <span class="text-black dark:text-white">نمایش کدهای بازیابی</span>
+                            <span class="text-black dark:text-white">{{ $t('show_recovery_codes') }}</span>
                         </SecondaryButton>
                     </ConfirmsPassword>
 
@@ -239,7 +239,7 @@ const disableTwoFactorAuthentication = () => {
                             :class="{ 'opacity-25': disabling }"
                             :disabled="disabling"
                         >
-                            <span class="text-black dark:text-white">انصراف</span>
+                            <span class="text-black dark:text-white">{{ $t('cancel') }}</span>
                         </SecondaryButton>
                     </ConfirmsPassword>
 
@@ -250,7 +250,7 @@ const disableTwoFactorAuthentication = () => {
                             :class="{ 'opacity-25': disabling }"
                             :disabled="disabling"
                         >
-                            <span class="text-black dark:text-white">غیرفعال‌سازی</span>
+                            <span class="text-black dark:text-white">{{ $t('disable') }}</span>
                         </DangerButton>
                     </ConfirmsPassword>
                 </div>
