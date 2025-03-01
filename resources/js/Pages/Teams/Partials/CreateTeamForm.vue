@@ -25,7 +25,7 @@ const createTeam = () => {
         </template>
 
         <template #description>
-            <span class="dark:text-white text-black">{{ $t('create_team') }}</span>
+            <span class="dark:text-white text-black">{{ $t('create_team_des') }}</span>
         </template>
 
         <template #form>
