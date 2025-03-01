@@ -45,18 +45,18 @@ const closeModal = () => {
 <template>
     <ActionSection class="p-5 rounded-lg hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 bg-gray-700/50 slide-up">
         <template #title>
-            <span class="text-black dark:text-white">نشست‌های مرورگر</span>
+            <span class="text-black dark:text-white">{{ $t('browser_sessions') }}</span>
         </template>
 
         <template #description>
             <div class="text-black dark:text-white" dir="rtl">
-                مدیریت و خروج از نشست‌های فعال خود در مرورگرها و دستگاه‌های دیگر.
+                {{ $t('manage_and_logout_sessions') }}
             </div>
         </template>
 
         <template #content>
             <div class="max-w-xl text-sm text-black dark:text-white" dir="rtl">
-                در صورت لزوم، می‌توانید از تمام نشست‌های مرورگر دیگر خود در تمام دستگاه‌ها خارج شوید. برخی از نشست‌های اخیر شما در زیر فهرست شده است؛ با این حال، این لیست ممکن است کامل نباشد. اگر احساس می‌کنید حساب شما به خطر افتاده است، باید رمز عبور خود را نیز به‌روز کنید.
+                {{ $t('logout_other_sessions_info') }}
             </div>
 
             <!-- نشست‌های مرورگر دیگر -->
@@ -71,8 +71,8 @@ const closeModal = () => {
                             <div class="text-xs text-black dark:text-white">
                                 {{ session.ip_address }}،
 
-                                <span v-if="session.is_current_device" class="text-green-500 font-semibold">این دستگاه</span>
-                                <span v-else>آخرین فعالیت {{ session.last_active }}</span>
+                                <span v-if="session.is_current_device" class="text-green-500 font-semibold">{{ $t('this_device') }}</span>
+                                <span v-else> {{ $t('last_activity') }} {{ session.last_active }}</span>
                             </div>
                         </div>
                     </div>
@@ -91,31 +91,30 @@ const closeModal = () => {
 
             <div class="flex items-center mt-5" dir="rtl">
                 <PrimaryButton @click="confirmLogout" class="rounded-lg hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 hover:bg-gray-700/50 transform hover:-translate-y-1">
-                    خروج از سایر نشست‌های مرورگر
+                    {{ $t('logout_other_sessions') }}
                 </PrimaryButton>
 
                 <ActionMessage :on="form.recentlySuccessful" class="ms-3">
-                    انجام شد.
+                    {{ $t('completed') }}
                 </ActionMessage>
             </div>
 
             <!-- مودال تایید خروج از سایر دستگاه‌ها -->
             <DialogModal :show="confirmingLogout" @close="closeModal">
                 <template #title>
-                    <span class="text-black dark:text-white">خروج از سایر نشست‌های مرورگر</span>
+                    <span class="text-black dark:text-white">{{ $t('logout_other_sessions') }}</span>
                 </template>
 
                 <template #content>
                     <div class="rounded-lg transition duration-300 transform" dir="rtl">
-                        لطفاً برای تایید خروج از سایر نشست‌های مرورگر در تمام دستگاه‌های خود، رمز عبور خود را وارد کنید.
-
+                      {{ $t('confirm_logout_other_sessions') }}
                         <div class="mt-4">
                             <TextInput
                                 ref="passwordInput"
                                 v-model="form.password"
                                 type="password"
                                 class="mt-1 block w-3/4 rounded-lg hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 hover:bg-gray-700/50 transform hover:-translate-y-1"
-                                placeholder="password عبور"
+                                placeholder="password"
                                 autocomplete="current-password"
                                 @keyup.enter="logoutOtherBrowserSessions"
                             />
@@ -127,7 +126,7 @@ const closeModal = () => {
 
                 <template #footer>
                     <SecondaryButton @click="closeModal" class="rounded-lg hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 hover:bg-gray-700/50 transform hover:-translate-y-1">
-                        <span class="text-black dark:text-white">انصراف</span>
+                        <span class="text-black dark:text-white">{{ $t('cancel') }}</span>
                     </SecondaryButton>
 
                     <PrimaryButton
@@ -136,7 +135,7 @@ const closeModal = () => {
                         :disabled="form.processing"
                         @click="logoutOtherBrowserSessions"
                     >
-                        <span class="text-black dark:text-white">خروج از سایر نشست‌های مرورگر</span>
+                        <span class="text-black dark:text-white">{{ $t('logout_other_sessions') }}</span>
                     </PrimaryButton>
                 </template>
             </DialogModal>
