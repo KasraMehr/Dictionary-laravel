@@ -78,11 +78,11 @@ const clearPhotoFileInput = () => {
 <template>
     <FormSection @submitted="updateProfileInformation" class="p-5 rounded-lg hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 bg-gray-700/50 slide-up">
         <template #title>
-            <span class="text-black dark:text-white">اطلاعات پروفایل</span>
+            <span class="text-black dark:text-white">{{ $t('profile_info') }}</span>
         </template>
 
         <template #description>
-            <span class="text-black dark:text-white">به‌روزرسانی اطلاعات پروفایل و آدرس ایمیل حساب کاربری شما.</span>
+            <span class="text-black dark:text-white">{{ $t('update_profile_info') }}</span>
         </template>
 
         <template #form>
@@ -117,7 +117,7 @@ const clearPhotoFileInput = () => {
                     type="button"
                     @click.prevent="selectNewPhoto"
                 >
-                    <span class="text-black dark:text-white">انتخاب عکس جدید</span>
+                    <span class="text-black dark:text-white">{{ $t('choose_new_photo') }}</span>
                 </SecondaryButton>
 
                 <SecondaryButton
@@ -126,7 +126,7 @@ const clearPhotoFileInput = () => {
                     class="mt-2 rounded-lg hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 hover:bg-gray-700/50"
                     @click.prevent="deletePhoto"
                 >
-                    <span class="text-black dark:text-white">حذف عکس</span>
+                    <span class="text-black dark:text-white">{{ $t('remove_photo') }}</span>
                 </SecondaryButton>
 
                 <InputError :message="form.errors.photo" class="mt-2" />
@@ -161,8 +161,7 @@ const clearPhotoFileInput = () => {
 
                 <div v-if="$page.props.jetstream.hasEmailVerification && user.email_verified_at === null">
                     <p class="text-sm mt-2 text-black dark:text-white">
-                        آدرس ایمیل شما تایید نشده است.
-
+                      {{ $t('email_not_verified') }}
                         <Link
                             :href="route('verification.send')"
                             method="post"
@@ -170,12 +169,12 @@ const clearPhotoFileInput = () => {
                             class="underline text-sm text-black dark:text-white transition duration-300 focus:outline-none"
                             @click.prevent="sendEmailVerification"
                         >
-                            برای ارسال مجدد ایمیل تایید اینجا کلیک کنید.
+                          {{ $t('resend_verification_email') }}
                         </Link>
                     </p>
 
                     <div v-show="verificationLinkSent" class="mt-2 font-medium text-sm text-black dark:text-white">
-                        لینک تایید جدید به آدرس ایمیل شما ارسال شد.
+                      {{ $t('verification_email_sent') }}
                     </div>
                 </div>
             </div>
@@ -183,7 +182,7 @@ const clearPhotoFileInput = () => {
 
         <template #actions>
             <ActionMessage :on="form.recentlySuccessful" class="p-2 ms-3 text-black dark:text-white">
-                ذخیره شد.
+                {{ $t('saved') }}
             </ActionMessage>
 
             <PrimaryButton
@@ -191,7 +190,7 @@ const clearPhotoFileInput = () => {
                 :disabled="form.processing"
                 class="rounded-lg hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 bg-gray-700/50"
             >
-                <span class="black-white">ذخیره</span>
+                <span class="black-white">{{ $t('save') }}</span>
             </PrimaryButton>
         </template>
     </FormSection>

@@ -40,11 +40,11 @@ const updatePassword = () => {
 <template>
     <FormSection @submitted="updatePassword" class="p-5 rounded-lg hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 bg-gray-700/50 slide-up">
         <template #title>
-            <span class="text-black dark:text-white">به‌روزرسانی رمز عبور</span>
+            <span class="text-black dark:text-white">{{ $t('update_password') }}</span>
         </template>
 
         <template #description>
-            <span class="text-black dark:text-white">برای حفظ امنیت، اطمینان حاصل کنید که حساب شما از یک رمز عبور طولانی و تصادفی استفاده می‌کند.</span>
+            <span class="text-black dark:text-white">{{ $t('password_security_notice') }}</span>
         </template>
 
         <template #form>
@@ -89,7 +89,7 @@ const updatePassword = () => {
 
         <template #actions>
             <ActionMessage :on="form.recentlySuccessful" class="ms-3 text-black dark:text-white">
-                ذخیره شد.
+                {{ $t('saved') }}
             </ActionMessage>
 
             <PrimaryButton
@@ -97,7 +97,7 @@ const updatePassword = () => {
                 :disabled="form.processing"
                 class="rounded-lg hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 bg-gray-700/50"
             >
-                <span class="black-white">ذخیره</span>
+                <span class="black-white">{{ $t('save') }}</span>
             </PrimaryButton>
         </template>
     </FormSection>
