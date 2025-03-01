@@ -51,7 +51,7 @@ onMounted(() => {
 
 const submit = () => {
     if (!form['g-recaptcha-response']) {
-        alert('لطفاً تأیید ریکپچا را انجام دهید');
+        alert('please confirm recaptcha');
         return;
     }
 
@@ -72,7 +72,7 @@ const submit = () => {
 </script>
 
 <template>
-    <Head title="ثبت نام" />
+    <Head title="Sign up" />
     <div class="bg-gray-200 dark:bg-gray-800 min-h-screen">
         <img
             class="fixed inset-0 w-full h-full object-cover opacity-10"
@@ -93,7 +93,7 @@ const submit = () => {
             <div class="flex flex-col gap-6 lg:w-1/3 overflow-hidden rounded-lg bg-gradient-to-br bg-gradient-to-br from-gray-400/50 to-gray-200/50 dark:from-gray-800/50 p-6 shadow-lg ring-1 ring-white/10 transition duration-300 hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 backdrop-blur-sm mt-6">
                 <form @submit.prevent="submit" dir="rtl" class="space-y-1">
                     <div>
-                        <InputLabel for="name" value="نام" class="text-black dark:text-white/90 text-lg" />
+                        <InputLabel for="name" value="name" class="text-black dark:text-white/90 text-lg" />
                         <TextInput
                             id="name"
                             v-model="form.name"
@@ -108,7 +108,7 @@ const submit = () => {
                     </div>
 
                     <div>
-                        <InputLabel for="email" value="ایمیل" class="text-black dark:text-white/90 text-lg" />
+                        <InputLabel for="email" value="email" class="text-black dark:text-white/90 text-lg" />
                         <TextInput
                             id="email"
                             v-model="form.email"
@@ -122,7 +122,7 @@ const submit = () => {
                     </div>
 
                     <div>
-                        <InputLabel for="password" value="رمز عبور" class="text-black dark:text-white/90 text-lg" />
+                        <InputLabel for="password" value="password" class="text-black dark:text-white/90 text-lg" />
                         <TextInput
                             id="password"
                             v-model="form.password"
@@ -136,7 +136,7 @@ const submit = () => {
                     </div>
 
                     <div>
-                        <InputLabel for="password_confirmation" value="تایید رمز عبور" class="text-black dark:text-white/90 text-lg" />
+                        <InputLabel for="password_confirmation" value="confirm password" class="text-black dark:text-white/90 text-lg" />
                         <TextInput
                             id="password_confirmation"
                             v-model="form.password_confirmation"
@@ -155,7 +155,7 @@ const submit = () => {
                             class="mt-6 flex justify-center min-h-[78px]"
                         ></div>
                         <p v-if="!recaptchaLoaded" class="text-sm text-gray-400 text-center">
-                            در حال بارگذاری reCAPTCHA...
+                            {{ $t('loading_recaptcha') }}
                         </p>
                         <InputError class="mt-2" :message="form.errors['g-recaptcha-response']" />
                     </div>
@@ -174,11 +174,11 @@ const submit = () => {
 
                     <div class="flex items-center justify-between">
                         <Link :href="route('login')" class="p-4 text-sm text-black dark:text-white/70 hover:text-black dark:text-white/90 rounded-md transition-all duration-300 hover:scale-105">
-                            قبلاً ثبت نام کرده‌اید؟
+                            {{ $t('already_registered') }}
                         </Link>
 
                         <PrimaryButton class=" bg-[#FF2D20] hover:bg-[#FF2D20]/90 hover:scale-105 hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                            ثبت نام
+                            {{ $t('register_now') }}
                         </PrimaryButton>
                     </div>
                 </form>

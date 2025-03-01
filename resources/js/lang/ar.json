@@ -103,5 +103,7 @@
     "forgot_password": "هل نسيت كلمة المرور؟",
     "sign_in": "تسجيل الدخول",
     "no_account": "ليس لديك حساب؟",
-    "register_now": "سجل الآن"
+    "register_now": "سجل الآن",
+    "loading_recaptcha": "جارٍ تحميل reCAPTCHA...",
+    "already_registered": "هل سجلت من قبل؟"
 }

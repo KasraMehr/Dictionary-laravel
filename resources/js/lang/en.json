@@ -103,5 +103,7 @@
     "forgot_password": "Forgot your password?",
     "sign_in": "Sign In",
     "no_account": "Don't have an account?",
-    "register_now": "Sign Up"
+    "register_now": "Sign Up",
+    "loading_recaptcha": "Loading reCAPTCHA...",
+    "already_registered": "Already registered?"
 }

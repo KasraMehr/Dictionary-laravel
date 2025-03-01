@@ -103,7 +103,9 @@
     "forgot_password": "رمز عبور خود را فراموش کرده‌اید؟",
     "sign_in": "ورود",
     "no_account": "حساب کاربری ندارید؟",
-    "register_now": "ثبت نام کنید"
+    "register_now": "ثبت نام کنید",
+    "loading_recaptcha": "در حال بارگذاری reCAPTCHA...",
+    "already_registered": "قبلاً ثبت نام کرده‌اید؟"
 
 
 }
