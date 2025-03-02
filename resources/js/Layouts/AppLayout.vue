@@ -50,7 +50,7 @@ const logout = () => {
         <Banner />
 
         <div class="min-h-screen bg-gray-50-100 dark:bg-gray-900">
-            <nav class="bg-gray-200 dark:bg-gray-800 border-b border-gray-300 dark:border-gray-700">
+            <nav class="bg-gray-200 dark:bg-gray-800 border-b border-gray-300 dark:border-gray-700 fixed top-0 left-0 w-full z-50 transition-all duration-300">
                 <!-- منوی اصلی -->
                 <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="flex justify-between h-16">
