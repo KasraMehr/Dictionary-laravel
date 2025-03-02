@@ -12,13 +12,13 @@ defineProps({
 <template>
     <AppLayout title="توکن‌های API">
         <template #header>
-            <h2 class="font-semibold text-xl text-black dark:text-white/90 leading-tight" dir="rtl">
+            <h2 class="font-semibold text-xl text-black dark:text-white/90 leading-tight"  >
                 {{ $t('api_tokens') }}
             </h2>
         </template>
 
         <div>
-            <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8" dir="rtl">
+            <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8"  >
                 <ApiTokenManager
                     :tokens="tokens"
                     :available-permissions="availablePermissions"

@@ -87,7 +87,7 @@ const clearPhotoFileInput = () => {
 
         <template #form>
             <!-- عکس پروفایل -->
-            <div v-if="$page.props.jetstream.managesProfilePhotos" class="col-span-6 sm:col-span-4" dir="rtl">
+            <div v-if="$page.props.jetstream.managesProfilePhotos" class="col-span-6 sm:col-span-4"  >
                 <!-- ورودی فایل عکس پروفایل -->
                 <input
                     id="photo"
@@ -133,7 +133,7 @@ const clearPhotoFileInput = () => {
             </div>
 
             <!-- نام -->
-            <div class="col-span-6 sm:col-span-4" dir="rtl">
+            <div class="col-span-6 sm:col-span-4"  >
                 <InputLabel for="name" value="name" class="text-black dark:text-white" />
                 <TextInput
                     id="name"
@@ -147,7 +147,7 @@ const clearPhotoFileInput = () => {
             </div>
 
             <!-- ایمیل -->
-            <div class="col-span-6 sm:col-span-4" dir="rtl">
+            <div class="col-span-6 sm:col-span-4"  >
                 <InputLabel for="email" value="email" class="text-black dark:text-white" />
                 <TextInput
                     id="email"

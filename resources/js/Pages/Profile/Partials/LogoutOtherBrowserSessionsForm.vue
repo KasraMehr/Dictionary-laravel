@@ -49,18 +49,18 @@ const closeModal = () => {
         </template>
 
         <template #description>
-            <div class="text-black dark:text-white" dir="rtl">
+            <div class="text-black dark:text-white"  >
                 {{ $t('manage_and_logout_sessions') }}
             </div>
         </template>
 
         <template #content>
-            <div class="max-w-xl text-sm text-black dark:text-white" dir="rtl">
+            <div class="max-w-xl text-sm text-black dark:text-white"  >
                 {{ $t('logout_other_sessions_info') }}
             </div>
 
             <!-- نشست‌های مرورگر دیگر -->
-            <div v-if="sessions.length > 0" class="mt-5 space-y-6" dir="rtl">
+            <div v-if="sessions.length > 0" class="mt-5 space-y-6"  >
                 <div v-for="(session, i) in sessions" :key="i" class="flex items-center rounded-lg hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 hover:bg-gray-700/50 transform hover:-translate-y-1 p-4">
                     <div class="ms-3">
                         <div class="text-sm text-black dark:text-white">
@@ -89,7 +89,7 @@ const closeModal = () => {
                 </div>
             </div>
 
-            <div class="flex items-center mt-5" dir="rtl">
+            <div class="flex items-center mt-5"  >
                 <PrimaryButton @click="confirmLogout" class="rounded-lg hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 hover:bg-gray-700/50 transform hover:-translate-y-1">
                     {{ $t('logout_other_sessions') }}
                 </PrimaryButton>
@@ -106,7 +106,7 @@ const closeModal = () => {
                 </template>
 
                 <template #content>
-                    <div class="rounded-lg transition duration-300 transform" dir="rtl">
+                    <div class="rounded-lg transition duration-300 transform"  >
                       {{ $t('confirm_logout_other_sessions') }}
                         <div class="mt-4">
                             <TextInput

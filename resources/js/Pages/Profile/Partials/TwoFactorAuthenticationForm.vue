@@ -115,19 +115,19 @@ const disableTwoFactorAuthentication = () => {
         </template>
 
         <template #content>
-            <h3 v-if="twoFactorEnabled && ! confirming" class="text-lg font-medium text-black dark:text-white" dir="rtl">
+            <h3 v-if="twoFactorEnabled && ! confirming" class="text-lg font-medium text-black dark:text-white"  >
               {{ $t('two_factor_enabled') }}
             </h3>
 
-            <h3 v-else-if="twoFactorEnabled && confirming" class="text-lg font-medium text-black dark:text-white" dir="rtl">
+            <h3 v-else-if="twoFactorEnabled && confirming" class="text-lg font-medium text-black dark:text-white"  >
               {{ $t('complete_two_factor_setup') }}
             </h3>
 
-            <h3 v-else class="text-lg font-medium text-black dark:text-white" dir="rtl">
+            <h3 v-else class="text-lg font-medium text-black dark:text-white"  >
               {{ $t('two_factor_disabled') }}
             </h3>
 
-            <div class="mt-3 max-w-xl text-sm text-black dark:text-white" dir="rtl">
+            <div class="mt-3 max-w-xl text-sm text-black dark:text-white"  >
                 <p>
                   {{ $t('two_factor_info') }}
                 </p>
@@ -135,7 +135,7 @@ const disableTwoFactorAuthentication = () => {
 
             <div v-if="twoFactorEnabled">
                 <div v-if="qrCode">
-                    <div class="mt-4 max-w-xl text-sm text-black dark:text-white" dir="rtl">
+                    <div class="mt-4 max-w-xl text-sm text-black dark:text-white"  >
                         <p v-if="confirming" class="font-semibold">
                           {{ $t('two_factor_setup_instructions') }}
                         </p>
@@ -147,13 +147,13 @@ const disableTwoFactorAuthentication = () => {
 
                     <div class="mt-4 p-2 inline-block bg-white rounded-lg" v-html="qrCode" />
 
-                    <div v-if="setupKey" class="mt-4 max-w-xl text-sm text-black dark:text-white" dir="rtl">
+                    <div v-if="setupKey" class="mt-4 max-w-xl text-sm text-black dark:text-white"  >
                         <p class="font-semibold">
                             {{ $t('setup_key') }} <span v-html="setupKey"></span>
                         </p>
                     </div>
 
-                    <div v-if="confirming" class="mt-4" dir="rtl">
+                    <div v-if="confirming" class="mt-4"  >
                         <InputLabel for="code" value="code" class="text-black dark:text-white" />
 
                         <TextInput
@@ -172,7 +172,7 @@ const disableTwoFactorAuthentication = () => {
                     </div>
                 </div>
 
-                <div v-if="recoveryCodes.length > 0 && ! confirming" dir="rtl">
+                <div v-if="recoveryCodes.length > 0 && ! confirming"  >
                     <div class="mt-4 max-w-xl text-sm text-black dark:text-white">
                         <p class="font-semibold">
                           {{ $t('store_recovery_codes') }}
@@ -187,7 +187,7 @@ const disableTwoFactorAuthentication = () => {
                 </div>
             </div>
 
-            <div class="mt-5" dir="rtl">
+            <div class="mt-5"  >
                 <div v-if="! twoFactorEnabled">
                     <ConfirmsPassword @confirmed="enableTwoFactorAuthentication">
                         <PrimaryButton

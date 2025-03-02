@@ -81,13 +81,13 @@ const deleteApiToken = () => {
             </template>
 
             <template #description>
-                <span class="text-black dark:text-white" dir="rtl">{{ $t('api_token_description') }}</span>
+                <span class="text-black dark:text-white"  >{{ $t('api_token_description') }}</span>
             </template>
 
             <template #form>
                 <!-- نام توکن -->
-                <div class="col-span-6 sm:col-span-4" dir="rtl">
-                    <InputLabel for="name" value="نام" class="p-2 text-black dark:text-white" />
+                <div class="col-span-6 sm:col-span-4"  >
+                    <InputLabel for="name" value="name" class="p-2 text-black dark:text-white" />
                     <TextInput
                         id="name"
                         v-model="createApiTokenForm.name"
@@ -99,8 +99,8 @@ const deleteApiToken = () => {
                 </div>
 
                 <!-- دسترسی‌های توکن -->
-                <div v-if="availablePermissions.length > 0" class="col-span-6" dir="rtl">
-                    <InputLabel for="permissions" value="دسترسی‌ها" class="text-black dark:text-white" />
+                <div v-if="availablePermissions.length > 0" class="col-span-6"  >
+                    <InputLabel for="permissions" value="permissions" class="text-black dark:text-white" />
 
                     <div class="mt-2 grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div v-for="permission in availablePermissions" :key="permission"
@@ -140,12 +140,12 @@ const deleteApiToken = () => {
                     </template>
 
                     <template #description>
-                        <span class="text-black dark:text-white" dir="rtl">{{ $t('delete_token_info') }}</span>
+                        <span class="text-black dark:text-white"  >{{ $t('delete_token_info') }}</span>
                     </template>
 
                     <!-- لیست توکن‌های API -->
                     <template #content>
-                        <div class="space-y-6" dir="rtl">
+                        <div class="space-y-6"  >
                             <div v-for="token in tokens" :key="token.id"
                                  class="flex items-center justify-between rounded-lg hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 hover:bg-gray-700/50 transform hover:-translate-y-1 p-4">
                                 <div class="break-all text-black dark:text-white">
@@ -186,7 +186,7 @@ const deleteApiToken = () => {
             </template>
 
             <template #content>
-                <div class="text-black dark:text-white rounded-lg hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 hover:bg-gray-700/50 transform hover:-translate-y-1" dir="rtl">
+                <div class="text-black dark:text-white rounded-lg hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 hover:bg-gray-700/50 transform hover:-translate-y-1"  >
                   {{ $t('copy_api_token') }}
                 </div>
 
@@ -210,7 +210,7 @@ const deleteApiToken = () => {
             </template>
 
             <template #content>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4" dir="rtl">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4"  >
                     <div v-for="permission in availablePermissions" :key="permission"
                          class="transition duration-300 transform hover:-translate-y-1">
                         <label class="flex items-center">
@@ -245,7 +245,7 @@ const deleteApiToken = () => {
             </template>
 
             <template #content>
-                <span class="text-black dark:text-white" dir="rtl">{{ $t('confirm_delete_api_token') }}</span>
+                <span class="text-black dark:text-white"  >{{ $t('confirm_delete_api_token') }}</span>
             </template>
 
             <template #footer>

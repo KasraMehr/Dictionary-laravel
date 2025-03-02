@@ -48,11 +48,11 @@ const closeModal = () => {
         </template>
 
         <template #content>
-            <div class="max-w-xl text-sm text-gray-600 dark:text-gray-400" dir="rtl">
+            <div class="max-w-xl text-sm text-gray-600 dark:text-gray-400">
               {{ $t('delete_account_warning') }}
             </div>
 
-            <div class="mt-5" dir="rtl">
+            <div class="mt-5">
                 <DangerButton @click="confirmUserDeletion"
                     class="rounded-lg hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 hover:bg-gray-700/50 transform hover:-translate-y-1">
                     {{ $t('delete_account') }}
@@ -66,7 +66,7 @@ const closeModal = () => {
                 </template>
 
                 <template #content>
-                    <div class="text-black dark:text-white rounded-lg hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 hover:bg-gray-700/50 transform hover:-translate-y-1" dir="rtl">
+                    <div class="text-black dark:text-white rounded-lg hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 hover:bg-gray-700/50 transform hover:-translate-y-1">
                           {{ $t('delete_account_confirmation') }}
                         <div class="mt-4">
                             <TextInput
