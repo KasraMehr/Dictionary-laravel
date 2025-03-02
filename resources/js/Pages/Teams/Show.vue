@@ -17,13 +17,13 @@ defineProps({
 <template>
     <AppLayout title="team settings">
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight" dir="rtl">
+            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight" >
                 {{ $t('team_settings') }}
             </h2>
         </template>
 
         <div>
-            <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8" dir="rtl">
+            <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
                 <UpdateTeamNameForm :team="team" :permissions="permissions" />
 
                 <TeamMemberManager

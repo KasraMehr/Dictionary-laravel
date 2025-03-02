@@ -29,7 +29,7 @@ const createTeam = () => {
         </template>
 
         <template #form>
-            <div class="col-span-6" dir="rtl">
+            <div class="col-span-6">
                 <InputLabel value="team owner" class="dark:text-white text-black" />
 
                 <div class="flex items-center mt-2">
@@ -43,7 +43,7 @@ const createTeam = () => {
                 </div>
             </div>
 
-            <div class="col-span-6 sm:col-span-4" dir="rtl">
+            <div class="col-span-6 sm:col-span-4">
                 <InputLabel for="name" value="team name" class="dark:text-white text-black" />
                 <TextInput
                     id="name"

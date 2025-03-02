@@ -108,15 +108,15 @@ const displayableRole = (role) => {
                 </template>
 
                 <template #form>
-                    <div class="col-span-6" dir="rtl">
+                    <div class="col-span-6">
                         <div class="max-w-xl text-sm dark:text-white text-black">
                             {{ $t('enter_email') }}
                         </div>
                     </div>
 
                     <!-- ایمیل عضو -->
-                    <div class="col-span-6 sm:col-span-4" dir="rtl">
-                        <InputLabel for="email" value="email" class="dark:text-white text-black" />
+                    <div class="col-span-6 sm:col-span-4">
+                        <InputLabel for="email" value="email" class="dark:text-white text-black"/>
                         <TextInput
                             id="email"
                             v-model="addTeamMemberForm.email"
@@ -127,7 +127,7 @@ const displayableRole = (role) => {
                     </div>
 
                     <!-- نقش -->
-                    <div v-if="availableRoles.length > 0" class="col-span-6 lg:col-span-4" dir="rtl">
+                    <div v-if="availableRoles.length > 0" class="col-span-6 lg:col-span-4"  >
                         <InputLabel for="roles" value="role" class="dark:text-white text-black" />
                         <InputError :message="addTeamMemberForm.errors.role" class="mt-2" />
 
@@ -195,7 +195,7 @@ const displayableRole = (role) => {
 
                 <!-- لیست دعوت‌نامه‌های در انتظار -->
                 <template #content>
-                    <div class="space-y-6" dir="rtl">
+                    <div class="space-y-6"  >
                         <div v-for="invitation in team.team_invitations"
                             :key="invitation.id"
                             class="flex items-center justify-between p-4 rounded-lg hover:ring-white/20 hover:shadow-xl transition duration-300 bg-gray-700/50">
@@ -233,7 +233,7 @@ const displayableRole = (role) => {
 
                 <!-- لیست اعضای تیم -->
                 <template #content>
-                    <div class="space-y-6" dir="rtl">
+                    <div class="space-y-6"  >
                         <div v-for="user in team.users" :key="user.id" class="flex items-center justify-between">
                             <div class="flex items-center">
                               <img class="size-8 rounded-full object-cover" :src="user.profile_photo_url" :alt="user.name">
@@ -285,7 +285,7 @@ const displayableRole = (role) => {
             </template>
 
             <template #content>
-                <div v-if="managingRoleFor" dir="rtl">
+                <div v-if="managingRoleFor"  >
                     <div class="relative z-0 mt-1 border border-gray-200 dark:border-gray-700 rounded-lg cursor-pointer">
                         <button
                             v-for="(role, i) in availableRoles"
