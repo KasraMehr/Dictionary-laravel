@@ -207,13 +207,14 @@ const updateChartTheme = () => {
 watch(
   () => locale.value,
   (newLocale) => {
+    location.reload();
     updateChartTheme();
   }
 );
 
 onMounted(() => {
-  const userLocale = navigator.language || "en";  // Default to "en" if no preference is found
-  locale.value = userLocale.split("-")[0]; // Set the language to the first part of the user's locale
+  const userLocale = localStorage.getItem("locale") || navigator.language;
+  locale.value = userLocale.split("-")[0];
 
   isDarkMode.value = document.documentElement.classList.contains("dark");
   createChart();
