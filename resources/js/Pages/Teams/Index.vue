@@ -79,13 +79,13 @@ const leaveTeam = async (teamId, userId) => {
 
                 <!-- Team Stats -->
                 <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 col-span-1 sm:col-span-2 lg:col-span-3 gap-2 sm:gap-4">
-                  <div class="text-sm sm:text-base text-gray-400">
+                  <div class="text-sm sm:text-base text-black dark:text-white">
                     {{ $t('member_count') }}: {{ 1 + team.users_count }}
                   </div>
-                  <div class="text-sm sm:text-base text-gray-400">
+                  <div class="text-sm sm:text-base text-black dark:text-white">
                     {{ $t('team_owner') }}: {{ team.owner.name }}
                   </div>
-                  <div class="text-sm sm:text-base text-gray-400">
+                  <div class="text-sm sm:text-base text-black dark:text-white">
                     {{ $t('word_count') }}: {{ team.words_count }}
                   </div>
                 </div>
