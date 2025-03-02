@@ -30,7 +30,7 @@ const submit = () => {
         <div class="relative min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0">
             <!-- Logo Section -->
             <Link :href="route('landing')">
-              <div class="mt-4 w-full max-w-[300px] mx-auto flex flex-col items-center gap-4 overflow-hidden rounded-lg bg-gradient-to-br from-gray-400 to-gray-300 dark:from-gray-800/50 to-gray-700/50 shadow-lg ring-1 ring-white/10 transition duration-300 hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 backdrop-blur-sm p-4">
+              <div class="mt-4 w-full max-w-[300px] mx-auto flex flex-col items-center gap-4 overflow-hidden rounded-lg bg-gradient-to-br from-gray-400 to-gray-300 dark:from-gray-800/50 dark:to-gray-700/50 shadow-lg ring-1 ring-white/10 transition duration-300 hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 backdrop-blur-sm p-4">
                 <img
                 src="/logo.png"
                 alt="logo"
@@ -41,7 +41,7 @@ const submit = () => {
 
 
             <div class="w-full sm:max-w-md mt-6 px-6 py-4">
-                <div class="flex flex-col gap-6 overflow-hidden rounded-lg bg-gradient-to-br from-gray-400/50 to-gray-200/50 dark:from-gray-800/50 to-gray-700/50 p-6 shadow-lg ring-1 ring-white/10 transition duration-300 hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 backdrop-blur-sm">
+                <div class="flex flex-col gap-6 overflow-hidden rounded-lg bg-gradient-to-br from-gray-400/50 to-gray-200/50 dark:from-gray-800/50 dark:to-gray-700/50 p-6 shadow-lg ring-1 ring-white/10 transition duration-300 hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 backdrop-blur-sm">
                     <div class="text-sm text-black dark:text-white/70" dir="rtl">
                         {{ $t('forgot_password_message') }}
                     </div>
@@ -76,7 +76,7 @@ const submit = () => {
                             <PrimaryButton
                                 :class="{ 'opacity-25': form.processing }"
                                 :disabled="form.processing"
-                                class="bg-gradient-to-br from-gray-400/50 to-gray-200/50 dark:from-gray-800/50 to-gray-700/50 hover:bg-[#FF2D20]/90 hover:scale-105 hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300"
+                                class="bg-gradient-to-br from-gray-400/50 to-gray-200/50 dark:from-gray-800/50 dark:to-gray-700/50 hover:bg-[#FF2D20]/90 hover:scale-105 hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300"
                             >
                                 <span class="text-black">{{ $t('send_reset_link') }}</span>
                             </PrimaryButton>

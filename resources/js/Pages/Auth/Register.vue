@@ -82,7 +82,7 @@ const submit = () => {
         <div class="relative min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0">
             <!-- Logo Container -->
             <Link :href="route('landing')">
-              <div class="mt-4 w-full max-w-[300px] mx-auto flex flex-col items-center gap-4 overflow-hidden rounded-lg bg-gradient-to-br from-gray-400 to-gray-300 dark:from-gray-800/50 to-gray-700/50 shadow-lg ring-1 ring-white/10 transition duration-300 hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 backdrop-blur-sm p-4">
+              <div class="mt-4 w-full max-w-[300px] mx-auto flex flex-col items-center gap-4 overflow-hidden rounded-lg bg-gradient-to-br from-gray-400 to-gray-300 dark:from-gray-800/50 dark:to-gray-700/50 shadow-lg ring-1 ring-white/10 transition duration-300 hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 backdrop-blur-sm p-4">
                 <img
                 src="/logo.png"
                 alt="logo"
@@ -92,7 +92,7 @@ const submit = () => {
             </Link>
 
             <!-- Form Container -->
-            <div class="flex flex-col gap-6 lg:w-1/3 overflow-hidden rounded-lg bg-gradient-to-br bg-gradient-to-br from-gray-400/50 to-gray-200/50 dark:from-gray-800/50 p-6 shadow-lg ring-1 ring-white/10 transition duration-300 hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 backdrop-blur-sm mt-6">
+            <div class="flex flex-col gap-6 lg:w-1/3 overflow-hidden rounded-lg bg-gradient-to-br from-gray-400/50 to-gray-200/50 dark:from-gray-800/50 dark:to-gray-700/50 p-6 shadow-lg ring-1 ring-white/10 transition duration-300 hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 backdrop-blur-sm mt-6">
                 <form @submit.prevent="submit" dir="rtl" class="space-y-1">
                     <div>
                         <InputLabel for="name" value="name" class="text-black dark:text-white/90 text-lg" />
