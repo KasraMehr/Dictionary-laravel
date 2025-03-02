@@ -411,10 +411,10 @@ export default {
         applyTheme() {
             if (this.isDarkMode) {
                 document.documentElement.classList.add('dark');
-                document.documentElement.classList.remove('light'); // حذف کلاس لایت
+                document.documentElement.classList.remove('light');
             } else {
                 document.documentElement.classList.add('light');
-                document.documentElement.classList.remove('dark'); // حذف کلاس دارک
+                document.documentElement.classList.remove('dark');
             }
         },
         toggleTheme() {
