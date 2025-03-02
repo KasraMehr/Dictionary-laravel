@@ -1,26 +1,25 @@
 <script setup>
-import {useI18n} from "vue-i18n";
-
-const { locale } = useI18n();
-
+import { useI18n } from "vue-i18n";
 import { onMounted, watch, ref } from "vue";
 import { Chart, registerables } from "chart.js";
 
+const { locale, t } = useI18n();
+
 const props = defineProps({
-    chartData: {
-        type: Object,
-        required: true,
-    },
-    words: {
-        type: Array,
-        required: true,
-        default: () => [],
-    },
-    users: {
-        type: Array,
-        required: true,
-        default: () => [],
-    },
+  chartData: {
+    type: Object,
+    required: true,
+  },
+  words: {
+    type: Array,
+    required: true,
+    default: () => [],
+  },
+  users: {
+    type: Array,
+    required: true,
+    default: () => [],
+  },
 });
 
 Chart.register(...registerables);
@@ -30,198 +29,209 @@ const isDarkMode = ref(false);
 
 // تابع تعیین رنگ‌ها بر اساس تم
 const getChartColors = () => {
-    return isDarkMode.value
-        ? {
-              textColor: "white",
-              gridColor: "rgba(255, 255, 255, 0.2)",
-              usersColor: "rgba(75, 192, 192, 1)",
-              usersBgColor: "rgba(75, 192, 192, 0.2)",
-              wordsColor: "rgba(153, 102, 255, 1)",
-              wordsBgColor: "rgba(153, 102, 255, 0.2)",
-              teamsColor: "rgba(255, 159, 64, 1)",
-              teamsBgColor: "rgba(255, 159, 64, 0.2)",
-          }
-        : {
-              textColor: "black",
-              gridColor: "rgba(0, 0, 0, 0.1)",
-              usersColor: "rgba(54, 162, 235, 1)",
-              usersBgColor: "rgba(54, 162, 235, 0.2)",
-              wordsColor: "rgba(255, 99, 132, 1)",
-              wordsBgColor: "rgba(255, 99, 132, 0.2)",
-              teamsColor: "rgba(255, 206, 86, 1)",
-              teamsBgColor: "rgba(255, 206, 86, 0.2)",
-          };
+  return isDarkMode.value
+    ? {
+        textColor: "white",
+        gridColor: "rgba(255, 255, 255, 0.2)",
+        usersColor: "rgba(75, 192, 192, 1)",
+        usersBgColor: "rgba(75, 192, 192, 0.2)",
+        wordsColor: "rgba(153, 102, 255, 1)",
+        wordsBgColor: "rgba(153, 102, 255, 0.2)",
+        teamsColor: "rgba(255, 159, 64, 1)",
+        teamsBgColor: "rgba(255, 159, 64, 0.2)",
+      }
+    : {
+        textColor: "black",
+        gridColor: "rgba(0, 0, 0, 0.1)",
+        usersColor: "rgba(54, 162, 235, 1)",
+        usersBgColor: "rgba(54, 162, 235, 0.2)",
+        wordsColor: "rgba(255, 99, 132, 1)",
+        wordsBgColor: "rgba(255, 99, 132, 0.2)",
+        teamsColor: "rgba(255, 206, 86, 1)",
+        teamsBgColor: "rgba(255, 206, 86, 0.2)",
+      };
 };
 
 const createChart = () => {
-    if (!props.chartData || Object.keys(props.chartData).length === 0) {
-        console.log("No chart data available");
-        return;
-    }
+  if (!props.chartData || Object.keys(props.chartData).length === 0) {
+    console.log("No chart data available");
+    return;
+  }
 
-    const canvas = document.getElementById("dashboardChart");
-    if (!canvas) {
-        console.error("Canvas element not found");
-        return;
-    }
-    const ctx = canvas.getContext("2d");
+  const canvas = document.getElementById("dashboardChart");
+  if (!canvas) {
+    console.error("Canvas element not found");
+    return;
+  }
+  const ctx = canvas.getContext("2d");
 
-    if (chartInstance) {
-        chartInstance.destroy();
-    }
+  if (chartInstance) {
+    chartInstance.destroy();
+  }
 
-    const colors = getChartColors();
-    const sortedDates = Object.keys(props.chartData).sort();
-    const datasets = {
-        users: [],
-        words: [],
-        teams: [],
-    };
+  const colors = getChartColors();
+  const sortedDates = Object.keys(props.chartData).sort();
+  const datasets = {
+    users: [],
+    words: [],
+    teams: [],
+  };
 
-    sortedDates.forEach((date) => {
-        datasets.users.push(props.chartData[date].users);
-        datasets.words.push(props.chartData[date].words);
-        datasets.teams.push(props.chartData[date].teams);
+  sortedDates.forEach((date) => {
+    datasets.users.push(props.chartData[date].users);
+    datasets.words.push(props.chartData[date].words);
+    datasets.teams.push(props.chartData[date].teams);
+  });
+
+  const formattedDates = sortedDates.map((date) => {
+    return new Date(date).toLocaleDateString("fa-IR", {
+      month: "short",
+      day: "numeric",
     });
+  });
 
-    const formattedDates = sortedDates.map((date) => {
-        return new Date(date).toLocaleDateString("fa-IR", {
-            month: "short",
-            day: "numeric",
-        });
-    });
-
-    chartInstance = new Chart(ctx, {
-        type: "line",
-        data: {
-            labels: formattedDates,
-            datasets: [
-                {
-                    label: "کاربران",
-                    data: datasets.users,
-                    borderColor: colors.usersColor,
-                    backgroundColor: colors.usersBgColor,
-                    fill: true,
-                },
-                {
-                    label: "کلمات",
-                    data: datasets.words,
-                    borderColor: colors.wordsColor,
-                    backgroundColor: colors.wordsBgColor,
-                    fill: true,
-                },
-                {
-                    label: "تیم‌ها",
-                    data: datasets.teams,
-                    borderColor: colors.teamsColor,
-                    backgroundColor: colors.teamsBgColor,
-                    fill: true,
-                },
-            ],
+  chartInstance = new Chart(ctx, {
+    type: "line",
+    data: {
+      labels: formattedDates,
+      datasets: [
+        {
+          label: t("users"),
+          data: datasets.users,
+          borderColor: colors.usersColor,
+          backgroundColor: colors.usersBgColor,
+          fill: true,
         },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    position: "top",
-                    labels: {
-                        color: colors.textColor,
-                        boxWidth: 15,
-                        padding: 10,
-                    },
-                },
-                title: {
-                    display: true,
-                    text: "نمودار داده‌ها در ۳۰ روز گذشته",
-                    color: colors.textColor,
-                    font: {
-                        size: 14,
-                    },
-                },
-            },
-            scales: {
-                x: {
-                    ticks: {
-                        color: colors.textColor,
-                        font: {
-                            size: 10,
-                        },
-                    },
-                    grid: {
-                        color: colors.gridColor,
-                    },
-                },
-                y: {
-                    ticks: {
-                        color: colors.textColor,
-                        font: {
-                            size: 10,
-                        },
-                    },
-                    grid: {
-                        color: colors.gridColor,
-                    },
-                    beginAtZero: true,
-                },
-            },
+        {
+          label: t("words"),
+          data: datasets.words,
+          borderColor: colors.wordsColor,
+          backgroundColor: colors.wordsBgColor,
+          fill: true,
         },
-    });
+        {
+          label: t("teams"),
+          data: datasets.teams,
+          borderColor: colors.teamsColor,
+          backgroundColor: colors.teamsBgColor,
+          fill: true,
+        },
+      ],
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          position: "top",
+          labels: {
+            color: colors.textColor,
+            boxWidth: 15,
+            padding: 10,
+          },
+        },
+        title: {
+          display: true,
+          text: t("title_chart"),
+          color: colors.textColor,
+          font: {
+            size: 14,
+          },
+        },
+      },
+      scales: {
+        x: {
+          ticks: {
+            color: colors.textColor,
+            font: {
+              size: 10,
+            },
+          },
+          grid: {
+            color: colors.gridColor,
+          },
+        },
+        y: {
+          ticks: {
+            color: colors.textColor,
+            font: {
+              size: 10,
+            },
+          },
+          grid: {
+            color: colors.gridColor,
+          },
+          beginAtZero: true,
+        },
+      },
+    },
+  });
 };
 
 // مانیتور کردن تغییرات تم
 const observeThemeChange = () => {
-    const observer = new MutationObserver(() => {
-        isDarkMode.value = document.documentElement.classList.contains("dark");
-        updateChartTheme();
-    });
+  const observer = new MutationObserver(() => {
+    isDarkMode.value = document.documentElement.classList.contains("dark");
+    updateChartTheme();
+  });
 
-    observer.observe(document.documentElement, {
-        attributes: true,
-        attributeFilter: ["class"],
-    });
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ["class"],
+  });
 };
 
 // آپدیت کردن تم چارت بدون تخریب کامل
 const updateChartTheme = () => {
-    if (!chartInstance) return;
+  if (!chartInstance) return;
 
-    const colors = getChartColors();
-    chartInstance.options.plugins.legend.labels.color = colors.textColor;
-    chartInstance.options.plugins.title.color = colors.textColor;
-    chartInstance.options.scales.x.ticks.color = colors.textColor;
-    chartInstance.options.scales.x.grid.color = colors.gridColor;
-    chartInstance.options.scales.y.ticks.color = colors.textColor;
-    chartInstance.options.scales.y.grid.color = colors.gridColor;
+  const colors = getChartColors();
+  chartInstance.options.plugins.legend.labels.color = colors.textColor;
+  chartInstance.options.plugins.title.color = colors.textColor;
+  chartInstance.options.scales.x.ticks.color = colors.textColor;
+  chartInstance.options.scales.x.grid.color = colors.gridColor;
+  chartInstance.options.scales.y.ticks.color = colors.textColor;
+  chartInstance.options.scales.y.grid.color = colors.gridColor;
 
-    chartInstance.data.datasets[0].borderColor = colors.usersColor;
-    chartInstance.data.datasets[0].backgroundColor = colors.usersBgColor;
-    chartInstance.data.datasets[1].borderColor = colors.wordsColor;
-    chartInstance.data.datasets[1].backgroundColor = colors.wordsBgColor;
-    chartInstance.data.datasets[2].borderColor = colors.teamsColor;
-    chartInstance.data.datasets[2].backgroundColor = colors.teamsBgColor;
+  chartInstance.data.datasets[0].borderColor = colors.usersColor;
+  chartInstance.data.datasets[0].backgroundColor = colors.usersBgColor;
+  chartInstance.data.datasets[1].borderColor = colors.wordsColor;
+  chartInstance.data.datasets[1].backgroundColor = colors.wordsBgColor;
+  chartInstance.data.datasets[2].borderColor = colors.teamsColor;
+  chartInstance.data.datasets[2].backgroundColor = colors.teamsBgColor;
 
-    chartInstance.update();
+  chartInstance.update();
 };
 
+// watch برای تغییرات زبان
+watch(
+  () => locale.value,
+  (newLocale) => {
+    updateChartTheme();
+  }
+);
+
 onMounted(() => {
-    isDarkMode.value = document.documentElement.classList.contains("dark");
-    createChart();
-    observeThemeChange();
+  const userLocale = navigator.language || "en";  // Default to "en" if no preference is found
+  locale.value = userLocale.split("-")[0]; // Set the language to the first part of the user's locale
+
+  isDarkMode.value = document.documentElement.classList.contains("dark");
+  createChart();
+  observeThemeChange();
 });
 
 watch(
-    () => props.chartData,
-    (newValue) => {
-        if (Object.keys(newValue).length > 0) {
-            createChart();
-        }
-    },
-    { deep: true }
+  () => props.chartData,
+  (newValue) => {
+    if (Object.keys(newValue).length > 0) {
+      createChart();
+    }
+  },
+  { deep: true }
 );
 
-
 </script>
+
 
 <style>
 .slide-up {
