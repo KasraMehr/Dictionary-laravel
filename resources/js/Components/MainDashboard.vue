@@ -276,7 +276,7 @@ watch(
             class="mb-5 p-5 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800/50 dark:to-gray-700/50 grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 lg:p-8 rounded-lg">
             <!-- Words Section -->
             <div
-                class="mb-5 p-5 text-white hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 hover:bg-gray-700/50 rounded-lg slide-up" style="animation-delay: 0.3s">
+                class="mb-5 p-5 text-black dark:text-white hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 hover:bg-gray-700/50 rounded-lg slide-up" style="animation-delay: 0.3s">
                 <h1 class="text-xl font-bold mb-6 text-black dark:text-white">{{ $t('new_words') }}</h1>
 
                 <!-- Desktop Headers -->
@@ -297,12 +297,12 @@ watch(
                             <span class="dark:text-white text-black">{{ word . word }}</span>
                         </div>
                         <div class="mb-2 p-2 grid gap-1 text-sm">
-                            <div><span class="text-white/70">{{ $t('meaning') }}:</span> <span
-                                    class="text-white">{{ word . meaning }}</span></div>
-                            <div><span class="text-white/70">{{ $t('pronunciation') }}:</span> <span
-                                    class="text-white">{{ word . pronunciation }}</span></div>
-                            <div><span class="text-white/70">{{ $t('description') }}:</span> <span
-                                    class="text-white">{{ word.description ? word.description.slice(0, 20) + '...' : '' }}</span></div>
+                            <div><span class="text-black dark:text-white/70">{{ $t('meaning') }}:</span> <span
+                                    class="text-black dark:text-white">{{ word . meaning }}</span></div>
+                            <div><span class="text-black dark:text-white/70">{{ $t('pronunciation') }}:</span> <span
+                                    class="text-black dark:text-white">{{ word . pronunciation }}</span></div>
+                            <div><span class="text-black dark:text-white/70">{{ $t('description') }}:</span> <span
+                                    class="text-black dark:text-white">{{ word.description ? word.description.slice(0, 20) + '...' : '' }}</span></div>
                         </div>
                     </div>
 
@@ -320,12 +320,12 @@ watch(
                     </div>
                 </div>
 
-                <p v-else class="text-white">{{ $t('no_words_found') }}</p>
+                <p v-else class="text-black dark:text-white">{{ $t('no_words_found') }}</p>
             </div>
 
             <!-- Users Section -->
             <div
-                class="mb-5 p-5 text-white hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 hover:bg-gray-700/50 rounded-lg slide-up" style="animation-delay: 0.3s">
+                class="mb-5 p-5 text-black dark:text-white hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 hover:bg-gray-700/50 rounded-lg slide-up" style="animation-delay: 0.3s">
                 <h1 class="text-xl font-bold mb-6 text-black dark:text-white">{{ $t('new_members') }}</h1>
 
                 <!-- Desktop Headers -->
@@ -345,10 +345,10 @@ watch(
                             <span class="dark:text-white text-black">{{ user . name }}</span>
                         </div>
                         <div class="grid gap-1 text-sm">
-                            <div><span class="text-white/70">{{ $t('email') }}:</span> <span
-                                    class="text-white">{{ user . email }}</span></div>
-                            <div><span class="text-white/70">{{ $t('membership_date') }}:</span> <span
-                                    class="text-white">{{ user . formatted_created_at }}</span></div>
+                            <div><span class="text-black dark:text-white/70">{{ $t('email') }}:</span> <span
+                                    class="text-black dark:text-white">{{ user . email }}</span></div>
+                            <div><span class="text-black dark:text-white/70">{{ $t('membership_date') }}:</span> <span
+                                    class="text-black dark:text-white">{{ user . formatted_created_at }}</span></div>
                         </div>
                     </div>
 
