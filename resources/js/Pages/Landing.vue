@@ -36,13 +36,12 @@ function handleImageError() {
     <MainLayout title="Home">
     <div
         class="min-h-screen text-gray-900 bg-gray-100 bg-gradient-to-br dark:from-gray-900 dark:to-gray-800 dark:text-white/90 transition-colors duration-300"
-        :dir="locale === 'en' ? 'ltr' : 'rtl'"
     >
         <img
             id="background"
             :class="['fixed inset-0 w-full h-full object-cover opacity-10 transition-opacity duration-500 pointer-events-none', { '!hidden': backgroundHidden }]"
             src="https://laravel.com/assets/img/welcome/background.svg"
-        />
+         alt="logo"/>
         <div class="relative min-h-screen flex flex-col items-center justify-center selection:bg-[#FF2D20] selection:text-white">
             <div class="relative w-full max-w-2xl px-4 sm:px-6 lg:max-w-7xl">
                 <main class="mt-6">
@@ -98,12 +97,11 @@ function handleImageError() {
                         <div class="flex flex-col items-start gap-6 overflow-hidden rounded-lg bg-gradient-to-br
                         from-gray-400/50 to-gray-200/50 dark:from-gray-800/50 dark:to-gray-700/50  p-6 shadow-lg ring-1 ring-white/10  hover:ring-white/20
                         hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 lg:p-10 lg:pb-10 w-full
-                        backdrop-blur-sm" :dir="locale === 'en' ? 'ltr' : 'rtl'">
+                        backdrop-blur-sm">
                             <h2 class="text-xl font-bold text-[#FF2D20]">{{ $t('best_members') }}</h2>
-                            <div class="w-full overflow-x-auto">
-                                <div class="pb-4 grid grid-cols-4 w-full min-w-[600px] text-gray-300">
+                            <div class="w-full">
+                                <div class="pb-4 grid grid-cols-3 w-full text-gray-300">
                                     <div class="text-center font-medium text-black dark:text-white">{{ $t('name') }}</div>
-                                    <div class="text-center font-medium text-black dark:text-white">{{ $t('teams') }}</div>
                                     <div class="text-center font-medium text-black dark:text-white">{{ $t('words') }}</div>
                                     <div class="text-center font-medium text-black dark:text-white">{{ $t('date') }}</div>
                                 </div>
@@ -115,13 +113,12 @@ function handleImageError() {
                                     <div
                                         v-for="(user, index) in topUsers"
                                         :key="user.name"
-                                        class="w-full hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 duration-300 p-3 sm:p-4 grid grid-cols-4 min-w-[600px] sm:min-w-[600px] items-center hover:bg-gray-700/50 rounded-lg transition-colors text-sm sm:text-base"
+                                        class="hover:bg-gray-700/50 p-4 grid grid-cols-3 items-center hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300  rounded-lg"
                                     >
                                         <div class="flex items-center space-x-2 sm:space-x-3 rtl:space-x-reverse">
                                             <span class=" text-gray-500 text-xs sm:text-base">{{ index + 1 }}</span>
                                             <span class="truncate">{{ user.name }}</span>
                                         </div>
-                                        <div class="text-center">{{ user.team_count + 1}}</div>
                                         <div class="text-center">{{ user.word_count }}</div>
                                         <div class="text-center text-xs sm:text-base">{{ user.joined_at }}</div>
                                     </div>
