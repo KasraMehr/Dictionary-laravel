@@ -83,12 +83,12 @@ const createChart = () => {
     datasets.teams.push(props.chartData[date].teams);
   });
 
-  const formattedDates = sortedDates.map((date) => {
-    return new Date(date).toLocaleDateString("fa-IR", {
-      month: "short",
-      day: "numeric",
+    const formattedDates = sortedDates.map((date) => {
+        return new Date(date).toLocaleDateString(locale.value, {
+            month: "short",
+            day: "numeric",
+        });
     });
-  });
 
   chartInstance = new Chart(ctx, {
     type: "line",
