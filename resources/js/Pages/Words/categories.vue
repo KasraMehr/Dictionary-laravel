@@ -85,10 +85,24 @@ const isTeamPage = computed(() => {
             <div v-for="(cursor, userId) in cursors" :key="userId"
                  class="absolute w-4 h-4 rounded-full pointer-events-none"
                  :style="{
-            top: `${cursor.y - 85}px`,
-            left: `${cursor.x - 70}px`,
-            backgroundColor: cursor.color
-          }">
+                   top: `${cursor.y - 85}px`,
+                   left: `${cursor.x - 70}px`,
+                   backgroundColor: cursor.color
+               }">
+
+                <!-- نشانگر موس -->
+                <div class="w-4 h-4 rounded-full" :style="{ backgroundColor: cursor.color }"></div>
+
+                <!-- نمایش نام کاربر کنار موس -->
+                <div class="absolute text-xs bg-black text-white px-2 py-1 rounded"
+                     :style="{
+                       top: '-20px',
+                       left: '50%',
+                       transform: 'translateX(-50%)'
+                   }">
+                    {{ cursor.name }}
+                </div>
+
             </div>
 
             <div class="flex flex-col gap-4 sm:gap-6 md:grid md:grid-cols-2 lg:grid-cols-3 items-center">
@@ -478,7 +492,8 @@ export default {
                 this.cursors[data.userId] = {
                     x: data.position.x,
                     y: data.position.y,
-                    color: data.color
+                    color: data.color,
+                    name: data.userName
                 };
             }
         });
@@ -616,6 +631,7 @@ export default {
             this.mouse = { x: clientX, y: clientY };
 
             const userId = this.$page.props.auth?.user?.id || localStorage.getItem("userId") || "guest";
+            const userName = this.$page.props.auth?.user?.name || "Guest";
             const teamId = this.$page.props.team?.id || localStorage.getItem("teamId") || "team";
 
             // ارسال مختصات موس به سرور
@@ -623,6 +639,7 @@ export default {
 
             this.socket.emit("mouse_move", {
               userId,
+              userName,
               teamId,
               position: { x: clientX, y: clientY }
             });
