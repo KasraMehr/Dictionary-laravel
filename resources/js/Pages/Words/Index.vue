@@ -63,7 +63,7 @@
               <ul>
                 <li v-for="user in onlineUsers" :key="user">
                   <!-- اینجا اگر بخواهید نام کاربر رو هم نمایش بدید، باید از طریق API یا اطلاعات موجود پیدا کنید -->
-                  {{ user }}
+                  {{ user.name }}
                 </li>
               </ul>
             </div>
