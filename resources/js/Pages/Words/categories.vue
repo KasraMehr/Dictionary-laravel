@@ -60,18 +60,17 @@ const isTeamPage = computed(() => {
     <AppLayout title="دسته بندی">
 
         <template #header dir="rtl">
-            <div>
-                <!-- بخش نمایش کاربران آنلاین، به عنوان مثال در گوشه صفحه -->
-                <div class="fixed bottom-4 right-4 bg-gray-200 dark:bg-gray-800 text-black dark:text-white p-4 rounded-lg shadow-lg">
-                    <h3 class="font-semibold mb-2">کاربران آنلاین:</h3>
-                    <ul>
-                        <li v-for="user in onlineUsers" :key="user">
-                            <!-- اینجا اگر بخواهید نام کاربر رو هم نمایش بدید، باید از طریق API یا اطلاعات موجود پیدا کنید -->
-                            {{ user }}
-                        </li>
-                    </ul>
-                </div>
-            </div>
+<!--            <div>-->
+<!--                &lt;!&ndash; بخش نمایش کاربران آنلاین، به عنوان مثال در گوشه صفحه &ndash;&gt;-->
+<!--                <div class="fixed bottom-4 right-4 bg-gray-200 dark:bg-gray-800 text-black dark:text-white p-4 rounded-lg shadow-lg">-->
+<!--                    <h3 class="font-semibold mb-2">کاربران آنلاین:</h3>-->
+<!--                    <ul>-->
+<!--                        <li v-for="user in onlineUsers" :key="user">-->
+<!--                            {{ user }}-->
+<!--                        </li>-->
+<!--                    </ul>-->
+<!--                </div>-->
+<!--            </div>-->
 
             <!-- لایه موس -->
             <div
