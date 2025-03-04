@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\CategoryAdded;
+use App\Events\WordAdded;
 use App\Models\Category;
 use App\Models\Team;
 use App\Models\Word;
@@ -117,10 +119,6 @@ class TeamController extends Controller
         $request->validate([
           'category_id' => 'required|exists:categories,id',
         ]);
-
-        if ($team->id !== auth()->user()->current_team_id) {
-          return response()->json(['message' => 'Unauthorized'], 403);
-        }
 
         // بررسی می‌کنیم که آیا دسته‌بندی قبلاً به تیم اضافه شده است یا خیر
         if (!$team->categories()->where('categories.id', $request->category_id)->exists()) {

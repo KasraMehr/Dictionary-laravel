@@ -572,6 +572,10 @@
                 type: Array,
                 required: true,
             },
+            team: {
+                type: Object,
+                required: false
+            }
         },
         name: "OnlineUsers",
         data() {
@@ -755,7 +759,7 @@
                 })
                 .then(response => {
                     if (window.location.pathname.includes('/team/')) {
-                      const teamId = this.$page.props.auth.user.current_team_id;
+                        const teamId = this.team?.id;
                       console.log("Current Team ID:", teamId);
 
                       return axios.post(`/team/${teamId}/words/add-word`, {
@@ -780,7 +784,6 @@
                     notification.className = 'fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg bg-green-500 dark:text-white text-black transform transition-all duration-500';
                     notification.innerHTML = '<div class="flex items-center"><span class="mr-2">✓</span>کلمه با موفقیت اضافه شد</div>';
                     document.body.appendChild(notification);
-                    console.log(response)
                     setTimeout(() => {
                         location.reload();
                     }, 2000);
@@ -790,7 +793,10 @@
                     const notification = document.createElement('div');
                     notification.className = 'fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg bg-red-500 dark:text-white text-black transform transition-all duration-500';
                     notification.innerHTML = '<div class="flex items-center"><span class="mr-2">✕</span>خطا در ذخیره‌سازی کلمه</div>';
-                    console.error('خطا در ذخیره‌سازی:', error.response.data);
+                    document.body.appendChild(notification);
+                    setTimeout(() => {
+                        location.reload();
+                    }, 2000);
                 });
             },
             fetchAutoFill() {

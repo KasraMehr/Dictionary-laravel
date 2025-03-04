@@ -451,6 +451,10 @@ export default {
             type: Array,
             required: true,
         },
+        team: {
+            type: Object,
+            required: false
+        }
     },
     data() {
         return {
@@ -534,7 +538,7 @@ export default {
             .then(response => {
               // دسته جدید ایجاد شده و در response.data.category قرار دارد.
               if (window.location.pathname.includes('/team/')) {
-                const teamId = this.$page.props.auth.user.current_team_id;
+                  const teamId = this.team?.id;
                 console.log("Current Team ID:", teamId);
 
                 return axios.post(`/team/${teamId}/categories/add-category`, {
@@ -569,6 +573,9 @@ export default {
               notification.className = 'fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg bg-red-500 dark:text-white text-black transform transition-all duration-500';
               notification.innerHTML = '<div class="flex items-center"><span class="mr-2">✕</span>خطا در ذخیره‌سازی دسته</div>';
               document.body.appendChild(notification);
+                setTimeout(() => {
+                    location.reload();
+                }, 2000);
             });
           },
 
