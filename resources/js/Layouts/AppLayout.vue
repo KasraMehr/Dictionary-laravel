@@ -50,7 +50,7 @@ const logout = () => {
         <Banner />
 
         <div class="min-h-screen bg-gray-50-100 dark:bg-gray-900">
-            <nav class="bg-gray-200 dark:bg-gray-800 border-b border-gray-300 dark:border-gray-700 fixed top-0 left-0 w-full z-50 transition-all duration-300">
+            <nav :class="{ 'fixed top-0 left-0 w-full bg-gray-100 dark:bg-gray-800 z-50 shadow-md': isHeaderFixed }">
                 <!-- منوی اصلی -->
                 <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="flex justify-between h-16">
@@ -397,33 +397,41 @@ const logout = () => {
 </template>
 
 <script>
-export default {
-    data() {
-        return {
-            isDarkMode: false
-        };
-    },
-    mounted() {
-        this.isDarkMode = localStorage.getItem('theme') === 'dark';
-        this.applyTheme();
-    },
-    methods: {
-        applyTheme() {
-            if (this.isDarkMode) {
-                document.documentElement.classList.add('dark');
-                document.documentElement.classList.remove('light');
-            } else {
-                document.documentElement.classList.add('light');
-                document.documentElement.classList.remove('dark');
-            }
-        },
-        toggleTheme() {
-            this.isDarkMode = !this.isDarkMode;
-            localStorage.setItem('theme', this.isDarkMode ? 'dark' : 'light');
-            this.applyTheme();
-            console.log(localStorage.getItem('theme'));
+  export default {
+      data() {
+          return {
+              isDarkMode: false,
+              isHeaderFixed: false
+          };
+      },
+      mounted() {
+          this.isDarkMode = localStorage.getItem('theme') === 'dark';
+          this.applyTheme();
+          window.addEventListener('scroll', this.handleScroll);
+      },
+      beforeUnmount() {
+          window.removeEventListener('scroll', this.handleScroll);
+      },
+      methods: {
+          applyTheme() {
+              if (this.isDarkMode) {
+                  document.documentElement.classList.add('dark');
+                  document.documentElement.classList.remove('light');
+              } else {
+                  document.documentElement.classList.add('light');
+                  document.documentElement.classList.remove('dark');
+              }
+          },
+          toggleTheme() {
+              this.isDarkMode = !this.isDarkMode;
+              localStorage.setItem('theme', this.isDarkMode ? 'dark' : 'light');
+              this.applyTheme();
+              console.log(localStorage.getItem('theme'));
+          },
+          handleScroll() {
+              this.isHeaderFixed = window.scrollY > 60; // بعد از 60 پیکسل اسکرول، هدر فیکس شود
+          }
+      }
+  };
 
-        },
-    }
-};
 </script>
