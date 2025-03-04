@@ -11,69 +11,53 @@ class WordImportController extends Controller
 {
     public function importWord($word)
     {
-        // 1. ترجمه کلمه فارسی به انگلیسی با MyMemory API
-        $translationResponse = Http::get('https://api.mymemory.translated.net/get', [
-            'q'        => $word,
-            'langpair' => 'fa|en'
+        $apiKey = env('MISTRAL_API_KEY'); // گرفتن API Key از .env
+        $endpoint = "https://api.mistral.ai/v1/chat/completions";
+
+        // ارسال درخواست به Mistral AI
+        $response = Http::withHeaders([
+            'Authorization' => "Bearer $apiKey",
+            'Content-Type'  => 'application/json'
+        ])->post($endpoint, [
+            'model'    => 'mistral-tiny',
+            'messages' => [
+                ['role' => 'system', 'content' => 'You are a dictionary bot that provides English translations, pronunciations (IPA format), and definitions of Persian words.'],
+                ['role' => 'user', 'content' => "Translate the Persian word '$word' to English and provide:
+            1. The English translation.
+            2. The pronunciation in IPA format.
+            3. A brief definition of the word."]
+            ]
         ]);
 
-        if (!$translationResponse->successful()) {
-            return response()->json(['error' => 'خطا در سرویس ترجمه'], 500);
+        if (!$response->successful()) {
+            return response()->json(['error' => 'خطا در دریافت اطلاعات'], 500);
         }
 
-        $translationData = $translationResponse->json();
-        $englishWord = $translationData['responseData']['translatedText'] ?? null;
+        $data = $response->json();
+        $reply = $data['choices'][0]['message']['content'] ?? null;
 
-        if (!$englishWord) {
-            return response()->json(['error' => 'ترجمه پیدا نشد'], 404);
+        if (!$reply) {
+            return response()->json(['error' => 'اطلاعات یافت نشد'], 404);
         }
 
-        // 2. دریافت اطلاعات کلمه از Free Dictionary API
-        $dictionaryResponse = Http::get('https://api.dictionaryapi.dev/api/v2/entries/en/' . urlencode($englishWord));
+        // پردازش پاسخ برای جدا کردن بخش‌ها
+        preg_match('/Translation:\s*(.*?)\n/i', $reply, $translationMatch);
+        preg_match('/Pronunciation:\s*(.*?)\n/i', $reply, $pronunciationMatch);
+        preg_match('/Definition:\s*(.*)/i', $reply, $definitionMatch);
 
-        if (!$dictionaryResponse->successful()) {
-            return response()->json(['error' => 'اطلاعات دیکشنری پیدا نشد'], 404);
-        }
-
-        $dictionaryData = $dictionaryResponse->json();
-        $firstEntry = $dictionaryData[0] ?? null;
-
-        if (!$firstEntry) {
-            return response()->json(['error' => 'ورودی دیکشنری یافت نشد'], 404);
-        }
-
-        // استخراج اطلاعات: تلفظ، فایل صوتی و تعریف انگلیسی
-        $pronunciation     = $firstEntry['phonetics'][0]['text'] ?? null;
-        $voice             = $firstEntry['phonetics'][0]['audio'] ?? null;
-        $englishDefinition = $firstEntry['meanings'][0]['definitions'][0]['definition'] ?? null;
-
-        // 3. ترجمه تعریف انگلیسی به فارسی (برای توضیحات)
-        $persianDefinition = null;
-        if ($englishDefinition) {
-            $definitionTranslationResponse = Http::get('https://api.mymemory.translated.net/get', [
-                'q'        => $englishDefinition,
-                'langpair' => 'en|fa'
-            ]);
-
-            if ($definitionTranslationResponse->successful()) {
-                $definitionTranslationData = $definitionTranslationResponse->json();
-                $persianDefinition = $definitionTranslationData['responseData']['translatedText'] ?? $englishDefinition;
-            } else {
-                $persianDefinition = $englishDefinition; // در صورت عدم موفقیت، انگلیسی باقی می‌ماند
-            }
-        }
-
-        // 5. آماده‌سازی داده برای ذخیره در دیتابیس (بدون category_id و is_popular)
-        $wordData = [
-            'word'          => $word,         // کلمه فارسی ورودی
-            'translation'   => $englishWord,  // ترجمه انگلیسی
-            'pronunciation' => $pronunciation,
-            'description'   => $persianDefinition,
-        ];
+        $translation    = $translationMatch[1] ?? null;
+        $pronunciation  = $pronunciationMatch[1] ?? null;
+        $definition     = $definitionMatch[1] ?? null;
 
         return response()->json([
-            'message' => 'کلمه با موفقیت وارد شد.',
-            'data'    => $wordData
-        ], 201);
+            'message' => 'کلمه با موفقیت دریافت شد.',
+            'data'    => [
+                'word'          => $word,
+                'translation'   => $translation,
+                'pronunciation' => $pronunciation,
+                'definition'    => $definition
+            ]
+        ]);
     }
 }
+

@@ -805,18 +805,23 @@
                     return;
                 }
                 this.isLoading = true;
-                // به عنوان مثال از مسیر API import-word استفاده می‌کنیم
+
                 axios
                     .get('/api/import-word/' + encodeURIComponent(this.autoFillWord))
                     .then(response => {
-                        // فرض می‌کنیم پاسخ API شامل data با ساختار:
-                        // { word, translation, pronunciation, description, image, voice }
                         const data = response.data.data;
-                        // پر کردن فیلدهای فرم بر اساس داده‌های دریافتی
-                        this.newWord.word = data.word;
-                        this.newWord.meaning = data.translation;
-                        this.newWord.pronunciation = data.pronunciation;
-                        this.newWord.description = data.description;
+
+                        if (!data) {
+                            this.autoFillError = 'اطلاعاتی یافت نشد';
+                            return;
+                        }
+
+                        // مقداردهی به فیلدها فقط در صورت وجود مقدار
+                        this.newWord.word = data.word || '';
+                        this.newWord.meaning = data.translation || 'ترجمه‌ای یافت نشد';
+                        this.newWord.pronunciation = data.pronunciation || 'تلفظی موجود نیست';
+                        this.newWord.description = data.definition || 'توضیحی یافت نشد'; // اصلاح اسم از description به definition
+
                         this.showAutoInput = false;
                         this.autoFillWord = '';
                     })
