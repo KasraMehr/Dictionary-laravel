@@ -213,7 +213,7 @@ watch(
 );
 
 onMounted(() => {
-  const userLocale = localStorage.getItem("locale") || navigator.language;
+  const userLocale = localStorage.getItem("locale") || 'en';
   locale.value = userLocale.split("-")[0];
 
   isDarkMode.value = document.documentElement.classList.contains("dark");
