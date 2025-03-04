@@ -203,11 +203,9 @@ const updateChartTheme = () => {
   chartInstance.update();
 };
 
-// watch برای تغییرات زبان
 watch(
   () => locale.value,
   (newLocale) => {
-    location.reload();
     updateChartTheme();
   }
 );
