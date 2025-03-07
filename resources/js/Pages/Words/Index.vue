@@ -132,7 +132,7 @@
         <!-- Search Module -->
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-gray-200 dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg">
+                <div class="bg-gray-300 dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg">
                     <!-- Search Module -->
                     <div v-if="showSearchModal"
                         class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50"
@@ -211,17 +211,17 @@
                                         <span class="text-gray-400 text-sm">{{ $t('meaning') }}:</span>
                                         <span class="truncate">{{ word . meaning }}</span>
                                     </div>
-                                    <div class="flex flex-col">
-                                        <span class="text-gray-400 text-sm">{{ $t('categories') }}:</span>
+                                    <!-- <div class="flex flex-col">
+                                        <span class="text-gray-800 dark:text-gray-100 text-sm">{{ $t('categories') }}:</span>
                                         <span class="truncate">
                                             <span
                                                 v-for="(category, i) in (word.categories ? word.categories.slice(0, 3) : [])"
                                                 :key="i"
-                                                class="bg-gray-500 px-2 py-1 text-sm rounded-lg mx-1">
+                                                class="bg-gray-200 dark:bg-gray-500 px-2 py-1 text-sm rounded-lg mx-1">
                                                 {{ category . name }}
                                             </span>
                                         </span>
-                                    </div>
+                                    </div> -->
                                 </div>
 
                                 <!-- Desktop Content -->
@@ -231,7 +231,7 @@
                                 <div class="flex justify-start gap-3 xl:gap-2 w-full ml-auto">
                                     <span v-for="category in (word.categories ? word.categories.slice(0, 3) : [])"
                                         :key="category.id"
-                                        class="bg-gray-600 dark:text-white text-black text-xs px-3 py-1 rounded-xl">
+                                        class="bg-gray-300 dark:bg-gray-600 dark:text-white text-black text-xs px-3 py-1 rounded-xl">
                                         {{ category . name }}
                                     </span>
                                 </div>
@@ -275,26 +275,26 @@
                     <!-- Word -->
                     <div class="grid grid-cols-1 sm:grid-cols-6 gap-4 items-start">
                         <strong class="dark:text-white text-black text-lg sm:col-span-1">{{ $t('word') }}:</strong>
-                        <span class="text-gray-300 sm:col-span-5">{{ selectedWord . word }}</span>
+                        <span class="text-black dark:text-gray-300 sm:col-span-5">{{ selectedWord . word }}</span>
                     </div>
 
                     <!-- Meaning -->
                     <div class="grid grid-cols-1 sm:grid-cols-6 gap-4 items-start">
                         <strong class="dark:text-white text-black text-lg sm:col-span-1">{{ $t('meaning') }}:</strong>
-                        <span class="text-gray-300 sm:col-span-5">{{ selectedWord . meaning }}</span>
+                        <span class="text-black dark:text-gray-300 sm:col-span-5">{{ selectedWord . meaning }}</span>
                     </div>
 
                     <!-- Pronunciation -->
                     <div class="grid grid-cols-1 sm:grid-cols-6 gap-4 items-start">
                         <strong class="dark:text-white text-black text-lg sm:col-span-1">{{ $t('pronunciation') }}:</strong>
-                        <span class="text-gray-300 sm:col-span-5">{{ selectedWord . pronunciation }}</span>
+                        <span class="text-black dark:text-gray-300 sm:col-span-5">{{ selectedWord . pronunciation }}</span>
                     </div>
 
                     <!-- Description -->
                     <div class="grid grid-cols-1 sm:grid-cols-6 gap-4 items-start">
                         <strong class="dark:text-white text-black text-lg sm:col-span-1">{{ $t('description') }}:</strong>
                         <div
-                            class="text-gray-300 sm:col-span-5 break-words whitespace-pre-wrap min-h-[100px] bg-gray-800/50 p-4 rounded-lg border border-gray-700">
+                            class="text-black dark:text-gray-300 sm:col-span-5 break-words whitespace-pre-wrap min-h-[100px] bg-gray-300 dark:bg-gray-800/50 p-4 rounded-lg border border-gray-700">
                             {{ selectedWord . description }}
                         </div>
                     </div>
@@ -316,9 +316,9 @@
 
                     <!-- Categories -->
                     <div class="flex flex-wrap gap-2 mt-3">
-                        <strong class="dark:text-white text-black text-lg sm:col-span-1 ml-16">{{ $t('categories') }}:</strong>
+                        <strong class="text-gray-800 dark:text-gray-100 text-lg sm:col-span-1 ml-16">{{ $t('categories') }}:</strong>
                         <span v-for="category in selectedWord.categories" :key="categoryId"
-                            class="bg-gray-600 dark:text-white text-black text-xs px-3 py-1 rounded-full flex items-center">
+                            class="bg-gray-300 dark:bg-gray-600 dark:text-white text-black text-xs px-3 py-1 rounded-full flex items-center">
                             {{ category . name }}
                         </span>
                     </div>
@@ -331,7 +331,7 @@
                         {{ $t('edit') }}
                     </button>
                     <button @click="closeModal"
-                        class="px-6 py-2.5 bg-gray-600 dark:text-white text-black rounded-lg hover:bg-gray-700 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:ring-offset-gray-800">
+                        class="px-6 py-2.5 bg-gray-300 dark:bg-gray-600 dark:text-white text-black rounded-lg hover:bg-gray-700 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:ring-offset-gray-800">
                         {{ $t('leave') }}
                     </button>
                 </div>
@@ -420,9 +420,9 @@
 
                     <!-- انتخاب دسته‌بندی‌ها -->
                     <div class="col-span-2">
-                        <label for="add-categories" class="text-sm">{{ $t('categories') }}</label>
+                        <label for="add-categories" class="text-sm text-gray-800 dark:text-gray-100">{{ $t('categories') }}</label>
                         <select id="add-categories" v-model="newWord.selectedCategories" multiple
-                            class="mt-1 block dark:bg-gray-800 w-full border rounded p-1.5 text-sm">
+                            class="mt-1 block bg-gray-400 dark:bg-gray-800/50 w-full border rounded p-1.5 text-sm">
                             <option v-for="category in categories" :key="category.id" :value="category.id">
                                 {{ category.name }}
                             </option>
@@ -431,7 +431,7 @@
 
                     <div class="flex flex-wrap gap-1.5 mt-2">
                         <span v-for="categoryId in newWord.selectedCategories" :key="categoryId"
-                            class="bg-gray-600 dark:text-white text-black text-xs px-2 py-0.5 rounded-full flex items-center">
+                            class="bg-gray-300 dark:bg-gray-600 dark:text-white text-black text-xs px-2 py-0.5 rounded-full flex items-center">
                             {{ getCategoryName(categoryId) }}
                             <button type="button" @click="removeCategory(categoryId)" class="ml-1.5 text-red-400">
                                 ×
@@ -522,9 +522,9 @@
 
                         <!-- Categories -->
                         <div class="md:col-span-2">
-                            <label class="block font-medium dark:text-white text-black text-sm mb-1">{{ $t('categories') }}:</label>
+                            <label class="block font-medium text-gray-800 dark:text-gray-100 text-sm mb-1">{{ $t('categories') }}:</label>
                             <select v-model="editForm.selectedCategories" multiple
-                                class="w-full px-3 py-1.5 rounded-lg border border-gray-700 bg-gray-800/50 dark:text-white text-black focus:outline-none focus:ring-2 focus:ring-[#FF2D20] transition-all duration-200 text-sm">
+                                class="w-full px-3 py-1.5 rounded-lg border border-gray-700 bg-gray-300 dark:bg-gray-800/50 dark:text-white text-black focus:outline-none focus:ring-2 focus:ring-[#FF2D20] transition-all duration-200 text-sm">
                                 <option v-for="category in categories" :key="category.id" :value="category.id">
                                     {{ category.name }}
                                 </option>
@@ -532,7 +532,7 @@
 
                             <div class="flex flex-wrap gap-2 mt-2">
                                 <span v-for="categoryId in editForm.selectedCategories" :key="categoryId"
-                                    class="bg-gray-600 dark:text-white text-black text-xs px-2 py-0.5 rounded-full flex items-center">
+                                    class="bg-gray-300 dark:bg-gray-600 dark:text-white text-black text-xs px-2 py-0.5 rounded-full flex items-center">
                                     {{ getCategoryName(categoryId) }}
                                     <button type="button" @click="removeCategory(categoryId)"
                                         class="ml-1.5 text-red-400">×</button>
@@ -548,7 +548,7 @@
                             {{ $t('save') }}
                         </button>
                         <button type="button" @click="closeEditModal"
-                            class="px-4 py-2 bg-gray-600 dark:text-white text-black text-sm rounded-lg hover:bg-gray-700 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:ring-offset-gray-800">
+                            class="px-4 py-2 bg-gray-300 dark:bg-gray-600 dark:text-white text-black text-sm rounded-lg hover:bg-gray-700 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:ring-offset-gray-800">
                             {{ $t('close') }}
                         </button>
                     </div>
