@@ -95,7 +95,7 @@ const leaveTeam = async (teamId, userId) => {
                   <span
                     v-for="category in (team.categories ? team.categories.slice(0, 3) : [])"
                     :key="category.id"
-                    class="bg-gray-600 dark:text-white text-black text-xs px-3 py-1 rounded-xl"
+                    class="bg-gray-300 dark:bg-gray-600 dark:text-white text-black text-xs px-3 py-1 rounded-xl"
                   >
                     {{ category.name }}
                   </span>

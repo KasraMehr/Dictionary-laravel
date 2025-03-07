@@ -148,7 +148,7 @@ import axios from "axios";
                                 <div class="flex hidden lg:block truncate xl:pr-4 justify-start gap-3 xl:gap-2 w-full ml-auto">
                                     <span v-for="category in (word.categories ? word.categories.slice(0, 1) : [])"
                                         :key="category.id"
-                                        class="bg-gray-600 dark:text-white text-black text-xs px-3 py-1 rounded-xl">
+                                        class="bg-gray-300 dark:bg-gray-600 dark:text-white text-black text-xs px-3 py-1 rounded-xl">
                                         {{ category . name }}
                                     </span>
                                 </div>
@@ -239,7 +239,7 @@ import axios from "axios";
                     <div class="flex flex-wrap gap-2 mt-3">
                         <strong class="dark:text-white text-black text-lg sm:col-span-1 ml-16">{{ $t('categories') }}:</strong>
                         <span v-for="category in selectedWord.categories" :key="categoryId"
-                            class="bg-gray-600 dark:text-white text-black text-xs px-3 py-1 rounded-full flex items-center">
+                            class="bg-gray-300 dark:bg-gray-600 dark:text-white text-black text-xs px-3 py-1 rounded-full flex items-center">
                             {{ category . name }}
                         </span>
                     </div>
