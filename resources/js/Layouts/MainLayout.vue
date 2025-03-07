@@ -174,6 +174,12 @@ const setLanguage = (lang) => {
                         <ResponsiveNavLink :href="route('library')" :active="route().current('teams.index')">
                             {{ $t('library') }}
                         </ResponsiveNavLink>
+                        <a href="https://docs.modern-dictionary.com/"
+                           class="block w-full ps-3 pe-4 py-2 border-l-4 border-transparent text-start text-base font-medium text-gray-700 dark:text-white hover:text-gray-900 dark:hover:text-white/90 hover:ring-black dark:hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 hover:bg-gray-200 dark:hover:bg-gray-700/50 focus:outline-none"
+                           target="_blank"
+                           rel="noopener noreferrer">
+                            {{ $t('documentation') }}
+                        </a>
                     </div>
                     <div class="border-t border-gray-700 dark:border-gray-500">
                       <ResponsiveNavLink
