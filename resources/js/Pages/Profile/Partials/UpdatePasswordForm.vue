@@ -49,7 +49,7 @@ const updatePassword = () => {
 
         <template #form>
             <div class="col-span-6 sm:col-span-4"  >
-                <InputLabel for="current_password" value="current password" class="text-black dark:text-white" />
+                <InputLabel for="current_password" :value="$t('confirm_password')" class="text-black dark:text-white" />
                 <TextInput
                     id="current_password"
                     ref="currentPasswordInput"
@@ -62,7 +62,7 @@ const updatePassword = () => {
             </div>
 
             <div class="col-span-6 sm:col-span-4"  >
-                <InputLabel for="password" value="new password" class="text-black dark:text-white" />
+                <InputLabel for="password" :value="$t('password')" class="text-black dark:text-white" />
                 <TextInput
                     id="password"
                     ref="passwordInput"
@@ -75,7 +75,7 @@ const updatePassword = () => {
             </div>
 
             <div class="col-span-6 sm:col-span-4"  >
-                <InputLabel for="password_confirmation" value="confirm new password" class="text-black dark:text-white" />
+                <InputLabel for="password_confirmation" :value="$t('confirm_password')"  class="text-black dark:text-white" />
                 <TextInput
                     id="password_confirmation"
                     v-model="form.password_confirmation"

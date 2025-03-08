@@ -154,7 +154,7 @@ const disableTwoFactorAuthentication = () => {
                     </div>
 
                     <div v-if="confirming" class="mt-4"  >
-                        <InputLabel for="code" value="code" class="text-black dark:text-white" />
+                        <InputLabel for="code" :value="$t('code')" class="text-black dark:text-white" />
 
                         <TextInput
                             id="code"
