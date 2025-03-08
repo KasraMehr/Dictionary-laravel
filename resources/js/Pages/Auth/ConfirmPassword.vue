@@ -39,7 +39,7 @@ const submit = () => {
 
         <form @submit.prevent="submit">
             <div>
-                <InputLabel for="password" value="Password" />
+                <InputLabel for="password" :value="$t('password')" />
                 <TextInput
                     id="password"
                     ref="passwordInput"

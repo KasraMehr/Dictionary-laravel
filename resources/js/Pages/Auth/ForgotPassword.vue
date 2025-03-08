@@ -52,7 +52,7 @@ const submit = () => {
 
                     <form @submit.prevent="submit" dir="rtl" class="space-y-6">
                         <div>
-                            <InputLabel for="email" value="email" class="text-black dark:text-white/90 text-lg" />
+                            <InputLabel for="email" :value="$t('email')" class="text-black dark:text-white/90 text-lg" />
                             <TextInput
                                 id="email"
                                 v-model="form.email"

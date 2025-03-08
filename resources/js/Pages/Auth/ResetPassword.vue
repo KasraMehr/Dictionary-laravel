@@ -36,7 +36,7 @@ const submit = () => {
 
         <form @submit.prevent="submit">
             <div>
-                <InputLabel for="email" value="Email" />
+                <InputLabel for="email" :value="$t('email')" />
                 <TextInput
                     id="email"
                     v-model="form.email"
@@ -50,7 +50,7 @@ const submit = () => {
             </div>
 
             <div class="mt-4">
-                <InputLabel for="password" value="Password" />
+                <InputLabel for="password" :value="$t('password')" />
                 <TextInput
                     id="password"
                     v-model="form.password"
@@ -63,7 +63,7 @@ const submit = () => {
             </div>
 
             <div class="mt-4">
-                <InputLabel for="password_confirmation" value="Confirm Password" />
+                <InputLabel for="password_confirmation" :value="$t('confirm_password')" />
                 <TextInput
                     id="password_confirmation"
                     v-model="form.password_confirmation"

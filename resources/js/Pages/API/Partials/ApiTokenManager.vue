@@ -87,7 +87,7 @@ const deleteApiToken = () => {
             <template #form>
                 <!-- نام توکن -->
                 <div class="col-span-6 sm:col-span-4"  >
-                    <InputLabel for="name" value="name" class="p-2 text-black dark:text-white" />
+                    <InputLabel for="name" :value="$t('name')" class="p-2 text-black dark:text-white" />
                     <TextInput
                         id="name"
                         v-model="createApiTokenForm.name"
@@ -100,7 +100,7 @@ const deleteApiToken = () => {
 
                 <!-- دسترسی‌های توکن -->
                 <div v-if="availablePermissions.length > 0" class="col-span-6"  >
-                    <InputLabel for="permissions" value="permissions" class="text-black dark:text-white" />
+                    <InputLabel for="permissions" :value="$t('permissions')" class="text-black dark:text-white" />
 
                     <div class="mt-2 grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div v-for="permission in availablePermissions" :key="permission"
