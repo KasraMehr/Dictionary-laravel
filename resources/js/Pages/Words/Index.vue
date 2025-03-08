@@ -150,32 +150,25 @@
                                 <h3 class="text-md font-bold mb-2">
                                     {{ $t('search_results') }}
                                 </h3>
-                                <div v-if="filteredWords.length > 0" class="list-disc pl-5">
+                                <div v-if="filteredWords.length > 0" class="space-y-2 border border-gray-700/50 rounded-xl max-w-7xl mx-auto">
                                     <div v-for="(word, index) in filteredWords" :key="word.id"
-                                        class="p-4 rounded shadow-sm grid grid-cols-4 items-center">
+                                         class="p-4 xl:p-6 rounded-xl shadow-sm flex flex-col lg:grid lg:grid-cols-4 gap-4 lg:gap-6 xl:gap-8 items-start lg:items-center hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 hover:bg-gray-700/50 transform translate-y-0 hover:-translate-y-1 dark:text-white text-black">
                                         <div class="flex items-center">
-                                            <div class="ml-5">
-                                                {{ index + 1 }}
-                                            </div>
+
                                             <div>{{ word . word }}</div>
                                         </div>
                                         <div>{{ word . meaning }}</div>
                                         <div>{{ word . pronunciation }}</div>
-                                        <!-- دکمه‌های عملیات -->
-                                        <div class="flex justify-end ">
+                                        <!-- Action Buttons -->
+                                        <div class="flex justify-end gap-3 xl:gap-2 w-full">
                                             <button @click="viewWord(word)"
-                                                class="px-4 py-2 rounded bg-blue-200 text-blue-700 ml-2 hover:bg-blue-300">
+                                                    class="px-4 xl:px-5 py-2 rounded bg-blue-200 text-blue-700 hover:bg-blue-300 transition-all duration-200 hover:scale-105">
                                                 {{ $t('view') }}
                                             </button>
 
-                                            <button @click.stop="editWord(word)"
-                                                class="px-4 py-2 rounded bg-blue-500 dark:text-white text-black ml-2 hover:bg-blue-600">
+                                            <button @click="editWord(word)"
+                                                    class="px-4 xl:px-5 py-2 rounded bg-blue-500 dark:text-white text-black hover:bg-blue-600 transition-all duration-200 hover:scale-105">
                                                 {{ $t('edit') }}
-                                            </button>
-
-                                            <button @click="deleteWord(word.id)"
-                                                class="px-4 py-2 rounded bg-red-500 dark:text-white text-black ml-2 hover:bg-red-600">
-                                                {{ $t('delete') }}
                                             </button>
                                         </div>
                                     </div>
@@ -197,8 +190,8 @@
                                 class="p-4 xl:p-6 rounded-xl shadow-sm flex flex-col lg:grid lg:grid-cols-4 gap-4 lg:gap-6 xl:gap-8 items-start lg:items-center hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 hover:bg-gray-700/50 transform translate-y-0 hover:-translate-y-1 dark:text-white text-black">
                                 <!-- Word -->
                                 <div class="flex items-center w-full">
-                                    <div class="ml-4 xl:ml-12 text-gray-400">{{ index + 1 }}</div>
-                                    <div class="ml-4 xl:ml-12">
+                                    <div class="mx-2 xl:mx-6 text-gray-400">{{ index + 1 }}</div>
+                                    <div class="mx-2 xl:mx-6">
                                         <img :src="word.image_url"  alt="Word Image"
                                             class="w-12 h-12 object-cover rounded-full">
                                     </div>
@@ -225,7 +218,7 @@
                                 </div>
 
                                 <!-- Desktop Content -->
-                                <div class="hidden lg:block truncate xl:pr-4">
+                                <div class="hidden lg:block truncate xl:px-4">
                                     {{ word . meaning }}
                                 </div>
                                 <div class="flex justify-start gap-3 xl:gap-2 w-full ml-auto">
@@ -780,6 +773,14 @@
                     if (teamResponse) {
                       console.log('Word added to team:', teamResponse.data);
                     }
+                    this.newWord = {
+                        word: "",
+                        meaning: "",
+                        pronunciation: "",
+                        description: "",
+                        voice: null,
+                        image: null,
+                    };
                     const notification = document.createElement('div');
                     notification.className = 'fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg bg-green-500 dark:text-white text-black transform transition-all duration-500';
                     notification.innerHTML = '<div class="flex items-center"><span class="mr-2">✓</span>کلمه با موفقیت اضافه شد</div>';
@@ -955,15 +956,15 @@
         },
         computed: {
     // فیلتر کلمات بر اساس کلمه یا معنی
-    filteredWords() {
-      const term = this.searchTerm.trim().toLowerCase();
-      if (!term) return this.words;
-      return this.words.filter(
-        (word) =>
-          word.word.toLowerCase().includes(term) ||
-          word.meaning.toLowerCase().includes(term)
-      );
-    },
+            filteredWords() {
+              const term = this.searchTerm.trim().toLowerCase();
+              if (!term) return null;
+              return this.words.filter(
+                (word) =>
+                  word.word.toLowerCase().includes(term) ||
+                  word.meaning.toLowerCase().includes(term)
+              );
+            },
   },
   mounted() {
     // اتصال به سرور Socket.IO
