@@ -83,7 +83,7 @@
     "api_token_description": "API tokens allow third-party services to authenticate with our application on your behalf.",
     "created": "Created.",
     "manage_tokens": "Manage Tokens",
-    "delete_token_info": "You can delete any of your existing tokens if they are no longer needed.",
+    "delete_toPasswordken_info": "You can delete any of your existing tokens if they are no longer needed.",
     "last_used": "Last Used",
     "permissions": "Permissions",
     "api_token": "API Token",
@@ -158,6 +158,14 @@
     "remove_photo": "Remove Photo",
     "email_not_verified": "Your email address is not verified.",
     "resend_verification_email": "Click here to resend the verification email.",
-    "verification_email_sent": "A new verification link has been sent to your email address."
-
+    "verification_email_sent": "A new verification link has been sent to your email address.",
+    "auth_confirm": "Please confirm access to your account by entering the authentication code provided by your authenticator application.",
+    "auth_recovery": "Please confirm access to your account by entering one of your emergency recovery codes.",
+    "code": "Code",
+    "recovery_code": "Recovery Code",
+    "verify_email": "Before continuing, could you verify your email address by clicking on the link we just emailed to you? If you didn't receive the email, we will gladly send you another.",
+    "email_verification_sent": "A new verification link has been sent to the email address you provided in your profile settings.",
+    "resend_verification_Email": "Resend Verification Email",
+    "use_recovery_code": "Use a recovery code",
+    "use_authentication_code": "Use an authentication code"
 }
