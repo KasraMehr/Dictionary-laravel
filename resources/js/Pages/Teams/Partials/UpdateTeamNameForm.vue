@@ -37,7 +37,7 @@ const updateTeamName = () => {
         <template #form>
             <!-- اطلاعات مالک تیم -->
             <div class="col-span-6">
-                <InputLabel value="team owner" class="dark:text-white text-black" />
+                <InputLabel :value="$t('team_owner')" class="dark:text-white text-black" />
 
                 <div class="flex items-center mt-2">
                     <img class="me-4 size-12 rounded-full object-cover" :src="team.owner.profile_photo_url" :alt="team.owner.name">
@@ -52,7 +52,7 @@ const updateTeamName = () => {
 
             <!-- نام تیم -->
             <div class="col-span-6 sm:col-span-4">
-                <InputLabel for="name" value="team name" class="dark:text-white text-black" />
+                <InputLabel for="name" :value="$t('team_name')" class="dark:text-white text-black" />
 
                 <TextInput
                     id="name"

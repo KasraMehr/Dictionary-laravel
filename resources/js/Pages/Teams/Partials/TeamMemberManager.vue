@@ -116,7 +116,7 @@ const displayableRole = (role) => {
 
                     <!-- ایمیل عضو -->
                     <div class="col-span-6 sm:col-span-4">
-                        <InputLabel for="email" value="email" class="dark:text-white text-black"/>
+                        <InputLabel for="email" :value="$t('email')" class="dark:text-white text-black"/>
                         <TextInput
                             id="email"
                             v-model="addTeamMemberForm.email"
@@ -136,7 +136,7 @@ const displayableRole = (role) => {
                                 v-for="(role, i) in availableRoles"
                                 :key="role.key"
                                 type="button"
-                                class="mb-5 rounded relative px-4 py-3 inline-flex w-full rounded-lg focus:z-10 focus:outline-none hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 hover:bg-gray-700/50"
+                                class="mb-5 rounded relative px-4 py-3 inline-flex w-full focus:z-10 focus:outline-none hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 hover:bg-gray-700/50"
                                 :class="{'border-t border-gray-200 dark:border-gray-700 focus:border-none rounded-t-none': i > 0, 'rounded-b-none': i != Object.keys(availableRoles).length - 1}"
                                 @click="addTeamMemberForm.role = role.key"
                             >
