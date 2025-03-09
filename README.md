@@ -68,9 +68,6 @@ php artisan serve
 
 ### Frontend Setup
 ```bash
-# Navigate to frontend folder
-cd frontend
-
 # Install dependencies
 npm install
 
