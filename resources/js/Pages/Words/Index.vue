@@ -6,7 +6,6 @@
     import axios from "axios";
 
     const categories = computed(() => usePage().props.categories || []);
-    console.log("Categories:", categories.value);
 
     const deleteWord = (id) => {
         if (confirm("از حذف کلمه مورد نظر اطمینان دارید؟")) {
@@ -622,6 +621,10 @@
             };
         },
         created() {
+            if (!window.location.pathname.startsWith("/team/")) {
+                return; // جلوگیری از متصل شدن به Socket
+            }
+
           this.socket = io(`${window.location.origin}`);
 
           if (!this.socket) {
@@ -886,8 +889,13 @@
                 this.showEditModal = false;
             },
             getCategoryName(categoryId) {
+                // Check if categories is defined and not empty
+                if (!this.categories || this.categories.length === 0) {
+                    return 'Unknown'; // Return 'Unknown' if categories is empty or undefined
+                }
+
                 const category = this.categories.find(cat => cat.id === categoryId);
-                return category ? category.name : 'نامشخص';
+                return category ? category.name : 'Unknown'; // Return category name if found, otherwise 'Unknown'
             },
 
             removeCategory(categoryId) {
@@ -933,6 +941,9 @@
                 }
             },
             handleMouseMove(event) {
+                if (!window.location.pathname.startsWith("/team/")) {
+                    return;
+                }
                 const { clientX, clientY } = event;
                 this.mouse = { x: clientX, y: clientY };
 
@@ -962,6 +973,11 @@
             },
   },
   mounted() {
+
+      if (!window.location.pathname.startsWith("/team/")) {
+          return;
+      }
+
     // اتصال به سرور Socket.IO
     this.socket = io(`${window.location.origin}`, {
       transports: ["websocket"],
