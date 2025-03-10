@@ -646,17 +646,8 @@
             },
             closeSearchModal() {
                 this.showSearchModal = false;
-                this.searchTerm = ""; // پاک کردن عبارت جستجو هنگام بستن ماژول
+                this.searchTerm = "";
             },
-            // handleVoiceUpload(event) {
-            //     const file = event.target.files[0];
-            //     if (file) {
-            //         this.newWord.voice = file;
-            //         this.editForm.voice = file;
-            //         this.simulateUpload('voice');
-            //     }
-            // },
-
             handleImageUpload(event) {
                 const file = event.target.files[0];
                 if (file) {
