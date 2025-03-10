@@ -5,6 +5,9 @@
     import AppLayout from "@/Layouts/AppLayout.vue";
     import axios from "axios";
 
+    const categories = computed(() => usePage().props.categories || []);
+    console.log("Categories:", categories.value);
+
     const deleteWord = (id) => {
         if (confirm("از حذف کلمه مورد نظر اطمینان دارید؟")) {
             const notification = document.createElement('div');
@@ -554,6 +557,7 @@
 <script>
     import axios from "axios";
     import { io } from "socket.io-client";
+    import {usePage} from "@inertiajs/vue3";
 
     export default {
         props: {
