@@ -69,7 +69,7 @@ class TeamController extends Controller
     public function team_words(Team $team)
     {
         $words = $team->words()->with('categories')->get();
-        $categories = $team->categories();
+        $categories = $team->categories()->get();
 
         $words->transform(function ($word) {
           $word->image_url = $word->image ? Storage::disk('liara')->url($word->image) : null;
