@@ -480,7 +480,11 @@ export default {
         };
     },
     created() {
-        this.socket = io("http://localhost:3000");
+        if (!window.location.pathname.startsWith("/team/")) {
+            return; // جلوگیری از متصل شدن به Socket
+        }
+
+        this.socket = io(`${window.location.origin}`);
 
         if (!this.socket) {
             console.error("Socket failed to initialize!");
@@ -634,6 +638,10 @@ export default {
         },
 
         handleMouseMove(event) {
+            if (!window.location.pathname.startsWith("/team/")) {
+                return;
+            }
+
             const { clientX, clientY } = event;
             this.mouse = { x: clientX, y: clientY };
 
@@ -664,8 +672,12 @@ export default {
         },
     },
     mounted() {
+        if (!window.location.pathname.startsWith("/team/")) {
+            return;
+        }
+
         // اتصال به سرور Socket.IO
-        this.socket = io("http://localhost:3000", {
+        this.socket = io(`${window.location.origin}`, {
             transports: ["websocket"],
             autoConnect: true,
         });
