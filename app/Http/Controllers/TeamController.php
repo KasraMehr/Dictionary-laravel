@@ -9,6 +9,8 @@ use App\Models\Team;
 use App\Models\Word;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+
 
 class TeamController extends Controller
 {
@@ -67,9 +69,7 @@ class TeamController extends Controller
     public function team_words(Team $team)
     {
         $words = $team->words()->with('categories')->get();
-        $categories = Category::whereHas('words', function ($query) use ($team) {
-          $query->whereIn('words.id', $team->words->pluck('id'));
-        })->get();
+        $categories = $team->categories();
 
         $words->transform(function ($word) {
           $word->image_url = $word->image ? Storage::disk('liara')->url($word->image) : null;
