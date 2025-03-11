@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Services\ElasticsearchService;
 use App\Models\Word;
@@ -9,6 +10,7 @@ use App\Models\User;
 use App\Models\Team;
 use App\Models\Category;
 use Inertia\Inertia;
+use Inertia\Response;
 
 
 class GeneralController extends Controller
@@ -20,7 +22,13 @@ class GeneralController extends Controller
         $this->elasticsearch = $elasticsearch;
     }
 
-    public function index()
+    /**
+     * Displays a library where there is a list of words that has been made by
+     * users or teams along with their categories.
+     *
+     * @return Response
+     */
+    public function index(): Response
     {
         $words = Word::with([
             'user:id,name',
@@ -35,7 +43,14 @@ class GeneralController extends Controller
         return Inertia::render('library/index', compact('words'));
     }
 
-    public function search(Request $request)
+    /**
+     * returns the searched data with the help of elastic search or mysql.
+     *
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
+    public function search(Request $request): JsonResponse
     {
         $query = $request->input('query');
         $results = $this->elasticsearch->searchWords($query);
