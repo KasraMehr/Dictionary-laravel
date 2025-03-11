@@ -3,18 +3,25 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Http;
 use App\Models\Word;
 use Illuminate\Http\Request;
 
 class WordImportController extends Controller
 {
+    /**
+     * validates the category.
+     *
+     * @param String $word
+     * @return JsonResponse
+     */
     public function importWord($word)
     {
-        $apiKey = env('MISTRAL_API_KEY'); // گرفتن API Key از .env
+        $apiKey = env('MISTRAL_API_KEY');
         $endpoint = "https://api.mistral.ai/v1/chat/completions";
 
-        // ارسال درخواست به Mistral AI
+        // send request to Mistral AI
         $response = Http::withHeaders([
             'Authorization' => "Bearer $apiKey",
             'Content-Type'  => 'application/json'
@@ -30,17 +37,17 @@ class WordImportController extends Controller
         ]);
 
         if (!$response->successful()) {
-            return response()->json(['error' => 'خطا در دریافت اطلاعات'], 500);
+            return response()->json(['error' => 'error in receiving word'], 500);
         }
 
         $data = $response->json();
         $reply = $data['choices'][0]['message']['content'] ?? null;
 
         if (!$reply) {
-            return response()->json(['error' => 'اطلاعات یافت نشد'], 404);
+            return response()->json(['error' => 'information has not been found'], 404);
         }
 
-        // پردازش پاسخ برای جدا کردن بخش‌ها
+        // process the answer for different sections
         preg_match('/Translation:\s*(.*?)\n/i', $reply, $translationMatch);
         preg_match('/Pronunciation:\s*(.*?)\n/i', $reply, $pronunciationMatch);
         preg_match('/Definition:\s*(.*)/i', $reply, $definitionMatch);
@@ -50,7 +57,7 @@ class WordImportController extends Controller
         $definition     = $definitionMatch[1] ?? null;
 
         return response()->json([
-            'message' => 'کلمه با موفقیت دریافت شد.',
+            'message' => 'word received successfully',
             'data'    => [
                 'word'          => $word,
                 'translation'   => $translation,
