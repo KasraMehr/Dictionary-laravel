@@ -66,7 +66,7 @@ class CategoryController extends Controller
           'description' => $validated['description'] ?? null,
         ]);
 
-       return response()->json(['message' => 'دسته‌بندی با موفقیت ایجاد شد', 'category' => $category], 201);
+       return response()->json(['message' => 'category created successfully', 'category' => $category], 201);
      }
 
     /**

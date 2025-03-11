@@ -7,28 +7,32 @@ use App\Events\WordAdded;
 use App\Models\Category;
 use App\Models\Team;
 use App\Models\Word;
+use Illuminate\Http\JsonResponse;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Inertia\Response;
 
 
 class TeamController extends Controller
 {
-    public function index()
+    /**
+     * Displays a list of teams along with their owner, users, categories, and word counts.
+     *
+     * @return Response
+     */
+    public function index(): Response
     {
         $teams = Team::with(['owner', 'users', 'categories'])
             ->withCount('users')
             ->get()
             ->map(function ($team) {
-                // شمارش کلمات کاربران تیم
                 $userWordsCount = $team->users->sum(function ($user) {
                     return $user->words->count();
                 });
 
-                // شمارش کلمات مالک تیم
                 $ownerWordsCount = $team->owner ? $team->owner->words->count() : 0;
 
-                // مجموع کلمات کاربران و مالک تیم
                 $team->words_count = $userWordsCount + $ownerWordsCount;
 
                 return $team;
@@ -45,15 +49,25 @@ class TeamController extends Controller
         ]);
     }
 
-
-
-    public function sendJoinRequest(Team $team): \Illuminate\Http\JsonResponse
+    /**
+     * Sends a join request for the authenticated user to a team.
+     *
+     * @param Team $team
+     * @return JsonResponse
+     */
+    public function sendJoinRequest(Team $team): JsonResponse
     {
         $team->users()->syncWithoutDetaching([auth()->id()]);
-      return response()->json(['message' => 'درخواست عضویت با موفقیت ارسال شد.']);
+      return response()->json(['message' => 'join request has been sent successfully']);
     }
 
-    public function leave(Team $team)
+    /**
+     * Allows a user to leave a team (The owner of the team cannot leave).
+     *
+     * @param Team $team
+     * @return JsonResponse
+     */
+    public function leave(Team $team): JsonResponse
     {
         $user = auth()->user();
 
@@ -66,7 +80,13 @@ class TeamController extends Controller
         return response()->json(['message' => 'You have left the team successfully.']);
     }
 
-    public function team_words(Team $team)
+    /**
+     * Retrieves all words associated with a team, including their categories and media URLs.
+     *
+     * @param Team $team
+     * @return Response
+     */
+    public function team_words(Team $team): Response
     {
         $words = $team->words()->with('categories')->get();
         $categories = $team->categories()->get();
@@ -82,12 +102,19 @@ class TeamController extends Controller
           'categories' => $categories,
           'team' => [
               'id' => $team->id,
-              'name' => $team->name, // ارسال نام تیم به Vue
+              'name' => $team->name,
           ],
         ]);
     }
 
-    public function addWordToTeam(Request $request, Team $team)
+    /**
+     * Adds a word to a team's collection if it doesn't already exist.
+     *
+     * @param Request $request
+     * @param Team $team
+     * @return JsonResponse
+     */
+    public function addWordToTeam(Request $request, Team $team): JsonResponse
     {
       $request->validate([
         'word_id' => 'required|exists:words,id',
@@ -97,39 +124,48 @@ class TeamController extends Controller
         $team->words()->attach($request->word_id);
       }
 
-      event(new WordAdded($team->id, $request->word_id));
+      //event(new WordAdded($team->id, $request->word_id));
 
       return response()->json(['message' => 'Word added to team successfully']);
     }
 
-    public function team_categories(Team $team)
+    /**
+     * Retrieves all categories associated with a team along with their word count.
+     *
+     * @param Team $team
+     * @return Response
+     */
+    public function team_categories(Team $team): Response
     {
       $categories = $team->categories()->withCount('words')->get();
       return Inertia::render('Words/categories', [
         'categories' => $categories,
         'team' => [
             'id' => $team->id,
-            'name' => $team->name, // ارسال نام تیم به Vue
+            'name' => $team->name,
         ],
       ]);
     }
 
-    public function addCategory(Request $request, Team $team)
+    /**
+     * Adds a category to a team if it doesn't already exist.
+     *
+     * @param Request $request
+     * @param Team $team
+     * @return JsonResponse
+     */
+    public function addCategory(Request $request, Team $team): JsonResponse
     {
         $request->validate([
           'category_id' => 'required|exists:categories,id',
         ]);
 
-        // بررسی می‌کنیم که آیا دسته‌بندی قبلاً به تیم اضافه شده است یا خیر
         if (!$team->categories()->where('categories.id', $request->category_id)->exists()) {
           $team->categories()->attach($request->category_id);
         }
 
-        event(new CategoryAdded($team->id, $request->category_id));
+        //event(new CategoryAdded($team->id, $request->category_id));
 
         return response()->json(['message' => 'Category added to team successfully']);
       }
-
-
-
 }
