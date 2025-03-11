@@ -46,41 +46,22 @@ import axios from "axios";
                                 {{ $t('search_results') }}
                               </h3>
                               <div v-if="searchResults.length > 0" class="list-disc pl-5">
-                                <div v-for="(word, index) in searchResults" :key="word.id"
-                                class="p-4 rounded shadow-sm grid grid-cols-5 items-center">
+                                <div v-for="word in searchResults" :key="word.id"
+                                     class="p-4 xl:p-6 rounded-xl shadow-sm flex flex-col lg:grid lg:grid-cols-4 gap-4 lg:gap-6 xl:gap-8 items-start lg:items-center hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 hover:bg-gray-700/50 transform translate-y-0 hover:-translate-y-1 dark:text-white text-black">
 
-                                <!-- شماره و کلمه -->
-                                <div class="flex items-center">
-                                  <div class="ml-5">
-                                    {{ index + 1 }}
-                                  </div>
-                                  <div>{{ word.word }}</div>
-                                </div>
+                                    <div>{{ word . word }}</div>
+                                    <div>{{ word . meaning }}</div>
 
-                                <!-- معنی کلمه -->
-                                <div>{{ word.meaning }}</div>
+                                    <div class="text-sm text-gray-700 dark:text-gray-300">
+                                      👤 {{ word.user ? word.user.name : '-' }}
+                                    </div>
 
-                                <!-- نام کاربر -->
-                                <div class="text-sm text-gray-700 dark:text-gray-300">
-                                  👤 {{ word.user ? word.user.name : '-' }}
-                                </div>
-
-                                <!-- تیم‌ها -->
-                                <div class="flex justify-start gap-2">
-                                  <span v-for="team in (word.user && word.user.teams ? word.user.teams.slice(0, 1) : [])"
-                                  :key="team.id"
-                                  class="bg-green-600 dark:text-white text-xs px-3 py-1 rounded-xl">
-                                  {{ team.name }}
-                                  </span>
-                                </div>
-
-                              <!-- دکمه‌های عملیات -->
                               <div class="flex justify-end ">
                                 <button @click="viewWord(word)"
                                 class="px-4 py-2 rounded bg-blue-200 text-blue-700 ml-2 hover:bg-blue-300">
                                 {{ $t('view') }}
-                              </button>
-                            </div>
+                                </button>
+                              </div>
 
                           </div>
                         </div>
@@ -97,7 +78,7 @@ import axios from "axios";
 
                         <div v-if="words.length > 0" class="space-y-2 border border-gray-700/50 rounded-xl max-w-7xl mx-auto">
                             <div v-for="(word, index) in words" :key="word.id"
-                                class="p-4 xl:p-6 rounded-xl shadow-sm flex flex-col lg:grid lg:grid-cols-7 gap-4 lg:gap-6 xl:gap-8 items-start lg:items-center hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 hover:bg-gray-700/50 transform translate-y-0 hover:-translate-y-1 dark:text-white text-black">
+                                class="p-4 xl:p-6 rounded-xl shadow-sm flex flex-col lg:grid lg:grid-cols-6 gap-4 lg:gap-6 xl:gap-8 items-start lg:items-center hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 hover:bg-gray-700/50 transform translate-y-0 hover:-translate-y-1 dark:text-white text-black">
                                 <!-- Word -->
                                 <div class="flex items-center w-full">
                                     <div class="ml-4 xl:ml-12 text-gray-400">{{ index + 1 }}</div>
@@ -131,21 +112,13 @@ import axios from "axios";
                                       👤 {{ word.user ? word.user.name : '-' }}
                                     </div>
 
-                                    <!-- تیم‌ها -->
-                                    <div class="flex justify-start gap-2">
-                                      <span v-for="team in (word.user && word.user.teams ? word.user.teams.slice(0, 3) : [])"
-                                      :key="team.id"
-                                      class="bg-green-600 dark:text-white text-xs px-3 py-1 rounded-xl">
-                                      {{ team.name }}
-                                      </span>
-                                    </div>
                                 </div>
 
                                 <!-- Desktop Content -->
                                 <div class="hidden lg:block truncate xl:pr-4">
                                     {{ word . meaning }}
                                 </div>
-                                <div class="flex hidden lg:block truncate xl:pr-4 justify-start gap-3 xl:gap-2 w-full ml-auto">
+                                <div class="hidden lg:block truncate xl:pr-4 justify-start gap-3 xl:gap-2 w-full ml-auto">
                                     <span v-for="category in (word.categories ? word.categories.slice(0, 1) : [])"
                                         :key="category.id"
                                         class="bg-gray-300 dark:bg-gray-600 dark:text-white text-black text-xs px-3 py-1 rounded-xl">
@@ -156,15 +129,6 @@ import axios from "axios";
                                 <!-- نام کاربر -->
                                 <div class="text-sm  hidden lg:block truncate xl:pr-4 text-gray-700 dark:text-gray-300">
                                   👤 {{ word.user ? word.user.name : '-' }}
-                                </div>
-
-                                <!-- تیم‌ها -->
-                                <div class="flex hidden lg:block truncate xl:pr-4 justify-start gap-2">
-                                  <span v-for="team in (word.user && word.user.teams ? word.user.teams.slice(0, 1) : [])"
-                                  :key="team.id"
-                                  class="bg-green-600 dark:text-white text-xs px-3 py-1 rounded-xl">
-                                  {{ team.name }}
-                                  </span>
                                 </div>
 
                                 <!-- Action Buttons -->
