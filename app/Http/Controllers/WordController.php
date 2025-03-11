@@ -4,23 +4,22 @@ namespace App\Http\Controllers;
 
 use App\Models\Word;
 use App\Models\Category;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Inertia\Response;
 
 class WordController extends Controller
 {
-    public function index()
-    {
-        $words = Word::all();
-        return Inertia::render('Dashboard', [
-            'words' => $words,
-        ]);
-    }
-
-    public function userWords()
+    /**
+     * Displays words along with their categories, also gets the files from liara bucket.
+     *
+     * @return Response
+     */
+    public function index(): Response
     {
         $words = Auth::user()->words()->with('categories')->get();
         $categories = Category::all();
@@ -37,6 +36,12 @@ class WordController extends Controller
         ]);
     }
 
+    /**
+     * validates the word.
+     *
+     * @param Request $request
+     * @return array
+     */
     private function validateWord(Request $request): array
     {
         return $request->validate([
@@ -49,7 +54,13 @@ class WordController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function store(Request $request): JsonResponse
     {
 
         try {
@@ -83,7 +94,14 @@ class WordController extends Controller
         }
     }
 
-    public function update(Request $request, $id)
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param Request $request
+     * @param  int  $id
+     * @return JsonResponse
+     */
+    public function update(Request $request, $id): JsonResponse
     {
         $request->validate([
             'word'               => 'required|string|max:255',
@@ -117,15 +135,21 @@ class WordController extends Controller
         if ($request->selectedCategories) {
             $categories = json_decode($request->selectedCategories, true);
             if (!is_array($categories)) {
-                return response()->json(['error' => 'فرمت دسته‌بندی‌ها اشتباه است'], 400);
+                return response()->json(['error' => 'categories format is wrong'], 400);
             }
             $word->categories()->sync($categories);
         }
 
-        return response()->json(['message' => 'کلمه با موفقیت به‌روزرسانی شد', 'word' => $word], 200);
+        return response()->json(['message' => 'word updated successfully', 'word' => $word], 200);
     }
 
-    public function destroy($id)
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return JsonResponse
+     */
+    public function destroy($id): JsonResponse
     {
         $word = Word::findOrFail($id);
 
@@ -139,7 +163,7 @@ class WordController extends Controller
 
         $word->delete();
 
-        return response()->json(['message' => 'کلمه با موفقیت حذف شد'], 200);
+        return response()->json(['message' => 'word deleted successfully']);
     }
 
 }

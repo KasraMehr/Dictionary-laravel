@@ -21,7 +21,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     // Words Management Routes
-    Route::get('/words', [WordController::class, 'userWords'])->name('words.index');
+    Route::get('/words', [WordController::class, 'index'])->name('words.index');
     Route::post('/words', [WordController::class, 'store'])->name('words.store');
     Route::get('/words/{word}', [WordController::class, 'show'])->name('words.show'); // Show specific word
     Route::put('/words/{word}', [WordController::class, 'update'])->name('words.update'); // Update word
