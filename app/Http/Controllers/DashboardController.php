@@ -2,16 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Models\Word;
 use App\Models\User;
 use App\Models\Team;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\DB;
+use Inertia\Response;
 
 class DashboardController extends Controller
 {
-    public function index()
+    /**
+     * Displays a chart with information about users, words and teams.
+     *
+     * @return Response
+     */
+    public function index(): Response
     {
         $chartData = [
             '1_week' => [
@@ -44,16 +51,21 @@ class DashboardController extends Controller
                 $user->formatted_created_at = $user->created_at->format('d/m/Y');
                 return $user;
             })
-            ->toArray(); // تبدیل به آرایه
+            ->toArray();
 
         return Inertia::render('Dashboard', [
             'chartData' => $chartData,
             'words' => Word::latest()->take(5)->get()->toArray(),
-            'users' => $users, // ارسال مقدار اصلاح‌شده
+            'users' => $users,
         ]);
     }
 
-    public function getChartData()
+    /**
+     * returns the chart data over the past month.
+     *
+     * @return JsonResponse
+     */
+    public function getChartData(): JsonResponse
     {
         $startDate = now()->subDays(30)->startOfDay();
         $endDate = now()->endOfDay();
