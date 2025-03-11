@@ -5,6 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @method static withCount(string $string)
+ * @method static findOrFail(int $id)
+ */
 class Category extends Model
 {
     use HasFactory;
