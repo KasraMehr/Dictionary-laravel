@@ -155,10 +155,7 @@
                                 <div v-if="filteredWords.length > 0" class="space-y-2 border border-gray-700/50 rounded-xl max-w-7xl mx-auto">
                                     <div v-for="(word, index) in filteredWords" :key="word.id"
                                          class="p-4 xl:p-6 rounded-xl shadow-sm flex flex-col lg:grid lg:grid-cols-4 gap-4 lg:gap-6 xl:gap-8 items-start lg:items-center hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 hover:bg-gray-700/50 transform translate-y-0 hover:-translate-y-1 dark:text-white text-black">
-                                        <div class="flex items-center">
-
-                                            <div>{{ word . word }}</div>
-                                        </div>
+                                        <div>{{ word . word }}</div>
                                         <div>{{ word . meaning }}</div>
                                         <div>{{ word . pronunciation }}</div>
                                         <!-- Action Buttons -->
