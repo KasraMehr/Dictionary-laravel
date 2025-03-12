@@ -58,7 +58,7 @@ const logout = () => {
                             <!-- لوگو -->
                             <div class="shrink-0 flex items-center h-full">
                                 <Link :href="route('landing')">
-                                    <img src="/logo.png" alt="logo" class="h-full w-auto max-h-16 object-contain" />
+                                    <img src="/logo.webp" alt="logo" class="h-full w-auto max-h-16 object-contain" />
                                 </Link>
                             </div>
 
