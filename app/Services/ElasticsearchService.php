@@ -2,7 +2,8 @@
 
 namespace App\Services;
 
-use Elastic\Elasticsearch\ClientBuilder;
+use App\Models\Word;
+use Elasticsearch\ClientBuilder;
 use Illuminate\Support\Facades\Log;
 use Exception;
 
@@ -43,6 +44,7 @@ class ElasticsearchService
                 ]
             ]);
         }
+        else return [];
     }
 
     public function searchWords($query)
@@ -57,7 +59,7 @@ class ElasticsearchService
                 ],
             ]);
         } else {
-            return \App\Models\Word::with(['user:id,name', 'user.teams:id,name', 'categories:id,name'])
+            return Word::with(['user:id,name', 'user.teams:id,name', 'categories:id,name'])
                 ->where('word', 'LIKE', "%$query%")
                 ->orWhere('meaning', 'LIKE', "%$query%")
                 ->get();
