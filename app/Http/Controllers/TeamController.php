@@ -24,19 +24,7 @@ class TeamController extends Controller
     public function index(): Response
     {
         $teams = Team::with(['owner', 'users', 'categories'])
-            ->withCount('users')
-            ->get()
-            ->map(function ($team) {
-                $userWordsCount = $team->users->sum(function ($user) {
-                    return $user->words->count();
-                });
-
-                $ownerWordsCount = $team->owner ? $team->owner->words->count() : 0;
-
-                $team->words_count = $userWordsCount + $ownerWordsCount;
-
-                return $team;
-            });
+            ->withCount('users', 'words')->get();
 
         $categories = Category::all();
 
