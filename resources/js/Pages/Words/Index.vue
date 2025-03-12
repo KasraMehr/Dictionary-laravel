@@ -619,7 +619,7 @@
         },
         created() {
             if (!window.location.pathname.startsWith("/team/")) {
-                return; // جلوگیری از متصل شدن به Socket
+                return;
             }
 
           this.socket = io(`${window.location.origin}`);
@@ -958,10 +958,10 @@
             },
         },
         computed: {
-    // فیلتر کلمات بر اساس کلمه یا معنی
+            // filter words
             filteredWords() {
               const term = this.searchTerm.trim().toLowerCase();
-              if (!term) return null;
+                if (!term) return []
               return this.words.filter(
                 (word) =>
                   word.word.toLowerCase().includes(term) ||
@@ -984,7 +984,6 @@
     this.socket.on("connect", () => {
       console.log("✅ Socket connected.");
 
-      // ارسال رویداد عضویت در تیم به سرور
       const teamId = this.$page.props.team?.id;
       const userId = this.$page.props.auth?.user?.id;
       if (teamId && userId) {
@@ -992,12 +991,10 @@
       }
     });
 
-    // دریافت رویداد حرکت موس
     this.socket.on("mouse_move", (data) => {
       console.log("Mouse move received:", data);
     });
 
-    // دریافت رویدادهای مربوط به کاربران آنلاین
     this.socket.on("user-joined", (data) => {
       console.log("📥 User joined:", data);
       this.onlineUsers = data.onlineUsers;
@@ -1013,12 +1010,10 @@
       this.onlineUsers = data.onlineUsers;
     });
 
-    // دیباگ: دریافت هر رویداد برای بررسی
     this.socket.onAny((event, ...args) => {
       console.log("📩 Received event:", event, args);
     });
 
-    // اضافه کردن رویداد کلیک بیرون (برای بستن ماژول یا عملکرد دیگر)
     window.addEventListener("click", this.handleClickOutside);
   },
   beforeUnmount() {
