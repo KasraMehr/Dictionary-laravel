@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -19,7 +20,7 @@ class User extends Authenticatable
 {
     use HasApiTokens;
 
-    /** @use HasFactory<\Database\Factories\UserFactory> */
+    /** @use HasFactory<UserFactory> */
     use HasFactory;
     use HasProfilePhoto;
     use HasTeams;
@@ -60,22 +61,52 @@ class User extends Authenticatable
         ];
     }
 
+    /**
+     * Get the teams the user belongs to.
+     *
+     * This defines a many-to-many relationship between users and teams.
+     *
+     * @return BelongsToMany
+     */
     public function teams(): BelongsToMany
     {
         return $this->belongsToMany(Team::class, 'team_user', 'user_id', 'team_id');
     }
 
-    public function currentTeam()
+    /**
+     * Get the current team of the user.
+     *
+     * This defines a one-to-many (inverse) relationship between users and teams.
+     *
+     * @return BelongsTo
+     */
+    public function currentTeam(): BelongsTo
     {
         return $this->belongsTo(Team::class, 'current_team_id');
     }
 
+    /**
+     * Get the words created by the user.
+     *
+     * This defines a one-to-many relationship between users and words.
+     *
+     * @return HasMany
+     */
     public function words(): HasMany
     {
-        return $this->hasmany(Word::class);
+        return $this->hasMany(Word::class);
     }
 
-    public function wordCountInTeam($teamId): int
+    /**
+     * Get the count of words the user has in a specific team.
+     *
+     * This method filters the user's words based on the given team ID and
+     * returns the total count.
+     *
+     * @param int $teamId The ID of the team to check for words.
+     * @return int The number of words the user has in the specified team.
+     */
+    public function wordCountInTeam(int $teamId): int
     {
         return $this->words()
             ->whereHas('team', function ($query) use ($teamId) {
