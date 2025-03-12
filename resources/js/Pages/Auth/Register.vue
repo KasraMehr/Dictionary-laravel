@@ -95,7 +95,7 @@ const submit = () => {
             <div class="flex flex-col gap-6 lg:w-1/3 overflow-hidden rounded-lg bg-gradient-to-br from-gray-400/50 to-gray-200/50 dark:from-gray-800/50 dark:to-gray-700/50 p-6 shadow-lg ring-1 ring-white/10 transition duration-300 hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 backdrop-blur-sm mt-6">
                 <form @submit.prevent="submit" dir="rtl" class="space-y-1">
                     <div>
-                        <InputLabel for="name" :value="$t('password')" class="text-black dark:text-white/90 text-lg" />
+                        <InputLabel for="name" :value="$t('name')" class="text-black dark:text-white/90 text-lg" />
                         <TextInput
                             id="name"
                             v-model="form.name"
