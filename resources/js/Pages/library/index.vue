@@ -14,9 +14,9 @@ import axios from "axios";
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-gray-200 dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg">
-                  <!-- Search Bar -->
 
-                  <div class="relative w-full lg:w-96 xl:w-[500px] mx-auto lg:mx-0 lg:justify-self-center">
+                  <!-- Search Bar -->
+                  <div class="relative w-full lg:w-96 xl:w-[500px] mx-auto lg:mx-0 lg:justify-self-center mt-10">
                       <input v-model="searchTerm" @focus="openSearchModal" type="text" :placeholder="$t('search_word_or_meaning')"
                           class="w-full border rounded-xl p-2 sm:p-3 lg:p-4 dark:dark:text-white text-black focus:outline-none dark:bg-gray-800/50 focus:ring-2 focus:ring-[#FF2D20] hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 hover:bg-gray-700/50 placeholder-gray-400 text-sm sm:text-base lg:text-medium" />
                   </div>
@@ -74,31 +74,25 @@ import axios from "axios";
 
                     <!-- Words List -->
                     <div class="dark:text-white text-black p-4 md:px-10 xl:px-24 2xl:px-4 py-10">
-                        <h1 class="text-xl lg:text-2xl font-bold mb-6">{{ $t('word_list') }}</h1>
+                        <h1 class="text-xl lg:text-2xl font-bold mb-6 px-5">{{ $t('word_list') }}</h1>
 
                         <div v-if="words.length > 0" class="space-y-2 border border-gray-700/50 rounded-xl max-w-7xl mx-auto">
                             <div v-for="(word, index) in words" :key="word.id"
-                                class="p-4 xl:p-6 rounded-xl shadow-sm flex flex-col lg:grid lg:grid-cols-6 gap-4 lg:gap-6 xl:gap-8 items-start lg:items-center hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 hover:bg-gray-700/50 transform translate-y-0 hover:-translate-y-1 dark:text-white text-black">
+                                class="p-4 xl:p-6 rounded-xl shadow-sm flex flex-col lg:grid lg:grid-cols-5 gap-4 lg:gap-6 xl:gap-8 items-start lg:items-center hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 hover:bg-gray-700/50 transform translate-y-0 hover:-translate-y-1 dark:text-white text-black">
                                 <!-- Word -->
                                 <div class="flex items-center w-full">
                                     <div class="ml-4 xl:ml-12 text-gray-400">{{ index + 1 }}</div>
-                                    <div class="ml-4 xl:ml-12">
-                                        <img :src="word.image_url"  alt="Word Image"
-                                            class="w-12 h-12 object-cover rounded-full">
-                                    </div>
-
+                                    <div class="font-medium truncate mx-8">{{ word.word }}</div>
                                 </div>
-                                <div class="font-medium truncate mx-8">{{ word.word }}</div>
-
                                 <!-- Mobile Labels and Content -->
                                 <div class="grid grid-cols-1 gap-2 w-full lg:hidden">
                                     <div class="flex flex-col">
-                                        <span class="text-gray-400 text-sm">{{ $t('meaning') }}:</span>
-                                        <span class="truncate">{{ word . meaning }}</span>
+                                        <span class="text-gray-400 text-sm py-2">{{ $t('meaning') }}:</span>
+                                        <span class="truncate p-2">{{ word . meaning }}</span>
                                     </div>
                                     <div class="flex flex-col" v-if="word.categories !== []">
-                                        <span class="text-gray-400 text-sm">{{ $t('categories') }}:</span>
-                                        <span class="truncate">
+                                        <span class="text-gray-400 text-sm py-2">{{ $t('categories') }}:</span>
+                                        <span class="truncate p-2">
                                             <span
                                                 v-for="(category, i) in (word.categories ? word.categories.slice(0, 3) : [])"
                                                 :key="i"
@@ -107,8 +101,7 @@ import axios from "axios";
                                             </span>
                                         </span>
                                     </div>
-                                    <!-- نام کاربر -->
-                                    <div class="text-sm text-gray-700 dark:text-gray-300">
+                                    <div class="text-sm text-gray-700 dark:text-gray-300 p-2">
                                       👤 {{ word.user ? word.user.name : '-' }}
                                     </div>
 
@@ -126,7 +119,6 @@ import axios from "axios";
                                     </span>
                                 </div>
 
-                                <!-- نام کاربر -->
                                 <div class="text-sm  hidden lg:block truncate xl:pr-4 text-gray-700 dark:text-gray-300">
                                   👤 {{ word.user ? word.user.name : '-' }}
                                 </div>
