@@ -92,7 +92,7 @@ https://docs.modern-dictionary.com
 ```bash
 php artisan config:cache
 php artisan route:cache
-php artisan migrate --force
+php artisan migrate
 ```
 
 ### Frontend
