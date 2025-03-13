@@ -86,10 +86,6 @@ For detailed API documentation, please refer to our main documentation at:
 ```
 https://docs.modern-dictionary.com
 ```
-Additionally, you can test available API endpoints locally at:
-```
-http://localhost:8000/api/documentation
-```
 
 ## Deployment
 ### Backend
