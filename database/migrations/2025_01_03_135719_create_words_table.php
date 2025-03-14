@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('voice')->nullable();
             $table->string('image')->nullable();
             $table->string('description')->nullable();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
