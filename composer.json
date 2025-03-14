@@ -21,6 +21,7 @@
         "predis/predis": "^2.3",
         "pusher/pusher-php-server": "^7.2",
         "sayakb/captcha": "dev-master",
+        "stichoza/google-translate-php": "^5.2",
         "tightenco/ziggy": "^2.0"
     },
     "require-dev": {
