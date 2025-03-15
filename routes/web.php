@@ -14,6 +14,7 @@ use App\Http\Controllers\TeamController;
 Route::get('/', [ReportController::class, 'landingData'])->name('landing');
 Route::get('/library', [GeneralController::class, 'index'])->name('library');
 Route::get('/search', [GeneralController::class, 'search']);
+Route::get('/word/{word}', [WordController::class, 'show'])->name('word.show');
 
 
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])->group(function ()

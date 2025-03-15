@@ -46,6 +46,19 @@ class Word extends Model
         'user_id',
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($word) {
+            $word->slug = Str::slug($word->word);
+        });
+
+        static::updating(function ($word) {
+            $word->slug = Str::slug($word->word);
+        });
+    }
+
     /**
      * Get the user who created the word.
      *
