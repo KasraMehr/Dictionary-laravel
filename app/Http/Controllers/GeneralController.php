@@ -15,13 +15,6 @@ use Inertia\Response;
 
 class GeneralController extends Controller
 {
-    protected $elasticsearch;
-
-    public function __construct(ElasticsearchService $elasticsearch)
-    {
-        $this->elasticsearch = $elasticsearch;
-    }
-
     /**
      * Displays a library where there is a list of words that has been made by
      * users or teams along with their categories.
@@ -32,15 +25,50 @@ class GeneralController extends Controller
     {
         $words = Word::with([
             'user:id,name',
-            'user.teams:id,name',
             'categories:id,name'
-        ])->get();
+        ])->paginate(10);
 
-        foreach ($words as $word) {
-            $this->elasticsearch->indexWord($word);
-        }
+        $words->each(function ($word) {
+            $word->user = $word->user ?? (object) ['id' => null, 'name' => ''];
+            $word->categories = $word->categories ?? collect([]);
+        });
 
-        return Inertia::render('library/index', compact('words'));
+        return Inertia::render('library/index', [
+            'words' => $words->items(),
+            'pagination' => [
+                'current_page' => $words->currentPage(),
+                'last_page' => $words->lastPage(),
+                'per_page' => $words->perPage(),
+                'total' => $words->total(),
+                'next_page_url' => $words->nextPageUrl(),
+            ]
+        ]);
+    }
+
+    public function fetchWords(Request $request)
+    {
+        $words = Word::with([
+            'user:id,name',
+            'categories:id,name'
+            ])->paginate(10);
+
+        $words->each(function ($word) {
+            $word->user = $word->user ?? (object) ['id' => null, 'name' => ''];
+            $word->categories = $word->categories ?? collect([]);
+        });
+
+        return Inertia::render('library/index', [
+            'words' => $words->items(),
+            'pagination' => [
+                'current_page' => $words->currentPage(),
+                'last_page' => $words->lastPage(),
+                'per_page' => $words->perPage(),
+                'total' => $words->total(),
+                'next_page_url' => $words->nextPageUrl(),
+            ]
+        ]);
+
+        return response()->json($words);
     }
 
     /**
@@ -50,11 +78,11 @@ class GeneralController extends Controller
      *
      * @return JsonResponse
      */
-    public function search(Request $request): JsonResponse
-    {
-        $query = $request->input('query');
-        $results = $this->elasticsearch->searchWords($query);
-
-        return response()->json($results);
-    }
+    // public function search(Request $request): JsonResponse
+    // {
+    //     $query = $request->input('query');
+    //     $results = $this->elasticsearch->searchWords($query);
+    //
+    //     return response()->json($results);
+    // }
 }
