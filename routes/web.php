@@ -14,6 +14,7 @@ use App\Http\Controllers\TeamController;
 Route::get('/', [ReportController::class, 'landingData'])->name('landing');
 Route::get('/library', [GeneralController::class, 'index'])->name('library');
 Route::get('/search', [GeneralController::class, 'search']);
+Route::get('/fetch-words', [WordController::class, 'fetchWords']);
 Route::get('/word/{word}', [WordController::class, 'show'])->name('word.show');
 
 
