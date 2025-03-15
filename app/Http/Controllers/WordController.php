@@ -37,6 +37,25 @@ class WordController extends Controller
     }
 
     /**
+    * Shows a specific word along with its categories.
+    *
+    * @param Request $request
+    * @param int $id
+    * @return JsonResponse
+    */
+    public function show(Request $request, int $id): JsonResponse
+    {
+        $word = Word::with('categories')->findOrFail($id);
+
+        $word->image_url = $word->image ? Storage::disk('liara')->url($word->image) : null;
+        $word->voice_url = $word->voice ? Storage::disk('liara')->url($word->voice) : null;
+
+        return Inertia::render('Words/Word', [
+            'word' => $word
+        ]);
+    }
+
+    /**
      * validates the word.
      *
      * @param Request $request
