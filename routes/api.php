@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Api\WordImportController;
+use App\Http\Controllers\GeneralController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -9,6 +9,7 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::get('/import-word/{word}', [WordImportController::class, 'importWord']);
+Route::get('/fetch-words', [GeneralController::class, 'fetchWords']);
 
 Route::post('/set-locale', function (Illuminate\Http\Request $request) {
     $locale = $request->input('locale');

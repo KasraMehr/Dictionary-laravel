@@ -49,9 +49,7 @@ class ReportController extends Controller
 
         $totalUsers = $users->count();
         $totalTeams = $teams->count();
-        $totalWords = $users->sum(function ($user) {
-            return $user->words->count();
-        });
+        $totalWords = Word::count();
 
         return Inertia::render('Landing', [
             'canLogin' => Route::has('login'),

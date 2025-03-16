@@ -52,10 +52,15 @@ class Word extends Model
 
         static::creating(function ($word) {
             $word->slug = Str::slug($word->word);
+            dispatch(new IndexWordInElasticsearch($word));
         });
 
         static::updating(function ($word) {
             $word->slug = Str::slug($word->word);
+        });
+
+        static::updated(function ($word) {
+            dispatch(new IndexWordInElasticsearch($word));
         });
     }
 

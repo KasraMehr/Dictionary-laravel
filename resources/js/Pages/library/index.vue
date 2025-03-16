@@ -133,9 +133,8 @@ import axios from "axios";
                             </div>
                         </div>
                         <p v-else class="text-gray-600 text-center py-8 text-lg">{{ $t('no_words_found') }}</p>
+                        <div ref="loadMoreTrigger" class="h-10"></div>
                     </div>
-
-
                 </div>
             </div>
         </div>
@@ -214,10 +213,14 @@ export default {
             type: Array,
             required: true,
         },
+        pagination: {
+            type: Object,
+            required: true
+        },
         categories: {
             type: Array,
             default: () => [],
-            required: true,
+            required: false,
         },
     },
     data() {
@@ -230,9 +233,57 @@ export default {
             loading: false,
             filteredWords: [],
             selectedWord: {},
+            words: [],  // لیست کلمات
+            page: 1,     // شماره صفحه
+            perPage: 10, // تعداد آیتم‌ها در هر درخواست
+            isLoading: false, // برای جلوگیری از درخواست‌های زیاد
+            hasMore: true
         };
     },
     methods: {
+      async loadWords() {
+          if (this.isLoading || !this.hasMore) return;
+
+          this.isLoading = true;
+          try {
+              const response = await fetch(`/api/fetch-words?page=${this.page}&per_page=${this.perPage}`);
+
+              if (!response.ok) {
+                  throw new Error(`HTTP error! Status: ${response.status}`);
+              }
+
+              const data = await response.json();
+              console.log("API Response:", data); // بررسی مقدار دریافتی
+
+        // تغییر در این بخش برای استفاده از data.words
+              if (!data || typeof data !== "object" || !data.words || !Array.isArray(data.words)) {
+                  throw new Error("Invalid response format");
+              }
+
+              if (data.words.length < this.perPage || data.pagination.current_page >= data.pagination.last_page) {
+                  this.hasMore = false;
+              }
+
+              this.words.push(...data.words);
+              this.page++;
+          } catch (error) {
+              console.error("Error loading words:", error);
+          }
+          this.isLoading = false;
+      },
+      setupObserver() {
+          this.$nextTick(() => {
+            if (!this.$refs.loadMoreTrigger) return;
+
+            const observer = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting) {
+                    this.loadWords();
+                }
+            }, { threshold: 1.0 });
+
+            observer.observe(this.$refs.loadMoreTrigger);
+            });
+        },
         openSearchModal() {
             this.showSearchModal = true;
         },
@@ -285,7 +336,8 @@ export default {
         },
     },
     mounted() {
-        // بستن ماژول در صورت کلیک بیرون
+        this.loadWords();
+        this.setupObserver();
         window.addEventListener("click", this.handleClickOutside);
     },
     beforeDestroy() {
