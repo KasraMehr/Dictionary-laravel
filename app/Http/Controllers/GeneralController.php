@@ -47,17 +47,19 @@ class GeneralController extends Controller
 
     public function fetchWords(Request $request)
     {
+        $page = $request->input('page', 1);
+        $perPage = 10;
         $words = Word::with([
             'user:id,name',
             'categories:id,name'
-            ])->paginate(10);
+            ])->paginate($perPage, ['*'], 'page', $page);
 
         $words->each(function ($word) {
             $word->user = $word->user ?? (object) ['id' => null, 'name' => ''];
             $word->categories = $word->categories ?? collect([]);
         });
 
-        return Inertia::render('library/index', [
+        return response()->json([
             'words' => $words->items(),
             'pagination' => [
                 'current_page' => $words->currentPage(),
@@ -67,8 +69,6 @@ class GeneralController extends Controller
                 'next_page_url' => $words->nextPageUrl(),
             ]
         ]);
-
-        return response()->json($words);
     }
 
     /**
