@@ -203,17 +203,6 @@
                                         <span class="text-gray-400 text-sm">{{ $t('meaning') }}:</span>
                                         <span class="truncate">{{ word . meaning }}</span>
                                     </div>
-                                    <!-- <div class="flex flex-col">
-                                        <span class="text-gray-800 dark:text-gray-100 text-sm">{{ $t('categories') }}:</span>
-                                        <span class="truncate">
-                                            <span
-                                                v-for="(category, i) in (word.categories ? word.categories.slice(0, 3) : [])"
-                                                :key="i"
-                                                class="bg-gray-200 dark:bg-gray-500 px-2 py-1 text-sm rounded-lg mx-1">
-                                                {{ category . name }}
-                                            </span>
-                                        </span>
-                                    </div> -->
                                 </div>
 
                                 <!-- Desktop Content -->
@@ -792,7 +781,7 @@
                     document.body.appendChild(notification);
                     setTimeout(() => {
                         location.reload();
-                    }, 2000);
+                    }, 7000);
                 });
             },
             fetchAutoFill() {
