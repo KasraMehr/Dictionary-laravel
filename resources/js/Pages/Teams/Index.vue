@@ -55,7 +55,7 @@ const leaveTeam = async (teamId, userId) => {
 </script>
 
 <template>
-  <AppLayout title="Dashboard">
+  <AppLayout title="Teams">
     <template #header>
         <h2 class="font-semibold text-xl dark:text-white text-black leading-tight rounded-lg">{{ $t('team_list') }}</h2>
     </template>

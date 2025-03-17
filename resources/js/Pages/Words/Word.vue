@@ -11,7 +11,7 @@ defineProps({
 </script>
 
 <template>
-    <MainLayout title="Home">
+    <MainLayout title="Word">
     <div
         class="min-h-screen text-gray-900 bg-gray-100 bg-gradient-to-br dark:from-gray-900 dark:to-gray-800 dark:text-white/90 transition-colors duration-300"
     >
