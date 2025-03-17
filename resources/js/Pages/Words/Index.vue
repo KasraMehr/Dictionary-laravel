@@ -54,7 +54,7 @@
 
     <Head title="words" ><title>words</title></Head>
 
-    <AppLayout title="کلمات">
+    <AppLayout title="Words">
 
         <template #header dir="rtl">
 

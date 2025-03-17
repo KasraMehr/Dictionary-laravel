@@ -57,7 +57,7 @@ const isTeamPage = computed(() => {
 <template>
     <Head title="categories" />
 
-    <AppLayout title="دسته بندی">
+    <AppLayout title="Categories">
 
         <template #header dir="rtl">
 <!--            <div>-->
