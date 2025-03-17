@@ -42,10 +42,11 @@ class WordSeeder extends Seeder
             $pronunciation = $this->getPronunciationFromWiktionary($word);
 
             // Get image from wikipedia
-            $imagePath = $this->getWikiImage($word);
+            $imageUrl = $this->getWikiImage($word);
+            $imagePath = $this->saveImageFromUrl($imageUrl, "images/{$word}.jpg");
 
             // Generate voice file
-            $voicePath = "public/words/$word.mp3";
+            $voicePath = "voices/{$word}.mp3";
             $this->generateVoice($word, $voicePath);
 
             // Store in database
@@ -114,10 +115,28 @@ class WordSeeder extends Seeder
 
     }
 
+    private function saveImageFromUrl($imageUrl, $path)
+{
+    if ($imageUrl) {
+        try {
+            $imageData = Http::get($imageUrl)->body();
+            Storage::disk('liara')->put($path, $imageData);
+            return $path;
+        } catch (\Exception $e) {
+            echo "⚠️ Failed to save image for $path\n";
+        }
+    }
+    return null;
+}
+
     private function generateVoice($word, $path)
     {
-        $voiceUrl = "https://translate.google.com/translate_tts?ie=UTF-8&tl=en&client=tw-ob&q=" . urlencode($word);
-        $voiceData = Http::get($voiceUrl)->body();
-        Storage::put($path, $voiceData);
+      try {
+          $voiceUrl = "https://translate.google.com/translate_tts?ie=UTF-8&tl=en&client=tw-ob&q=" . urlencode($word);
+          $voiceData = Http::get($voiceUrl)->body();
+          Storage::disk('liara')->put($path, $voiceData);
+      } catch (\Exception $e) {
+          echo "⚠️ Failed to generate voice for $word\n";
+      }
     }
 }
