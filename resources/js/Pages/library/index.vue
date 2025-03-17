@@ -198,6 +198,13 @@ import axios from "axios";
                             {{ category . name }}
                         </span>
                     </div>
+                    <div class="flex justify-end gap-3 mt-8 border-t border-gray-700 pt-4">
+                    <a :href="`/word/${selectedWord.id}`"
+                        class="px-6 py-2.5 bg-blue-500 dark:text-white text-black rounded-lg hover:bg-blue-700 transition-all duration-200
+                        focus:outline-none focus:ring-2 focus:ring-[#FF2D20] focus:ring-offset-2 focus:ring-offset-gray-800">
+                        {{ $t('view') }}
+                    </a>
+                    </div>
                 </div>
             </div>
         </div>

@@ -41,14 +41,14 @@ class WordController extends Controller
     *
     * @param Request $request
     * @param int $id
-    * @return JsonResponse
+    * @return Response
     */
-    public function show(Request $request, int $id): JsonResponse
+    public function show(Request $request, int $id): Response
     {
         $word = Word::with('categories')->findOrFail($id);
 
-        $word->image_url = $word->image ? Storage::disk('liara')->url($word->image) : null;
-        $word->voice_url = $word->voice ? Storage::disk('liara')->url($word->voice) : null;
+        //$word->image_url = $word->image ? Storage::disk('liara')->url($word->image) : null;
+        //$word->voice_url = $word->voice ? Storage::disk('liara')->url($word->voice) : null;
 
         return Inertia::render('Words/Word', [
             'word' => $word
