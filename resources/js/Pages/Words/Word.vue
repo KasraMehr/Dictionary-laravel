@@ -34,6 +34,8 @@ defineProps({
                       </div>
                       <div class="text-lg font-semibold text-gray-700 dark:text-gray-300">{{ word.meaning }}</div>
                       <div class="text-base text-gray-600 dark:text-gray-400 italic">{{ word.pronunciation }}</div>
+                      <div class="text-sm font-medium text-green-600 dark:text-green-400">{{ word.level }}</div>
+                      <div class="text-sm font-medium text-blue-600 dark:text-blue-400">{{ word.grammer }}</div>
                       <div class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">{{ word.description }}</div>
                     </div>
                 </main>
