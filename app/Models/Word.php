@@ -47,6 +47,10 @@ class Word extends Model
         'voice',
         'image',
         'user_id',
+        'level',
+        'grammer',
+        'native_lang',
+        'translated_lang',
     ];
 
     protected static function boot()
