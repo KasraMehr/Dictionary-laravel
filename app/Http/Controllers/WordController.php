@@ -40,10 +40,12 @@ class WordController extends Controller
     * Shows a specific word along with its categories.
     *
     * @param Request $request
+    * @param string $lang1
+    * @param string $lang2
     * @param int $id
     * @return Response
     */
-    public function show(Request $request, int $id): Response
+    public function show(Request $request, string $lang1, string $lang2, int $id): Response
     {
         $word = Word::with('categories')->findOrFail($id);
 
