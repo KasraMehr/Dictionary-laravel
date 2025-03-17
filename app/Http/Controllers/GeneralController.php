@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Services\ElasticsearchService;
 use App\Models\Word;
 use App\Models\User;
@@ -11,6 +12,7 @@ use App\Models\Team;
 use App\Models\Category;
 use Inertia\Inertia;
 use Inertia\Response;
+use GuzzleHttp\Client;
 
 
 class GeneralController extends Controller
@@ -78,11 +80,38 @@ class GeneralController extends Controller
      *
      * @return JsonResponse
      */
-    // public function search(Request $request): JsonResponse
-    // {
-    //     $query = $request->input('query');
-    //     $results = $this->elasticsearch->searchWords($query);
-    //
-    //     return response()->json($results);
-    // }
+     public function search(Request $request): JsonResponse
+     {
+        $query = $request->input('query');
+        $useElastic = $this->isElasticAvailable();
+
+        if ($useElastic) {
+            $results = $this->elasticsearch->searchWords($query);
+        } else {
+            $results = DB::table('words')
+                ->where('word', 'LIKE', "%{$query}%")
+                ->orWhere('meaning', 'LIKE', "%{$query}%")
+                ->limit(10)
+                ->get();
+        }
+
+        return response()->json($results);
+      }
+
+      /**
+      * checks if ElasticSearch is avalable or not.
+      *
+      * @return bool
+      */
+      private function isElasticAvailable(): bool
+      {
+          try {
+              $client = new Client();
+              $response = $client->get(env('ELASTICSEARCH_HOST', 'http://localhost:9200'));
+
+              return $response->getStatusCode() === 200;
+          } catch (\Exception $e) {
+              return false;
+          }
+      }
 }
