@@ -45,7 +45,7 @@ const logout = () => {
 
 <template>
     <div :dir="locale === 'en' ? 'ltr' : 'rtl'">
-        <Head :title="title" ><title>dashboard</title></Head>
+        <Head :title="title"></Head>
 
         <Banner />
 
