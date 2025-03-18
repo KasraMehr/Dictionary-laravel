@@ -131,11 +131,11 @@ function handleImageError() {
                     </div>
                 </main>
 
-                <footer class="py-16 text-center text-sm text-gray-400">
+                <!-- <footer class="py-16 text-center text-sm text-gray-400">
                     <p class="transition-all duration-300 hover:text-white hover:scale-105">
                         {{ $t('created_by') }}
                     </p>
-                </footer>
+                </footer> -->
             </div>
         </div>
     </div>
