@@ -74,10 +74,7 @@ const submit = () => {
 <template>
     <Head title="Sign up" />
     <div class="bg-gray-200 dark:bg-gray-800 min-h-screen">
-        <img
-            class="fixed inset-0 w-full h-full object-cover opacity-10"
-            src="https://laravel.com/assets/img/welcome/background.svg"
-        />
+        <img class="fixed inset-0 w-full h-full object-cover opacity-10" src="/logo.svg"/>
 
         <div class="relative min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0">
             <!-- Logo Container -->

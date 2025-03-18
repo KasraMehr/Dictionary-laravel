@@ -45,11 +45,7 @@ const submit = () => {
 
         <Link :href="route('landing')">
           <div class="mt-4 w-full max-w-[300px] mx-auto flex flex-col items-center gap-4 overflow-hidden rounded-lg bg-gradient-to-br from-gray-400 to-gray-300 dark:from-gray-800/50 dark:to-gray-700/50 shadow-lg ring-1 ring-white/10 transition duration-300 hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 backdrop-blur-sm p-4">
-            <img
-            src="/logo.webp"
-            alt="logo"
-            class="h-24 w-auto lg:h-32 transition-all duration-300 hover:scale-110"
-            />
+            <img src="/logo.svg" alt="logo" class="h-24 w-auto lg:h-32 transition-all duration-300 hover:scale-110"/>
           </div>
         </Link>
 
