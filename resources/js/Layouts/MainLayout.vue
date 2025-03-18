@@ -12,6 +12,18 @@ import { useI18n } from 'vue-i18n';
 
 defineProps({
     title: String,
+    metaDescription: {
+        type: String,
+        default: 'Default page description for better SEO.'
+    },
+    metaKeywords: {
+        type: String,
+        default: 'keyword1, keyword2, keyword3'
+    },
+    metaImage: {
+        type: String,
+        default: 'https://example.com/default-image.jpg'
+    }
 });
 
 const showingNavigationDropdown = ref(false);
@@ -35,7 +47,28 @@ const setLanguage = (lang) => {
 
 <template>
     <div :dir="locale === 'en' ? 'ltr' : 'rtl'">
-        <Head :title="title"></Head>
+        <Head :title="title">
+          <!-- Meta Tags for SEO -->
+      <meta name="description" :content="metaDescription" />
+      <meta name="keywords" :content="metaKeywords" />
+      <meta name="robots" content="index, follow" />
+
+      <!-- Open Graph Meta Tags (for social media sharing) -->
+      <meta property="og:title" :content="title" />
+      <meta property="og:description" :content="metaDescription" />
+      <meta property="og:image" :content="metaImage" />
+      <meta property="og:url" :content="currentUrl" />
+      <meta property="og:type" content="website" />
+
+      <!-- Twitter Card Meta Tags -->
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" :content="title" />
+      <meta name="twitter:description" :content="metaDescription" />
+      <meta name="twitter:image" :content="metaImage" />
+
+      <!-- Canonical Link (helps with SEO) -->
+      <link rel="canonical" :href="currentUrl" />
+        </Head>
 
         <Banner />
 
