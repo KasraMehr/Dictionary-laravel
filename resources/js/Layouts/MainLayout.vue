@@ -221,6 +221,35 @@ const setLanguage = (lang) => {
             </main>
         </div>
     </div>
+    <footer class="bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300 py-6">
+        <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col sm:flex-row justify-center items-center">
+                <p class="text-sm">&copy; {{ new Date().getFullYear() }} Modern Dictionary. All rights reserved.</p>
+
+                <div class="flex space-x-4 mt-4 sm:mt-0">
+                    <a href="https://facebook.com" target="_blank" class="hover:text-gray-900 dark:hover:text-white">
+                        <i class="fab fa-facebook"></i>
+                    </a>
+                    <a href="https://twitter.com" target="_blank" class="hover:text-gray-900 dark:hover:text-white">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="https://linkedin.com" target="_blank" class="hover:text-gray-900 dark:hover:text-white">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="text-center mt-4">
+                <!-- <RouterLink :to="route('privacy')" class="text-sm hover:underline">
+                    {{ $t('privacy_policy') }}
+                </RouterLink>
+                |
+                <RouterLink :to="route('terms')" class="text-sm hover:underline">
+                    {{ $t('terms_of_service') }}
+                </RouterLink> -->
+            </div>
+        </div>
+    </footer>
 </template>
 
 <script>
