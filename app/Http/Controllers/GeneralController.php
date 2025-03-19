@@ -6,6 +6,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Services\ElasticsearchService;
+use Illuminate\Support\Facades\Route;
 use App\Models\Word;
 use App\Models\User;
 use App\Models\Team;
@@ -113,5 +114,25 @@ class GeneralController extends Controller
           } catch (\Exception $e) {
               return false;
           }
+      }
+
+      /**
+       * no. of words, users, teams.
+       *
+       * @return Response
+       */
+      public function landingData(): Response
+      {
+          $totalUsers = User::count();
+          $totalTeams = Team::count();
+          $totalWords = Word::count();
+
+          return Inertia::render('Landing', [
+              'canLogin' => Route::has('login'),
+              'canRegister' => Route::has('register'),
+              'totalUsers' => $totalUsers,
+              'totalTeams' => $totalTeams,
+              'totalWords' => $totalWords,
+          ]);
       }
 }
