@@ -10,8 +10,6 @@ defineProps({
     canRegister: {
         type: Boolean,
     },
-    teamStats: Array,
-    topUsers: Array,
     totalUsers: Number,
     totalTeams: Number,
     totalWords: Number,
@@ -60,82 +58,7 @@ function handleImageError() {
                             </div>
                         </div>
                     </div>
-                    <div class="grid gap-6 lg:grid-cols-2 lg:gap-8 my-10">
-                        <!-- Team Statistics Card -->
-                        <div class="flex flex-col items-start gap-6 overflow-hidden rounded-lg bg-gradient-to-br from-gray-400/50 to-gray-200/50 dark:from-gray-800/50 dark:to-gray-700/50 p-6 shadow-lg ring-1 ring-white/10 transition duration-300 hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10  lg:p-10 lg:pb-10 w-full backdrop-blur-sm">
-                            <h2 class="text-xl font-bold text-[#FF2D20]">{{ $t('best_teams') }}</h2>
-                            <div class="w-full">
-                                <div class="pb-4 grid grid-cols-3 w-full text-gray-300">
-                                    <div class="text-center font-medium text-black dark:text-white">{{ $t('team_name') }}</div>
-                                    <div class="text-center font-medium text-black dark:text-white">{{ $t('users') }}</div>
-                                    <div class="text-center font-medium text-black dark:text-white">{{ $t('words') }}</div>
-                                </div>
-                                <div
-                                    v-if="teamStats.length > 0"
-                                    class="space-y-3 divide-y divide-gray-700"
-                                >
-                                    <div
-                                        v-for="(team, index) in teamStats"
-                                        :key="team.team_name"
-                                        class="hover:bg-gray-700/50 p-4 grid grid-cols-3 items-center hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300  rounded-lg "
-                                    >
-                                        <div
-                                        class="flex items-center space-x-3 rtl:space-x-reverse"
-                                        >
-                                            <span class="text-gray-500">{{ index + 1 }}</span>
-                                            <span>{{ team.team_name }}</span>
-                                        </div>
-                                        <div class="text-center">{{ team.member_count }}</div>
-                                        <div class="text-center">{{ team.word_count }}</div>
-                                    </div>
-                                </div>
-                                <p v-else class="text-gray-500 text-center">{{ $t('no_words_found') }}</p>
-                            </div>
-                        </div>
-
-                        <!-- Top Users Card -->
-                        <div class="flex flex-col items-start gap-6 overflow-hidden rounded-lg bg-gradient-to-br
-                        from-gray-400/50 to-gray-200/50 dark:from-gray-800/50 dark:to-gray-700/50  p-6 shadow-lg ring-1 ring-white/10  hover:ring-white/20
-                        hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 lg:p-10 lg:pb-10 w-full
-                        backdrop-blur-sm">
-                            <h2 class="text-xl font-bold text-[#FF2D20]">{{ $t('best_members') }}</h2>
-                            <div class="w-full">
-                                <div class="pb-4 grid grid-cols-3 w-full text-gray-300">
-                                    <div class="text-center font-medium text-black dark:text-white">{{ $t('name') }}</div>
-                                    <div class="text-center font-medium text-black dark:text-white">{{ $t('words') }}</div>
-                                    <div class="text-center font-medium text-black dark:text-white">{{ $t('date') }}</div>
-                                </div>
-
-                                <div
-                                    v-if="topUsers.length > 0"
-                                    class="space-y-3 divide-y divide-gray-700 "
-                                >
-                                    <div
-                                        v-for="(user, index) in topUsers"
-                                        :key="user.name"
-                                        class="hover:bg-gray-700/50 p-4 grid grid-cols-3 items-center hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300  rounded-lg"
-                                    >
-                                        <div class="flex items-center space-x-2 sm:space-x-3 rtl:space-x-reverse">
-                                            <span class=" text-gray-500 text-xs sm:text-base">{{ index + 1 }}</span>
-                                            <span class="truncate">{{ user.name }}</span>
-                                        </div>
-                                        <div class="text-center">{{ user.word_count }}</div>
-                                        <div class="text-center text-xs sm:text-base">{{ user.joined_at }}</div>
-                                    </div>
-                                </div>
-
-                                <p v-else class="text-gray-500 text-center">{{ $t('no_words_found') }}</p>
-                            </div>
-                        </div>
-
-                    </div>
                 </main>
-
-                <!-- <footer class="py-16 text-center text-sm text-gray-400">
-                    <p class="transition-all duration-300 hover:text-white hover:scale-105">
-                        {{ $t('created_by') }}
-                    </p>
-                </footer> -->
             </div>
         </div>
     </div>
