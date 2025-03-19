@@ -17,7 +17,7 @@ class ReportController extends Controller
      *
      * @return Response
      */
-    public function landingData(): Response
+    public function statisticReport(): Response
     {
         $users = User::with(['words', 'teams'])->get();
         $teams = Team::with('users.words')->get();
@@ -51,7 +51,7 @@ class ReportController extends Controller
         $totalTeams = $teams->count();
         $totalWords = Word::count();
 
-        return Inertia::render('Landing', [
+        return Inertia::render('Reports/StatisticReport', [
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
             'teamStats' => $teamStats,
