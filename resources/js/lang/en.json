@@ -167,5 +167,6 @@
     "email_verification_sent": "A new verification link has been sent to the email address you provided in your profile settings.",
     "resend_verification_Email": "Resend Verification Email",
     "use_recovery_code": "Use a recovery code",
-    "use_authentication_code": "Use an authentication code"
+    "use_authentication_code": "Use an authentication code",
+    "reports": "Reports"
 }

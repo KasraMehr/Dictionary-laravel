@@ -167,5 +167,6 @@
     "email_verification_sent": "یک لینک تأیید جدید به آدرس ایمیلی که در تنظیمات پروفایل خود ارائه داده‌اید ارسال شده است.",
     "resend_verification_Email": "ارسال مجدد ایمیل تأیید",
     "use_recovery_code": "استفاده از کد بازیابی",
-    "use_authentication_code": "استفاده از کد احراز هویت"
+    "use_authentication_code": "استفاده از کد احراز هویت",
+    "reports": "گزارش‌ها"
 }

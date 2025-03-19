@@ -167,5 +167,6 @@
     "email_verification_sent": "تم إرسال رابط تحقق جديد إلى عنوان البريد الإلكتروني الذي قدمته في إعدادات ملفك الشخصي.",
     "resend_verification_Email": "إعادة إرسال بريد التحقق",
     "use_recovery_code": "استخدم رمز الاسترداد",
-    "use_authentication_code": "استخدم رمز المصادقة"
+    "use_authentication_code": "استخدم رمز المصادقة",
+    "reports": "التقارير"
 }
