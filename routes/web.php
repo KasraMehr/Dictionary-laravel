@@ -11,7 +11,8 @@ use App\Http\Controllers\TeamController;
 
 
 
-Route::get('/', [ReportController::class, 'landingData'])->name('landing');
+Route::get('/', [GeneralController::class, 'landingData'])->name('landing');
+Route::get('/reports', [ReportController::class, 'statisticReport'])->name('reports');
 Route::get('/library', [GeneralController::class, 'index'])->name('library');
 Route::get('/search', [GeneralController::class, 'search']);
 Route::get('/word/{native_lang}-{translated_lang}/{id}', [WordController::class, 'show'])->name('word.show');
