@@ -98,8 +98,11 @@ const setLanguage = (lang) => {
                                           {{ $t('register') }}
                                         </NavLink>
                                     </template>
-                                    <NavLink :href="route('library')" :active="route().current('teams.index')" class="text-black dark:text-white">
+                                    <NavLink :href="route('library')" :active="route().current('library')" class="text-black dark:text-white">
                                         {{ $t('library') }}
+                                    </NavLink>
+                                    <NavLink :href="route('reports')" :active="route().current('reports')" class="text-black dark:text-white">
+                                        {{ $t('reports') }}
                                     </NavLink>
                                     <a href="https://docs.modern-dictionary.com/"
                                        class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-800 dark:text-white/70 hover:text-black dark:hover:text-white/90 border-b-2 border-transparent rounded-lg hover:bg-gray-300 dark:hover:bg-gray-700/50 hover:ring-black dark:hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition-all duration-300 transform hover:scale-105 focus:outline-none"
@@ -115,7 +118,7 @@ const setLanguage = (lang) => {
 
                             <!-- دکمه تغییر تم -->
                             <div>
-                                <button @click="toggleTheme" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700">
+                                <button @click="toggleTheme" class="p-2 rounded-full bg-white dark:bg-gray-700">
                                     <svg v-if="isDarkMode" class="w-6 h-6 text-gray-800 dark:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <circle cx="12" cy="12" r="4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></circle>
                                         <path stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -191,54 +194,53 @@ const setLanguage = (lang) => {
                 </div>
 
                 <!-- منوی موبایل -->
-                <div :class="{'block': showingNavigationDropdown, 'hidden': ! showingNavigationDropdown}" class="sm:hidden">
+                <transition name="mobile-menu">
+                  <div v-if="showingNavigationDropdown" class="sm:hidden">
                     <div class="pt-2 pb-3 space-y-1">
-                        <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')" v-if="$page.props.auth.user">
-                            {{ $t('dashboard') }}
+                      <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')" v-if="$page.props.auth.user">
+                        {{ $t('dashboard') }}
+                      </ResponsiveNavLink>
+                      <template v-else>
+                        <ResponsiveNavLink :href="route('login')" :active="route().current('words.index')">
+                          {{ $t('login') }}
                         </ResponsiveNavLink>
-                        <template v-else>
-                            <ResponsiveNavLink :href="route('login')" :active="route().current('words.index')">
-                              {{ $t('login') }}
-                            </ResponsiveNavLink>
-                            <ResponsiveNavLink :href="route('register')" :active="route().current('categories.index')" v-if="canRegister">
-                              {{ $t('register') }}
-                            </ResponsiveNavLink>
-                        </template>
-                        <ResponsiveNavLink :href="route('library')" :active="route().current('teams.index')">
-                            {{ $t('library') }}
+                        <ResponsiveNavLink :href="route('register')" :active="route().current('categories.index')" v-if="canRegister">
+                          {{ $t('register') }}
                         </ResponsiveNavLink>
-                        <a href="https://docs.modern-dictionary.com/"
-                           class="block w-full ps-3 pe-4 py-2 border-l-4 border-transparent text-start text-base font-medium text-gray-700 dark:text-white hover:text-gray-900 dark:hover:text-white/90 hover:ring-black dark:hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 hover:bg-gray-200 dark:hover:bg-gray-700/50 focus:outline-none"
-                           target="_blank"
-                           rel="noopener noreferrer">
-                            {{ $t('documentation') }}
-                        </a>
+                      </template>
+                      <ResponsiveNavLink :href="route('library')" :active="route().current('library')">
+                        {{ $t('library') }}
+                      </ResponsiveNavLink>
+                      <ResponsiveNavLink :href="route('reports')" :active="route().current('reports')">
+                        {{ $t('reports') }}
+                      </ResponsiveNavLink>
+                      <a href="https://docs.modern-dictionary.com/"
+                      class="block w-full ps-3 pe-4 py-2 border-l-4 border-transparent text-start text-base font-medium text-gray-700 dark:text-white hover:text-gray-900 dark:hover:text-white/90 hover:ring-black dark:hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 hover:bg-gray-200 dark:hover:bg-gray-700/50 focus:outline-none"
+                      target="_blank"
+                      rel="noopener noreferrer">
+                        {{ $t('documentation') }}
+                      </a>
                     </div>
                     <div class="border-t border-gray-700 dark:border-gray-500">
-                      <ResponsiveNavLink
-                        class="text-black dark:text-white"
-                        v-for="lang in languages"
-                        :key="lang.code"
-                        as="button"
-                        @click="setLanguage(lang.code)">
+                      <ResponsiveNavLink class="text-black dark:text-white" v-for="lang in languages" :key="lang.code" as="button" @click="setLanguage(lang.code)">
                         {{ lang.label.toUpperCase() }}
                       </ResponsiveNavLink>
                     </div>
-
                     <div class="p-2">
-                        <button @click="toggleTheme" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700">
-                            <svg v-if="isDarkMode" class="w-6 h-6 text-gray-800 dark:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <circle cx="12" cy="12" r="4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></circle>
-                                <path stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                      d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
-                            </svg>
-                            <svg v-else class="w-6 h-6 text-gray-800 dark:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                      d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
-                            </svg>
-                        </button>
+                      <button @click="toggleTheme" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700">
+                        <svg v-if="isDarkMode" class="w-6 h-6 text-gray-800 dark:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <circle cx="12" cy="12" r="4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></circle>
+                          <path stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+                        </svg>
+                        <svg v-else class="w-6 h-6 text-gray-800 dark:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
+                          </svg>
+                      </button>
                     </div>
-                </div>
+                  </div>
+                </transition>
             </nav>
 
             <!-- سرصفحه -->
@@ -273,6 +275,9 @@ const setLanguage = (lang) => {
             </div>
 
             <div class="text-center mt-4">
+              <p class="transition-all duration-300 hover:text-black dark:hover:text-white hover:scale-105">
+                  {{ $t('created_by') }}
+              </p>
                 <!-- <RouterLink :to="route('privacy')" class="text-sm hover:underline">
                     {{ $t('privacy_policy') }}
                 </RouterLink>
@@ -285,6 +290,17 @@ const setLanguage = (lang) => {
     </footer>
 </template>
 
+<style>
+  .mobile-menu-enter-active, .mobile-menu-leave-active {
+    transition: all 0.3s ease-in-out;
+}
+
+.mobile-menu-enter-from, .mobile-menu-leave-to {
+    opacity: 0;
+    transform: translateY(-10px);
+}
+
+</style>
 <script>
 export default {
     data() {
