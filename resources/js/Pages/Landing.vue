@@ -134,7 +134,38 @@ function handleImageError() {
                              </div>
                          </div>
                      </div>
-                     
+                     <div class="relative grid grid-cols-1 lg:grid-cols-3 gap-5 rounded-lg shadow-lg overflow-hidden my-10">
+                       <!-- تصویر پس‌زمینه با گوشه‌های گرد -->
+                       <div class="absolute inset-0 bg-cover bg-center rounded-lg" style="background-image: url('/path-to-your-image.jpg');"></div>
+
+                       <!-- لایه‌های زبان‌ها -->
+                       <div v-for="(lang, index) in [
+                       { name: 'فارسی', code: 'fa', flag: '🇮🇷', color: 'rgba(0, 0, 0, 0.6)' },
+                       { name: 'English', code: 'en', flag: '🇬🇧', color: 'rgba(0, 51, 102, 0.6)' },
+                       { name: 'العربية', code: 'ar', flag: '🇸🇦', color: 'rgba(0, 100, 0, 0.6)' }
+                       ]" :key="index"
+                       class="relative w-full p-10 text-white text-center flex flex-col items-center gap-6 transition duration-300 rounded-lg z-10"
+                       :style="{ backgroundColor: lang.color }">
+
+                       <!-- پرچم و نام زبان -->
+                       <div class="text-5xl">{{ lang.flag }}</div>
+                       <h2 class="text-2xl font-bold">{{ lang.name }}</h2>
+
+                       <!-- اطلاعات آماری -->
+                       <div class="grid grid-cols-3 gap-6 w-full max-w-xl">
+                         <div v-for="(stat, i) in [
+                         { title: 'words', value: '150K+' },
+                         { title: 'users', value: '50K+' },
+                         { title: 'translators', value: '200+' }
+                         ]" :key="i"
+                         class="flex flex-col items-center gap-2">
+                         <div class="text-xl font-semibold">{{ stat.value }}</div>
+                         <div class="text-sm opacity-80">{{ stat.title }}</div>
+                       </div>
+                     </div>
+
+                   </div>
+                    </div>
                  </main>
              </div>
          </div>
