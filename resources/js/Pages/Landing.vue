@@ -96,21 +96,38 @@ function handleImageError() {
                      <div class="grid gap-6 lg:grid-cols-2 lg:gap-8 my-10">
                          <!-- ترجمه سریع جملات -->
                          <div class="flex flex-col items-start gap-6 overflow-hidden rounded-lg bg-gradient-to-br from-gray-400/50 to-gray-200/50 dark:from-gray-800/50 dark:to-gray-700/50 p-6 shadow-lg ring-1 ring-white/10 transition duration-300 hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 lg:p-10 lg:pb-10 w-full backdrop-blur-sm">
-                             <h2 class="text-xl font-bold text-[#FF2D20]">{{ $t('fast_translate_sentences') }}</h2>
+                           <h2 class="text-xl font-bold text-[#FF2D20]">{{ $t('fast_translate_sentences') }}</h2>
 
-                             <!-- فیلد ترجمه -->
-                             <div class="w-full">
-                                 <textarea v-model="inputText" placeholder="enter your text..." class="w-full p-4 text-lg border rounded-lg focus:ring-2 focus:ring-[#FF2D20] outline-none bg-white dark:bg-gray-800 dark:text-white"></textarea>
+                           <!-- فیلد ترجمه -->
+                           <div class="w-full">
+                             <textarea v-model="inputText" ref="inputTextArea" placeholder="Enter your text..."
+                             class="w-full p-4 text-lg border rounded-lg focus:ring-2 focus:ring-[#FF2D20] outline-none bg-white dark:bg-gray-800 dark:text-white"
+                             @input="updateHeight"></textarea>
 
-                                 <button @click="translateText" class="mt-4 w-full bg-[#FF2D20] text-white font-semibold py-2 rounded-lg hover:bg-[#e6261e] transition">
-                                     {{ $t('translate_now') }}
-                                 </button>
-                             </div>
+                             <button @click="translateText" class="my-4 w-full bg-[#FF2D20] text-white font-semibold py-2 rounded-lg hover:bg-[#e6261e] transition">
+                               {{ $t('translate_now') }}
+                             </button>
+                           </div>
 
-                             <!-- نتیجه ترجمه -->
-                             <div v-if="translatedText" class="w-full p-4 bg-gray-200 dark:bg-gray-900 rounded-lg mt-4">
-                                 <p class="text-lg font-semibold">{{ translatedText }}</p>
-                             </div>
+                           <!-- نتیجه ترجمه -->
+                           <div class="w-full p-4 bg-white dark:bg-gray-900 rounded-lg" :style="{ height: textAreaHeight + 'px' }">
+                             <p class="text-lg font-semibold">{{ translatedText }}</p>
+                           </div>
+
+                           <!-- انتخاب زبان‌های مبدا و مقصد -->
+                           <div class="flex justify-between w-full gap-4">
+                             <select v-model="sourceLang" class="border rounded-lg bg-white dark:bg-gray-800 dark:text-white">
+                               <option value="en">English</option>
+                               <option value="fa">Persian</option>
+                               <option value="ar">Arabic</option>
+                             </select>
+                             <button @click="swapLanguages" class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition">⇆</button>
+                             <select v-model="targetLang" class="border rounded-lg bg-white dark:bg-gray-800 dark:text-white">
+                               <option value="en">English</option>
+                               <option value="fa">Persian</option>
+                               <option value="ar">Arabic</option>
+                             </select>
+                           </div>
                          </div>
 
                          <!-- تاریخچه و لیست علاقه‌مندی‌ها -->
@@ -214,3 +231,31 @@ function handleImageError() {
     </div>
     </MainLayout>
 </template>
+
+<script>
+  export default {
+      data() {
+          return {
+              inputText: '',
+              translatedText: '',
+              sourceLang: 'en',
+              targetLang: 'fa',
+              textAreaHeight: 100,
+          };
+      },
+      methods: {
+          translateText() {
+              this.translatedText = "متن ترجمه شده اینجا نمایش داده می‌شود";
+          },
+          swapLanguages() {
+              [this.sourceLang, this.targetLang] = [this.targetLang, this.sourceLang];
+          },
+          updateHeight() {
+              this.$nextTick(() => {
+                  const input = this.$refs.inputTextArea;
+                  this.textAreaHeight = input.scrollHeight; // ارتفاع خروجی را با ورودی برابر کن
+              });
+          }
+      }
+  };
+</script>
