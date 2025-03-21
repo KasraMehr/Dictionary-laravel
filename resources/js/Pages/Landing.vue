@@ -166,6 +166,39 @@ function handleImageError() {
 
                    </div>
                     </div>
+                    <div class="grid gap-6 lg:grid-cols-2 lg:gap-8 my-10">
+                   <!-- بخش کوییز -->
+                   <div class="flex flex-col items-start gap-6 overflow-hidden rounded-lg bg-gradient-to-br from-gray-400/50 to-gray-200/50 dark:from-gray-800/50 dark:to-gray-700/50 p-6 shadow-lg ring-1 ring-white/10 transition duration-300 hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 lg:p-10 lg:pb-10 w-full backdrop-blur-sm">
+                     <h2 class="text-xl font-bold text-[#FF2D20]">{{ $t('quiz_section') }}</h2>
+                     <p class="text-sm text-gray-700 dark:text-gray-300">{{ $t('test_your_knowledge') }}</p>
+
+                     <div class="w-full">
+                       <p class="font-semibold text-lg">currentQuestion.question </p>
+                       <div class="mt-4 space-y-2">
+                         <button v-for="(option, index) in [[1, 1], [2, 2], [3, 3], [4, 4]]" :key="index"
+                         @click="selectAnswer(index)"
+                         class="block w-full p-3 text-left bg-gray-100 dark:bg-gray-800 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition">
+                         option
+                       </button>
+                     </div>
+                   </div>
+                 </div>
+
+                 <!-- بخش یادگیری -->
+                 <div class="flex flex-col items-start gap-6 overflow-hidden rounded-lg bg-gradient-to-br from-gray-400/50 to-gray-200/50 dark:from-gray-800/50 dark:to-gray-700/50 p-6 shadow-lg ring-1 ring-white/10 transition duration-300 hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 lg:p-10 lg:pb-10 w-full backdrop-blur-sm">
+                   <h2 class="text-xl font-bold text-[#FF2D20]">{{ $t('learning_section') }}</h2>
+                   <p class="text-sm text-gray-700 dark:text-gray-300">{{ $t('learn_new_words_daily') }}</p>
+
+                   <ul class="w-full space-y-2">
+                     <p class="font-semibold text-lg">currentQuestion.question </p>
+                     <li v-for="(word, index) in [[ab, 1], [bc, 2], [cd, 3], [de, 4], [ef, 5]]" :key="index"
+                     class="p-2 bg-gray-700/50 rounded-lg text-white flex justify-between">
+                     <span>{{ word.word }} - {{ word.meaning }}</span>
+                     <button @click="addToFavorites(word)" class="text-yellow-400 hover:text-yellow-600">⭐</button>
+                    </li>
+                  </ul>
+                </div>
+                    </div>
                  </main>
              </div>
          </div>
