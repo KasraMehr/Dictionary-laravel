@@ -23,6 +23,7 @@
     "dependencies": {
         "chart.js": "^4.4.7",
         "socket.io-client": "^4.8.1",
+        "swiper": "^11.2.6",
         "vue-i18n": "^11.1.1"
     }
 }
