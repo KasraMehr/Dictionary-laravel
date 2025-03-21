@@ -168,5 +168,18 @@
     "resend_verification_Email": "إعادة إرسال بريد التحقق",
     "use_recovery_code": "استخدم رمز الاسترداد",
     "use_authentication_code": "استخدم رمز المصادقة",
-    "reports": "التقارير"
+    "reports": "التقارير",
+    "instant_translation_for_any_sentence": "ترجمة فورية لأي جملة",
+    "with_just_a_few_clicks": "ببضع نقرات فقط",
+    "translate_languages_quickly_and_accurately": "ترجمة اللغات بسرعة ودقة",
+    "whether_it_is_for_work_or_daily_conversations": "سواء للعمل أو للمحادثات اليومية",
+    "fast_translate_sentences": "ترجمة سريعة للجمل",
+    "translate_now": "ترجم الآن",
+    "history_and_favorites": "التاريخ والمفضلة",
+    "search_history": "تاريخ البحث",
+    "favorite_words": "الكلمات المفضلة",
+    "quiz_section": "قسم الاختبار",
+    "test_your_knowledge": "اختبر معرفتك",
+    "learning_section": "قسم التعلم",
+    "learn_new_words_daily": "تعلم كلمات جديدة يوميًا"
 }

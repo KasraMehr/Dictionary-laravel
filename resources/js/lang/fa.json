@@ -168,5 +168,18 @@
     "resend_verification_Email": "ارسال مجدد ایمیل تأیید",
     "use_recovery_code": "استفاده از کد بازیابی",
     "use_authentication_code": "استفاده از کد احراز هویت",
-    "reports": "گزارش‌ها"
+    "reports": "گزارش‌ها",
+    "instant_translation_for_any_sentence": "ترجمه فوری برای هر جمله",
+    "with_just_a_few_clicks": "تنها با چند کلیک",
+    "translate_languages_quickly_and_accurately": "ترجمه زبان‌ها به سرعت و دقت بالا",
+    "whether_it_is_for_work_or_daily_conversations": "چه برای کار و چه برای مکالمات روزمره",
+    "fast_translate_sentences": "ترجمه سریع جملات",
+    "translate_now": "اکنون ترجمه کنید",
+    "history_and_favorites": "تاریخچه و موارد دلخواه",
+    "search_history": "تاریخچه جستجو",
+    "favorite_words": "کلمات مورد علاقه",
+    "quiz_section": "بخش آزمون",
+    "test_your_knowledge": "دانش خود را بسنجید",
+    "learning_section": "بخش یادگیری",
+    "learn_new_words_daily": "هر روز کلمات جدید یاد بگیرید"
 }

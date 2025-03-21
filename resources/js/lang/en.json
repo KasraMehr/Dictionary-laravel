@@ -168,5 +168,18 @@
     "resend_verification_Email": "Resend Verification Email",
     "use_recovery_code": "Use a recovery code",
     "use_authentication_code": "Use an authentication code",
-    "reports": "Reports"
+    "reports": "Reports",
+    "instant_translation_for_any_sentence": "Instant translation for any sentence",
+    "with_just_a_few_clicks": "with just a few clicks",
+    "translate_languages_quickly_and_accurately": "Translate languages quickly and accurately",
+    "whether_it_is_for_work_or_daily_conversations": "whether it is for work or daily conversations",
+    "fast_translate_sentences": "Fast translate sentences",
+    "translate_now": "Translate Now",
+    "history_and_favorites": "History & Favorites",
+    "search_history": "Search History",
+    "favorite_words": "Favorite Words",
+    "quiz_section": "Quiz Section",
+    "test_your_knowledge": "Test Your Knowledge",
+    "learning_section": "Learning Section",
+    "learn_new_words_daily": "Learn new words daily"
 }
