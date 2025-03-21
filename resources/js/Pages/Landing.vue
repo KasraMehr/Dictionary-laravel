@@ -50,7 +50,7 @@ function handleImageError() {
                              {{ $t('Modern Dictionary') }}
                          </h1>
                          <p class="text-lg text-gray-700 dark:text-gray-300 mt-2">
-                             {{ $t('search_any_word_easily') }}
+                           {{ $t('instant_translation_for_any_sentence') }} {{ $t('with_just_a_few_clicks') }}. {{ $t('translate_languages_quickly_and_accurately') }} {{ $t('whether_it_is_for_work_or_daily_conversations') }}.
                          </p>
 
                          <!-- فیلد جستجو -->
@@ -59,8 +59,8 @@ function handleImageError() {
                                  class="w-full p-4 text-lg border rounded-lg focus:ring-2 focus:ring-[#FF2D20] outline-none bg-white dark:bg-gray-800 dark:text-white">
 
                              <!-- دکمه‌های جستجو -->
-                             <div class="absolute inset-y-0 right-3 flex items-center gap-2">
-                                 <button @click="startVoiceSearch" class="p-2 rounded-full bg-[#FF2D20] text-white hover:bg-[#e6261e] transition">
+                             <div class="absolute inset-y-0 flex items-center gap-2"
+                                  :class="{ 'left-3': $i18n.locale === 'fa', 'right-3': $i18n.locale === 'en' }">                                 <button @click="startVoiceSearch" class="p-2 rounded-full bg-[#FF2D20] text-white hover:bg-[#e6261e] transition">
                                      🎙️
                                  </button>
                                  <button @click="startOCR" class="p-2 rounded-full bg-[#FF2D20] text-white hover:bg-[#e6261e] transition">
