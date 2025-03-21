@@ -135,4 +135,9 @@ class GeneralController extends Controller
               'totalWords' => $totalWords,
           ]);
       }
+
+      public function aboutUs()
+      {
+          return Inertia::render('Communicate/AboutUs');
+      }
 }
