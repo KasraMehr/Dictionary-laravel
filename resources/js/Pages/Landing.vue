@@ -190,7 +190,7 @@ function handleImageError() {
                    <p class="text-sm text-gray-700 dark:text-gray-300">{{ $t('learn_new_words_daily') }}</p>
 
                    <ul class="w-full space-y-2">
-                     <p class="font-semibold text-lg">currentQuestion.question </p>
+                     <p class="font-semibold text-lg">currentWordList.wordList </p>
                      <li v-for="(word, index) in [[ab, 1], [bc, 2], [cd, 3], [de, 4], [ef, 5]]" :key="index"
                      class="p-2 bg-gray-700/50 rounded-lg text-white flex justify-between">
                      <span>{{ word.word }} - {{ word.meaning }}</span>
