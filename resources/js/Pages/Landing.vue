@@ -83,8 +83,58 @@ function handleImageError() {
                                  </div>
                              </div>
                          </div>
-
                      </div>
+
+                     <div class="grid gap-6 lg:grid-cols-2 lg:gap-8 my-10">
+                         <!-- ترجمه سریع جملات -->
+                         <div class="flex flex-col items-start gap-6 overflow-hidden rounded-lg bg-gradient-to-br from-gray-400/50 to-gray-200/50 dark:from-gray-800/50 dark:to-gray-700/50 p-6 shadow-lg ring-1 ring-white/10 transition duration-300 hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 lg:p-10 lg:pb-10 w-full backdrop-blur-sm">
+                             <h2 class="text-xl font-bold text-[#FF2D20]">{{ $t('fast_translate_sentences') }}</h2>
+
+                             <!-- فیلد ترجمه -->
+                             <div class="w-full">
+                                 <textarea v-model="inputText" placeholder="enter your text..." class="w-full p-4 text-lg border rounded-lg focus:ring-2 focus:ring-[#FF2D20] outline-none bg-white dark:bg-gray-800 dark:text-white"></textarea>
+
+                                 <button @click="translateText" class="mt-4 w-full bg-[#FF2D20] text-white font-semibold py-2 rounded-lg hover:bg-[#e6261e] transition">
+                                     {{ $t('translate_now') }}
+                                 </button>
+                             </div>
+
+                             <!-- نتیجه ترجمه -->
+                             <div v-if="translatedText" class="w-full p-4 bg-gray-200 dark:bg-gray-900 rounded-lg mt-4">
+                                 <p class="text-lg font-semibold">{{ translatedText }}</p>
+                             </div>
+                         </div>
+
+                         <!-- تاریخچه و لیست علاقه‌مندی‌ها -->
+                         <div class="flex flex-col items-start gap-6 overflow-hidden rounded-lg bg-gradient-to-br from-gray-400/50 to-gray-200/50 dark:from-gray-800/50 dark:to-gray-700/50 p-6 shadow-lg ring-1 ring-white/10 hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 lg:p-10 lg:pb-10 w-full backdrop-blur-sm">
+                             <h2 class="text-xl font-bold text-[#FF2D20]">{{ $t('history_and_favorites') }}</h2>
+
+                            <div class="grid grid-cols-2 w-full">
+                             <!-- تاریخچه جستجو -->
+                             <div class="">
+                                 <h3 class="text-lg font-semibold">{{ $t('search_history') }}</h3>
+                                 <ul class="mt-2 space-y-2">
+                                     <li v-for="(history, index) in searchHistory" :key="index" class="p-2 bg-gray-700/50 rounded-lg flex justify-between">
+                                         <span class="text-white">{{ history }}</span>
+                                         <button @click="removeHistory(index)" class="text-red-400 hover:text-red-600">✖</button>
+                                     </li>
+                                 </ul>
+                             </div>
+
+                             <!-- لیست علاقه‌مندی‌ها -->
+                             <div class="">
+                                 <h3 class="text-lg font-semibold">{{ $t('favorite_words') }}</h3>
+                                 <ul class="mt-2 space-y-2">
+                                     <li v-for="(word, index) in favoriteWords" :key="index" class="p-2 bg-gray-700/50 rounded-lg flex justify-between">
+                                         <span class="text-white">{{ word }}</span>
+                                         <button @click="removeFavorite(index)" class="text-red-400 hover:text-red-600">✖</button>
+                                     </li>
+                                 </ul>
+                             </div>
+                             </div>
+                         </div>
+                     </div>
+                     
                  </main>
              </div>
          </div>
