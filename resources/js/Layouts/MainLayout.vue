@@ -260,89 +260,91 @@ const setLanguage = (lang) => {
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <!--Grid-->
           <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8 py-10 max-md:max-w-sm max-md:mx-auto">
-              <div class="col-span-full mb-10 lg:col-span-2 lg:mb-0">
+              <div class="col-span-full mb-10 lg:col-span-2">
                 <a href="javascript:;" class="cursor-pointer flex items-center justify-center lg:justify-start space-x-3">
                   <img src="/logo.svg" alt="logo" class="w-16 h-16">
-                  <div class="text-xl text-gray-900 font-semibold">Modern Dictionary</div>
+                  <div class="text-xl text-black dark:text-white font-semibold">Modern Dictionary</div>
                 </a>
 
-                  <p class="py-8 text-sm text-gray-500 lg:max-w-xs text-center lg:text-left">Trusted in more than 100
+                  <p class="py-8 text-sm text-gray-500 dark:text-gray-300 lg:max-w-xs text-center lg:text-left">Trusted in more than 100
                       countries & 5 million customers. Have any query ?</p>
-                  <a href="javascript:;"
-                      class="py-2.5 cursor-pointer px-5 h-9 block w-fit bg-indigo-600 rounded-full shadow-sm text-xs text-white mx-auto transition-all  duration-500 hover:bg-indigo-700 lg:mx-0">
-                      Contact us
-                  </a>
+                      <div class="flex flex-row justify-center gap-4 lg:justify-start">
+                        <a href="javascript:;"
+                        class="py-2.5 cursor-pointer px-5 h-9 block w-fit bg-red-600 rounded-full shadow-sm text-xs text-white transition-all duration-500 hover:bg-red-700">
+                        Contact us
+                      </a>
+                      <a href="javascript:;"
+                      class="flex cursor-pointer items-center justify-center gap-2 border border-red-600 rounded-full py-2 px-4 w-fit text-sm text-red-600 font-semibold transition-all duration-500 hover:bg-red-700 hover:text-white">
+                      Subscribe
+                    </a>
+                  </div>
               </div>
               <!--End Col-->
               <div class="lg:mx-auto">
-                  <h4 class="text-lg text-gray-900 font-medium mb-7 ">Pagedone</h4>
+                  <h4 class="text-lg text-black dark:text-white font-medium mb-7 ">Our Services</h4>
                   <ul class="text-sm  transition-all duration-500">
+                        <li class="mb-6">
+                          <a href="javascript:;" class="cursor-pointer text-gray-600 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white">Library</a>
+                        </li>
+                        <li class="mb-6">
+                          <a href="javascript:;" class="cursor-pointer text-gray-600 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white">Reports</a>
+                        </li>
                       <li class="mb-6">
-                          <a href="javascript:;" class="cursor-pointer text-gray-600 hover:text-gray-900">Home</a>
-                      </li>
-                      <li class="mb-6">
-                          <a href="javascript:;" class="cursor-pointer  text-gray-600 hover:text-gray-900">About</a>
-                      </li>
-                      <li>
-                          <a href="javascript:;" class="cursor-pointer  text-gray-600 hover:text-gray-900">Pricing</a>
+                          <a href="javascript:;" class="cursor-pointer text-gray-600 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white">Documentation</a>
                       </li>
                   </ul>
               </div>
               <!--End Col-->
               <div class="lg:mx-auto">
-                  <h4 class="text-lg text-gray-900 font-medium mb-7">Products</h4>
+                  <h4 class="text-lg text-black dark:text-white font-medium mb-7">Learn</h4>
                   <ul class="text-sm  transition-all duration-500">
                       <li class="mb-6">
-                          <a href="javascript:;" class="cursor-pointer text-gray-600 hover:text-gray-900">Figma UI
-                              System</a>
+                          <a href="javascript:;" class="cursor-pointer text-gray-600 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white">Topics Category</a>
                       </li>
                       <li class="mb-6">
-                          <a href="javascript:;" class="cursor-pointer  text-gray-600 hover:text-gray-900">Icons
-                              Assets</a>
+                          <a href="javascript:;" class="cursor-pointer  text-gray-600 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white">Levels Category</a>
                       </li>
                       <li>
-                          <a href="javascript:;" class="cursor-pointer  text-gray-600 hover:text-gray-900">Responsive
-                              Blocks</a>
+                          <a href="javascript:;" class="cursor-pointer  text-gray-600 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white">Grammers Category</a>
+                      </li>
+
+                  </ul>
+              </div>
+              <!--End Col-->
+              <div class="lg:mx-auto">
+                  <h4 class="text-lg text-black dark:text-white font-medium mb-7">Quiz</h4>
+                  <ul class="text-sm  transition-all duration-500">
+                      <li class="mb-6">
+                          <a href="javascript:;" class="cursor-pointer text-gray-600 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white">Daily Words</a>
+                      </li>
+                      <li class="mb-6">
+                          <a href="javascript:;" class="cursor-pointer  text-gray-600 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white">Placement test</a>
+                      </li>
+                      <li>
+                          <a href="javascript:;" class="cursor-pointer  text-gray-600 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white">Popular words</a>
                       </li>
                   </ul>
               </div>
               <!--End Col-->
               <div class="lg:mx-auto">
-                  <h4 class="text-lg text-gray-900 font-medium mb-7">Support</h4>
+                  <h4 class="text-lg text-black dark:text-white font-medium mb-7">Support</h4>
                   <ul class="text-sm  transition-all duration-500">
                       <li class="mb-6">
-                          <a href="javascript:;" class="cursor-pointer text-gray-600 hover:text-gray-900">Customer
-                              Support</a>
+                          <a href="javascript:;" class="cursor-pointer text-gray-600 dark:text-gray-200 hover:text-gray-900">About Us</a>
                       </li>
                       <li class="mb-6">
-                          <a href="javascript:;" class="cursor-pointer  text-gray-600 hover:text-gray-900">Terms &
-                              Conditions</a>
+                          <a href="javascript:;" class="cursor-pointer  text-gray-600 dark:text-gray-200 hover:text-gray-900">Contact Us</a>
                       </li>
                       <li>
-                          <a href="javascript:;" class="cursor-pointer  text-gray-600 hover:text-gray-900">Privacy
-                              Policy</a>
+                          <a href="javascript:;" class="cursor-pointer  text-gray-600 dark:text-gray-200 hover:text-gray-900">FAQ</a>
                       </li>
                   </ul>
-              </div>
-              <!--End Col-->
-              <div class="lg:mx-auto">
-                  <h4 class="text-lg text-gray-900 font-medium mb-7">Subscribe</h4>
-                  <p class="text-sm text-gray-500 leading-6 mb-7">Subscribe to get the latest news from us</p>
-                  <a href="javascript:;"
-                      class="flex cursor-pointer items-center justify-center gap-2 border border-indigo-600 rounded-full py-3 px-6 w-fit text-sm text-indigo-600 font-semibold transition-all duration-500 hover:bg-indigo-50">
-                      Subscribe<svg width="15" height="12" viewBox="0 0 15 12" fill="none"
-                          xmlns="http://www.w3.org/2000/svg">
-                          <path
-                              d="M1.25 6L13.25 6M9.5 10.5L13.4697 6.53033C13.7197 6.28033 13.8447 6.15533 13.8447 6C13.8447 5.84467 13.7197 5.71967 13.4697 5.46967L9.5 1.5"
-                              stroke="#4F46E5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
-                      </svg>
-                  </a>
               </div>
           </div>
           <!--Grid-->
-          <div class="py-7 border-t border-gray-200">
+          <div class="py-7 border-t border-gray-700 dark:border-gray-200">
               <div class="flex items-center justify-center flex-col lg:justify-between lg:flex-row">
-                  <span class="text-sm text-gray-500 ">&copy; {{ new Date().getFullYear() }} Modern Dictionary. All rights reserved.</span>
+                  <span class="text-sm text-gray-600 dark:text-gray-300">&copy; {{ new Date().getFullYear() }} Modern Dictionary. All rights reserved.</span>
                   <div class="flex mt-4 space-x-4 sm:justify-center sm:mt-0 ">
                       <a href="javascript:;"
                           class="w-8 cursor-pointer h-8 rounded-full transition-all duration-500 flex justify-center items-center bg-black/80 hover:bg-black">
@@ -398,7 +400,6 @@ const setLanguage = (lang) => {
                                   d="M13.9191 1.10651C14.558 1.27906 15.0602 1.78251 15.2299 2.42069C15.5388 3.57887 15.5388 5.99687 15.5388 5.99687C15.5388 5.99687 15.5388 8.41487 15.2299 9.57306C15.0578 10.2136 14.5556 10.7171 13.9191 10.8872C12.7638 11.1969 8.12875 11.1969 8.12875 11.1969C8.12875 11.1969 3.49603 11.1969 2.33844 10.8872C1.69952 10.7147 1.19735 10.2112 1.0276 9.57306C0.71875 8.41487 0.71875 5.99687 0.71875 5.99687C0.71875 5.99687 0.71875 3.57887 1.0276 2.42069C1.1997 1.78015 1.70188 1.27669 2.33844 1.10651C3.49603 0.796875 8.12875 0.796875 8.12875 0.796875C8.12875 0.796875 12.7638 0.796875 13.9191 1.10651ZM10.4981 5.99687L6.6481 8.22578V3.76796L10.4981 5.99687Z"
                                   fill="white" />
                           </svg>
-
                       </a>
                   </div>
               </div>
