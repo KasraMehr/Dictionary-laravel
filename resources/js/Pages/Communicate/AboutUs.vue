@@ -174,18 +174,18 @@ onMounted(() => {
     </style>
 <template>
   <MainLayout title="About Us">
-      <template class="py-14 lg:py-24 relative z-0 bg-gray-50">
+      <section class="py-5 relative z-0 bg-gray-200 dark:bg-gray-800">
               <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative text-center">
                   <h1 class="max-w-2xl mx-auto text-center font-manrope font-bold text-4xl text-black dark:text-white mb-5 md:text-5xl md:leading-normal">
                       Control your Finances with our <span class="text-red-600">Smart Tool</span>
                   </h1>
-                  <p class="max-w-sm mx-auto text-center text-base font-normal leading-7 text-gray-500 mb-9">
+                  <p class="max-w-sm mx-auto text-center text-base font-normal leading-7 text-gray-500">
                       Invest intelligently and discover a better way to manage your entire wealth easily.
                   </p>
               </div>
-          </template>
+          </section>
 
-    <section class="py-14 lg:py-24 relative">
+    <section class="py-14 lg:py-10 relative">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative ">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-9">
                 <div class="img-box">
@@ -211,7 +211,7 @@ onMounted(() => {
         </div>
     </section>
 
-    <section class="py-14 lg:py-24 relative">
+    <section class="py-14 lg:py-10 relative">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative ">
             <div class="grid grid-cols-1 lg:grid-cols-2 lg:gap-9 ">
 
@@ -239,7 +239,7 @@ onMounted(() => {
         </div>
     </section>
 
-    <section class="py-20">
+    <section class="py-10">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <h2 class="font-manrope text-4xl text-center text-black dark:text-white font-bold mb-14">Our results in numbers</h2>
             <div class="flex flex-col gap-5 xl:gap-8 lg:flex-row lg:justify-between">
@@ -286,16 +286,16 @@ onMounted(() => {
         </div>
     </section>
 
-    <section class=" py-14 lg:py-24">
+    <section class=" py-14 lg:py-10">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative">
-          <div class="mb-16 rounded-full">
+          <div class="rounded-full">
             <h2 class="text-4xl font-manrope font-bold text-black dark:text-white text-center">What our happy user says!</h2>
           </div>
 
           <div style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff" class="swiper mySwiper2">
             <div class="swiper-wrapper">
               <div class="swiper-slide">
-                <div class="relative mb-20">
+                <div class="relative">
                   <!--Slider Wrapper-->
                   <div class="max-w-max mx-auto lg:max-w-4xl">
                     <p class="text-lg text-gray-500 leading-8 mb-8 text-center">
@@ -311,7 +311,7 @@ onMounted(() => {
                 </div>
               </div>
               <div class="swiper-slide">
-                <div class="relative mb-20">
+                <div class="relative">
                   <!--Slider Wrapper-->
                   <div class="max-w-max mx-auto lg:max-w-4xl">
                     <p class="text-lg text-gray-500 leading-8 mb-8 text-center">
@@ -327,7 +327,7 @@ onMounted(() => {
                 </div>
               </div>
               <div class="swiper-slide">
-                <div class="relative mb-20">
+                <div class="relative">
                   <!--Slider Wrapper-->
                   <div class="max-w-max mx-auto lg:max-w-4xl">
                     <p class="text-lg text-gray-500 leading-8 mb-8 text-center">
@@ -364,9 +364,9 @@ onMounted(() => {
         </div>
       </section>
 
-    <section class="py-14 lg:py-24 ">
+    <section class="py-14 lg:py-10 ">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div class="mb-24">
+            <div class="mb-10">
                 <h2 class="font-manrope text-4xl text-center font-bold text-black dark:text-white mb-6">Meet our soldier of finance
                 </h2>
                 <p class="text-lg text-gray-500 text-center">We provide all the advantage that can simplify all your
@@ -605,7 +605,7 @@ onMounted(() => {
         </div>
     </section>
 
-    <section class="py-20 ">
+    <section class="py-10 ">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div class="bg-gray-600 rounded-2xl p-8 xl:p-11">
                 <h2 class="font-manrope text-4xl text-white text-center font-bold mb-4">Subscribe to the latest offer
