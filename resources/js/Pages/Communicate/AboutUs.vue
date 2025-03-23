@@ -209,10 +209,10 @@ onMounted(() => {
       <section class="py-5 relative z-0 bg-gray-200 dark:bg-gray-800">
               <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative text-center">
                   <h1 class="max-w-2xl mx-auto text-center font-manrope font-bold text-4xl text-black dark:text-white mb-5 md:text-5xl md:leading-normal">
-                      Control your Finances with our <span class="text-red-600">Smart Tool</span>
+                      {{ $t('experience') }} <span class="text-red-600">{{ $t('modern_dictionary') }}</span>
                   </h1>
                   <p class="max-w-sm mx-auto text-center text-base font-normal leading-7 text-gray-500">
-                      Invest intelligently and discover a better way to manage your entire wealth easily.
+                      {{ $t('smart_tool') }}
                   </p>
               </div>
           </section>
@@ -226,16 +226,10 @@ onMounted(() => {
                 </div>
                 <div class="lg:pl-[100px] flex items-center">
                     <div class="data w-full">
-                        <h2
-                            class="font-manrope font-bold text-4xl lg:text-5xl text-black dark:text-white mb-9 max-lg:text-center relative">
-                            About
-                            Us </h2>
+                        <h2 class="font-manrope font-bold text-4xl lg:text-5xl text-black dark:text-white mb-9 max-lg:text-center relative">
+                            {{ $t('about_us') }} </h2>
                         <p class="font-normal text-xl leading-8 text-gray-500 max-lg:text-center max-w-2xl mx-auto">
-                            Driven by a passion for seamless user experiences, we've meticulously curated pagedone
-                            to empower creators, designers, and developers alike. Our mission is to provide a
-                            comprehensive toolkit,
-                            enabling you to build intuitive, beautiful interfaces that resonate with users on every
-                            interaction.
+                            {{ $t('about_text') }}
                         </p>
                     </div>
                 </div>
@@ -251,15 +245,11 @@ onMounted(() => {
                     <div class="data w-full">
                         <img src="https://pagedone.io/asset/uploads/1702034785.png" alt="About Us tailwind page"
                             class="block lg:hidden mb-9 mx-auto object-cover">
-                        <h2 class="font-manrope font-bold text-4xl lg:text-5xl text-black dark:text-white mb-9 max-lg:text-center">We
-                            are Creative Since 2005</h2>
+                        <h2 class="font-manrope font-bold text-4xl lg:text-5xl text-black dark:text-white mb-9 max-lg:text-center">
+                            {{ $t('since') }}
+                        </h2>
                         <p class="font-normal text-xl leading-8 text-gray-500 max-lg:text-center max-w-2xl mx-auto">
-                            Pagedone isn’t just a collection of components and guidelines; it's a philosophy. We go
-                            beyond aesthetics, prioritizing accessibility, scalability, and usability. Every element,
-                            from the tiniest
-                            detail to the grandest layout, is meticulously crafted to enhance functionality and elevate
-                            user
-                            satisfaction.
+                            {{ $t('beyond_translation') }}
                         </p>
                     </div>
                 </div>
@@ -273,7 +263,9 @@ onMounted(() => {
 
     <section class="py-10">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <h2 class="font-manrope text-4xl text-center text-black dark:text-white font-bold mb-14">Our results in numbers</h2>
+            <h2 class="font-manrope text-4xl text-center text-black dark:text-white font-bold mb-14">
+              {{ $t('achievements') }}
+            </h2>
             <div class="flex flex-col gap-5 xl:gap-8 lg:flex-row lg:justify-between">
                 <div
                     class="w-full max-lg:max-w-2xl mx-auto lg:mx-0 lg:w-1/3 bg-gray-700 dark:bg-gray-200 p-6 rounded-2xl shadow-md shadow-gray-100">
@@ -283,8 +275,9 @@ onMounted(() => {
                         </div>
                         <div class="flex-1">
                             <h4 class="text-xl text-white dark:text-black font-semibold mb-2">Company growth</h4>
-                            <p class="text-xs text-gray-100 dark:text-gray-500 leading-5">Company's remarkable growth journey as we
-                                continually innovate and drive towards new heights of success.</p>
+                            <p class="text-xs text-gray-100 dark:text-gray-500 leading-5">
+                                {{ $t('growth') }}
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -296,8 +289,9 @@ onMounted(() => {
                         </div>
                         <div class="flex-1">
                             <h4 class="text-xl text-white dark:text-black font-semibold mb-2">Company growth</h4>
-                            <p class="text-xs text-gray-100 dark:text-gray-500 leading-5">Our very talented team members are the powerhouse
-                                of pagedone and pillars of our success. </p>
+                            <p class="text-xs text-gray-100 dark:text-gray-500 leading-5">
+                                {{ $t('languages') }}
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -310,7 +304,8 @@ onMounted(() => {
                         <div class="flex-1">
                             <h4 class="text-xl text-white dark:text-black font-semibold mb-2">Projects Completed</h4>
                             <p class="text-xs text-gray-100 dark:text-gray-500 leading-5">We have accomplished more than 625 projects
-                                worldwide and we are still counting many more.</p>
+                                {{ $t('daily_users') }}
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -321,7 +316,9 @@ onMounted(() => {
     <section class=" py-14 lg:py-10">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative">
           <div class="rounded-full">
-            <h2 class="text-4xl font-manrope font-bold text-black dark:text-white text-center">What our happy user says!</h2>
+            <h2 class="text-4xl font-manrope font-bold text-black dark:text-white text-center">
+                {{ $t('expert_reviews') }}
+            </h2>
           </div>
 
           <div style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff" class="swiper mySwiper2">
@@ -331,13 +328,7 @@ onMounted(() => {
                   <!--Slider Wrapper-->
                   <div class="max-w-max mx-auto lg:max-w-4xl">
                     <p class="text-lg text-gray-500 leading-8 mb-8 text-center">
-                      I have been using pagedone for several months now, and I must say that it has made my life a lot
-                      easier. The
-                      platform's intuitive interface and ease of use have allowed me to manage my finances more effectively
-                      and
-                      make informed investment decisions. I particularly like the product's auto-tracking feature, which has
-                      saved
-                      me a lot of time and effort.
+                      {{ $t('review_1') }}
                     </p>
                   </div>
                 </div>
@@ -347,13 +338,7 @@ onMounted(() => {
                   <!--Slider Wrapper-->
                   <div class="max-w-max mx-auto lg:max-w-4xl">
                     <p class="text-lg text-gray-500 leading-8 mb-8 text-center">
-                      I have been using pagedone for several months now, and I must say that it has made my life a lot
-                      easier. The
-                      platform's intuitive interface and ease of use have allowed me to manage my finances more effectively
-                      and
-                      make informed investment decisions. I particularly like the product's auto-tracking feature, which has
-                      saved
-                      me a lot of time and effort.
+                      {{ $t('review_2') }}
                     </p>
                   </div>
                 </div>
@@ -363,13 +348,7 @@ onMounted(() => {
                   <!--Slider Wrapper-->
                   <div class="max-w-max mx-auto lg:max-w-4xl">
                     <p class="text-lg text-gray-500 leading-8 mb-8 text-center">
-                      I have been using pagedone for several months now, and I must say that it has made my life a lot
-                      easier. The
-                      platform's intuitive interface and ease of use have allowed me to manage my finances more effectively
-                      and
-                      make informed investment decisions. I particularly like the product's auto-tracking feature, which has
-                      saved
-                      me a lot of time and effort.
+                      {{ $t('review_3') }}
                     </p>
                   </div>
                 </div>
@@ -399,10 +378,12 @@ onMounted(() => {
     <section class="py-14 lg:py-10 ">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div class="mb-10">
-                <h2 class="font-manrope text-4xl text-center font-bold text-black dark:text-white mb-6">Meet our soldier of finance
+                <h2 class="font-manrope text-4xl text-center font-bold text-black dark:text-white mb-6">
+                  {{ $t('meet_team') }}
                 </h2>
-                <p class="text-lg text-gray-500 text-center">We provide all the advantage that can simplify all your
-                    financial and banking support without any further issues</p>
+                <p class="text-lg text-gray-500 text-center">
+                  {{ $t('team_text') }}
+                </p>
             </div>
             <!--Slider Wrapper-->
             <div class="swiper teamswiper pb-10">
