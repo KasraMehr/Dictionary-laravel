@@ -103,7 +103,7 @@ onMounted(() => {
             transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
         }
 
-        .mySwiper .swiper-slide.swiper-slide-thumb-active>.swiper-slide\:border-indigo-600 {
+        .mySwiper .swiper-slide.swiper-slide-thumb-active>.swiper-slide\:border-red-600 {
             --tw-border-opacity: 1;
             border-color: rgb(79 70 229 / var(--tw-border-opacity));
         }
@@ -127,7 +127,7 @@ onMounted(() => {
             padding-top: 16px !important;
         }
 
-        .teamswiper .swiper-slide.swiper-slide-active>.slide\:border-indigo-600 {
+        .teamswiper .swiper-slide.swiper-slide-active>.slide\:border-red-600 {
             --tw-border-opacity: 1;
             border-color: rgb(79 70 229 / var(--tw-border-opacity));
         }
@@ -177,7 +177,7 @@ onMounted(() => {
       <template class="py-14 lg:py-24 relative z-0 bg-gray-50">
               <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative text-center">
                   <h1 class="max-w-2xl mx-auto text-center font-manrope font-bold text-4xl text-black dark:text-white mb-5 md:text-5xl md:leading-normal">
-                      Control your Finances with our <span class="text-indigo-600">Smart Tool</span>
+                      Control your Finances with our <span class="text-red-600">Smart Tool</span>
                   </h1>
                   <p class="max-w-sm mx-auto text-center text-base font-normal leading-7 text-gray-500 mb-9">
                       Invest intelligently and discover a better way to manage your entire wealth easily.
@@ -244,40 +244,40 @@ onMounted(() => {
             <h2 class="font-manrope text-4xl text-center text-black dark:text-white font-bold mb-14">Our results in numbers</h2>
             <div class="flex flex-col gap-5 xl:gap-8 lg:flex-row lg:justify-between">
                 <div
-                    class="w-full max-lg:max-w-2xl mx-auto lg:mx-0 lg:w-1/3 bg-white p-6 rounded-2xl shadow-md shadow-gray-100">
+                    class="w-full max-lg:max-w-2xl mx-auto lg:mx-0 lg:w-1/3 bg-gray-700 dark:bg-gray-200 p-6 rounded-2xl shadow-md shadow-gray-100">
                     <div class="flex gap-5">
-                        <div class="font-manrope text-2xl font-bold text-indigo-600">
+                        <div class="font-manrope text-2xl font-bold text-red-600">
                             240%
                         </div>
                         <div class="flex-1">
-                            <h4 class="text-xl text-black dark:text-white font-semibold mb-2">Company growth</h4>
-                            <p class="text-xs text-gray-500 leading-5">Company's remarkable growth journey as we
+                            <h4 class="text-xl text-white dark:text-black font-semibold mb-2">Company growth</h4>
+                            <p class="text-xs text-gray-100 dark:text-gray-500 leading-5">Company's remarkable growth journey as we
                                 continually innovate and drive towards new heights of success.</p>
                         </div>
                     </div>
                 </div>
                 <div
-                    class="w-full max-lg:max-w-2xl mx-auto lg:mx-0 lg:w-1/3 bg-white p-6 rounded-2xl shadow-md shadow-gray-100">
+                    class="w-full max-lg:max-w-2xl mx-auto lg:mx-0 lg:w-1/3 bg-gray-700 dark:bg-gray-200 p-6 rounded-2xl shadow-md shadow-gray-100">
                     <div class="flex gap-5">
-                        <div class="font-manrope text-2xl font-bold text-indigo-600">
+                        <div class="font-manrope text-2xl font-bold text-red-600">
                             175+
                         </div>
                         <div class="flex-1">
-                            <h4 class="text-xl text-black dark:text-white font-semibold mb-2">Company growth</h4>
-                            <p class="text-xs text-gray-500 leading-5">Our very talented team members are the powerhouse
+                            <h4 class="text-xl text-white dark:text-black font-semibold mb-2">Company growth</h4>
+                            <p class="text-xs text-gray-100 dark:text-gray-500 leading-5">Our very talented team members are the powerhouse
                                 of pagedone and pillars of our success. </p>
                         </div>
                     </div>
                 </div>
                 <div
-                    class="w-full max-lg:max-w-2xl mx-auto lg:mx-0 lg:w-1/3 bg-white p-6 rounded-2xl shadow-md shadow-gray-100">
+                    class="w-full max-lg:max-w-2xl mx-auto lg:mx-0 lg:w-1/3 bg-gray-700 dark:bg-gray-200 p-6 rounded-2xl shadow-md shadow-gray-100">
                     <div class="flex gap-5">
-                        <div class="font-manrope text-2xl font-bold text-indigo-600">
+                        <div class="font-manrope text-2xl font-bold text-red-600">
                             625+
                         </div>
                         <div class="flex-1">
-                            <h4 class="text-xl text-black dark:text-white font-semibold mb-2">Projects Completed</h4>
-                            <p class="text-xs text-gray-500 leading-5">We have accomplished more than 625 projects
+                            <h4 class="text-xl text-white dark:text-black font-semibold mb-2">Projects Completed</h4>
+                            <p class="text-xs text-gray-100 dark:text-gray-500 leading-5">We have accomplished more than 625 projects
                                 worldwide and we are still counting many more.</p>
                         </div>
                     </div>
@@ -349,23 +349,18 @@ onMounted(() => {
             <div class="swiper-wrapper">
               <div class="swiper-slide">
                 <img src="https://pagedone.io/asset/uploads/1704349534.png" alt="Emily image"
-                  class="mx-auto scale-90 transition-all duration-300 swiper-slide:w-16 border rounded-full swiper-slide:border-indigo-600 object-cover" />
+                  class="mx-auto scale-90 transition-all duration-300 swiper-slide:w-16 border rounded-full swiper-slide:border-red-600 object-cover" />
               </div>
               <div class="swiper-slide">
                 <img src="https://pagedone.io/asset/uploads/1704349572.png" alt="Ethan image"
-                  class="mx-auto scale-90 transition-all duration-300 swiper-slide:w-16 border rounded-full swiper-slide:border-indigo-600 object-cover" />
+                  class="mx-auto scale-90 transition-all duration-300 swiper-slide:w-16 border rounded-full swiper-slide:border-red-600 object-cover" />
               </div>
               <div class="swiper-slide">
                 <img src="https://pagedone.io/asset/uploads/1704349514.png" alt="Olivia image"
-                  class="mx-auto scale-90 transition-all duration-300 swiper-slide:w-16 border rounded-full swiper-slide:border-indigo-600 object-cover" />
+                  class="mx-auto scale-90 transition-all duration-300 swiper-slide:w-16 border rounded-full swiper-slide:border-red-600 object-cover" />
               </div>
-
             </div>
-
           </div>
-
-
-
         </div>
       </section>
 
@@ -390,7 +385,7 @@ onMounted(() => {
                             <div class="text-center lg:text-left lg:max-w-xs flex-1">
                                 <div class="mb-5 pb-5 border-b border-solid border-gray-300">
                                     <h6 class="text-lg text-black dark:text-white font-semibold mb-1">Harsh Patel</h6>
-                                    <span class="text-sm text-gray-500 group-hover:text-indigo-600">Co-Founder &
+                                    <span class="text-sm text-gray-500 group-hover:text-red-600">Co-Founder &
                                         CEO</span>
                                 </div>
                                 <p class="text-gray-500 leading-6 mb-7">
@@ -399,7 +394,7 @@ onMounted(() => {
                                 </p>
                                 <div class="flex items-center gap-4 justify-center lg:justify-start">
                                     <p
-                                        class="cursor-pointer  text-black dark:text-white hover:text-white group w-12 h-12 rounded-full flex justify-center items-center bg-gray-100 transition-all duration-500 hover:bg-indigo-600">
+                                        class="cursor-pointer  text-black dark:text-white hover:text-white group w-12 h-12 rounded-full flex justify-center items-center bg-gray-100 transition-all duration-500 hover:bg-red-600">
                                         <svg class="w-5 h-5" width="32" height="32" viewBox="0 0 32 32" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
                                             <path
@@ -408,7 +403,7 @@ onMounted(() => {
                                         </svg>
                                     </p>
                                     <p
-                                        class="cursor-pointer  text-black dark:text-white hover:text-white group w-12 h-12 rounded-full flex justify-center items-center bg-gray-100 transition-all duration-500 hover:bg-indigo-600">
+                                        class="cursor-pointer  text-black dark:text-white hover:text-white group w-12 h-12 rounded-full flex justify-center items-center bg-gray-100 transition-all duration-500 hover:bg-red-600">
                                         <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
                                             <path
@@ -417,7 +412,7 @@ onMounted(() => {
                                         </svg>
                                     </p>
                                     <p
-                                        class="cursor-pointer  text-black dark:text-white hover:text-white group w-12 h-12 rounded-full flex justify-center items-center bg-gray-100 transition-all duration-500 hover:bg-indigo-600">
+                                        class="cursor-pointer  text-black dark:text-white hover:text-white group w-12 h-12 rounded-full flex justify-center items-center bg-gray-100 transition-all duration-500 hover:bg-red-600">
                                         <svg class="w-5 h-5" viewBox="0 0 20 19" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
                                             <path
@@ -440,7 +435,7 @@ onMounted(() => {
                             <div class="text-center lg:text-left lg:max-w-xs flex-1 flex flex-col justify-between">
                                 <div class="mb-5 pb-5 border-b border-solid border-gray-300">
                                     <h6 class="text-lg text-black dark:text-white font-semibold mb-1">Alexa Kimberly</h6>
-                                    <span class="text-sm text-gray-500 group-hover:text-indigo-600">Lead Designer</span>
+                                    <span class="text-sm text-gray-500 group-hover:text-red-600">Lead Designer</span>
                                 </div>
                                 <p class="text-gray-500 leading-6 mb-7">
                                     I’ve been lead designer for pagedone since the beginning of it and enjoyed every
@@ -449,7 +444,7 @@ onMounted(() => {
                                 <div
                                     class="flex items-center gap-4 justify-center lg:justify-start max-sm:bottom-0 relative">
                                     <p
-                                        class="cursor-pointer text-black dark:text-white hover:text-white group w-12 h-12 rounded-full flex justify-center items-center bg-gray-100 transition-all duration-500 hover:bg-indigo-600">
+                                        class="cursor-pointer text-black dark:text-white hover:text-white group w-12 h-12 rounded-full flex justify-center items-center bg-gray-100 transition-all duration-500 hover:bg-red-600">
                                         <svg class="w-5 h-5 " width="32" height="32" viewBox="0 0 32 32" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
                                             <path
@@ -458,7 +453,7 @@ onMounted(() => {
                                         </svg>
                                     </p>
                                     <p
-                                        class="cursor-pointer  text-black dark:text-white hover:text-white group w-12 h-12 rounded-full flex justify-center items-center bg-gray-100 transition-all duration-500 hover:bg-indigo-600">
+                                        class="cursor-pointer  text-black dark:text-white hover:text-white group w-12 h-12 rounded-full flex justify-center items-center bg-gray-100 transition-all duration-500 hover:bg-red-600">
                                         <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
                                             <path
@@ -467,7 +462,7 @@ onMounted(() => {
                                         </svg>
                                     </p>
                                     <p
-                                        class="cursor-pointer  text-black dark:text-white hover:text-white group w-12 h-12 rounded-full flex justify-center items-center bg-gray-100 transition-all duration-500 hover:bg-indigo-600">
+                                        class="cursor-pointer  text-black dark:text-white hover:text-white group w-12 h-12 rounded-full flex justify-center items-center bg-gray-100 transition-all duration-500 hover:bg-red-600">
                                         <svg class="w-5 h-5" viewBox="0 0 20 19" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
                                             <path
@@ -490,7 +485,7 @@ onMounted(() => {
                             <div class="text-center lg:text-left lg:max-w-xs flex-1">
                                 <div class="mb-5 pb-5 border-b border-solid border-gray-300">
                                     <h6 class="text-lg text-black dark:text-white font-semibold mb-1">Harsh Patel</h6>
-                                    <span class="text-sm text-gray-500 group-hover:text-indigo-600">Co-Founder &
+                                    <span class="text-sm text-gray-500 group-hover:text-red-600">Co-Founder &
                                         CEO</span>
                                 </div>
                                 <p class="text-gray-500 leading-6 mb-7">
@@ -499,7 +494,7 @@ onMounted(() => {
                                 </p>
                                 <div class="flex items-center gap-4 justify-center lg:justify-start">
                                     <p
-                                        class="cursor-pointer  text-black dark:text-white hover:text-white group w-12 h-12 rounded-full flex justify-center items-center bg-gray-100 transition-all duration-500 hover:bg-indigo-600">
+                                        class="cursor-pointer  text-black dark:text-white hover:text-white group w-12 h-12 rounded-full flex justify-center items-center bg-gray-100 transition-all duration-500 hover:bg-red-600">
                                         <svg class="w-5 h-5" width="32" height="32" viewBox="0 0 32 32" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
                                             <path
@@ -508,7 +503,7 @@ onMounted(() => {
                                         </svg>
                                     </p>
                                     <p
-                                        class="cursor-pointer  text-black dark:text-white hover:text-white group w-12 h-12 rounded-full flex justify-center items-center bg-gray-100 transition-all duration-500 hover:bg-indigo-600">
+                                        class="cursor-pointer  text-black dark:text-white hover:text-white group w-12 h-12 rounded-full flex justify-center items-center bg-gray-100 transition-all duration-500 hover:bg-red-600">
                                         <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
                                             <path
@@ -517,7 +512,7 @@ onMounted(() => {
                                         </svg>
                                     </p>
                                     <p
-                                        class="cursor-pointer  text-black dark:text-white hover:text-white group w-12 h-12 rounded-full flex justify-center items-center bg-gray-100 transition-all duration-500 hover:bg-indigo-600">
+                                        class="cursor-pointer  text-black dark:text-white hover:text-white group w-12 h-12 rounded-full flex justify-center items-center bg-gray-100 transition-all duration-500 hover:bg-red-600">
                                         <svg class="w-5 h-5" viewBox="0 0 20 19" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
                                             <path
@@ -540,7 +535,7 @@ onMounted(() => {
                             <div class="text-center lg:text-left lg:max-w-xs flex-1 flex flex-col justify-between">
                                 <div class="mb-5 pb-5 border-b border-solid border-gray-300">
                                     <h6 class="text-lg text-black dark:text-white font-semibold mb-1">Alexa Kimberly</h6>
-                                    <span class="text-sm text-gray-500 group-hover:text-indigo-600">Lead Designer</span>
+                                    <span class="text-sm text-gray-500 group-hover:text-red-600">Lead Designer</span>
                                 </div>
                                 <p class="text-gray-500 leading-6 mb-7">
                                     I’ve been lead designer for pagedone since the beginning of it and enjoyed every
@@ -549,7 +544,7 @@ onMounted(() => {
                                 <div
                                     class="flex items-center gap-4 justify-center lg:justify-start max-sm:bottom-0 relative">
                                     <p
-                                        class="cursor-pointer  text-black dark:text-white hover:text-white group w-12 h-12 rounded-full flex justify-center items-center bg-gray-100 transition-all duration-500 hover:bg-indigo-600">
+                                        class="cursor-pointer  text-black dark:text-white hover:text-white group w-12 h-12 rounded-full flex justify-center items-center bg-gray-100 transition-all duration-500 hover:bg-red-600">
                                         <svg class="w-5 h-5" width="32" height="32" viewBox="0 0 32 32" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
                                             <path
@@ -558,7 +553,7 @@ onMounted(() => {
                                         </svg>
                                     </p>
                                     <p
-                                        class="cursor-pointer  text-black dark:text-white hover:text-white group w-12 h-12 rounded-full flex justify-center items-center bg-gray-100 transition-all duration-500 hover:bg-indigo-600">
+                                        class="cursor-pointer  text-black dark:text-white hover:text-white group w-12 h-12 rounded-full flex justify-center items-center bg-gray-100 transition-all duration-500 hover:bg-red-600">
                                         <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
                                             <path
@@ -567,7 +562,7 @@ onMounted(() => {
                                         </svg>
                                     </p>
                                     <p
-                                        class="cursor-pointer  text-black dark:text-white hover:text-white group w-12 h-12 rounded-full flex justify-center items-center bg-gray-100 transition-all duration-500 hover:bg-indigo-600">
+                                        class="cursor-pointer  text-black dark:text-white hover:text-white group w-12 h-12 rounded-full flex justify-center items-center bg-gray-100 transition-all duration-500 hover:bg-red-600">
                                         <svg class="w-5 h-5" viewBox="0 0 20 19" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
                                             <path
@@ -582,7 +577,7 @@ onMounted(() => {
                     </div>
                 </div>
                 <button id="slider-button-left"
-                    class="swiper-button-prev p-2.5 group flex justify-center items-center text-black dark:text-white w-12 h-12 transition-all duration-500 rounded-full hover:text-indigo-600"
+                    class="swiper-button-prev p-2.5 group flex justify-center items-center text-black dark:text-white w-12 h-12 transition-all duration-500 rounded-full hover:text-red-600"
                     data-carousel-prev>
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                         <path
@@ -592,7 +587,7 @@ onMounted(() => {
 
                 </button>
                 <button id="slider-button-right"
-                    class="swiper-button-next p-2.5 group flex justify-center items-center text-black dark:text-white w-12 h-12 transition-all duration-500 rounded-full hover:text-indigo-600"
+                    class="swiper-button-next p-2.5 group flex justify-center items-center text-black dark:text-white w-12 h-12 transition-all duration-500 rounded-full hover:text-red-600"
                     data-carousel-next>
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                         <path
@@ -612,10 +607,10 @@ onMounted(() => {
 
     <section class="py-20 ">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div class="bg-indigo-600 rounded-2xl p-8 xl:p-11">
+            <div class="bg-red-600 rounded-2xl p-8 xl:p-11">
                 <h2 class="font-manrope text-4xl text-white text-center font-bold mb-4">Subscribe to the latest offer
                 </h2>
-                <p class="text-indigo-200 text-center mb-11 max-lg:max-w-2xl mx-auto">Join our community of subscribers
+                <p class="text-red-200 text-center mb-11 max-lg:max-w-2xl mx-auto">Join our community of subscribers
                     and receive regular
                     updates delivered straight to your inbox. It's quick, easy, and free</p>
                 <div
@@ -624,7 +619,7 @@ onMounted(() => {
                         class="py-2 px-6 bg-transparent rounded-full max-lg:border border-gray-300  text-gray-100 max-lg:text-center placeholder:text-gray-400 focus:outline-none flex-1 w-full lg:w-auto lg:py-2 lg:px-6 lg:bg-transparent"
                         placeholder="Enter your email..">
                     <button type="submit"
-                        class="py-2 px-5 text-sm bg-indigo-500 shadow-md rounded-full  text-white font-semibold hover:bg-indigo-700">Subscribe</button>
+                        class="py-2 px-5 text-sm bg-red-500 shadow-md rounded-full  text-white font-semibold hover:bg-red-700">Subscribe</button>
                 </div>
             </div>
         </div>
