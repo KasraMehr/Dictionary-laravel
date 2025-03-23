@@ -54,7 +54,7 @@ onMounted(() => {
   updateActiveUser(0);
 
   // Swiper تیم
-  new Swiper(".teamswiper", {
+  const teamSwiper = new Swiper(".teamswiper", {
     slidesPerView: 1,
     spaceBetween: 32,
     centeredSlides: false,
@@ -71,8 +71,8 @@ onMounted(() => {
       },
     },
     navigation: {
-      nextEl: ".teamswiper .swiper-button-next",
-      prevEl: ".teamswiper .swiper-button-prev",
+      nextEl: "#slider-button-right",
+      prevEl: "#slider-button-left",
     },
     scrollbar: {
       el: ".swiper-scrollbar",
@@ -84,6 +84,7 @@ onMounted(() => {
       clickable: true,
     },
   });
+
 });
 </script>
 
@@ -607,27 +608,6 @@ onMounted(() => {
                         </div>
                     </div>
                 </div>
-                <button id="slider-button-left"
-                    class="swiper-button-prev p-2.5 group flex justify-center items-center text-black dark:text-white w-12 h-12 transition-all duration-500 rounded-full hover:text-red-600"
-                    data-carousel-prev>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                        <path
-                            d="M8.38413 15.1022L3.33301 10.0511M3.33301 10.0511L8.38413 5M3.33301 10.0511L18.3329 10.0511"
-                            stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-
-                </button>
-                <button id="slider-button-right"
-                    class="swiper-button-next p-2.5 group flex justify-center items-center text-black dark:text-white w-12 h-12 transition-all duration-500 rounded-full hover:text-red-600"
-                    data-carousel-next>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                        <path
-                            d="M11.6158 5L16.6669 10.0511M16.6669 10.0511L11.6158 15.1022M16.6669 10.0511L1.66699 10.0511"
-                            stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
-                    </svg>
-
-                </button>
-
                 <div class="swiper-pagination"></div>
                 <div class="swiper-scrollbar"></div>
             </div>
