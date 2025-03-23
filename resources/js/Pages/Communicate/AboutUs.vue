@@ -8,26 +8,50 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 
 onMounted(() => {
-  // Swiper اول
   const swiper1 = new Swiper(".mySwiper", {
-    loop: true,
-    spaceBetween: -10,
+    spaceBetween: 10,
     slidesPerView: 3,
+    freeMode: true,
     watchSlidesProgress: true,
+    watchSlidesVisibility: true,
+    loop: false,
   });
 
-  // Swiper دوم
   const swiper2 = new Swiper(".mySwiper2", {
-    loop: true,
     spaceBetween: 32,
-    thumbs: {
-      swiper: swiper1,
-    },
+    loop: false,
     navigation: {
       nextEl: ".swiper-button-next",
       prevEl: ".swiper-button-prev",
     },
+    thumbs: {
+      swiper: swiper1,
+    },
+    on: {
+      slideChange: () => {
+        updateActiveUser(swiper2.activeIndex);
+      },
+    },
   });
+
+  document.querySelectorAll(".mySwiper .swiper-slide").forEach((slide, index) => {
+    slide.addEventListener("click", () => {
+      swiper2.slideTo(index);
+      updateActiveUser(index);
+    });
+  });
+
+  function updateActiveUser(index) {
+    document.querySelectorAll(".mySwiper .swiper-slide img").forEach((img, i) => {
+      if (i === index) {
+        img.classList.add("border-red-600");
+      } else {
+        img.classList.remove("border-red-600");
+      }
+    });
+  }
+
+  updateActiveUser(0);
 
   // Swiper تیم
   new Swiper(".teamswiper", {
@@ -47,21 +71,28 @@ onMounted(() => {
       },
     },
     navigation: {
-      nextEl: ".swiper-button-next",
-      prevEl: ".swiper-button-prev",
+      nextEl: ".teamswiper .swiper-button-next",
+      prevEl: ".teamswiper .swiper-button-prev",
     },
     scrollbar: {
       el: ".swiper-scrollbar",
+      draggable: true,
     },
     pagination: {
       el: ".swiper-pagination",
       type: "fraction",
+      clickable: true,
     },
   });
 });
 </script>
 
 <style scoped>
+        .swiper-slide.active {
+            border: 3px solid red !important; /* استایل برای اسلاید فعال */
+            border-radius: 50%;
+            transition: border 0.3s ease-in-out;
+        }
         .swiper-wrapper {
             height: max-content !important;
 
