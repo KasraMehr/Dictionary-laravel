@@ -256,87 +256,121 @@ const setLanguage = (lang) => {
             </main>
         </div>
     </div>
-    <footer class="bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300 py-6">
+    <footer class="bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300 py-6" :dir="locale === 'en' ? 'ltr' : 'rtl'">
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <!--Grid-->
           <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8 py-10 max-md:max-w-sm max-md:mx-auto">
               <div class="col-span-full mb-10 lg:col-span-2">
                 <a href="javascript:;" class="cursor-pointer flex items-center justify-center lg:justify-start space-x-3">
                   <img src="/logo.svg" alt="logo" class="w-16 h-16">
-                  <div class="text-xl text-black dark:text-white font-semibold">Modern Dictionary</div>
+                  <div class="text-xl text-black dark:text-white font-semibold">
+                    {{ $t('modern_dictionary') }}
+                  </div>
                 </a>
 
-                  <p class="py-8 text-sm text-gray-500 dark:text-gray-300 lg:max-w-xs text-center lg:text-left">Trusted in more than 100
-                      countries & 5 million customers. Have any query ?</p>
+                  <p class="py-8 text-sm text-gray-500 dark:text-gray-300 lg:max-w-xs text-center"
+                     :class="locale === 'en' ? ' lg:text-left' : ' lg:text-right'">
+                    {{ $t('trusted_in_more_than_100_countries') }} {{ $t('have_any_query') }}
+                  </p>
                       <div class="flex flex-row justify-center gap-4 lg:justify-start">
-                        <a href="javascript:;"
-                        class="py-2.5 cursor-pointer px-5 h-9 block w-fit bg-red-600 rounded-full shadow-sm text-xs text-white transition-all duration-500 hover:bg-red-700">
-                        Contact us
+                        <a href="javascript:;" class="py-2.5 cursor-pointer px-5 h-9 block w-fit bg-red-600 rounded-full shadow-sm text-xs text-white transition-all duration-500 hover:bg-red-700">
+                        {{ $t('contact_us') }}
                       </a>
-                      <a href="javascript:;"
-                      class="flex cursor-pointer items-center justify-center gap-2 border border-red-600 rounded-full py-2 px-4 w-fit text-sm text-red-600 font-semibold transition-all duration-500 hover:bg-red-700 hover:text-white">
-                      Subscribe
+                      <a href="javascript:;" class="flex cursor-pointer items-center justify-center gap-2 border border-red-600 rounded-full py-2 px-4 w-fit text-sm text-red-600 font-semibold transition-all duration-500 hover:bg-red-700 hover:text-white">
+                        {{ $t('subscribe') }}
                     </a>
                   </div>
               </div>
               <!--End Col-->
               <div class="lg:mx-auto">
-                  <h4 class="text-lg text-black dark:text-white font-medium mb-7 ">Our Services</h4>
+                  <h4 class="text-lg text-black dark:text-white font-medium mb-7 ">
+                    {{ $t('navigation') }}
+                  </h4>
                   <ul class="text-sm  transition-all duration-500">
                         <li class="mb-6">
-                          <a href="javascript:;" class="cursor-pointer text-gray-600 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white">Library</a>
+                          <a href="javascript:;" class="cursor-pointer text-gray-600 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white">
+                            {{ $t('library') }}
+                          </a>
                         </li>
                         <li class="mb-6">
-                          <a href="javascript:;" class="cursor-pointer text-gray-600 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white">Reports</a>
+                          <a href="javascript:;" class="cursor-pointer text-gray-600 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white">
+                            {{ $t('reports') }}
+                          </a>
                         </li>
                       <li class="mb-6">
-                          <a href="javascript:;" class="cursor-pointer text-gray-600 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white">Documentation</a>
+                          <a href="javascript:;" class="cursor-pointer text-gray-600 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white">
+                            {{ $t('documentation') }}
+                          </a>
                       </li>
                   </ul>
               </div>
               <!--End Col-->
               <div class="lg:mx-auto">
-                  <h4 class="text-lg text-black dark:text-white font-medium mb-7">Learn</h4>
+                  <h4 class="text-lg text-black dark:text-white font-medium mb-7">
+                    {{ $t('learn') }}
+                  </h4>
                   <ul class="text-sm  transition-all duration-500">
                       <li class="mb-6">
-                          <a href="javascript:;" class="cursor-pointer text-gray-600 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white">Topics Category</a>
+                          <a href="javascript:;" class="cursor-pointer text-gray-600 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white">
+                            {{ $t('topics_category') }}
+                          </a>
                       </li>
                       <li class="mb-6">
-                          <a href="javascript:;" class="cursor-pointer  text-gray-600 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white">Levels Category</a>
+                          <a href="javascript:;" class="cursor-pointer  text-gray-600 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white">
+                            {{ $t('levels_category') }}
+                          </a>
                       </li>
                       <li>
-                          <a href="javascript:;" class="cursor-pointer  text-gray-600 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white">Grammers Category</a>
+                          <a href="javascript:;" class="cursor-pointer  text-gray-600 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white">
+                            {{ $t('grammers_category') }}
+                          </a>
                       </li>
 
                   </ul>
               </div>
               <!--End Col-->
               <div class="lg:mx-auto">
-                  <h4 class="text-lg text-black dark:text-white font-medium mb-7">Quiz</h4>
+                  <h4 class="text-lg text-black dark:text-white font-medium mb-7">
+                    {{ $t('quiz') }}
+                  </h4>
                   <ul class="text-sm  transition-all duration-500">
                       <li class="mb-6">
-                          <a href="javascript:;" class="cursor-pointer text-gray-600 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white">Daily Words</a>
+                          <a href="javascript:;" class="cursor-pointer text-gray-600 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white">
+                            {{ $t('daily_words') }}
+                          </a>
                       </li>
                       <li class="mb-6">
-                          <a href="javascript:;" class="cursor-pointer  text-gray-600 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white">Placement test</a>
+                          <a href="javascript:;" class="cursor-pointer  text-gray-600 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white">
+                            {{ $t('popular_words') }}
+                          </a>
                       </li>
                       <li>
-                          <a href="javascript:;" class="cursor-pointer  text-gray-600 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white">Popular words</a>
+                          <a href="javascript:;" class="cursor-pointer  text-gray-600 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white">
+                            {{ $t('placement_test') }}
+                          </a>
                       </li>
                   </ul>
               </div>
               <!--End Col-->
               <div class="lg:mx-auto">
-                  <h4 class="text-lg text-black dark:text-white font-medium mb-7">Support</h4>
+                  <h4 class="text-lg text-black dark:text-white font-medium mb-7">
+                    {{ $t('support') }}
+                  </h4>
                   <ul class="text-sm  transition-all duration-500">
                       <li class="mb-6">
-                          <a href="javascript:;" class="cursor-pointer text-gray-600 dark:text-gray-200 hover:text-gray-900">About Us</a>
+                          <a href="javascript:;" class="cursor-pointer text-gray-600 dark:text-gray-200 hover:text-gray-900">
+                            {{ $t('about_us') }}
+                          </a>
                       </li>
                       <li class="mb-6">
-                          <a href="javascript:;" class="cursor-pointer  text-gray-600 dark:text-gray-200 hover:text-gray-900">Contact Us</a>
+                          <a href="javascript:;" class="cursor-pointer  text-gray-600 dark:text-gray-200 hover:text-gray-900">
+                            {{ $t('contact_us') }}
+                          </a>
                       </li>
                       <li>
-                          <a href="javascript:;" class="cursor-pointer  text-gray-600 dark:text-gray-200 hover:text-gray-900">FAQ</a>
+                          <a href="javascript:;" class="cursor-pointer  text-gray-600 dark:text-gray-200 hover:text-gray-900">
+                            {{ $t('faq') }}
+                          </a>
                       </li>
                   </ul>
               </div>
@@ -344,10 +378,12 @@ const setLanguage = (lang) => {
           <!--Grid-->
           <div class="py-7 border-t border-gray-700 dark:border-gray-200">
               <div class="flex items-center justify-center flex-col lg:justify-between lg:flex-row">
-                  <span class="text-sm text-gray-600 dark:text-gray-300">&copy; {{ new Date().getFullYear() }} Modern Dictionary. All rights reserved.</span>
-                  <div class="flex mt-4 space-x-4 sm:justify-center sm:mt-0 ">
+                  <span class="text-sm text-gray-600 dark:text-gray-300">
+                    &copy; {{ new Date().getFullYear() }} {{ $t('modern_dictionary') }}. {{ $t('all_rights_reserved') }}
+                  </span>
+                  <div class="flex mt-4 sm:justify-center sm:mt-0 ">
                       <a href="javascript:;"
-                          class="w-8 cursor-pointer h-8 rounded-full transition-all duration-500 flex justify-center items-center bg-black/80 hover:bg-black">
+                          class="w-8 cursor-pointer h-8 rounded-full transition-all duration-500 flex justify-center items-center bg-black/80 hover:bg-black mx-4">
                           <svg class="w-5 h-5 text-white group-hover:text-white" width="32" height="32"
                               viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                               <path
@@ -356,7 +392,7 @@ const setLanguage = (lang) => {
                           </svg>
                       </a>
                       <a href="javascript:;"
-                          class="group cursor-pointer relative w-8 h-8 rounded-full transition-all duration-500 flex justify-center items-center hover:bg-gray-900 before:content[''] before:absolute before:bg-[url('././images/footer/instagram.png')] before:w-full before:h-full before:-z-10">
+                          class="group cursor-pointer relative w-8 h-8 rounded-full transition-all duration-500 flex justify-center items-center hover:bg-gray-900 before:content[''] before:absolute before:bg-[url('././images/footer/instagram.png')] before:w-full before:h-full before:-z-10 mx-4">
                           <svg class="w-8 h-8 text-white " width="26" height="26" viewBox="0 0 26 26" fill="none"
                               xmlns="http://www.w3.org/2000/svg">
                               <g clip-path="url(#clip0_8797_65643)">
@@ -384,16 +420,7 @@ const setLanguage = (lang) => {
                           </svg>
                       </a>
                       <a href="javascript:;"
-                          class="relative  w-8 h-8 rounded-full transition-all duration-500 flex justify-center items-center bg-[#337FFF]  hover:bg-gray-900 ">
-                          <svg class="w-[1rem] h-[1rem] text-white" viewBox="0 0 8 14" fill="none"
-                              xmlns="http://www.w3.org/2000/svg">
-                              <path
-                                  d="M7.04111 7.81204L7.41156 5.46043H5.1296V3.93188C5.1296 3.28886 5.44818 2.66054 6.46692 2.66054H7.51899V0.657999C6.90631 0.560385 6.28723 0.507577 5.66675 0.5C3.78857 0.5 2.56239 1.62804 2.56239 3.66733V5.46043H0.480469V7.81204H2.56239V13.5H5.1296V7.81204H7.04111Z"
-                                  fill="currentColor" />
-                          </svg>
-                      </a>
-                      <a href="javascript:;"
-                          class="relative  w-8 h-8 rounded-full transition-all duration-500 flex justify-center items-center bg-[#FF0000]  hover:bg-gray-900 ">
+                          class="relative  w-8 h-8 rounded-full transition-all duration-500 flex justify-center items-center bg-[#FF0000]  hover:bg-gray-900 mx-4">
                           <svg class="w-[1.25rem] h-[0.875rem] text-white" viewBox="0 0 16 12" fill="none"
                               xmlns="http://www.w3.org/2000/svg">
                               <path fill-rule="evenodd" clip-rule="evenodd"
