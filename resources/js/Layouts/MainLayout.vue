@@ -270,7 +270,7 @@ const setLanguage = (lang) => {
 
                   <p class="py-8 text-sm text-gray-500 dark:text-gray-300 lg:max-w-xs text-center"
                      :class="locale === 'en' ? ' lg:text-left' : ' lg:text-right'">
-                    {{ $t('trusted_in_more_than_100_countries') }} {{ $t('have_any_query') }}
+                    {{ $t('slogan') }}
                   </p>
                       <div class="flex flex-row justify-center gap-4 lg:justify-start">
                         <a href="javascript:;" class="py-2.5 cursor-pointer px-5 h-9 block w-fit bg-red-600 rounded-full shadow-sm text-xs text-white transition-all duration-500 hover:bg-red-700">
