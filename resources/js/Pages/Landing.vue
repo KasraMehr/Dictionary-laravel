@@ -47,10 +47,10 @@ function handleImageError() {
 
                          <!-- عنوان و توضیحات -->
                          <h1 class="text-4xl font-extrabold text-gray-900 dark:text-white sm:text-5xl">
-                             {{ $t('Modern Dictionary') }}
+                             {{ $t('modern_dictionary') }}
                          </h1>
                          <p class="text-lg text-gray-700 dark:text-gray-300 mt-2">
-                           {{ $t('instant_translation_for_any_sentence') }} {{ $t('with_just_a_few_clicks') }}. {{ $t('translate_languages_quickly_and_accurately') }} {{ $t('whether_it_is_for_work_or_daily_conversations') }}.
+                           {{ $t('slogan') }}
                          </p>
 
                          <!-- فیلد جستجو -->
@@ -60,7 +60,7 @@ function handleImageError() {
 
                              <!-- دکمه‌های جستجو -->
                              <div class="absolute inset-y-0 flex items-center gap-2"
-                                  :class="{ 'left-3': $i18n.locale === 'fa', 'right-3': $i18n.locale === 'en' }">
+                                  :class="{ 'left-3': $i18n.locale === 'fa' || $i18n.locale === 'ar', 'right-3': $i18n.locale === 'en' }">
                                   <button @click="startVoiceSearch" class="p-2 rounded-full bg-[#FF2D20] text-white hover:bg-[#e6261e] transition">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                                       <path stroke-linecap="round" stroke-linejoin="round" d="M12 18.75a6 6 0 0 0 6-6v-1.5m-6 7.5a6 6 0 0 1-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 0 1-3-3V4.5a3 3 0 1 1 6 0v8.25a3 3 0 0 1-3 3Z" />
