@@ -261,7 +261,7 @@ const setLanguage = (lang) => {
           <!--Grid-->
           <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8 py-10 max-md:max-w-sm max-md:mx-auto">
               <div class="col-span-full mb-10 lg:col-span-2">
-                <a href="javascript:;" class="cursor-pointer flex items-center justify-center lg:justify-start space-x-3">
+                <a :href="route('dashboard')" class="cursor-pointer flex items-center justify-center lg:justify-start space-x-3">
                   <img src="/logo.svg" alt="logo" class="w-16 h-16">
                   <div class="text-xl text-black dark:text-white font-semibold">
                     {{ $t('modern_dictionary') }}
@@ -288,17 +288,17 @@ const setLanguage = (lang) => {
                   </h4>
                   <ul class="text-sm  transition-all duration-500">
                         <li class="mb-6">
-                          <a href="javascript:;" class="cursor-pointer text-gray-600 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white">
+                          <a :href="route('library')" class="cursor-pointer text-gray-600 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white">
                             {{ $t('library') }}
                           </a>
                         </li>
                         <li class="mb-6">
-                          <a href="javascript:;" class="cursor-pointer text-gray-600 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white">
+                          <a :href="route('reports')" class="cursor-pointer text-gray-600 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white">
                             {{ $t('reports') }}
                           </a>
                         </li>
                       <li class="mb-6">
-                          <a href="javascript:;" class="cursor-pointer text-gray-600 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white">
+                          <a href="https://docs.modern-dictionary.com/" class="cursor-pointer text-gray-600 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white">
                             {{ $t('documentation') }}
                           </a>
                       </li>
@@ -358,7 +358,7 @@ const setLanguage = (lang) => {
                   </h4>
                   <ul class="text-sm  transition-all duration-500">
                       <li class="mb-6">
-                          <a href="javascript:;" class="cursor-pointer text-gray-600 dark:text-gray-200 hover:text-gray-900">
+                          <a :href="route('aboutUs')" class="cursor-pointer text-gray-600 dark:text-gray-200 hover:text-gray-900">
                             {{ $t('about_us') }}
                           </a>
                       </li>
