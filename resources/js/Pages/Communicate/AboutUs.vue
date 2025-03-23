@@ -494,7 +494,7 @@ onMounted(() => {
                                 </p>
                                 <div class="flex items-center gap-4 justify-center lg:justify-start">
                                     <p
-                                        class="cursor-pointer  text-black dark:text-white hover:text-white group w-12 h-12 rounded-full flex justify-center items-center bg-gray-100 transition-all duration-500 hover:bg-red-600">
+                                        class="cursor-pointer  text-black hover:text-white group w-12 h-12 rounded-full flex justify-center items-center bg-gray-100 transition-all duration-500 hover:bg-red-600">
                                         <svg class="w-5 h-5" width="32" height="32" viewBox="0 0 32 32" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
                                             <path
@@ -503,7 +503,7 @@ onMounted(() => {
                                         </svg>
                                     </p>
                                     <p
-                                        class="cursor-pointer  text-black dark:text-white hover:text-white group w-12 h-12 rounded-full flex justify-center items-center bg-gray-100 transition-all duration-500 hover:bg-red-600">
+                                        class="cursor-pointer  text-black hover:text-white group w-12 h-12 rounded-full flex justify-center items-center bg-gray-100 transition-all duration-500 hover:bg-red-600">
                                         <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
                                             <path
@@ -512,7 +512,7 @@ onMounted(() => {
                                         </svg>
                                     </p>
                                     <p
-                                        class="cursor-pointer  text-black dark:text-white hover:text-white group w-12 h-12 rounded-full flex justify-center items-center bg-gray-100 transition-all duration-500 hover:bg-red-600">
+                                        class="cursor-pointer  text-black hover:text-white group w-12 h-12 rounded-full flex justify-center items-center bg-gray-100 transition-all duration-500 hover:bg-red-600">
                                         <svg class="w-5 h-5" viewBox="0 0 20 19" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
                                             <path
@@ -544,7 +544,7 @@ onMounted(() => {
                                 <div
                                     class="flex items-center gap-4 justify-center lg:justify-start max-sm:bottom-0 relative">
                                     <p
-                                        class="cursor-pointer  text-black dark:text-white hover:text-white group w-12 h-12 rounded-full flex justify-center items-center bg-gray-100 transition-all duration-500 hover:bg-red-600">
+                                        class="cursor-pointer  text-black hover:text-white group w-12 h-12 rounded-full flex justify-center items-center bg-gray-100 transition-all duration-500 hover:bg-red-600">
                                         <svg class="w-5 h-5" width="32" height="32" viewBox="0 0 32 32" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
                                             <path
@@ -553,7 +553,7 @@ onMounted(() => {
                                         </svg>
                                     </p>
                                     <p
-                                        class="cursor-pointer  text-black dark:text-white hover:text-white group w-12 h-12 rounded-full flex justify-center items-center bg-gray-100 transition-all duration-500 hover:bg-red-600">
+                                        class="cursor-pointer  text-black hover:text-white group w-12 h-12 rounded-full flex justify-center items-center bg-gray-100 transition-all duration-500 hover:bg-red-600">
                                         <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
                                             <path
@@ -562,7 +562,7 @@ onMounted(() => {
                                         </svg>
                                     </p>
                                     <p
-                                        class="cursor-pointer  text-black dark:text-white hover:text-white group w-12 h-12 rounded-full flex justify-center items-center bg-gray-100 transition-all duration-500 hover:bg-red-600">
+                                        class="cursor-pointer  text-black hover:text-white group w-12 h-12 rounded-full flex justify-center items-center bg-gray-100 transition-all duration-500 hover:bg-red-600">
                                         <svg class="w-5 h-5" viewBox="0 0 20 19" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
                                             <path
