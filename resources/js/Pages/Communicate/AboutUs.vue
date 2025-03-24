@@ -209,7 +209,7 @@ onMounted(() => {
       <section class="py-5 relative z-0 bg-gray-200 dark:bg-gray-800">
               <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative text-center">
                   <h1 class="max-w-2xl mx-auto text-center font-manrope font-bold text-4xl text-black dark:text-white mb-5 md:text-5xl md:leading-normal">
-                      {{ $t('experience') }} <span class="text-red-600">{{ $t('modern_dictionary') }}</span>
+                      {{ $t('experience') }} <br><span class="text-red-600">{{ $t('modern_dictionary') }}</span>
                   </h1>
                   <p class="max-w-sm mx-auto text-center text-base font-normal leading-7 text-gray-500 dark:text-gray-400">
                       {{ $t('smart_tool') }}
