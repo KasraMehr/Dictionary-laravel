@@ -1,12 +1,24 @@
 <script setup>
 import { ref } from "vue";
+import { useI18n } from "vue-i18n";
 import MainLayout from "@/Layouts/MainLayout.vue";
+
+const { locale, t } = useI18n();
 
 // لیست سوالات و پاسخ‌ها
 const faqs = ref([
-  { question: "How do I delete my account?", answer: "Go to Settings and click 'Delete Account'." },
-  { question: "How do I reset my password?", answer: "Click on 'Forgot Password' on the login page and follow the instructions." },
-  { question: "Can I change my email address?", answer: "Yes, you can update your email in Account Settings." },
+  { question: t('how_to_become_translator'), answer: t('translator_registration') },
+  { question: t('how_to_gain_social_credit'), answer: t('social_credit_explanation') },
+  { question: t('team_translation'), answer: t('team_translation_explanation') },
+  { question: t('types_of_contributions'), answer: t('contribution_explanation') },
+  { question: t('how_to_learn'), answer: t('learning_methods') },
+  { question: t('how_to_contact_translator'), answer: t('contact_translator_explanation') },
+  { question: t('language_level_test'), answer: t('level_test_explanation') },
+  { question: t('daily_tests'), answer: t('daily_tests_explanation') },
+  { question: t('word_tests'), answer: t('word_tests_explanation') },
+  { question: t('is_dictionary_just_a_dictionary'), answer: t('dictionary_features') },
+  { question: t('image_translation'), answer: t('image_translation_explanation') },
+  { question: t('sentence_translation'), answer: t('sentence_translation_explanation') },
 ]);
 
 const activeIndex = ref(null);
