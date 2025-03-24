@@ -211,7 +211,7 @@ onMounted(() => {
                   <h1 class="max-w-2xl mx-auto text-center font-manrope font-bold text-4xl text-black dark:text-white mb-5 md:text-5xl md:leading-normal">
                       {{ $t('experience') }} <span class="text-red-600">{{ $t('modern_dictionary') }}</span>
                   </h1>
-                  <p class="max-w-sm mx-auto text-center text-base font-normal leading-7 text-gray-500">
+                  <p class="max-w-sm mx-auto text-center text-base font-normal leading-7 text-gray-500 dark:text-gray-400">
                       {{ $t('smart_tool') }}
                   </p>
               </div>
@@ -228,7 +228,7 @@ onMounted(() => {
                     <div class="data w-full">
                         <h2 class="font-manrope font-bold text-4xl lg:text-5xl text-black dark:text-white mb-9 max-lg:text-center relative">
                             {{ $t('about_us') }} </h2>
-                        <p class="font-normal text-xl leading-8 text-gray-500 max-lg:text-center max-w-2xl mx-auto">
+                        <p class="font-normal text-xl leading-8 text-gray-500 dark:text-gray-400 max-lg:text-center max-w-2xl mx-auto">
                             {{ $t('about_text') }}
                         </p>
                     </div>
@@ -248,7 +248,7 @@ onMounted(() => {
                         <h2 class="font-manrope font-bold text-4xl lg:text-5xl text-black dark:text-white mb-9 max-lg:text-center">
                             {{ $t('since') }}
                         </h2>
-                        <p class="font-normal text-xl leading-8 text-gray-500 max-lg:text-center max-w-2xl mx-auto">
+                        <p class="font-normal text-xl leading-8 text-gray-500 dark:text-gray-400 max-lg:text-center max-w-2xl mx-auto">
                             {{ $t('beyond_translation') }}
                         </p>
                     </div>
@@ -274,7 +274,7 @@ onMounted(() => {
                             240%
                         </div>
                         <div class="flex-1">
-                            <h4 class="text-xl text-white dark:text-black font-semibold mb-2">Company growth</h4>
+                            <h4 class="text-xl text-white dark:text-black font-semibold mb-2">{{ $t('good_comments') }}</h4>
                             <p class="text-xs text-gray-100 dark:text-gray-500 leading-5">
                                 {{ $t('growth') }}
                             </p>
@@ -288,7 +288,7 @@ onMounted(() => {
                             175+
                         </div>
                         <div class="flex-1">
-                            <h4 class="text-xl text-white dark:text-black font-semibold mb-2">Company growth</h4>
+                            <h4 class="text-xl text-white dark:text-black font-semibold mb-2">{{ $t('languages_num') }}</h4>
                             <p class="text-xs text-gray-100 dark:text-gray-500 leading-5">
                                 {{ $t('languages') }}
                             </p>
@@ -302,8 +302,8 @@ onMounted(() => {
                             625+
                         </div>
                         <div class="flex-1">
-                            <h4 class="text-xl text-white dark:text-black font-semibold mb-2">Projects Completed</h4>
-                            <p class="text-xs text-gray-100 dark:text-gray-500 leading-5">We have accomplished more than 625 projects
+                            <h4 class="text-xl text-white dark:text-black font-semibold mb-2">{{ $t('daily_users_num') }}</h4>
+                            <p class="text-xs text-gray-100 dark:text-gray-500 leading-5">
                                 {{ $t('daily_users') }}
                             </p>
                         </div>
@@ -327,7 +327,7 @@ onMounted(() => {
                 <div class="relative">
                   <!--Slider Wrapper-->
                   <div class="max-w-max mx-auto lg:max-w-4xl">
-                    <p class="text-lg text-gray-500 leading-8 mb-8 text-center">
+                    <p class="text-lg text-gray-500 dark:text-gray-400 leading-8 mb-8 text-center">
                       {{ $t('review_1') }}
                     </p>
                   </div>
@@ -337,7 +337,7 @@ onMounted(() => {
                 <div class="relative">
                   <!--Slider Wrapper-->
                   <div class="max-w-max mx-auto lg:max-w-4xl">
-                    <p class="text-lg text-gray-500 leading-8 mb-8 text-center">
+                    <p class="text-lg text-gray-500 dark:text-gray-400 leading-8 mb-8 text-center">
                       {{ $t('review_2') }}
                     </p>
                   </div>
@@ -347,7 +347,7 @@ onMounted(() => {
                 <div class="relative">
                   <!--Slider Wrapper-->
                   <div class="max-w-max mx-auto lg:max-w-4xl">
-                    <p class="text-lg text-gray-500 leading-8 mb-8 text-center">
+                    <p class="text-lg text-gray-500 dark:text-gray-400 leading-8 mb-8 text-center">
                       {{ $t('review_3') }}
                     </p>
                   </div>
@@ -381,7 +381,7 @@ onMounted(() => {
                 <h2 class="font-manrope text-4xl text-center font-bold text-black dark:text-white mb-6">
                   {{ $t('meet_team') }}
                 </h2>
-                <p class="text-lg text-gray-500 text-center">
+                <p class="text-lg text-gray-500 dark:text-gray-400 text-center">
                   {{ $t('team_text') }}
                 </p>
             </div>
@@ -398,10 +398,10 @@ onMounted(() => {
                             <div class="text-center lg:text-left lg:max-w-xs flex-1">
                                 <div class="mb-5 pb-5 border-b border-solid border-gray-300">
                                     <h6 class="text-lg text-black dark:text-white font-semibold mb-1">Harsh Patel</h6>
-                                    <span class="text-sm text-gray-500 group-hover:text-red-600">Co-Founder &
+                                    <span class="text-sm text-gray-500 dark:text-gray-400 group-hover:text-red-600">Co-Founder &
                                         CEO</span>
                                 </div>
-                                <p class="text-gray-500 leading-6 mb-7">
+                                <p class="text-gray-500 dark:text-gray-400 leading-6 mb-7">
                                     I am the co founder of pagedone and we’ve pushed our limit so far to make it
                                     successful.
                                 </p>
@@ -448,9 +448,9 @@ onMounted(() => {
                             <div class="text-center lg:text-left lg:max-w-xs flex-1 flex flex-col justify-between">
                                 <div class="mb-5 pb-5 border-b border-solid border-gray-300">
                                     <h6 class="text-lg text-black dark:text-white font-semibold mb-1">Alexa Kimberly</h6>
-                                    <span class="text-sm text-gray-500 group-hover:text-red-600">Lead Designer</span>
+                                    <span class="text-sm text-gray-500 dark:text-gray-400 group-hover:text-red-600">Lead Designer</span>
                                 </div>
-                                <p class="text-gray-500 leading-6 mb-7">
+                                <p class="text-gray-500 dark:text-gray-400 leading-6 mb-7">
                                     I’ve been lead designer for pagedone since the beginning of it and enjoyed every
                                     bit.
                                 </p>
@@ -498,10 +498,10 @@ onMounted(() => {
                             <div class="text-center lg:text-left lg:max-w-xs flex-1">
                                 <div class="mb-5 pb-5 border-b border-solid border-gray-300">
                                     <h6 class="text-lg text-black dark:text-white font-semibold mb-1">Harsh Patel</h6>
-                                    <span class="text-sm text-gray-500 group-hover:text-red-600">Co-Founder &
+                                    <span class="text-sm text-gray-500 dark:text-gray-400 group-hover:text-red-600">Co-Founder &
                                         CEO</span>
                                 </div>
-                                <p class="text-gray-500 leading-6 mb-7">
+                                <p class="text-gray-500 dark:text-gray-400 leading-6 mb-7">
                                     I am the co founder of pagedone and we’ve pushed our limit so far to make it
                                     successful.
                                 </p>
@@ -548,9 +548,9 @@ onMounted(() => {
                             <div class="text-center lg:text-left lg:max-w-xs flex-1 flex flex-col justify-between">
                                 <div class="mb-5 pb-5 border-b border-solid border-gray-300">
                                     <h6 class="text-lg text-black dark:text-white font-semibold mb-1">Alexa Kimberly</h6>
-                                    <span class="text-sm text-gray-500 group-hover:text-red-600">Lead Designer</span>
+                                    <span class="text-sm text-gray-500 dark:text-gray-400 group-hover:text-red-600">Lead Designer</span>
                                 </div>
-                                <p class="text-gray-500 leading-6 mb-7">
+                                <p class="text-gray-500 dark:text-gray-400 leading-6 mb-7">
                                     I’ve been lead designer for pagedone since the beginning of it and enjoyed every
                                     bit.
                                 </p>
@@ -600,18 +600,19 @@ onMounted(() => {
     <section class="py-10 ">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div class="bg-gray-600 rounded-2xl p-8 xl:p-11">
-                <h2 class="font-manrope text-4xl text-white text-center font-bold mb-4">Subscribe to the latest offer
+                <h2 class="font-manrope text-4xl text-white text-center font-bold mb-4">
+                  {{ $t('stay_updated') }}
                 </h2>
-                <p class="text-gray-200 text-center mb-11 max-lg:max-w-2xl mx-auto">Join our community of subscribers
-                    and receive regular
-                    updates delivered straight to your inbox. It's quick, easy, and free</p>
+                <p class="text-gray-200 text-center mb-11 max-lg:max-w-2xl mx-auto">
+                    {{ $t('aboutUs_subscribe') }}
+                </p>
                 <div
                     class="max-w-md mx-auto lg:bg-transparent rounded-3xl max-lg:py-3 lg:rounded-full lg:h-12 lg:p-1.5 lg:flex-row gap-6 lg:gap-0 flex-col flex items-center justify-between">
                     <input type="text" name="email"
                         class="py-2 px-6 bg-transparent rounded-full text-gray-100 max-lg:text-center placeholder:text-gray-400 focus:outline-none flex-1 w-full lg:w-auto lg:py-2 lg:px-6 lg:bg-transparent mx-2"
                         placeholder="Enter your email..">
                     <button type="submit"
-                        class="py-2 px-5 text-sm bg-red-500 shadow-md rounded-full  text-white font-semibold hover:bg-red-700">Subscribe</button>
+                        class="py-2 px-5 text-sm bg-red-500 shadow-md rounded-full  text-white font-semibold hover:bg-red-700">{{ $t('subscribe') }}</button>
                 </div>
             </div>
         </div>
