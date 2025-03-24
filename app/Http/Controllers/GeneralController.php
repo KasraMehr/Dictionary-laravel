@@ -140,4 +140,9 @@ class GeneralController extends Controller
       {
           return Inertia::render('Communicate/AboutUs');
       }
+
+      public function contactUs()
+      {
+          return Inertia::render('Communicate/ContactUs');
+      }
 }
