@@ -20,7 +20,7 @@ import MainLayout from '@/Layouts/MainLayout.vue';
                 <input type="text" class="w-full h-14 shadow-sm bg-gray-200 dark:bg-gray-600 text-gray-600 dark:text-gray-100 placeholder-text-900 text-lg font-normal leading-7 rounded-full border border-gray-200 focus:outline-none py-2 px-4 mb-8" placeholder="Name">
                 <input type="email" class="w-full h-14 shadow-sm bg-gray-200 dark:bg-gray-600 text-gray-600 dark:text-gray-100 placeholder-text-400 text-lg font-normal leading-7 rounded-full border border-gray-200 focus:outline-none py-2 px-4 mb-8" placeholder="Email">
                 <textarea name="" id="text" class="w-full h-48 shadow-sm resize-none bg-gray-200 dark:bg-gray-600 text-gray-600 dark:text-gray-100 placeholder-text-400 text-lg font-normal leading-7 rounded-2xl border border-gray-200 focus:outline-none px-4 py-4 mb-8" placeholder="message ..."></textarea>
-                <button class="w-full h-12 text-center text-white text-base font-semibold leading-6 rounded-full bg-red-600 shadow transition-all duration-700 hover:bg-red-800">Submit</button>
+                <button class="w-full h-12 text-center text-white text-base font-semibold leading-6 rounded-full bg-red-600 shadow transition-all duration-700 hover:bg-red-800">{{ $t('send') }}</button>
               </form>
             </div>
           </div>
