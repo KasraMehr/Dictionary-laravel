@@ -610,7 +610,7 @@ onMounted(() => {
                     class="max-w-md mx-auto lg:bg-transparent rounded-3xl max-lg:py-3 lg:rounded-full lg:h-12 lg:p-1.5 lg:flex-row gap-6 lg:gap-0 flex-col flex items-center justify-between">
                     <input type="text" name="email"
                         class="py-2 px-6 bg-transparent rounded-full text-gray-100 max-lg:text-center placeholder:text-gray-400 focus:outline-none flex-1 w-full lg:w-auto lg:py-2 lg:px-6 lg:bg-transparent mx-2"
-                        placeholder="Enter your email..">
+                        :placeholder="$t('email')">
                     <button type="submit"
                         class="py-2 px-5 text-sm bg-red-500 shadow-md rounded-full  text-white font-semibold hover:bg-red-700">{{ $t('subscribe') }}</button>
                 </div>
