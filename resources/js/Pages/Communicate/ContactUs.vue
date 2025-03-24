@@ -17,14 +17,14 @@ import MainLayout from '@/Layouts/MainLayout.vue';
                 {{ $t('reach_out_to_us') }}
               </h2>
               <form action="">
-                <input type="text" class="w-full h-14 shadow-sm bg-gray-200 dark:bg-gray-600 text-gray-600 dark:text-gray-100 placeholder-text-900 text-lg font-normal leading-7 rounded-full border border-gray-200 focus:outline-none py-2 px-4 mb-8" placeholder="Name">
-                <input type="email" class="w-full h-14 shadow-sm bg-gray-200 dark:bg-gray-600 text-gray-600 dark:text-gray-100 placeholder-text-400 text-lg font-normal leading-7 rounded-full border border-gray-200 focus:outline-none py-2 px-4 mb-8" placeholder="Email">
-                <textarea name="" id="text" class="w-full h-48 shadow-sm resize-none bg-gray-200 dark:bg-gray-600 text-gray-600 dark:text-gray-100 placeholder-text-400 text-lg font-normal leading-7 rounded-2xl border border-gray-200 focus:outline-none px-4 py-4 mb-8" placeholder="message ..."></textarea>
+                <input type="text" class="w-full h-14 shadow-sm bg-gray-200 dark:bg-gray-600 text-gray-600 dark:text-gray-100 placeholder-text-900 text-lg font-normal leading-7 rounded-full border border-gray-500 focus:outline-none py-2 px-4 mb-8" :placeholder="$t('name')">
+                <input type="email" class="w-full h-14 shadow-sm bg-gray-200 dark:bg-gray-600 text-gray-600 dark:text-gray-100 placeholder-text-400 text-lg font-normal leading-7 rounded-full border border-gray-500 focus:outline-none py-2 px-4 mb-8" :placeholder="$t('email')">
+                <textarea name="" id="text" class="w-full h-48 shadow-sm resize-none bg-gray-200 dark:bg-gray-600 text-gray-600 dark:text-gray-100 placeholder-text-400 text-lg font-normal leading-7 rounded-2xl border border-gray-500 focus:outline-none px-4 py-4 mb-8" :placeholder="$t('description')"></textarea>
                 <button class="w-full h-12 text-center text-white text-base font-semibold leading-6 rounded-full bg-red-600 shadow transition-all duration-700 hover:bg-red-800">{{ $t('send') }}</button>
               </form>
             </div>
           </div>
-          <div class="lg:max-w-xl w-full h-[600px] flex items-center justify-center bg-gray-600 rounded-lg">
+          <div class="lg:max-w-xl w-full h-[600px] flex items-center justify-center bg-gray-500 dark:bg-gray-700 rounded-lg">
             <div class="">
               <div class="lg:w-96 w-auto h-auto bg-gray-200 dark:bg-gray-800 shadow-xl lg:p-6 p-4 rounded-xl">
                 <a :href="route('dashboard')" class="cursor-pointer flex items-center justify-center space-x-2 mb-4">
