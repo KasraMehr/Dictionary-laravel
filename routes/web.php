@@ -16,6 +16,7 @@ Route::get('/reports', [ReportController::class, 'statisticReport'])->name('repo
 Route::get('/library', [GeneralController::class, 'index'])->name('library');
 Route::get('/search', [GeneralController::class, 'search']);
 Route::get('/about-us', [GeneralController::class, 'aboutUs'])->name('aboutUs');
+Route::get('/contact-us', [GeneralController::class, 'contactUs'])->name('contactUs');
 Route::get('/word/{native_lang}-{translated_lang}/{id}', [WordController::class, 'show'])->name('word.show');
 
 
