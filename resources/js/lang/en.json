@@ -246,5 +246,10 @@
     "image_translation": "How can I use the image translation feature?",
     "image_translation_explanation": "You can upload an image containing text and receive its translation. This feature is useful for reading texts on signs, books, and even restaurant menus!",
     "sentence_translation": "Can I translate my own sentences and share them with others?",
-    "sentence_translation_explanation": "Yes! You can enter your sentences, receive their translations, and even add your suggested translations to the dictionary for others to benefit from."
+    "sentence_translation_explanation": "Yes! You can enter your sentences, receive their translations, and even add your suggested translations to the dictionary for others to benefit from.",
+    "more_faq": "Frequently Asked Questions",
+    "translators_questions": "Questions related to translators and contributors",
+    "language_learners_questions": "Questions related to language learners",
+    "tests_questions": "Questions related to exams and language proficiency assessment",
+    "translation_features_questions": "Questions related to translation capabilities and smart translator"
 }
