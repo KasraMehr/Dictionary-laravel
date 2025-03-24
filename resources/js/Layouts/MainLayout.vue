@@ -368,7 +368,7 @@ const setLanguage = (lang) => {
                           </a>
                       </li>
                       <li>
-                          <a href="javascript:;" class="cursor-pointer  text-gray-600 dark:text-gray-200 hover:text-gray-900">
+                          <a :href="route('faq')" class="cursor-pointer  text-gray-600 dark:text-gray-200 hover:text-gray-900">
                             {{ $t('faq') }}
                           </a>
                       </li>
