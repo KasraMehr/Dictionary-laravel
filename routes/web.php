@@ -20,6 +20,7 @@ Route::get('/about-us', [GeneralController::class, 'aboutUs'])->name('aboutUs');
 Route::get('/contact-us', [GeneralController::class, 'contactUs'])->name('contactUs');
 Route::get('/FAQ', [GeneralController::class, 'FAQ'])->name('faq');
 
+Route::get('/learn', [LearnController::class, 'learn'])->name('learn');
 Route::get('/topics', [LearnController::class, 'topics'])->name('topics');
 Route::get('/levels', [LearnController::class, 'levels'])->name('levels');
 Route::get('/grammars', [LearnController::class, 'grammars'])->name('grammars');
