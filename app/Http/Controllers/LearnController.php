@@ -12,9 +12,16 @@ class LearnController extends Controller
     public function topics()
     {
       $categories = Category::withCount('words')->get();
-      
+
       return Inertia::render('Learn/Topics', [
           'categories' => $categories,
       ]);
     }
+
+    public function levels()
+    {
+        return Inertia::render('Learn/Levels');
+    }
+
+
 }
