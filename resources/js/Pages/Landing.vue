@@ -32,9 +32,7 @@ function handleImageError() {
 
 <template>
     <MainLayout title="Home">
-    <div
-        class="min-h-screen text-gray-900 bg-gray-100 bg-gradient-to-br dark:from-gray-900 dark:to-gray-800 dark:text-white/90 transition-colors duration-300"
-    >
+    <div class="min-h-screen text-gray-900 bg-gray-100 bg-gradient-to-br dark:from-gray-900 dark:to-gray-800 dark:text-white/90 transition-colors duration-300">
         <img
             id="background"
             :class="['fixed inset-0 w-full h-full object-cover opacity-10 transition-opacity duration-500 pointer-events-none', { '!hidden': backgroundHidden }]"
@@ -54,27 +52,49 @@ function handleImageError() {
                          </p>
 
                          <!-- فیلد جستجو -->
-                         <div class="relative w-full max-w-xl mt-4">
+                         <div ref="searchContainer" class="relative w-full max-w-xl mt-4">
                              <input type="text" v-model="searchQuery" placeholder="search word ..."
                                  class="w-full p-4 text-lg border rounded-lg focus:ring-2 focus:ring-[#FF2D20] outline-none bg-white dark:bg-gray-800 dark:text-white">
 
-                             <!-- دکمه‌های جستجو -->
-                             <div class="absolute inset-y-0 flex items-center gap-2"
-                                  :class="{ 'left-3': $i18n.locale === 'fa' || $i18n.locale === 'ar', 'right-3': $i18n.locale === 'en' }">
-                                  <button @click="startVoiceSearch" class="p-2 rounded-full bg-[#FF2D20] text-white hover:bg-[#e6261e] transition">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                      <path stroke-linecap="round" stroke-linejoin="round" d="M12 18.75a6 6 0 0 0 6-6v-1.5m-6 7.5a6 6 0 0 1-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 0 1-3-3V4.5a3 3 0 1 1 6 0v8.25a3 3 0 0 1-3 3Z" />
-                                    </svg>
-
-                                 </button>
-                                 <button @click="startOCR" class="p-2 rounded-full bg-[#FF2D20] text-white hover:bg-[#e6261e] transition">
+                                 <div class="absolute inset-y-0 flex items-center gap-2"
+                                 :class="{ 'left-3': $i18n.locale === 'fa' || $i18n.locale === 'ar', 'right-3': $i18n.locale === 'en' }">
+                                 <button @click="startVoiceSearch" class="p-2 rounded-full bg-[#FF2D20] text-white hover:bg-[#e6261e] transition">
                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                     <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z" />
-                                     <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0ZM18.75 10.5h.008v.008h-.008V10.5Z" />
+                                     <path stroke-linecap="round" stroke-linejoin="round"
+                                     d="M12 18.75a6 6 0 0 0 6-6v-1.5m-6 7.5a6 6 0 0 1-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 0 1-3-3V4.5a3 3 0 1 1 6 0v8.25a3 3 0 0 1-3 3Z"/>
                                    </svg>
-
                                  </button>
-                             </div>
+
+                                 <button @click="openFilePicker" class="p-2 rounded-full bg-[#FF2D20] text-white hover:bg-[#e6261e] transition">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z" />
+        <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0ZM18.75 10.5h.008v.008h-.008V10.5Z" />
+    </svg>
+</button>
+
+<input type="file" id="fileInput" accept="image/*" class="hidden" @change="handleFileUpload">
+                               </div>
+
+                               <!-- مدال جستجوی صوتی -->
+                               <div v-if="isVoiceModalOpen" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" @click="closeVoiceSearch">
+                                 <div class="bg-white rounded-lg p-6 shadow-lg text-center w-80" @click.stop>
+                                   <h2 class="text-xl font-semibold">در حال گوش دادن...</h2>
+                                   <p class="text-gray-600">لطفاً صحبت کنید.</p>
+                                   <div class="mt-4">
+                                     <button @click="stopVoiceSearch" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">توقف</button>
+                                   </div>
+                                 </div>
+                               </div>
+                             <ul v-if="showResults && searchResults.length" class="absolute w-full bg-white dark:bg-gray-800 border rounded-lg mt-2 z-50">
+                               <li v-for="result in searchResults" :key="result.id">
+                                 <a
+                                   :href="`/word/${result.native_lang}-${result.translated_lang}/${result.id}`"
+                                   class="block p-2 hover:bg-gray-200 dark:hover:bg-gray-600"
+                                 >
+                                   {{ result.word }} - {{ result.meaning }}
+                                 </a>
+                               </li>
+                             </ul>
                          </div>
 
                          <!-- آمار کاربران و لغات -->
@@ -236,6 +256,11 @@ function handleImageError() {
   export default {
       data() {
           return {
+              searchQuery: "",
+              searchResults: [],
+              showResults: false,
+              isVoiceModalOpen: false,
+              recognition: null,
               inputText: '',
               translatedText: '',
               sourceLang: 'en',
@@ -243,7 +268,32 @@ function handleImageError() {
               textAreaHeight: 100,
           };
       },
-      methods: {
+      watch: {
+          searchQuery(newQuery) {
+            if (newQuery.length > 2) {
+              this.fetchSearchResults(newQuery);
+            } else {
+              this.searchResults = [];
+              this.showResults = false;
+            }
+          },
+        },
+        methods: {
+          async fetchSearchResults(query) {
+            try {
+              const response = await fetch(`/search?query=${query}`);
+              const results = await response.json();
+              this.searchResults = results.slice(0, 4);
+              this.showResults = true;
+            } catch (error) {
+              console.error("Error fetching search results:", error);
+            }
+          },
+          closeResults(event) {
+            if (!this.$refs.searchContainer.contains(event.target)) {
+              this.showResults = false;
+            }
+          },
           translateText() {
               this.translatedText = "متن ترجمه شده اینجا نمایش داده می‌شود";
           },
@@ -253,9 +303,67 @@ function handleImageError() {
           updateHeight() {
               this.$nextTick(() => {
                   const input = this.$refs.inputTextArea;
-                  this.textAreaHeight = input.scrollHeight; // ارتفاع خروجی را با ورودی برابر کن
+                  this.textAreaHeight = input.scrollHeight;
               });
-          }
+          },
+          startVoiceSearch() {
+      this.isVoiceModalOpen = true;
+
+      if ("webkitSpeechRecognition" in window) {
+        this.recognition = new webkitSpeechRecognition();
+        this.recognition.lang = "fa-IR"; // می‌توان زبان را تغییر داد
+        this.recognition.continuous = false;
+        this.recognition.interimResults = false;
+
+        this.recognition.onresult = (event) => {
+          const transcript = event.results[0][0].transcript;
+          console.log("متن تشخیص داده شده:", transcript);
+          this.$emit("voice-search", transcript);
+        };
+
+        this.recognition.onerror = (event) => {
+          console.error("خطای تشخیص صدا:", event.error);
+        };
+
+        this.recognition.onend = () => {
+          this.isVoiceModalOpen = false;
+        };
+
+        this.recognition.start();
+      } else {
+        alert("مرورگر شما از جستجوی صوتی پشتیبانی نمی‌کند.");
       }
+    },
+    stopVoiceSearch() {
+      if (this.recognition) {
+        this.recognition.stop();
+      }
+      this.isVoiceModalOpen = false;
+    },
+    closeVoiceSearch() {
+      this.stopVoiceSearch();
+    },
+    openFilePicker() {
+        document.getElementById('fileInput').click();
+    },
+    handleFileUpload(event) {
+        const file = event.target.files[0];
+        if (file) {
+            // پردازش تصویر انتخاب‌شده
+            console.log("تصویر انتخاب شد:", file);
+            this.startOCR(file);
+        }
+    },
+    startOCR(file) {
+        // اینجا می‌تونید فایل رو به یک API برای OCR ارسال کنید
+        alert("OCR شروع شد برای: " + file.name);
+    }
+      },
+      mounted() {
+        document.addEventListener("click", this.closeResults);
+      },
+      beforeUnmount() {
+        document.removeEventListener("click", this.closeResults);
+      },
   };
 </script>
