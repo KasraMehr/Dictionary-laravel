@@ -3,6 +3,7 @@
 use App\Http\Middleware\TeamMemberMiddleware;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\GeneralController;
+use App\Http\Controllers\LearnController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WordController;
 use App\Http\Controllers\DashboardController;
@@ -18,6 +19,8 @@ Route::get('/search', [GeneralController::class, 'search']);
 Route::get('/about-us', [GeneralController::class, 'aboutUs'])->name('aboutUs');
 Route::get('/contact-us', [GeneralController::class, 'contactUs'])->name('contactUs');
 Route::get('/FAQ', [GeneralController::class, 'FAQ'])->name('faq');
+
+Route::get('/topics', [LearnController::class, 'topics'])->name('topics');
 Route::get('/word/{native_lang}-{translated_lang}/{id}', [WordController::class, 'show'])->name('word.show');
 
 
@@ -52,7 +55,6 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
     });
 
     // Chart data
-    Route::get('/dashboard/chart-data', [DashboardController::class, 'getChartData'])
-        ->name('dashboard.chart-data');
+    Route::get('/dashboard/chart-data', [DashboardController::class, 'getChartData'])->name('dashboard.chart-data');
 
 });
