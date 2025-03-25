@@ -21,6 +21,7 @@ Route::get('/contact-us', [GeneralController::class, 'contactUs'])->name('contac
 Route::get('/FAQ', [GeneralController::class, 'FAQ'])->name('faq');
 
 Route::get('/topics', [LearnController::class, 'topics'])->name('topics');
+Route::get('/levels', [LearnController::class, 'levels'])->name('levels');
 Route::get('/word/{native_lang}-{translated_lang}/{id}', [WordController::class, 'show'])->name('word.show');
 
 
