@@ -9,6 +9,11 @@ use Inertia\Inertia;
 
 class LearnController extends Controller
 {
+    public function learn()
+    {
+      return Inertia::render('Learn/Learn');
+    }
+
     public function topics()
     {
       $categories = Category::withCount('words')->get();
