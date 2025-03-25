@@ -23,5 +23,9 @@ class LearnController extends Controller
         return Inertia::render('Learn/Levels');
     }
 
+    public function grammars()
+    {
+        return Inertia::render('Learn/Grammars');
+    }
 
 }
