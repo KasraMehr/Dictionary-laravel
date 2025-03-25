@@ -306,9 +306,11 @@ const setLanguage = (lang) => {
               </div>
               <!--End Col-->
               <div class="lg:mx-auto">
-                  <h4 :href="route('learn')" class="text-lg text-black dark:text-white font-medium mb-7">
+                <a :href="route('learn')" >
+                  <h4 class="text-lg text-black dark:text-white font-medium mb-7">
                     {{ $t('learn') }}
                   </h4>
+                  </a>
                   <ul class="text-sm  transition-all duration-500">
                       <li class="mb-6">
                           <a :href="route('topics')" class="cursor-pointer text-gray-600 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white">
