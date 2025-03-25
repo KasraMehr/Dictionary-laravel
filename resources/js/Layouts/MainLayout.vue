@@ -316,12 +316,12 @@ const setLanguage = (lang) => {
                           </a>
                       </li>
                       <li class="mb-6">
-                          <a href="javascript:;" class="cursor-pointer  text-gray-600 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white">
+                          <a :href="route('levels')" class="cursor-pointer  text-gray-600 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white">
                             {{ $t('levels_category') }}
                           </a>
                       </li>
                       <li>
-                          <a href="javascript:;" class="cursor-pointer  text-gray-600 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white">
+                          <a :href="route('grammars')" class="cursor-pointer  text-gray-600 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white">
                             {{ $t('grammers_category') }}
                           </a>
                       </li>
