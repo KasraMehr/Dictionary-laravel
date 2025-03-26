@@ -126,6 +126,7 @@ class GeneralController extends Controller
           $totalUsers = User::count();
           $totalTeams = Team::count();
           $totalWords = Word::count();
+          $wordList = Word::inRandomOrder()->take(5)->get(['id', 'word', 'meaning', 'native_lang', 'translated_lang']); // گرفتن ۵ کلمه تصادفی
 
           return Inertia::render('Landing', [
               'canLogin' => Route::has('login'),
@@ -133,6 +134,7 @@ class GeneralController extends Controller
               'totalUsers' => $totalUsers,
               'totalTeams' => $totalTeams,
               'totalWords' => $totalWords,
+              'wordList' => $wordList,
           ]);
       }
 
