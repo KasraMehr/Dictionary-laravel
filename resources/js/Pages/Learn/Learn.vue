@@ -131,31 +131,28 @@ const extraFeatures = ref([
         </section>
 
         <!-- بخش آزمون و کلمات روزانه -->
-        <section class="mb-12">
-  <h2 class="text-2xl font-bold text-red-700 mb-4">امکانات بیشتر</h2>
-  <div class="grid md:grid-cols-2 gap-6">
-    <router-link
-      v-for="feature in extraFeatures"
-      :key="feature.title"
-      :to="feature.link"
-      class="relative block overflow-hidden rounded-lg shadow-lg transition-transform hover:scale-105 min-h-[220px]"
-      :class="feature.bgColor"
-    >
-      <!-- لایه نیمه‌شفاف برای افزایش خوانایی -->
-      <div class="absolute inset-0 bg-black opacity-20 dark:opacity-30"></div>
+        <section class="my-12">
+        <h2 class="text-2xl font-bold text-red-700 mb-4">امکانات بیشتر</h2>
+        <div class="grid md:grid-cols-2 gap-6">
+          <router-link
+            v-for="feature in extraFeatures"
+            :key="feature.title"
+            :to="feature.link"
+            class="relative block p-6 rounded-lg shadow-lg transition-transform hover:scale-105 overflow-hidden border border-white/40"
+          >
+            <!-- لایه گلس‌مورفیسم -->
+            <div class="absolute inset-0 bg-gray-200 dark:bg-black/30 backdrop-blur-lg"></div>
 
-      <!-- محتوای کارت -->
-      <div class="relative p-6 text-white flex flex-col justify-center h-full">
-        <h3 class="text-xl font-semibold text-black dark:text-white drop-shadow-md">
-          {{ feature.title }}
-        </h3>
-        <p class="mt-2 text-black dark:text-white drop-shadow-md">
-          {{ feature.description }}
-        </p>
-      </div>
-    </router-link>
-  </div>
-</section>
+            <!-- محتوای کارت -->
+            <div class="relative z-10 text-black dark:text-white">
+              <h3 class="text-xl font-semibold">{{ feature.title }}</h3>
+              <p class="mt-2">{{ feature.description }}</p>
+            </div>
+          </router-link>
+        </div>
+      </section>
+
+
       </div>
     </div>
   </MainLayout>
