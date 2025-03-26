@@ -19,6 +19,29 @@ class ReportController extends Controller
      */
     public function statisticReport(): Response
     {
+          $chartData = [
+            '1_week' => [
+                'users' => User::where('created_at', '>=', now()->subWeek())->count(),
+                'words' => Word::where('created_at', '>=', now()->subWeek())->count(),
+                'teams' => Team::where('created_at', '>=', now()->subWeek())->count(),
+            ],
+            '1_month' => [
+                'users' => User::where('created_at', '>=', now()->subMonth())->count(),
+                'words' => Word::where('created_at', '>=', now()->subMonth())->count(),
+                'teams' => Team::where('created_at', '>=', now()->subMonth())->count(),
+            ],
+            '6_months' => [
+                'users' => User::where('created_at', '>=', now()->subMonths(6))->count(),
+                'words' => Word::where('created_at', '>=', now()->subMonths(6))->count(),
+                'teams' => Team::where('created_at', '>=', now()->subMonths(6))->count(),
+            ],
+            '1_year' => [
+                'users' => User::where('created_at', '>=', now()->subYear())->count(),
+                'words' => Word::where('created_at', '>=', now()->subYear())->count(),
+                'teams' => Team::where('created_at', '>=', now()->subYear())->count(),
+            ],
+        ];
+
         $users = User::with(['words', 'teams'])->get();
         $teams = Team::with('users.words')->get();
 
@@ -59,6 +82,9 @@ class ReportController extends Controller
             'totalUsers' => $totalUsers,
             'totalTeams' => $totalTeams,
             'totalWords' => $totalWords,
+            'chartData' => $chartData,
+            'words' => Word::latest()->take(5)->get()->toArray(),
+            'users' => $users,
         ]);
     }
 }
