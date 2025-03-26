@@ -49,11 +49,16 @@ class WordController extends Controller
     {
         $word = Word::with('categories')->findOrFail($id);
 
+        $dailyWords = Word::inRandomOrder()->take(5)->get(['id', 'word', 'native_lang', 'translated_lang']);
+        $synonyms = Word::inRandomOrder()->take(5)->get(['id', 'word', 'meaning', 'native_lang', 'translated_lang']);
+
         //$word->image_url = $word->image ? Storage::disk('liara')->url($word->image) : null;
         //$word->voice_url = $word->voice ? Storage::disk('liara')->url($word->voice) : null;
 
         return Inertia::render('Words/Word', [
-            'word' => $word
+            'word' => $word,
+            'dailyWords' => $dailyWords,
+            'synonyms' => $synonyms
         ]);
     }
 
