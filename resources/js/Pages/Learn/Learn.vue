@@ -138,10 +138,10 @@ const extraFeatures = ref([
             v-for="feature in extraFeatures"
             :key="feature.title"
             :to="feature.link"
-            class="relative block p-6 rounded-lg shadow-lg transition-transform hover:scale-105 overflow-hidden border border-white/40"
+            class="relative block p-6 rounded-lg shadow-lg transition-transform hover:scale-105 overflow-hidden border border-black/40 dark:border-white/40"
           >
             <!-- لایه گلس‌مورفیسم -->
-            <div class="absolute inset-0 bg-gray-200 dark:bg-black/30 backdrop-blur-lg"></div>
+            <div class="absolute inset-0 bg-gradient-to-br from-red-400/60 to-white/40 dark:from-red-900/40 dark:to-black/30 backdrop-blur-lg"></div>
 
             <!-- محتوای کارت -->
             <div class="relative z-10 text-black dark:text-white">
