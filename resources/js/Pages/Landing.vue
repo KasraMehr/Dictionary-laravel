@@ -110,42 +110,38 @@ function handleImageError() {
                          </div>
                      </div>
 
-                     <div class="my-10">
-                         <!-- ترجمه سریع جملات -->
-                         <div class="flex flex-col items-start gap-6 overflow-hidden rounded-lg bg-gradient-to-br from-gray-400/50 to-gray-200/50 dark:from-gray-800/50 dark:to-gray-700/50 p-6 shadow-lg ring-1 ring-white/10 transition duration-300 hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 lg:p-10 lg:pb-10 w-full backdrop-blur-sm">
-                           <h2 class="text-xl font-bold text-[#FF2D20]">{{ $t('fast_translate_sentences') }}</h2>
+                     <div class="gap-6 overflow-hidden rounded-lg bg-gradient-to-br from-gray-400/50 to-gray-200/50 dark:from-gray-800/50 dark:to-gray-700/50 p-10 shadow-lg ring-1 ring-white/10 transition duration-300 hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 w-full backdrop-blur-sm my-10">
+                       <!-- انتخاب زبان -->
+                       <div class="flex items-center justify-between mb-4">
+                         <select v-model="sourceLang" class="border rounded-lg">
+                           <option value="en">English</option>
+                           <option value="fa">Persian</option>
+                           <option value="ar">Arabic</option>
+                         </select>
+                         <button @click="swapLanguages" class="px-8 py-2 bg-gray-200 rounded-lg">⇆</button>
+                         <select v-model="targetLang" class="border rounded-lg">
+                           <option value="en">English</option>
+                           <option value="fa">Persian</option>
+                           <option value="ar">Arabic</option>
+                         </select>
+                       </div>
 
-                           <!-- فیلد ترجمه -->
-                           <div class="w-full">
-                             <textarea v-model="inputText" ref="inputTextArea" placeholder="Enter your text..."
-                             class="w-full p-4 text-lg border rounded-lg focus:ring-2 focus:ring-[#FF2D20] outline-none bg-white dark:bg-gray-800 dark:text-white"
-                             @input="updateHeight"></textarea>
+                       <!-- بخش ورودی و خروجی -->
+                       <div class="lg:flex lg:gap-4">
+                         <textarea v-model="inputText" class="w-full lg:w-1/2 p-4 border rounded-lg" placeholder="Enter text..."></textarea>
+                         <!--mobile دکمه ترجمه -->
+                         <button @click="translateText" class="block lg:hidden my-4 w-full bg-red-500 text-white p-2 rounded-lg hover:bg-red-600">
+                           Translate
+                         </button>
+                         <textarea v-model="translatedText" class="w-full lg:w-1/2 p-4 border rounded-lg bg-gray-100" readonly></textarea>
+                       </div>
 
-                             <button @click="translateText" class="my-4 w-full bg-[#FF2D20] text-white font-semibold py-2 rounded-lg hover:bg-[#e6261e] transition">
-                               {{ $t('translate_now') }}
-                             </button>
-                           </div>
+                       <!-- دکمه ترجمه -->
+                       <button @click="translateText" class="hidden lg:block my-4 w-full bg-red-500 text-white p-2 rounded-lg hover:bg-red-600">
+                         Translate
+                       </button>
 
-                           <!-- نتیجه ترجمه -->
-                           <div class="w-full p-4 bg-white dark:bg-gray-700 rounded-lg" :style="{ height: textAreaHeight + 'px' }">
-                             <p class="text-lg font-semibold">{{ translatedText }}</p>
-                           </div>
 
-                           <!-- انتخاب زبان‌های مبدا و مقصد -->
-                           <div class="flex justify-between w-full gap-4">
-                             <select v-model="sourceLang" class="border rounded-lg bg-white dark:bg-gray-800 dark:text-white">
-                               <option value="en">English</option>
-                               <option value="fa">Persian</option>
-                               <option value="ar">Arabic</option>
-                             </select>
-                             <button @click="swapLanguages" class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition">⇆</button>
-                             <select v-model="targetLang" class="border rounded-lg bg-white dark:bg-gray-800 dark:text-white">
-                               <option value="en">English</option>
-                               <option value="fa">Persian</option>
-                               <option value="ar">Arabic</option>
-                             </select>
-                           </div>
-                         </div>
                      </div>
                      <div class="relative grid grid-cols-1 lg:grid-cols-3 gap-5 rounded-lg shadow-lg overflow-hidden my-10">
                        <!-- لایه‌های زبان‌ها -->
@@ -431,3 +427,10 @@ function handleImageError() {
       },
   };
 </script>
+
+<style>
+textarea {
+  min-height: 150px;
+  resize: none;
+}
+</style>
