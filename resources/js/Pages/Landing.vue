@@ -295,33 +295,33 @@ function handleImageError() {
             }
           },
           async translateText() {
-  if (!this.inputText.trim()) {
-    this.translatedText = "لطفاً متنی برای ترجمه وارد کنید.";
-    return;
-  }
+            if (!this.inputText.trim()) {
+              this.translatedText = "لطفاً متنی برای ترجمه وارد کنید.";
+              return;
+            }
 
-  try {
-    const proxyUrl = "https://cors-anywhere.herokuapp.com/";
-    const apiUrl = `https://ftapi.pythonanywhere.com/translate?sl=${this.sourceLang}&dl=${this.targetLang}&text=${encodeURIComponent(this.inputText)}`;
+            try {
+              const proxyUrl = "https://cors-anywhere.herokuapp.com/";
+              const apiUrl = `https://ftapi.pythonanywhere.com/translate?sl=${this.sourceLang}&dl=${this.targetLang}&text=${encodeURIComponent(this.inputText)}`;
 
-    const response = await fetch(proxyUrl + apiUrl, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+              const response = await fetch(proxyUrl + apiUrl, {
+                method: "GET",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+              });
 
-    if (!response.ok) {
-      throw new Error(`API Error: ${response.status} ${response.statusText}`);
-    }
+              if (!response.ok) {
+                throw new Error(`API Error: ${response.status} ${response.statusText}`);
+              }
 
-    const data = await response.json();
-    this.translatedText = data["destination-text"] || "ترجمه‌ای دریافت نشد.";
-  } catch (error) {
-    console.error("خطا در ترجمه:", error);
-    this.translatedText = "مشکلی پیش آمد. لطفاً دوباره امتحان کنید.";
-  }
-},
+              const data = await response.json();
+              this.translatedText = data["destination-text"] || "ترجمه‌ای دریافت نشد.";
+            } catch (error) {
+              console.error("خطا در ترجمه:", error);
+              this.translatedText = "مشکلی پیش آمد. لطفاً دوباره امتحان کنید.";
+            }
+          },
           swapLanguages() {
               [this.sourceLang, this.targetLang] = [this.targetLang, this.sourceLang];
           },
