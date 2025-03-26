@@ -113,13 +113,13 @@ function handleImageError() {
                      <div class="gap-6 overflow-hidden rounded-lg bg-gradient-to-br from-gray-400/50 to-gray-200/50 dark:from-gray-800/50 dark:to-gray-700/50 p-10 shadow-lg ring-1 ring-white/10 transition duration-300 hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 w-full backdrop-blur-sm my-10">
                        <!-- انتخاب زبان -->
                        <div class="flex items-center justify-between mb-4">
-                         <select v-model="sourceLang" class="border rounded-lg bg-gray-200 dark:bg-gray-700">
+                         <select v-model="sourceLang" class="border rounded-lg bg-gray-200 dark:bg-gray-700 focus:ring-2 focus:ring-[#FF2D20] ">
                            <option value="en">English</option>
                            <option value="fa">Persian</option>
                            <option value="ar">Arabic</option>
                          </select>
                          <button @click="swapLanguages" class="px-8 py-2 bg-gray-400 dark:bg-gray-600 rounded-lg">⇆</button>
-                         <select v-model="targetLang" class="border rounded-lg  bg-gray-200 dark:bg-gray-700">
+                         <select v-model="targetLang" class="border rounded-lg  bg-gray-200 dark:bg-gray-700 focus:ring-2 focus:ring-[#FF2D20] ">
                            <option value="en">English</option>
                            <option value="fa">Persian</option>
                            <option value="ar">Arabic</option>
@@ -128,12 +128,12 @@ function handleImageError() {
 
                        <!-- بخش ورودی و خروجی -->
                        <div class="lg:flex lg:gap-4">
-                         <textarea v-model="inputText" class="w-full lg:w-1/2 p-4 border rounded-lg  bg-white dark:bg-gray-800" placeholder="Enter text..."></textarea>
+                         <textarea v-model="inputText" class="w-full lg:w-1/2 p-4 border rounded-lg  bg-white dark:bg-gray-800 focus:ring-2 focus:ring-[#FF2D20] " placeholder="Enter text..."></textarea>
                          <!--mobile دکمه ترجمه -->
                          <button @click="translateText" class="block lg:hidden my-4 w-full bg-red-500 text-white p-2 rounded-lg hover:bg-red-600">
                            Translate
                          </button>
-                         <textarea v-model="translatedText" class="w-full lg:w-1/2 p-4 border rounded-lg bg-gray-100 dark:bg-gray-700" readonly></textarea>
+                         <textarea v-model="translatedText" class="w-full lg:w-1/2 p-4 border rounded-lg bg-gray-100 dark:bg-gray-700 focus:ring-2 focus:ring-[#FF2D20]" readonly></textarea>
                        </div>
 
                        <!-- دکمه ترجمه -->
