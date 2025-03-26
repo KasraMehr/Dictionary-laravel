@@ -275,11 +275,11 @@ const setLanguage = (lang) => {
                       <div class="flex flex-row justify-center gap-4 lg:justify-start">
                         <a href="javascript:;" class="py-2.5 cursor-pointer px-5 h-9 block w-fit bg-red-600 rounded-full shadow-sm text-xs text-white transition-all duration-500 hover:bg-red-700">
                         {{ $t('contact_us') }}
-                      </a>
-                      <a href="javascript:;" class="flex cursor-pointer items-center justify-center gap-2 border border-red-600 rounded-full py-2 px-4 w-fit text-sm text-red-600 font-semibold transition-all duration-500 hover:bg-red-700 hover:text-white">
-                        {{ $t('subscribe') }}
-                    </a>
-                  </div>
+                        </a>
+                        <a href="javascript:;" class="flex cursor-pointer items-center justify-center gap-2 border border-red-600 rounded-full py-2 px-4 w-fit text-sm text-red-600 font-semibold transition-all duration-500 hover:bg-red-700 hover:text-white">
+                          {{ $t('subscribe') }}
+                        </a>
+                      </div>
               </div>
               <!--End Col-->
               <div class="lg:mx-auto">
