@@ -110,7 +110,7 @@ function handleImageError() {
                          </div>
                      </div>
 
-                     <div class="grid gap-6 lg:grid-cols-2 lg:gap-8 my-10">
+                     <div class="my-10">
                          <!-- ترجمه سریع جملات -->
                          <div class="flex flex-col items-start gap-6 overflow-hidden rounded-lg bg-gradient-to-br from-gray-400/50 to-gray-200/50 dark:from-gray-800/50 dark:to-gray-700/50 p-6 shadow-lg ring-1 ring-white/10 transition duration-300 hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 lg:p-10 lg:pb-10 w-full backdrop-blur-sm">
                            <h2 class="text-xl font-bold text-[#FF2D20]">{{ $t('fast_translate_sentences') }}</h2>
@@ -145,35 +145,6 @@ function handleImageError() {
                                <option value="ar">Arabic</option>
                              </select>
                            </div>
-                         </div>
-
-                         <!-- تاریخچه و لیست علاقه‌مندی‌ها -->
-                         <div class="flex flex-col items-start gap-6 overflow-hidden rounded-lg bg-gradient-to-br from-gray-400/50 to-gray-200/50 dark:from-gray-800/50 dark:to-gray-700/50 p-6 shadow-lg ring-1 ring-white/10 hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 lg:p-10 lg:pb-10 w-full backdrop-blur-sm">
-                             <h2 class="text-xl font-bold text-[#FF2D20]">{{ $t('history_and_favorites') }}</h2>
-
-                            <div class="grid grid-cols-2 w-full">
-                             <!-- تاریخچه جستجو -->
-                             <div class="">
-                                 <h3 class="text-lg font-semibold">{{ $t('search_history') }}</h3>
-                                 <ul class="mt-2 space-y-2">
-                                     <li v-for="(history, index) in searchHistory" :key="index" class="p-2 bg-gray-700/50 rounded-lg flex justify-between">
-                                         <span class="text-white">{{ history }}</span>
-                                         <button @click="removeHistory(index)" class="text-red-400 hover:text-red-600">✖</button>
-                                     </li>
-                                 </ul>
-                             </div>
-
-                             <!-- لیست علاقه‌مندی‌ها -->
-                             <div class="">
-                                 <h3 class="text-lg font-semibold">{{ $t('favorite_words') }}</h3>
-                                 <ul class="mt-2 space-y-2">
-                                     <li v-for="(word, index) in favoriteWords" :key="index" class="p-2 bg-gray-700/50 rounded-lg flex justify-between">
-                                         <span class="text-white">{{ word }}</span>
-                                         <button @click="removeFavorite(index)" class="text-red-400 hover:text-red-600">✖</button>
-                                     </li>
-                                 </ul>
-                             </div>
-                             </div>
                          </div>
                      </div>
                      <div class="relative grid grid-cols-1 lg:grid-cols-3 gap-5 rounded-lg shadow-lg overflow-hidden my-10">
@@ -249,10 +220,10 @@ function handleImageError() {
                           </div>
 
                           <!-- پیام تشویقی -->
-                          <p v-if="correctAnswers === 10" class="mt-4 text-xl font-bold text-green-500">
+                          <p v-if="showCongratulation" class="mt-4 text-xl font-bold text-green-500">
                               🎉 {{ $t('congratulations') }}! You answered all questions correctly! 🎉
                           </p>
-                      </div>
+                        </div>
 
 
                  <!-- بخش یادگیری -->
@@ -301,8 +272,9 @@ function handleImageError() {
               textAreaHeight: 100,
               currentQuestionIndex: parseInt(localStorage.getItem("currentQuestionIndex")) || 0,
               selectedAnswer: null,
-              correctAnswers: parseInt(localStorage.getItem("correctAnswers")) || 0
-          };
+              correctAnswers: parseInt(localStorage.getItem("correctAnswers")) || 0,
+              showCongratulation: false,
+            };
       },
       watch: {
           searchQuery(newQuery) {
@@ -439,6 +411,15 @@ function handleImageError() {
                 this.currentQuestionIndex++;
                 this.selectedAnswer = null;
                 localStorage.setItem("currentQuestionIndex", this.currentQuestionIndex);
+            }
+
+            // چک کردن بعد از پاسخ دادن به آخرین سوال
+            if (this.currentQuestionIndex === this.quizQuestions.length - 1 && this.correctAnswers === 10) {
+                this.showCongratulation = true;
+                setTimeout(() => {
+                    this.showCongratulation = false;
+                    location.reload(); // صفحه را ریلود می‌کند
+                }, 5000);
             }
         }
       },
