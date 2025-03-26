@@ -12,7 +12,55 @@ import axios from "axios";
     <MainLayout title="library">
         <!-- Search Module -->
         <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+          <!-- Filter Sidebar -->
+          <transition name="slide-fade">
+          <div v-if="isFilterOpen" ref="filterBox"
+              class="fixed bg-gray-100 dark:bg-gray-900 p-4 rounded-lg shadow-lg border dark:border-gray-700 transition-transform duration-300 z-40
+                     right-4 bottom-16 w-64 lg:top-1/4 lg:right-4"
+              @click.stop>
+
+              <h3 class="text-lg font-bold text-gray-800 dark:text-white mb-3">{{ $t('filters') }}</h3>
+
+              <!-- Category Filter -->
+              <div class="mb-3">
+                  <label class="text-sm font-medium dark:text-white text-gray-700">{{ $t('category') }}</label>
+                  <select v-model="selectedCategory" class="border rounded-lg w-full dark:bg-gray-800 dark:text-white">
+                      <option value="">{{ $t('all') }}</option>
+                      <option v-for="category in uniqueCategories" :key="category" :value="category">
+                          {{ category }}
+                      </option>
+                  </select>
+              </div>
+
+              <!-- Level Filter -->
+              <div class="mb-3">
+                  <label class="text-sm font-medium dark:text-white text-gray-700">{{ $t('level') }}</label>
+                  <select v-model="selectedLevel" class="border rounded-lg w-full dark:bg-gray-800 dark:text-white">
+                      <option value="">{{ $t('all') }}</option>
+                      <option v-for="level in uniqueLevels" :key="level" :value="level">
+                          {{ level }}
+                      </option>
+                  </select>
+              </div>
+
+              <!-- Grammar Filter -->
+              <div>
+                  <label class="text-sm font-medium dark:text-white text-gray-700">{{ $t('grammar') }}</label>
+                  <select v-model="selectedGrammar" class="border rounded-lg w-full dark:bg-gray-800 dark:text-white">
+                      <option value="">{{ $t('all') }}</option>
+                      <option v-for="grammar in uniqueGrammarTypes" :key="grammar" :value="grammar">
+                          {{ grammar }}
+                      </option>
+                  </select>
+              </div>
+          </div>
+        </transition>
+
+            <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
+              <button @click.stop="toggleFilter"
+                  class="fixed bottom-4 right-4 bg-[#FF2D20] text-white px-4 py-2 rounded-full shadow-lg z-50">
+                  {{ isFilterOpen ? '✖' : '⚙️' }} {{ $t('filters') }}
+              </button>
                 <div class="bg-gray-200 dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg">
 
                   <!-- Search Bar -->
@@ -22,9 +70,7 @@ import axios from "axios";
                   </div>
 
                     <!-- Search Module -->
-                    <div v-if="showSearchModal"
-                        class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50"
-                        @click="closeSearchModal">
+                    <div v-if="showSearchModal" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50" @click="closeSearchModal">
                         <div class="bg-white dark:text-white text-black dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700 p-6 rounded shadow-md w-3/4"
                             @click.stop>
                             <!-- search bar in module -->
@@ -39,6 +85,7 @@ import axios from "axios";
                                       {{ $t('search') }}
                                     </button>
                             </div>
+
 
                             <!-- Search results -->
                             <div>
@@ -211,6 +258,43 @@ import axios from "axios";
     </MainLayout>
 </template>
 
+<style scoped>
+  /* حالت اولیه (پیش از ورود) */
+.slide-fade-enter-from {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+/* حالت در حال ورود */
+.slide-fade-enter-active {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* حالت کامل‌شده (بعد از ورود) */
+.slide-fade-enter-to {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* حالت اولیه هنگام خروج */
+.slide-fade-leave-from {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* حالت در حال خروج */
+.slide-fade-leave-active {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* حالت بعد از خروج */
+.slide-fade-leave-to {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+</style>
+
 <script>
 import axios from "axios";
 
@@ -244,7 +328,11 @@ export default {
             page: 1,     // شماره صفحه
             perPage: 10, // تعداد آیتم‌ها در هر درخواست
             isLoading: false, // برای جلوگیری از درخواست‌های زیاد
-            hasMore: true
+            hasMore: true,
+            selectedCategory: "",
+        selectedLevel: "",
+        selectedGrammar: "",
+        isFilterOpen: false,
         };
     },
     methods: {
@@ -335,20 +423,50 @@ export default {
         closeModal(){
           this.showViewModal = false;
         },
+        toggleFilter() {
+        this.isFilterOpen = !this.isFilterOpen;
+    },
+    closeFilterOnClickOutside(event) {
+        if (this.isFilterOpen && this.$refs.filterBox && !this.$refs.filterBox.contains(event.target)) {
+            this.isFilterOpen = false;
+        }
+    }
 
     },
     computed: {
-        filteredWords() {
-            return this.searchResults.length > 0 ? this.searchResults : this.words;
+        uniqueCategories() {
+            return [...new Set(this.words.flatMap(word => word.categories.map(c => c.name)))];
         },
+        uniqueLevels() {
+            return [...new Set(this.words.map(word => word.level))];
+        },
+        uniqueGrammarTypes() {
+            return [...new Set(this.words.map(word => word.grammar))];
+        },
+        filteredWords() {
+            let words = this.searchResults.length > 0 ? this.searchResults : this.words;
+
+            // اعمال فیلترها
+            if (this.selectedCategory) {
+                words = words.filter(word => word.categories.some(c => c.name === this.selectedCategory));
+            }
+            if (this.selectedLevel) {
+                words = words.filter(word => word.level === this.selectedLevel);
+            }
+            if (this.selectedGrammar) {
+                words = words.filter(word => word.grammar === this.selectedGrammar);
+            }
+
+            return words;
+        }
     },
     mounted() {
         this.loadWords();
         this.setupObserver();
-        window.addEventListener("click", this.handleClickOutside);
+        document.addEventListener("click", this.closeFilterOnClickOutside);
     },
     beforeDestroy() {
-        window.removeEventListener("click", this.handleClickOutside);
+      document.removeEventListener("click", this.closeFilterOnClickOutside);
     },
 };
 </script>
