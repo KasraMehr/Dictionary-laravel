@@ -8,25 +8,33 @@ const learningMethods = ref([
     title: "🔰 یادگیری بر اساس سطح",
     description: "از مبتدی تا پیشرفته، یادگیری متناسب با سطح شما",
     link: "/learning/level",
-    bgColor: "bg-red-500",
+    image: "/images/levels.png", // مسیر تصویر مرتبط
+    stats: "150+",
+    statLabel: "دوره آموزشی",
   },
   {
     title: "📂 یادگیری بر اساس موضوع",
     description: "کلمات و عبارات مرتبط با موضوعات مختلف",
     link: "/learning/category",
-    bgColor: "bg-green-500",
+    image: "/images/topics.png",
+    stats: "2000+",
+    statLabel: "کلمه یادگرفته‌شده",
   },
   {
     title: "📖 یادگیری گرامر",
     description: "یادگیری اصول و قواعد گرامری به صورت ساده و کاربردی",
     link: "/learning/grammar",
-    bgColor: "bg-yellow-500",
+    image: "/images/grammars.png",
+    stats: "50+",
+    statLabel: "درس گرامری",
   },
   {
     title: "🤖 یادگیری با هوش مصنوعی",
     description: "یادگیری تعاملی با AI (در دست توسعه)",
     link: "/learning/ai",
-    bgColor: "bg-red-500",
+    image: "/images/AI.png",
+    stats: "0",
+    statLabel: "درس فعال",
     comingSoon: true,
   },
 ]);
@@ -76,43 +84,85 @@ const extraFeatures = ref([
       <div class="container mx-auto px-6 py-10 text-gray-900 dark:text-gray-100">
         <!-- بخش یادگیری -->
         <section class="mb-12">
-          <h2 class="text-2xl font-bold mb-4">روش‌های یادگیری</h2>
+          <h2 class="text-3xl font-bold text-center mb-6 text-black dark:text-white">
+            روش‌های یادگیری
+          </h2>
+
           <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             <router-link
               v-for="method in learningMethods"
               :key="method.title"
               :to="method.comingSoon ? '#' : method.link"
-              class="block p-6 rounded-lg shadow-lg text-white transition-transform hover:scale-105"
-              :class="method.bgColor"
+              class="relative block overflow-hidden rounded-lg shadow-lg transition-transform hover:scale-105 min-h-[300px]"
             >
-              <h3 class="text-xl font-semibold text-black dark:text-white">{{ method.title }}</h3>
-              <p class="text-black dark:text-white mt-2">{{ method.description }}</p>
-              <span
-                v-if="method.comingSoon"
-                class="bg-gray-800 text-white px-3 py-1 rounded-full text-sm mt-3 inline-block"
-                >Coming Soon</span
+              <!-- تصویر پس‌زمینه -->
+              <div
+                class="absolute inset-0 bg-cover bg-center opacity-70 dark:opacity-50"
+                :style="{ backgroundImage: `url(${method.image})` }"
+              ></div>
+
+              <!-- محتوای کارت -->
+              <div
+                class="absolute bottom-0 w-full flex flex-col justify-end p-6 text-black dark:text-gray-200 bg-gradient-to-t from-white/80 via-white/60 to-transparent dark:from-black/80 dark:via-black/60 backdrop-blur-md"
               >
+                <h3 class="text-2xl font-semibold text-black dark:text-white drop-shadow-md">
+                  {{ method.title }}
+                </h3>
+                <p class="mt-2 text-sm text-gray-800 dark:text-gray-300 drop-shadow-md">
+                  {{ method.description }}
+                </p>
+
+                <!-- اطلاعات عددی -->
+                <p class="mt-3 text-lg font-bold text-red-600 dark:text-red-400 drop-shadow-md">
+                  📊 {{ method.stats }} {{ method.statLabel }}
+                </p>
+
+                <!-- برچسب "Coming Soon" -->
+                <span
+                  v-if="method.comingSoon"
+                  class="bg-gray-900 text-white px-3 py-1 rounded-full text-sm mt-3 inline-block"
+                >
+                  Coming Soon
+                </span>
+              </div>
             </router-link>
+
           </div>
         </section>
 
         <!-- بخش آزمون و کلمات روزانه -->
         <section class="mb-12">
-          <h2 class="text-2xl font-bold text-red-700 mb-4">امکانات بیشتر</h2>
-          <div class="grid md:grid-cols-2 gap-6">
-            <router-link
-              v-for="feature in extraFeatures"
-              :key="feature.title"
-              :to="feature.link"
-              class="block p-6 rounded-lg shadow-lg text-white transition-transform hover:scale-105"
-              :class="feature.bgColor"
-            >
-              <h3 class="text-xl font-semibold text-black dark:text-white">{{ feature.title }}</h3>
-              <p class="text-black dark:text-white mt-2">{{ feature.description }}</p>
-            </router-link>
-          </div>
-        </section>
+  <h2 class="text-2xl font-bold text-red-700 mb-4">امکانات بیشتر</h2>
+  <div class="grid md:grid-cols-2 gap-6">
+    <router-link
+      v-for="feature in extraFeatures"
+      :key="feature.title"
+      :to="feature.link"
+      class="relative block overflow-hidden rounded-lg shadow-lg transition-transform hover:scale-105 min-h-[220px]"
+      :class="feature.bgColor"
+    >
+      <!-- لایه نیمه‌شفاف برای افزایش خوانایی -->
+      <div class="absolute inset-0 bg-black opacity-20 dark:opacity-30"></div>
+
+      <!-- محتوای کارت -->
+      <div class="relative p-6 text-white flex flex-col justify-center h-full">
+        <h3 class="text-xl font-semibold text-black dark:text-white drop-shadow-md">
+          {{ feature.title }}
+        </h3>
+        <p class="mt-2 text-black dark:text-white drop-shadow-md">
+          {{ feature.description }}
+        </p>
+      </div>
+    </router-link>
+  </div>
+</section>
       </div>
     </div>
   </MainLayout>
 </template>
+
+<style scoped>
+.dark .bg-gradient-to-t {
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.5));
+}
+</style>
