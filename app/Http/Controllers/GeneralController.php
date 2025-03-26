@@ -126,7 +126,33 @@ class GeneralController extends Controller
           $totalUsers = User::count();
           $totalTeams = Team::count();
           $totalWords = Word::count();
-          $wordList = Word::inRandomOrder()->take(5)->get(['id', 'word', 'meaning', 'native_lang', 'translated_lang']); // گرفتن ۵ کلمه تصادفی
+          $wordList = Word::inRandomOrder()->take(5)->get(['id', 'word', 'meaning', 'native_lang', 'translated_lang']);
+
+          // گرفتن 10 کلمه تصادفی
+          $words = Word::inRandomOrder()->take(10)->get(['id', 'word', 'meaning']);
+
+          // ساخت آرایه سوالات
+          $quizQuestions = [];
+          foreach ($words as $word) {
+              // گرفتن ۳ گزینه‌ی اشتباه
+              $wrongOptions = Word::where('id', '!=', $word->id)
+                  ->inRandomOrder()
+                  ->take(3)
+                  ->pluck('meaning')
+                  ->toArray();
+
+              // ادغام گزینه‌ی درست با گزینه‌های اشتباه
+              $options = $wrongOptions;
+              $correctIndex = rand(0, 3);
+              array_splice($options, $correctIndex, 0, $word->meaning);
+
+              $quizQuestions[] = [
+                  'question' => "What is the meaning of '{$word->word}'?",
+                  'options' => $options,
+                  'correctIndex' => $correctIndex
+              ];
+          }
+
 
           return Inertia::render('Landing', [
               'canLogin' => Route::has('login'),
@@ -135,6 +161,8 @@ class GeneralController extends Controller
               'totalTeams' => $totalTeams,
               'totalWords' => $totalWords,
               'wordList' => $wordList,
+              'quizQuestions' => $quizQuestions,
+
           ]);
       }
 
