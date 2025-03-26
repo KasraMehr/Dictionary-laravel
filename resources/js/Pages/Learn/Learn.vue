@@ -64,18 +64,12 @@ const extraFeatures = ref([
 
           <!-- CTA Buttons -->
           <div class="mt-6 flex justify-center gap-4 text-gray-800 dark:text-gray-200">
-            <router-link
-              to="/test"
-              class="bg-yellow-500 hover:bg-yellow-600 px-6 py-3 rounded-lg text-lg font-semibold shadow-md transition-transform transform hover:scale-105"
-            >
-              🎯 آزمون تعیین سطح
-            </router-link>
-            <router-link
-              to="/learning/level"
-              class="bg-green-500 hover:bg-green-600 px-6 py-3 rounded-lg text-lg font-semibold shadow-md transition-transform transform hover:scale-105"
-            >
-              📚 شروع یادگیری
-            </router-link>
+            <a href="javascript:;" class="py-2.5 cursor-pointer px-5 h-9 block w-fit bg-red-600 rounded-full shadow-sm text-xs text-white transition-all duration-500 hover:bg-red-700">
+            {{ $t('quiz') }}
+            </a>
+            <a href="javascript:;" class="flex cursor-pointer items-center justify-center gap-2 border border-red-600 rounded-full py-2 px-4 w-fit text-sm text-red-600 font-semibold transition-all duration-500 hover:bg-red-700 hover:text-white">
+              {{ $t('learn') }}
+            </a>
           </div>
       </header>
 
