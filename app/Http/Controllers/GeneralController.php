@@ -121,50 +121,53 @@ class GeneralController extends Controller
        *
        * @return Response
        */
-      public function landingData(): Response
-      {
-          $totalUsers = User::count();
-          $totalTeams = Team::count();
-          $totalWords = Word::count();
-          $wordList = Word::inRandomOrder()->take(5)->get(['id', 'word', 'meaning', 'native_lang', 'translated_lang']);
+       public function landingData(): Response
+       {
+           $totalUsers = User::count();
+           $totalTeams = Team::count();
+           $totalWords = Word::count();
 
-          // گرفتن 10 کلمه تصادفی
-          $words = Word::inRandomOrder()->take(10)->get(['id', 'word', 'meaning']);
+           // اگر کلمات در سشن نباشند، تولید و ذخیره کن
+           if (!session()->has('wordList')) {
+               session(['wordList' => Word::inRandomOrder()->take(5)->get(['id', 'word', 'meaning', 'native_lang', 'translated_lang'])]);
+           }
 
-          // ساخت آرایه سوالات
-          $quizQuestions = [];
-          foreach ($words as $word) {
-              // گرفتن ۳ گزینه‌ی اشتباه
-              $wrongOptions = Word::where('id', '!=', $word->id)
-                  ->inRandomOrder()
-                  ->take(3)
-                  ->pluck('meaning')
-                  ->toArray();
+           if (!session()->has('quizQuestions')) {
+               $words = Word::inRandomOrder()->take(10)->get(['id', 'word', 'meaning']);
+               $quizQuestions = [];
 
-              // ادغام گزینه‌ی درست با گزینه‌های اشتباه
-              $options = $wrongOptions;
-              $correctIndex = rand(0, 3);
-              array_splice($options, $correctIndex, 0, $word->meaning);
+               foreach ($words as $word) {
+                   $wrongOptions = Word::where('id', '!=', $word->id)
+                       ->inRandomOrder()
+                       ->take(3)
+                       ->pluck('meaning')
+                       ->toArray();
 
-              $quizQuestions[] = [
-                  'question' => "What is the meaning of '{$word->word}'?",
-                  'options' => $options,
-                  'correctIndex' => $correctIndex
-              ];
-          }
+                   $options = $wrongOptions;
+                   $correctIndex = rand(0, 3);
+                   array_splice($options, $correctIndex, 0, $word->meaning);
 
+                   $quizQuestions[] = [
+                       'question' => "What is the meaning of '{$word->word}'?",
+                       'options' => $options,
+                       'correctIndex' => $correctIndex
+                   ];
+               }
 
-          return Inertia::render('Landing', [
-              'canLogin' => Route::has('login'),
-              'canRegister' => Route::has('register'),
-              'totalUsers' => $totalUsers,
-              'totalTeams' => $totalTeams,
-              'totalWords' => $totalWords,
-              'wordList' => $wordList,
-              'quizQuestions' => $quizQuestions,
+               session(['quizQuestions' => $quizQuestions]);
+           }
 
-          ]);
-      }
+           return Inertia::render('Landing', [
+               'canLogin' => Route::has('login'),
+               'canRegister' => Route::has('register'),
+               'totalUsers' => $totalUsers,
+               'totalTeams' => $totalTeams,
+               'totalWords' => $totalWords,
+               'wordList' => session('wordList'),
+               'quizQuestions' => session('quizQuestions'),
+           ]);
+       }
+
 
       public function aboutUs()
       {
