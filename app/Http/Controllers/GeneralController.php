@@ -36,7 +36,7 @@ class GeneralController extends Controller
             $word->categories = $word->categories ?? collect([]);
         });
 
-        return Inertia::render('library/index', [
+        return Inertia::render('Library/Index', [
             'words' => $words->items(),
             'pagination' => [
                 'current_page' => $words->currentPage(),
@@ -166,6 +166,38 @@ class GeneralController extends Controller
                'wordList' => session('wordList'),
                'quizQuestions' => session('quizQuestions'),
            ]);
+       }
+
+       public function DailyTest()
+       {
+         if (!session()->has('quizQuestions')) {
+             $words = Word::inRandomOrder()->take(10)->get(['id', 'word', 'meaning']);
+             $quizQuestions = [];
+
+             foreach ($words as $word) {
+                 $wrongOptions = Word::where('id', '!=', $word->id)
+                     ->inRandomOrder()
+                     ->take(3)
+                     ->pluck('meaning')
+                     ->toArray();
+
+                 $options = $wrongOptions;
+                 $correctIndex = rand(0, 3);
+                 array_splice($options, $correctIndex, 0, $word->meaning);
+
+                 $quizQuestions[] = [
+                     'question' => "What is the meaning of '{$word->word}'?",
+                     'options' => $options,
+                     'correctIndex' => $correctIndex
+                 ];
+             }
+
+             session(['quizQuestions' => $quizQuestions]);
+         }
+
+         return Inertia::render('Library/DailyTest', [
+             'quizQuestions' => session('quizQuestions'),
+         ]);
        }
 
 
