@@ -176,6 +176,7 @@ function handleImageError() {
                    </div>
                     </div>
                       <div class="grid gap-6 lg:grid-cols-2 lg:gap-8 m-10">
+                        <!-- quiz section -->
                         <div class="flex flex-col items-start gap-6 overflow-hidden rounded-lg bg-gradient-to-br from-gray-400/50 to-gray-200/50 dark:from-gray-800/50 dark:to-gray-700/50 p-6 shadow-lg ring-1 ring-white/10 transition duration-300 hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 lg:p-10 lg:pb-10 w-full backdrop-blur-sm">
                           <h2 class="text-xl font-bold text-[#FF2D20]">{{ $t('quiz_section') }}</h2>
                           <p class="text-sm text-gray-700 dark:text-gray-300">{{ $t('test_your_knowledge') }}</p>
