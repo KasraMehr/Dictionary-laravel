@@ -337,7 +337,7 @@ const setLanguage = (lang) => {
                   </h4>
                   <ul class="text-sm  transition-all duration-500">
                       <li class="mb-6">
-                          <a href="javascript:;" class="cursor-pointer text-gray-600 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white">
+                          <a :href="route('DailyWords')" class="cursor-pointer text-gray-600 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white">
                             {{ $t('daily_words') }}
                           </a>
                       </li>
