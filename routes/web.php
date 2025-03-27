@@ -16,6 +16,9 @@ Route::get('/', [GeneralController::class, 'landingData'])->name('landing');
 Route::get('/reports', [ReportController::class, 'statisticReport'])->name('reports');
 Route::get('/library', [GeneralController::class, 'index'])->name('library');
 Route::get('/search', [GeneralController::class, 'search'])->name('search');
+Route::get('/daily-test', [GeneralController::class, 'DailyTest'])->name('DailyTest');
+
+// Communicate routes
 Route::get('/about-us', [GeneralController::class, 'aboutUs'])->name('aboutUs');
 Route::get('/contact-us', [GeneralController::class, 'contactUs'])->name('contactUs');
 Route::get('/FAQ', [GeneralController::class, 'FAQ'])->name('faq');
