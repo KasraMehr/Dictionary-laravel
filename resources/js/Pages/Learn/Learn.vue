@@ -7,7 +7,7 @@ const learningMethods = ref([
   {
     title: "🔰 یادگیری بر اساس سطح",
     description: "از مبتدی تا پیشرفته، یادگیری متناسب با سطح شما",
-    link: "/learning/level",
+    link: "/levels",
     image: "/images/levels.png", // مسیر تصویر مرتبط
     stats: "150+",
     statLabel: "دوره آموزشی",
@@ -15,7 +15,7 @@ const learningMethods = ref([
   {
     title: "📂 یادگیری بر اساس موضوع",
     description: "کلمات و عبارات مرتبط با موضوعات مختلف",
-    link: "/learning/category",
+    link: "/topics",
     image: "/images/topics.png",
     stats: "2000+",
     statLabel: "کلمه یادگرفته‌شده",
@@ -23,7 +23,7 @@ const learningMethods = ref([
   {
     title: "📖 یادگیری گرامر",
     description: "یادگیری اصول و قواعد گرامری به صورت ساده و کاربردی",
-    link: "/learning/grammar",
+    link: "/grammars",
     image: "/images/grammars.png",
     stats: "50+",
     statLabel: "درس گرامری",
@@ -44,7 +44,7 @@ const extraFeatures = ref([
   {
     title: "📝 آزمون تعیین سطح",
     description: "سطح زبان خود را مشخص کنید و پیشرفت کنید",
-    link: "/test",
+    link: "/daily-test",
     bgColor: "bg-gray-500",
   },
   {
@@ -60,40 +60,41 @@ const extraFeatures = ref([
   <MainLayout title="Learn">
     <div class="min-h-screen">
       <!-- هدر صفحه -->
-      <header class="relative w-full  py-5 relative z-0 bg-gray-200 dark:bg-gray-800">
-        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative text-center">
-          <h1 class="max-w-2xl mx-auto text-center font-manrope font-bold text-4xl text-black dark:text-white mb-5 md:text-5xl md:leading-normal">
-            {{ $t('experience') }} <br><span class="text-red-600">{{ $t('modern_dictionary') }}</span>
+      <header class="relative w-full py-5 bg-gray-200 dark:bg-gray-800">
+        <div class="mx-auto max-w-7xl px-4 text-center">
+          <h1 class="max-w-2xl mx-auto font-manrope font-bold text-4xl text-black dark:text-white mb-5 md:text-5xl">
+            {{ $t('experience') }} <br /><span class="text-red-600">{{ $t('modern_dictionary') }}</span>
           </h1>
-          <p class="max-w-sm mx-auto text-center text-base font-normal leading-7 text-gray-500 dark:text-gray-400">
+          <p class="max-w-sm mx-auto text-base font-normal leading-7 text-gray-500 dark:text-gray-400">
             {{ $t('smart_tool') }}
           </p>
         </div>
 
-          <!-- CTA Buttons -->
-          <div class="mt-6 flex justify-center gap-4 text-gray-800 dark:text-gray-200">
-            <a href="javascript:;" class="py-2.5 cursor-pointer px-5 h-9 block w-fit bg-red-600 rounded-full shadow-sm text-xs text-white transition-all duration-500 hover:bg-red-700">
+        <!-- CTA Buttons -->
+        <div class="mt-6 flex justify-center gap-4 text-gray-800 dark:text-gray-200">
+          <a href="/daily-test"
+             class="py-2.5 px-5 h-9 block w-fit bg-red-600 rounded-full shadow-sm text-xs text-white transition-all duration-500 hover:bg-red-700">
             {{ $t('quiz') }}
-            </a>
-            <a href="javascript:;" class="flex cursor-pointer items-center justify-center gap-2 border border-red-600 rounded-full py-2 px-4 w-fit text-sm text-red-600 font-semibold transition-all duration-500 hover:bg-red-700 hover:text-white">
-              {{ $t('learn') }}
-            </a>
-          </div>
+          </a>
+          <a href="/learning"
+             class="flex items-center justify-center gap-2 border border-red-600 rounded-full py-2 px-4 w-fit text-sm text-red-600 font-semibold transition-all duration-500 hover:bg-red-700 hover:text-white">
+            {{ $t('learn') }}
+          </a>
+        </div>
       </header>
 
       <div class="container mx-auto px-6 py-10 text-gray-900 dark:text-gray-100">
         <!-- بخش یادگیری -->
         <section class="mb-12">
-          <h2 class="text-3xl font-bold text-center mb-6 text-black dark:text-white">
-            روش‌های یادگیری
-          </h2>
+          <h2 class="text-3xl font-bold text-center mb-6 text-black dark:text-white">روش‌های یادگیری</h2>
 
           <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <router-link
+            <a
               v-for="method in learningMethods"
               :key="method.title"
-              :to="method.comingSoon ? '#' : method.link"
+              :href="method.comingSoon ? '#' : method.link"
               class="relative block overflow-hidden rounded-lg shadow-lg transition-transform hover:scale-105 min-h-[300px]"
+              :class="{ 'pointer-events-none opacity-50': method.comingSoon }"
             >
               <!-- تصویر پس‌زمینه -->
               <div
@@ -125,38 +126,36 @@ const extraFeatures = ref([
                   Coming Soon
                 </span>
               </div>
-            </router-link>
-
+            </a>
           </div>
         </section>
 
         <!-- بخش آزمون و کلمات روزانه -->
         <section class="my-12">
-        <h2 class="text-2xl font-bold text-red-700 mb-4">امکانات بیشتر</h2>
-        <div class="grid md:grid-cols-2 gap-6">
-          <router-link
-            v-for="feature in extraFeatures"
-            :key="feature.title"
-            :to="feature.link"
-            class="relative block p-6 rounded-lg shadow-lg transition-transform hover:scale-105 overflow-hidden border border-black/40 dark:border-white/40"
-          >
-            <!-- لایه گلس‌مورفیسم -->
-            <div class="absolute inset-0 bg-gradient-to-br from-red-400/60 to-white/40 dark:from-red-900/40 dark:to-black/30 backdrop-blur-lg"></div>
+          <h2 class="text-2xl font-bold text-red-700 mb-4">امکانات بیشتر</h2>
+          <div class="grid md:grid-cols-2 gap-6">
+            <a
+              v-for="feature in extraFeatures"
+              :key="feature.title"
+              :href="feature.link"
+              class="relative block p-6 rounded-lg shadow-lg transition-transform hover:scale-105 overflow-hidden border border-black/40 dark:border-white/40"
+            >
+              <!-- لایه گلس‌مورفیسم -->
+              <div class="absolute inset-0 bg-gradient-to-br from-red-400/60 to-white/40 dark:from-red-900/40 dark:to-black/30 backdrop-blur-lg"></div>
 
-            <!-- محتوای کارت -->
-            <div class="relative z-10 text-black dark:text-white">
-              <h3 class="text-xl font-semibold">{{ feature.title }}</h3>
-              <p class="mt-2">{{ feature.description }}</p>
-            </div>
-          </router-link>
-        </div>
-      </section>
-
-
+              <!-- محتوای کارت -->
+              <div class="relative z-10 text-black dark:text-white">
+                <h3 class="text-xl font-semibold">{{ feature.title }}</h3>
+                <p class="mt-2">{{ feature.description }}</p>
+              </div>
+            </a>
+          </div>
+        </section>
       </div>
     </div>
   </MainLayout>
 </template>
+
 
 <style scoped>
 .dark .bg-gradient-to-t {
