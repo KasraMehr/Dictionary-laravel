@@ -53,7 +53,7 @@ import axios from "axios";
           </div>
         </transition>
 
-            <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
+            <div class="w-full mx-auto sm:px-6 lg:px-8">
               <button @click.stop="toggleFilter"
                   class="fixed bottom-4 right-4 bg-[#FF2D20] text-white px-4 py-2 rounded-full shadow-lg z-50">
                   {{ isFilterOpen ? '✖' : '⚙️' }} {{ $t('filters') }}
@@ -117,7 +117,7 @@ import axios from "axios";
 
                         <div v-if="words.length > 0" class="space-y-2 border border-gray-700/50 rounded-xl max-w-7xl mx-auto">
                             <div v-for="(word, index) in words" :key="word.id"
-                                class="p-4 xl:p-6 rounded-xl shadow-sm flex flex-col lg:grid lg:grid-cols-4 gap-4 lg:gap-6 xl:gap-8 items-start lg:items-center hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 hover:bg-gray-700/50 transform translate-y-0 hover:-translate-y-1 dark:text-white text-black">
+                                class="p-4 xl:p-6 rounded-xl shadow-sm flex flex-col lg:grid lg:grid-cols-6 gap-4 lg:gap-6 xl:gap-8 items-start lg:items-center hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 hover:bg-gray-700/50 transform translate-y-0 hover:-translate-y-1 dark:text-white text-black">
                                 <!-- Word -->
                                 <div class="flex items-center w-full">
                                     <div class="ml-4 xl:ml-12 text-gray-400">{{ index + 1 }}</div>
@@ -128,6 +128,14 @@ import axios from "axios";
                                     <div class="flex flex-col">
                                         <span class="text-gray-400 text-sm py-2">{{ $t('meaning') }}:</span>
                                         <span class="truncate p-2">{{ word . meaning }}</span>
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <span class="text-gray-400 text-sm py-2">{{ $t('level') }}:</span>
+                                        <span class="truncate p-2">{{ word . level }}</span>
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <span class="text-gray-400 text-sm py-2">{{ $t('grammer') }}:</span>
+                                        <span class="truncate p-2">{{ word . grammer }}</span>
                                     </div>
                                     <div class="flex flex-col" v-if="word.categories !== []">
                                         <span class="text-gray-400 text-sm py-2">{{ $t('categories') }}:</span>
@@ -146,6 +154,12 @@ import axios from "axios";
                                 <!-- Desktop Content -->
                                 <div class="hidden lg:block truncate xl:pr-4">
                                     {{ word . meaning }}
+                                </div>
+                                <div class="hidden lg:block truncate xl:pr-4">
+                                    {{ word . level }}
+                                </div>
+                                <div class="hidden lg:block truncate xl:pr-4">
+                                    {{ word . grammer }}
                                 </div>
                                 <div class="hidden lg:block truncate xl:pr-4 justify-start gap-3 xl:gap-2 w-full ml-auto">
                                     <span v-for="category in (word.categories ? word.categories.slice(0, 1) : [])"
