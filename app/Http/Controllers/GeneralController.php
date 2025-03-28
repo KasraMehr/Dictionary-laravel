@@ -27,12 +27,10 @@ class GeneralController extends Controller
     public function index(): Response
     {
         $words = Word::with([
-            'user:id,name',
             'categories:id,name'
         ])->paginate(10);
 
         $words->each(function ($word) {
-            $word->user = $word->user ?? (object) ['id' => null, 'name' => ''];
             $word->categories = $word->categories ?? collect([]);
         });
 
@@ -53,12 +51,10 @@ class GeneralController extends Controller
         $page = $request->input('page', 1);
         $perPage = 10;
         $words = Word::with([
-            'user:id,name',
             'categories:id,name'
             ])->paginate($perPage, ['*'], 'page', $page);
 
         $words->each(function ($word) {
-            $word->user = $word->user ?? (object) ['id' => null, 'name' => ''];
             $word->categories = $word->categories ?? collect([]);
         });
 
