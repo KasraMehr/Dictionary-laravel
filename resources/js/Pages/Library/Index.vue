@@ -194,26 +194,26 @@ import axios from "axios";
                     <!-- Word -->
                     <div class="grid grid-cols-1 sm:grid-cols-6 gap-4 items-start">
                         <strong class="dark:text-white text-black text-lg sm:col-span-1">{{ $t('word') }}:</strong>
-                        <span class="text-gray-300 sm:col-span-5">{{ selectedWord . word }}</span>
+                        <span class="text-xl text-gray-800 dark:text-gray-300 sm:col-span-5">{{ selectedWord . word }}</span>
                     </div>
 
                     <!-- Meaning -->
                     <div class="grid grid-cols-1 sm:grid-cols-6 gap-4 items-start">
                         <strong class="dark:text-white text-black text-lg sm:col-span-1">{{ $t('meaning') }}:</strong>
-                        <span class="text-gray-300 sm:col-span-5">{{ selectedWord . meaning }}</span>
+                        <span class="text-xl text-gray-800 dark:text-gray-300 sm:col-span-5">{{ selectedWord . meaning }}</span>
                     </div>
 
                     <!-- Pronunciation -->
                     <div class="grid grid-cols-1 sm:grid-cols-6 gap-4 items-start">
                         <strong class="dark:text-white text-black text-lg sm:col-span-1">{{ $t('pronunciation') }}:</strong>
-                        <span class="text-gray-300 sm:col-span-5">{{ selectedWord . pronunciation }}</span>
+                        <span class="text-lg text-gray-800 dark:text-gray-300 sm:col-span-5">{{ selectedWord . pronunciation }}</span>
                     </div>
 
                     <!-- Description -->
                     <div class="grid grid-cols-1 sm:grid-cols-6 gap-4 items-start">
                         <strong class="dark:text-white text-black text-lg sm:col-span-1">{{ $t('description') }}:</strong>
                         <div
-                            class="text-gray-300 sm:col-span-5 break-words whitespace-pre-wrap min-h-[100px] bg-gray-800/50 p-4 rounded-lg border border-gray-700">
+                            class="text-gray-800 dark:text-gray-300 sm:col-span-5 break-words whitespace-pre-wrap min-h-[100px] bg-gray-800/50 p-4 rounded-lg border border-gray-700">
                             {{ selectedWord . description }}
                         </div>
                     </div>
