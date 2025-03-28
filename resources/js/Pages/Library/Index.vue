@@ -90,14 +90,10 @@ import axios from "axios";
                               </h3>
                               <div v-if="searchResults.length > 0" class="list-disc pl-5">
                                 <div v-for="word in searchResults" :key="word.id"
-                                     class="p-4 xl:p-6 rounded-xl shadow-sm flex flex-col lg:grid lg:grid-cols-4 gap-4 lg:gap-6 xl:gap-8 items-start lg:items-center hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 hover:bg-gray-700/50 transform translate-y-0 hover:-translate-y-1 dark:text-white text-black">
+                                     class="p-4 xl:p-6 rounded-xl shadow-sm flex flex-col lg:grid lg:grid-cols-3 gap-4 lg:gap-6 xl:gap-8 items-start lg:items-center hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 hover:bg-gray-700/50 transform translate-y-0 hover:-translate-y-1 dark:text-white text-black">
 
                                     <div>{{ word . word }}</div>
                                     <div>{{ word . meaning }}</div>
-
-                                    <div class="text-sm text-gray-700 dark:text-gray-300">
-                                      👤 {{ word.user ? word.user.name : '-' }}
-                                    </div>
 
                               <div class="flex justify-end ">
                                 <button @click="viewWord(word)"
@@ -121,7 +117,7 @@ import axios from "axios";
 
                         <div v-if="words.length > 0" class="space-y-2 border border-gray-700/50 rounded-xl max-w-7xl mx-auto">
                             <div v-for="(word, index) in words" :key="word.id"
-                                class="p-4 xl:p-6 rounded-xl shadow-sm flex flex-col lg:grid lg:grid-cols-5 gap-4 lg:gap-6 xl:gap-8 items-start lg:items-center hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 hover:bg-gray-700/50 transform translate-y-0 hover:-translate-y-1 dark:text-white text-black">
+                                class="p-4 xl:p-6 rounded-xl shadow-sm flex flex-col lg:grid lg:grid-cols-4 gap-4 lg:gap-6 xl:gap-8 items-start lg:items-center hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 hover:bg-gray-700/50 transform translate-y-0 hover:-translate-y-1 dark:text-white text-black">
                                 <!-- Word -->
                                 <div class="flex items-center w-full">
                                     <div class="ml-4 xl:ml-12 text-gray-400">{{ index + 1 }}</div>
@@ -144,9 +140,6 @@ import axios from "axios";
                                             </span>
                                         </span>
                                     </div>
-                                    <div class="text-sm text-gray-700 dark:text-gray-300 p-2">
-                                      👤 {{ word.user ? word.user.name : '-' }}
-                                    </div>
 
                                 </div>
 
@@ -160,10 +153,6 @@ import axios from "axios";
                                         class="bg-gray-300 dark:bg-gray-600 dark:text-white text-black text-xs px-3 py-1 rounded-xl">
                                         {{ category . name }}
                                     </span>
-                                </div>
-
-                                <div class="text-sm  hidden lg:block truncate xl:pr-4 text-gray-700 dark:text-gray-300">
-                                  👤 {{ word.user ? word.user.name : '-' }}
                                 </div>
 
                                 <!-- Action Buttons -->
