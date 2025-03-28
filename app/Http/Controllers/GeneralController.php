@@ -124,6 +124,10 @@ class GeneralController extends Controller
        public function landingData(): Response
        {
 
+         $totalUsers = User::count();
+         $totalTeams = Team::count();
+         $totalWords = Word::count();
+
            // اگر کلمات در سشن نباشند، تولید و ذخیره کن
            if (!session()->has('wordList')) {
                session(['wordList' => Word::inRandomOrder()->take(5)->get(['id', 'word', 'meaning', 'native_lang', 'translated_lang'])]);
