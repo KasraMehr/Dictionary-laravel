@@ -37,6 +37,15 @@ const learningMethods = ref([
     statLabel: "درس فعال",
     comingSoon: true,
   },
+  {
+    title: "یادگیری با داستان",
+    description: "یادگیری زبان با خواندن داستان و ترجمه کلمات به صورت آنی (در دست توسعه)",
+    link: "/learning/ai",
+    image: "/images/story.png",
+    stats: "0",
+    statLabel: "درس فعال",
+    comingSoon: true,
+  },
 ]);
 
 // لیست سایر امکانات یادگیری
