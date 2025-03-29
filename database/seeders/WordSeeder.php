@@ -120,7 +120,7 @@ class WordSeeder extends Seeder
     if ($imageUrl) {
         try {
             $imageData = Http::get($imageUrl)->body();
-            Storage::disk('liara')->put($path, $imageData);
+            Storage::disk('public')->put($path, $imageData);
             return $path;
         } catch (\Exception $e) {
             echo "⚠️ Failed to save image for $path\n";
@@ -134,7 +134,7 @@ class WordSeeder extends Seeder
       try {
           $voiceUrl = "https://translate.google.com/translate_tts?ie=UTF-8&tl=en&client=tw-ob&q=" . urlencode($word);
           $voiceData = Http::get($voiceUrl)->body();
-          Storage::disk('liara')->put($path, $voiceData);
+          Storage::disk('public')->put($path, $voiceData);
       } catch (\Exception $e) {
           echo "⚠️ Failed to generate voice for $word\n";
       }
