@@ -8,7 +8,7 @@ const learningMethods = ref([
     title: "🔰 یادگیری بر اساس سطح",
     description: "از مبتدی تا پیشرفته، یادگیری متناسب با سطح شما",
     link: "/levels",
-    image: "/images/levels.png", // مسیر تصویر مرتبط
+    image: "/images/levels.png",
     stats: "150+",
     statLabel: "دوره آموزشی",
   },
@@ -81,12 +81,15 @@ const extraFeatures = ref([
 
         <!-- CTA Buttons -->
         <div class="mt-6 flex justify-center gap-4 text-gray-800 dark:text-gray-200">
+          <!-- Quiz Button -->
           <a href="/daily-test"
-             class="py-2.5 px-5 h-9 block w-fit bg-red-600 rounded-full shadow-sm text-xs text-white transition-all duration-500 hover:bg-red-700">
+             class="py-3 px-6 h-10 block w-fit bg-red-600 rounded-full shadow-lg text-sm font-semibold text-white transition-all duration-500 hover:bg-red-700 transform hover:scale-105">
             {{ $t('quiz') }}
           </a>
+
+          <!-- Learn Button -->
           <a href="/learning"
-             class="flex items-center justify-center gap-2 border border-red-600 rounded-full py-2 px-4 w-fit text-sm text-red-600 font-semibold transition-all duration-500 hover:bg-red-700 hover:text-white">
+             class="flex items-center justify-center gap-2 py-3 px-6 h-10 w-fit bg-white border border-red-600 rounded-full text-sm font-semibold text-red-600 shadow-lg transition-all duration-500 hover:bg-red-600 hover:text-white transform hover:scale-105 dark:bg-gray-900 dark:border-red-500 dark:text-red-400 dark:hover:bg-red-600 dark:hover:text-white">
             {{ $t('learn') }}
           </a>
         </div>
