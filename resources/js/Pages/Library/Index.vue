@@ -200,10 +200,10 @@ const setDefaultImage = (event) => {
                                 <div class="hidden lg:block truncate">
                                     {{ word . meaning }}
                                 </div>
-                                <div class="hidden lg:block truncate">
+                                <div class="hidden lg:block truncate text-green-600 dark:text-green-400">
                                     {{ word . level }}
                                 </div>
-                                <div class="hidden lg:block truncate ">
+                                <div class="hidden lg:block truncate text-blue-600 dark:text-blue-400">
                                     {{ word . grammer }}
                                 </div>
                                 <button
