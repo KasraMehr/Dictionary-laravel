@@ -5,6 +5,16 @@
     import AppLayout from "@/Layouts/AppLayout.vue";
     import axios from "axios";
 
+    const levels = ['-', 'A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
+
+    const grammarTypes = [
+      '-', 'noun', 'pronoun', 'verb', 'adjective', 'adverb', 'preposition', 'conjunction',
+      'interjection', 'article', 'determiner', 'numeral', 'auxiliary verb',
+      'modal verb', 'participle', 'gerund', 'infinitive', 'possessive pronoun',
+      'relative pronoun', 'demonstrative pronoun', 'reflexive pronoun',
+      'reciprocal pronoun', 'intensive pronoun'
+    ];
+
     const categories = computed(() => usePage().props.categories || []);
 
     const deleteWord = (id) => {
@@ -362,6 +372,25 @@
                             class="mt-1 block dark:bg-gray-800 w-full border rounded p-1.5 text-sm" required />
                     </div>
                     <div>
+                        <label for="add-level" class="text-sm">{{ $t('level') }}</label>
+                        <select id="add-level" v-model="newWord.level"
+                            class="mt-1 block dark:bg-gray-800 w-full border rounded p-1.5 text-sm">
+                            <option v-for="level in levels" :key="level" :value="level">
+                                {{ level }}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="add-grammar" class="text-sm">{{ $t('grammar') }}</label>
+                        <select id="add-grammar" v-model="newWord.grammar"
+                            class="mt-1 block dark:bg-gray-800 w-full border rounded p-1.5 text-sm">
+                            <option v-for="grammar in grammarTypes" :key="grammar" :value="grammar">
+                                {{ grammar }}
+                            </option>
+                        </select>
+                    </div>
+                    <div>
                         <label for="add-pronunciation" class="text-sm">{{ $t('pronunciation') }}</label>
                         <input id="add-pronunciation" v-model="newWord.pronunciation" type="text"
                             class="mt-1 block dark:bg-gray-800 w-full border rounded p-1.5 text-sm" />
@@ -569,6 +598,8 @@
                 newWord: {
                     word: "",
                     meaning: "",
+                    level: "",
+                    grammar: "",
                     pronunciation: "",
                     description: "",
                     voice: null,
@@ -580,6 +611,8 @@
                     id: null,
                     word: "",
                     meaning: "",
+                    level: "",
+                    grammar: "",
                     pronunciation: "",
                     description: "",
                     voice: null,
@@ -715,6 +748,8 @@
                 formData.append('word', this.newWord.word);
                 formData.append('meaning', this.newWord.meaning);
                 formData.append('pronunciation', this.newWord.pronunciation);
+                formData.append('level', this.newWord.level);
+                formData.append('grammar', this.newWord.grammar);
                 formData.append('description', this.newWord.description);
 
                 if (this.newWord.voice) {
