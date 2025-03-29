@@ -251,5 +251,19 @@
     "translators_questions": "Questions related to translators and contributors",
     "language_learners_questions": "Questions related to language learners",
     "tests_questions": "Questions related to exams and language proficiency assessment",
-    "translation_features_questions": "Questions related to translation capabilities and smart translator"
+    "translation_features_questions": "Questions related to translation capabilities and smart translator",
+    "listening": "Listening...",
+    "please_speak": "Please speak.",
+    "translate": "Translate",
+    "congratulations": "Congratulations! You answered all questions correctly!",
+    "please_enter_text": "Please enter text for translation.",
+    "no_translation_received": "No translation received.",
+    "error_occurred": "An error occurred. Please try again.",
+    "browser_no_voice_search": "Your browser does not support voice search.",
+    "ocr_started_for": "OCR started for:",
+    "correct_answer": "Correct answer",
+    "wrong_answer": "Wrong answer",
+    "what_is_the_meaning_of": "What is the meaning of",
+    "previous": "Previous",
+    "next": "Next"
 }

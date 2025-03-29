@@ -251,5 +251,19 @@
     "translators_questions": "الأسئلة المتعلقة بالمترجمين والمساهمين",
     "language_learners_questions": "الأسئلة المتعلقة بمتعلمين اللغات",
     "tests_questions": "الأسئلة المتعلقة بالاختبارات وتقييم مستوى اللغة",
-    "translation_features_questions": "الأسئلة المتعلقة بقدرات الترجمة والمترجم الذكي"
+    "translation_features_questions": "الأسئلة المتعلقة بقدرات الترجمة والمترجم الذكي",
+    "listening": "جارٍ الاستماع...",
+    "please_speak": "يرجى التحدث.",
+    "translate": "ترجمة",
+    "congratulations": "تهانينا! لقد أجبت على جميع الأسئلة بشكل صحيح!",
+    "please_enter_text": "يرجى إدخال نص للترجمة.",
+    "no_translation_received": "لم يتم استلام أي ترجمة.",
+    "error_occurred": "حدثت مشكلة. يرجى المحاولة مرة أخرى.",
+    "browser_no_voice_search": "متصفحك لا يدعم البحث الصوتي.",
+    "ocr_started_for": "تم بدء OCR لـ:",
+    "correct_answer": "إجابة صحيحة",
+    "wrong_answer": "إجابة خاطئة",
+    "what_is_the_meaning_of": "ما معنى",
+    "previous": "السابق",
+    "next": "التالي"
 }

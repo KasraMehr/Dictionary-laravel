@@ -250,6 +250,20 @@
     "translators_questions": "سوالات مربوط به ترنسلیتورها و مشارکت‌کنندگان",
     "language_learners_questions": "سوالات مربوط به زبان‌آموزان",
     "tests_questions": "سوالات مربوط به آزمون‌ها و سنجش سطح زبان",
-    "translation_features_questions": "سوالات مربوط به قابلیت‌های ترجمه و ترنسلیتور هوشمند"
+    "translation_features_questions": "سوالات مربوط به قابلیت‌های ترجمه و ترنسلیتور هوشمند",
+    "listening": "در حال گوش دادن...",
+    "please_speak": "لطفاً صحبت کنید.",
+    "translate": "ترجمه",
+    "congratulations": "تبریک! شما به تمام سوالات درست پاسخ دادید!",
+    "please_enter_text": "لطفاً متنی برای ترجمه وارد کنید.",
+    "no_translation_received": "ترجمه‌ای دریافت نشد.",
+    "error_occurred": "مشکلی پیش آمد. لطفاً دوباره امتحان کنید.",
+    "browser_no_voice_search": "مرورگر شما از جستجوی صوتی پشتیبانی نمی‌کند.",
+    "ocr_started_for": "OCR شروع شد برای:",
+    "correct_answer": "پاسخ درست",
+    "wrong_answer": "پاسخ نادرست",
+    "what_is_the_meaning_of": "معنی کلمه ",
+    "previous": "قبلی",
+    "next": "بعدی"
 
 }
