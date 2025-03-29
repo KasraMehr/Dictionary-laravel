@@ -3,6 +3,23 @@ import { Head, } from "@inertiajs/vue3";
 import AuthenticationCardLogo from "@/Components/AuthenticationCardLogo.vue";
 import MainLayout from '@/Layouts/MainLayout.vue';
 import axios from "axios";
+import { ref } from "vue";
+
+const audioRefs = ref({});
+
+const setAudioRef = (id, el) => {
+  if (el) audioRefs.value[id] = el;
+};
+
+const playAudio = (id) => {
+  if (audioRefs.value[id]) {
+    audioRefs.value[id].play();
+  }
+};
+
+const setDefaultImage = (event) => {
+  event.target.src = "/images/default-image.jpg";
+};
 </script>
 
 <template>
@@ -122,15 +139,20 @@ import axios from "axios";
 
                         <div v-if="words.length > 0" class="space-y-2 border border-gray-700/50 rounded-xl mx-auto">
                             <div v-for="(word, index) in words" :key="word.id"
-                                class="p-4 xl:p-6 rounded-xl shadow-sm flex flex-col lg:grid lg:grid-cols-7 gap-4 lg:gap-6 xl:gap-8 items-start lg:items-center hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 hover:bg-gray-700/50 transform translate-y-0 hover:-translate-y-1 dark:text-white text-black">
+                                class="p-4 xl:p-6 rounded-xl shadow-sm flex flex-col lg:grid lg:grid-cols-8 gap-4 lg:gap-6 xl:gap-8 items-start lg:items-center hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 hover:bg-gray-700/50 transform translate-y-0 hover:-translate-y-1 dark:text-white text-black">
                                 <!-- Word -->
                                 <div class="flex items-center w-full">
                                     <div class="text-gray-400">{{ index + 1 }}</div>
-                                    <img :src="`/storage/images/${word.image}`" alt="Word Image" class="w-16 h-16 mx-8 object-cover rounded-lg">
-                                    <div class="font-medium truncate mx-8">{{ word.word }}</div>
+                                    <img :src="`/storage/${word.image}`" alt="Word Image" class="w-16 h-16 mx-6 object-cover rounded-lg" @error="setDefaultImage">
+
                                 </div>
                                 <!-- Mobile Labels and Content -->
                                 <div class="grid grid-cols-1 gap-2 w-full lg:hidden">
+                                  <div class="flex flex-col">
+                                      <span class="text-gray-400 text-sm py-2">{{ $t('word') }}:</span>
+                                      <span class="truncate p-2">{{ word.word }}</span>
+                                  </div>
+
                                     <div class="flex flex-col">
                                         <span class="text-gray-400 text-sm py-2">{{ $t('meaning') }}:</span>
                                         <span class="truncate p-2">{{ word . meaning }}</span>
@@ -140,13 +162,24 @@ import axios from "axios";
                                         <span class="truncate p-2">{{ word . level }}</span>
                                     </div>
                                     <div class="flex flex-col">
-                                        <span class="text-gray-400 text-sm py-2">{{ $t('grammer') }}:</span>
-                                        <span class="truncate p-2">{{ word . grammer }}</span>
+                                        <span class="text-gray-400 text-sm py-2">{{ $t('grammar') }}:</span>
+                                        <span class="truncate p-2">{{ word . grammar }}</span>
                                     </div>
-                                    <audio controls>
-                                      <source :src="`/storage/voices/${word.voice}.mp3`" type="audio/mpeg">
-                                        Your browser does not support the audio tag.
-                                    </audio>
+                                    <button
+                                        @click="playAudio(word.id)"
+                                        class="w-8 h-8 flex items-center justify-center bg-gray-400 dark:bg-gray-700 rounded-full"
+                                      >
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-black dark:text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                          <path d="M3 10v4"/>
+                                          <path d="M7 5v14"/>
+                                          <path d="M11 3v18"/>
+                                          <path d="M15 6v12"/>
+                                          <path d="M19 10v4"/>
+                                        </svg>
+                                      </button>
+                                      <audio :ref="el => setAudioRef(word.id, el)">
+                                        <source :src="`/storage/${word.voice}`" type="audio/mpeg">
+                                      </audio>
                                     <div class="flex flex-col" v-if="word.categories !== []">
                                         <span class="text-gray-400 text-sm py-2">{{ $t('categories') }}:</span>
                                         <span class="truncate p-2">
@@ -158,10 +191,12 @@ import axios from "axios";
                                             </span>
                                         </span>
                                     </div>
-
                                 </div>
 
                                 <!-- Desktop Content -->
+                                <div class="font-medium truncate">
+                                  {{ word.word }}
+                                </div>
                                 <div class="hidden lg:block truncate">
                                     {{ word . meaning }}
                                 </div>
@@ -171,10 +206,21 @@ import axios from "axios";
                                 <div class="hidden lg:block truncate ">
                                     {{ word . grammer }}
                                 </div>
-                                <audio controls>
-                                  <source :src="`/storage/voices/${word.voice}`" type="audio/mpeg">
-                                    Your browser does not support the audio tag.
-                                </audio>
+                                <button
+                                    @click="playAudio(word.id)"
+                                    class="w-8 h-8 flex items-center justify-center bg-gray-400 dark:bg-gray-700 rounded-full"
+                                  >
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-black dark:text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                      <path d="M3 10v4"/>
+                                      <path d="M7 5v14"/>
+                                      <path d="M11 3v18"/>
+                                      <path d="M15 6v12"/>
+                                      <path d="M19 10v4"/>
+                                    </svg>
+                                  </button>
+                                  <audio :ref="el => setAudioRef(word.id, el)">
+                                    <source :src="`/storage/${word.voice}`" type="audio/mpeg">
+                                  </audio>
                                 <div class="hidden lg:block truncate justify-start gap-3 xl:gap-2 w-full ml-auto">
                                     <span v-for="category in (word.categories ? word.categories.slice(0, 1) : [])"
                                         :key="category.id"
