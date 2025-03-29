@@ -93,6 +93,8 @@ class WordController extends Controller
             $validated = $request->validate([
                 'word'          => 'required|string|max:255',
                 'meaning'       => 'required|string|max:1000',
+                'level'         => 'required|in:A1,A2,B1,B2,C1,C2,-',
+                'grammar'       => 'required|in:-,noun,pronoun,verb,adjective,adverb,preposition,conjunction,interjection,article,determiner,numeral,auxiliary verb,modal verb,participle,gerund,infinitive,possessive pronoun,relative pronoun,demonstrative pronoun,reflexive pronoun,reciprocal pronoun,intensive pronoun',
                 'pronunciation' => 'nullable|string|max:255',
                 'description'   => 'nullable|string|max:2000',
                 'voice'         => 'nullable|mimetypes:audio/wav,audio/x-wav,audio/mpeg,audio/ogg,audio/webm,video/webm',
@@ -106,6 +108,8 @@ class WordController extends Controller
             $word = Word::create([
                 'word'          => $validated['word'],
                 'meaning'       => $validated['meaning'],
+                'level' => $validated['level'] ?? '-',
+                'grammar' => $validated['grammar'] ?? '-',
                 'pronunciation' => $validated['pronunciation'] ?? null,
                 'description'   => $validated['description'] ?? null,
                 'voice'         => $voicePath,
