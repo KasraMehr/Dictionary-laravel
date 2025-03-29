@@ -1,7 +1,9 @@
 <script setup>
 import { Head, Link } from "@inertiajs/vue3";
 import MainLayout from '@/Layouts/MainLayout.vue';
+import { useI18n } from "vue-i18n";
 
+const { locale, t } = useI18n();
 
 defineProps({
   canLogin: Boolean,
@@ -75,8 +77,8 @@ function handleImageError() {
                                <!-- مدال جستجوی صوتی -->
                                <div v-if="isVoiceModalOpen" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" @click="closeVoiceSearch">
                                  <div class="bg-gray-200 dark:bg-gray-700 rounded-lg p-6 shadow-lg text-center w-80" @click.stop>
-                                   <h2 class="text-xl font-semibold text-black dark:text-white">در حال گوش دادن...</h2>
-                                   <p class="text-gray-600 dark:text-gray-300">لطفاً صحبت کنید.</p>
+                                   <h2 class="text-xl font-semibold text-black dark:text-white">{{ $t('listening') }}</h2>
+                                   <p class="text-gray-600 dark:text-gray-300">{{ $t('please_speak') }}</p>
                                    <div class="mt-4">
                                      <button @click="stopVoiceSearch" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">توقف</button>
                                    </div>
@@ -131,14 +133,14 @@ function handleImageError() {
                          <textarea v-model="inputText" class="w-full lg:w-1/2 p-4 border rounded-lg  bg-white dark:bg-gray-800 focus:ring-2 focus:ring-[#FF2D20] " placeholder="Enter text..."></textarea>
                          <!--mobile دکمه ترجمه -->
                          <button @click="translateText" class="block lg:hidden my-4 w-full bg-red-500 text-white p-2 rounded-lg hover:bg-red-600">
-                           Translate
+                           {{ $t('translate') }}
                          </button>
                          <textarea v-model="translatedText" class="w-full lg:w-1/2 p-4 border rounded-lg bg-gray-100 dark:bg-gray-700 focus:ring-2 focus:ring-[#FF2D20]" readonly></textarea>
                        </div>
 
                        <!-- دکمه ترجمه -->
                        <button @click="translateText" class="hidden lg:block my-4 w-full bg-red-500 text-white p-2 rounded-lg hover:bg-red-600">
-                         Translate
+                         {{ $t('translate') }}
                        </button>
 
 
@@ -182,7 +184,7 @@ function handleImageError() {
                           <p class="text-sm text-gray-700 dark:text-gray-300">{{ $t('test_your_knowledge') }}</p>
 
                           <div class="w-full">
-                              <p class="font-semibold text-lg">{{ quizQuestions[currentQuestionIndex].question }}</p>
+                              <p class="font-semibold text-lg">{{ $t('what_is_the_meaning_of') }} {{ quizQuestions[currentQuestionIndex].question }} </p>
                               <div class="mt-4 space-y-2">
                                   <button v-for="(option, index) in quizQuestions[currentQuestionIndex].options"
                                       :key="index"
@@ -218,7 +220,7 @@ function handleImageError() {
 
                           <!-- پیام تشویقی -->
                           <p v-if="showCongratulation" class="mt-4 text-xl font-bold text-green-500">
-                              🎉 {{ $t('congratulations') }}! You answered all questions correctly! 🎉
+                              🎉 {{ $t('congratulations') }} 🎉
                           </p>
                         </div>
 
@@ -301,7 +303,7 @@ function handleImageError() {
           },
           async translateText() {
             if (!this.inputText.trim()) {
-              this.translatedText = "لطفاً متنی برای ترجمه وارد کنید.";
+              this.translatedText = please_enter_text;
               return;
             }
 
@@ -321,10 +323,10 @@ function handleImageError() {
               }
 
               const data = await response.json();
-              this.translatedText = data["destination-text"] || "ترجمه‌ای دریافت نشد.";
+              this.translatedText = data["destination-text"] || t('no_translation_received');
             } catch (error) {
               console.error("خطا در ترجمه:", error);
-              this.translatedText = "مشکلی پیش آمد. لطفاً دوباره امتحان کنید.";
+              this.translatedText = t('error_occurred');
             }
           },
           swapLanguages() {
@@ -341,7 +343,7 @@ function handleImageError() {
 
       if ("webkitSpeechRecognition" in window) {
         this.recognition = new webkitSpeechRecognition();
-        this.recognition.lang = "fa-IR"; // می‌توان زبان را تغییر داد
+        this.recognition.lang = "fa-IR";
         this.recognition.continuous = false;
         this.recognition.interimResults = false;
 
@@ -361,7 +363,7 @@ function handleImageError() {
 
         this.recognition.start();
       } else {
-        alert("مرورگر شما از جستجوی صوتی پشتیبانی نمی‌کند.");
+        alert(t('browser_no_voice_search'));
       }
     },
     stopVoiceSearch() {
@@ -385,7 +387,7 @@ function handleImageError() {
         }
     },
     startOCR(file) {
-        alert("OCR شروع شد برای: " + file.name);
+        alert(t('ocr_started_for') + file.name);
     },
     selectAnswer(index) {
             if (this.selectedAnswer === null) {
@@ -410,13 +412,12 @@ function handleImageError() {
                 localStorage.setItem("currentQuestionIndex", this.currentQuestionIndex);
             }
 
-            // چک کردن بعد از پاسخ دادن به آخرین سوال
             if (this.currentQuestionIndex === this.quizQuestions.length - 1 && this.correctAnswers === 10) {
                 this.showCongratulation = true;
                 setTimeout(() => {
-                    this.showCongratulation = false;
-                    location.reload(); // صفحه را ریلود می‌کند
+                    location.reload();
                 }, 5000);
+                this.showCongratulation = false;
             }
         }
       },
