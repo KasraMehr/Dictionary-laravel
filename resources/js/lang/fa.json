@@ -264,6 +264,9 @@
     "wrong_answer": "پاسخ نادرست",
     "what_is_the_meaning_of": "معنی کلمه ",
     "previous": "قبلی",
-    "next": "بعدی"
+    "next": "بعدی",
+    "grammar": "دستور زبان",
+    "level": "سطح",
+    "daily_test": "آزمون روزانه"
 
 }

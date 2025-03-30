@@ -265,5 +265,8 @@
     "wrong_answer": "Wrong answer",
     "what_is_the_meaning_of": "What is the meaning of",
     "previous": "Previous",
-    "next": "Next"
+    "next": "Next",
+    "grammar": "Grammar",
+    "level": "Level",
+    "daily_test": "Daily test"
 }

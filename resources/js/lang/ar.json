@@ -265,5 +265,8 @@
     "wrong_answer": "إجابة خاطئة",
     "what_is_the_meaning_of": "ما معنى",
     "previous": "السابق",
-    "next": "التالي"
+    "next": "التالي",
+    "grammar": "القواعد",
+    "level": "المستوى",
+    "daily_test": "الاختبار اليومي"
 }
