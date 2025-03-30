@@ -194,9 +194,9 @@
                       @mousemove="handleMouseMove">
                         <h1 class="text-xl lg:text-2xl font-bold mb-6">{{ $t('word_list') }}</h1>
 
-                        <div v-if="words.length > 0" class="space-y-2 border border-gray-700/50 rounded-xl max-w-7xl mx-auto">
+                        <div v-if="words.length > 0" class="space-y-2 border border-gray-700/50 rounded-xl w-full mx-auto">
                             <div v-for="(word, index) in words" :key="word.id"
-                                class="p-4 xl:p-6 rounded-xl shadow-sm flex flex-col lg:grid lg:grid-cols-4 gap-4 lg:gap-6 xl:gap-8 items-start lg:items-center hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 hover:bg-gray-700/50 transform translate-y-0 hover:-translate-y-1 dark:text-white text-black">
+                                class="p-4 xl:p-6 rounded-xl shadow-sm flex flex-col lg:grid lg:grid-cols-6 gap-4 lg:gap-6 xl:gap-8 items-start lg:items-center hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 hover:bg-gray-700/50 transform translate-y-0 hover:-translate-y-1 dark:text-white text-black">
                                 <!-- Word -->
                                 <div class="flex items-center w-full">
                                     <div class="mx-2 xl:mx-6 text-gray-400">{{ index + 1 }}</div>
@@ -213,14 +213,30 @@
                                         <span class="text-gray-400 text-sm">{{ $t('meaning') }}:</span>
                                         <span class="truncate">{{ word . meaning }}</span>
                                     </div>
+
+                                    <div class="flex flex-col">
+                                        <span class="text-gray-400 text-sm">{{ $t('level') }}:</span>
+                                        <span class="truncate">{{ word . level }}</span>
+                                    </div>
+
+                                    <div class="flex flex-col">
+                                        <span class="text-gray-400 text-sm">{{ $t('grammar') }}:</span>
+                                        <span class="truncate">{{ word . grammer }}</span>
+                                    </div>
                                 </div>
 
                                 <!-- Desktop Content -->
                                 <div class="hidden lg:block truncate xl:px-4">
                                     {{ word . meaning }}
                                 </div>
+                                <div class="hidden lg:block truncate xl:px-4">
+                                    {{ word . level }}
+                                </div>
+                                <div class="hidden lg:block truncate xl:px-4">
+                                    {{ word . grammer }}
+                                </div>
                                 <div class="flex justify-start gap-3 xl:gap-2 w-full ml-auto">
-                                    <span v-for="category in (word.categories ? word.categories.slice(0, 3) : [])"
+                                    <span v-for="category in (word.categories ? word.categories.slice(0, 1) : [])"
                                         :key="category.id"
                                         class="bg-gray-300 dark:bg-gray-600 dark:text-white text-black text-xs px-3 py-1 rounded-xl">
                                         {{ category . name }}
@@ -273,6 +289,18 @@
                     <div class="grid grid-cols-1 sm:grid-cols-6 gap-4 items-start">
                         <strong class="dark:text-white text-black text-lg sm:col-span-1">{{ $t('meaning') }}:</strong>
                         <span class="text-black dark:text-gray-300 sm:col-span-5">{{ selectedWord . meaning }}</span>
+                    </div>
+
+                    <!-- Level -->
+                    <div class="grid grid-cols-1 sm:grid-cols-6 gap-4 items-start">
+                        <strong class="dark:text-white text-black text-lg sm:col-span-1">{{ $t('level') }}:</strong>
+                        <span class="text-black dark:text-gray-300 sm:col-span-5">{{ selectedWord . level }}</span>
+                    </div>
+
+                    <!-- Grammar -->
+                    <div class="grid grid-cols-1 sm:grid-cols-6 gap-4 items-start">
+                        <strong class="dark:text-white text-black text-lg sm:col-span-1">{{ $t('grammar') }}:</strong>
+                        <span class="text-black dark:text-gray-300 sm:col-span-5">{{ selectedWord . grammer }}</span>
                     </div>
 
                     <!-- Pronunciation -->
@@ -383,7 +411,7 @@
 
                     <div>
                         <label for="add-grammar" class="text-sm">{{ $t('grammar') }}</label>
-                        <select id="add-grammar" v-model="newWord.grammar"
+                        <select id="add-grammar" v-model="newWord.grammer"
                             class="mt-1 block dark:bg-gray-800 w-full border rounded p-1.5 text-sm">
                             <option v-for="grammar in grammarTypes" :key="grammar" :value="grammar">
                                 {{ grammar }}
@@ -488,6 +516,26 @@
                             <label class="block font-medium dark:text-white text-black text-sm mb-1">{{ $t('meaning') }}:</label>
                             <input v-model="editForm.meaning" type="text"
                                 class="w-full px-3 py-1.5 rounded-lg border border-gray-700 bg-gray-800/50 dark:text-white text-black focus:outline-none focus:ring-2 focus:ring-[#FF2D20] transition-all duration-200" />
+                        </div>
+
+                        <div>
+                            <label for="add-level" class="block font-medium dark:text-white text-black text-sm mb-1">{{ $t('level') }}</label>
+                            <select id="add-level" v-model="editForm.level"
+                                class="w-full px-3 py-1.5 rounded-lg border border-gray-700 bg-gray-800/50 dark:text-white text-black focus:outline-none focus:ring-2 focus:ring-[#FF2D20] transition-all duration-200">
+                                <option v-for="level in levels" :key="level" :value="level">
+                                    {{ level }}
+                                </option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label for="add-grammar" class="block font-medium dark:text-white text-black text-sm mb-1">{{ $t('grammar') }}</label>
+                            <select id="add-grammar" v-model="editForm.grammer"
+                                class="w-full px-3 py-1.5 rounded-lg border border-gray-700 bg-gray-800/50 dark:text-white text-black focus:outline-none focus:ring-2 focus:ring-[#FF2D20] transition-all duration-200">
+                                <option v-for="grammar in grammarTypes" :key="grammar" :value="grammar">
+                                    {{ grammar }}
+                                </option>
+                            </select>
                         </div>
 
                         <!-- Pronunciation Input -->
@@ -599,7 +647,7 @@
                     word: "",
                     meaning: "",
                     level: "",
-                    grammar: "",
+                    grammer: "",
                     pronunciation: "",
                     description: "",
                     voice: null,
@@ -612,7 +660,7 @@
                     word: "",
                     meaning: "",
                     level: "",
-                    grammar: "",
+                    grammer: "",
                     pronunciation: "",
                     description: "",
                     voice: null,
@@ -749,7 +797,7 @@
                 formData.append('meaning', this.newWord.meaning);
                 formData.append('pronunciation', this.newWord.pronunciation);
                 formData.append('level', this.newWord.level);
-                formData.append('grammar', this.newWord.grammar);
+                formData.append('grammer', this.newWord.grammer);
                 formData.append('description', this.newWord.description);
 
                 if (this.newWord.voice) {
@@ -897,6 +945,8 @@
                     id: word.id,
                     word: word.word,
                     meaning: word.meaning,
+                    level: word.level,
+                    grammer: word.grammer,
                     pronunciation: word.pronunciation,
                     description: word.description,
                     voice: word.voice,
@@ -927,6 +977,8 @@
                 formData.append('_method', 'PUT');
                 formData.append('word', this.editForm.word);
                 formData.append('meaning', this.editForm.meaning);
+                formData.append('level', this.editForm.level);
+                formData.append('grammer', this.editForm.grammer);
                 formData.append('pronunciation', this.editForm.pronunciation);
                 formData.append('description', this.editForm.description);
                 formData.append('selectedCategories', JSON.stringify(this.editForm.selectedCategories));
