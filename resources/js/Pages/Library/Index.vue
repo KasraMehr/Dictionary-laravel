@@ -204,7 +204,7 @@ const setDefaultImage = (event) => {
                                     {{ word . level }}
                                 </div>
                                 <div class="hidden lg:block truncate text-blue-600 dark:text-blue-400">
-                                    {{ word . grammer }}
+                                    {{ word . grammar }}
                                 </div>
                                 <button
                                     @click="playAudio(word.id)"
@@ -264,6 +264,16 @@ const setDefaultImage = (event) => {
                     <div class="grid grid-cols-1 sm:grid-cols-6 gap-4 items-start">
                         <strong class="dark:text-white text-black text-lg sm:col-span-1">{{ $t('meaning') }}:</strong>
                         <span class="text-xl text-gray-800 dark:text-gray-300 sm:col-span-5">{{ selectedWord . meaning }}</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-6 gap-4 items-start">
+                        <strong class="dark:text-white text-black text-lg sm:col-span-1">{{ $t('level') }}:</strong>
+                        <span class="text-xl text-gray-800 dark:text-gray-300 sm:col-span-5">{{ selectedWord . level }}</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-6 gap-4 items-start">
+                        <strong class="dark:text-white text-black text-lg sm:col-span-1">{{ $t('grammar') }}:</strong>
+                        <span class="text-xl text-gray-800 dark:text-gray-300 sm:col-span-5">{{ selectedWord . grammar }}</span>
                     </div>
 
                     <!-- Pronunciation -->
