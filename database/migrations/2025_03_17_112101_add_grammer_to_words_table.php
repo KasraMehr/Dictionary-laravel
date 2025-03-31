@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('words', function (Blueprint $table) {
-          $table->enum('grammer', [
+          $table->enum('grammar', [
             '-', 'noun', 'pronoun', 'verb', 'adjective', 'adverb', 'preposition', 'conjunction',
             'interjection', 'article', 'determiner', 'numeral', 'auxiliary verb',
             'modal verb', 'participle', 'gerund', 'infinitive', 'possessive pronoun',
@@ -27,7 +27,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('words', function (Blueprint $table) {
-            $table->dropColumn('grammer');
+            $table->dropColumn('grammar');
         });
     }
 };
