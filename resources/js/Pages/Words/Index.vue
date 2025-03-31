@@ -221,7 +221,7 @@
 
                                     <div class="flex flex-col">
                                         <span class="text-gray-400 text-sm">{{ $t('grammar') }}:</span>
-                                        <span class="truncate">{{ word . grammer }}</span>
+                                        <span class="truncate">{{ word . grammar }}</span>
                                     </div>
                                 </div>
 
@@ -233,7 +233,7 @@
                                     {{ word . level }}
                                 </div>
                                 <div class="hidden lg:block truncate xl:px-4">
-                                    {{ word . grammer }}
+                                    {{ word . grammar }}
                                 </div>
                                 <div class="flex justify-start gap-3 xl:gap-2 w-full ml-auto">
                                     <span v-for="category in (word.categories ? word.categories.slice(0, 1) : [])"
@@ -300,7 +300,7 @@
                     <!-- Grammar -->
                     <div class="grid grid-cols-1 sm:grid-cols-6 gap-4 items-start">
                         <strong class="dark:text-white text-black text-lg sm:col-span-1">{{ $t('grammar') }}:</strong>
-                        <span class="text-black dark:text-gray-300 sm:col-span-5">{{ selectedWord . grammer }}</span>
+                        <span class="text-black dark:text-gray-300 sm:col-span-5">{{ selectedWord . grammar }}</span>
                     </div>
 
                     <!-- Pronunciation -->
@@ -411,7 +411,7 @@
 
                     <div>
                         <label for="add-grammar" class="text-sm">{{ $t('grammar') }}</label>
-                        <select id="add-grammar" v-model="newWord.grammer"
+                        <select id="add-grammar" v-model="newWord.grammar"
                             class="mt-1 block dark:bg-gray-800 w-full border rounded p-1.5 text-sm">
                             <option v-for="grammar in grammarTypes" :key="grammar" :value="grammar">
                                 {{ grammar }}
@@ -530,7 +530,7 @@
 
                         <div>
                             <label for="add-grammar" class="block font-medium dark:text-white text-black text-sm mb-1">{{ $t('grammar') }}</label>
-                            <select id="add-grammar" v-model="editForm.grammer"
+                            <select id="add-grammar" v-model="editForm.grammar"
                                 class="w-full px-3 py-1.5 rounded-lg border border-gray-700 bg-gray-800/50 dark:text-white text-black focus:outline-none focus:ring-2 focus:ring-[#FF2D20] transition-all duration-200">
                                 <option v-for="grammar in grammarTypes" :key="grammar" :value="grammar">
                                     {{ grammar }}
@@ -647,7 +647,7 @@
                     word: "",
                     meaning: "",
                     level: "",
-                    grammer: "",
+                    grammar: "",
                     pronunciation: "",
                     description: "",
                     voice: null,
@@ -660,7 +660,7 @@
                     word: "",
                     meaning: "",
                     level: "",
-                    grammer: "",
+                    grammar: "",
                     pronunciation: "",
                     description: "",
                     voice: null,
@@ -797,7 +797,7 @@
                 formData.append('meaning', this.newWord.meaning);
                 formData.append('pronunciation', this.newWord.pronunciation);
                 formData.append('level', this.newWord.level);
-                formData.append('grammer', this.newWord.grammer);
+                formData.append('grammar', this.newWord.grammar);
                 formData.append('description', this.newWord.description);
 
                 if (this.newWord.voice) {
@@ -946,7 +946,7 @@
                     word: word.word,
                     meaning: word.meaning,
                     level: word.level,
-                    grammer: word.grammer,
+                    grammar: word.grammar,
                     pronunciation: word.pronunciation,
                     description: word.description,
                     voice: word.voice,
@@ -978,7 +978,7 @@
                 formData.append('word', this.editForm.word);
                 formData.append('meaning', this.editForm.meaning);
                 formData.append('level', this.editForm.level);
-                formData.append('grammer', this.editForm.grammer);
+                formData.append('grammar', this.editForm.grammar);
                 formData.append('pronunciation', this.editForm.pronunciation);
                 formData.append('description', this.editForm.description);
                 formData.append('selectedCategories', JSON.stringify(this.editForm.selectedCategories));
