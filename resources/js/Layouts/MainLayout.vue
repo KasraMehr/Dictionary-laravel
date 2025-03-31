@@ -254,11 +254,11 @@ const setLanguage = (lang) => {
         </div>
     </div>
     <footer class="bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300 py-6" :dir="locale === 'en' ? 'ltr' : 'rtl'">
-      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="mx-auto w-full px-4 sm:px-24">
           <!--Grid-->
           <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8 py-10 max-md:max-w-sm max-md:mx-auto">
               <div class="col-span-full mb-10 lg:col-span-2">
-                <a :href="route('dashboard')" class="cursor-pointer flex items-center justify-center lg:justify-start space-x-3">
+                <a :href="route('landing')" class="cursor-pointer flex items-center justify-center lg:justify-start space-x-3">
                   <img src="/logo.svg" alt="logo" class="w-16 h-16">
                   <div class="text-xl text-black dark:text-white font-semibold">
                     {{ $t('modern_dictionary') }}

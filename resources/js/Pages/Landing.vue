@@ -39,7 +39,7 @@ function handleImageError() {
             src="https://laravel.com/assets/img/welcome/background.svg"
          alt="logo"/>
          <div class="relative min-h-screen flex flex-col items-center justify-center selection:bg-[#FF2D20] selection:text-white">
-             <div class="relative w-full max-w-2xl px-4 sm:px-6 lg:max-w-7xl text-center">
+             <div class="relative w-full px-4 sm:px-24 text-center">
                  <main class="mt-6">
                      <div class="flex flex-col items-center gap-6 overflow-hidden rounded-lg bg-gradient-to-br from-gray-400/50 to-gray-200/50 dark:from-gray-800/50 dark:to-gray-700/50 p-10 shadow-lg ring-1 ring-white/10 transition duration-300 hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 w-full backdrop-blur-sm">
 
