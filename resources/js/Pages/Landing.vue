@@ -2,6 +2,7 @@
 import { Head, Link } from "@inertiajs/vue3";
 import MainLayout from '@/Layouts/MainLayout.vue';
 import { useI18n } from "vue-i18n";
+import { ref } from 'vue';
 
 const { locale, t } = useI18n();
 
@@ -15,7 +16,6 @@ defineProps({
   quizQuestions: Array
 });
 
-import { ref } from 'vue';
 
 const screenshotHidden = ref(false);
 const docsCardRowSpan = ref(false);
