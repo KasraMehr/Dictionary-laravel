@@ -321,7 +321,7 @@ const setLanguage = (lang) => {
                       </li>
                       <li>
                           <a :href="route('grammars')" class="cursor-pointer  text-gray-600 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white">
-                            {{ $t('grammers_category') }}
+                            {{ $t('grammars_category') }}
                           </a>
                       </li>
 
