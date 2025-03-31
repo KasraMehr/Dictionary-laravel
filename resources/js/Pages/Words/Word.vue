@@ -83,7 +83,7 @@ defineProps({
                     <!-- سطح و نوع گرامری -->
                     <div class="flex gap-4">
                         <h3 class="text-sm font-medium text-green-600 dark:text-green-400">Level: {{ word.level }}</h3>
-                        <h3 class="text-sm font-medium text-blue-600 dark:text-blue-400">Grammar: {{ word.grammer }}</h3>
+                        <h3 class="text-sm font-medium text-blue-600 dark:text-blue-400">Grammar: {{ word.grammar }}</h3>
                     </div>
 
                     <!-- توضیحات -->

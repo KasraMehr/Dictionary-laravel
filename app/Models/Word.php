@@ -48,7 +48,7 @@ class Word extends Model
         'image',
         'user_id',
         'level',
-        'grammer',
+        'grammar',
         'native_lang',
         'translated_lang',
     ];
