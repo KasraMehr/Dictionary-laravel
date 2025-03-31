@@ -75,7 +75,7 @@ const setLanguage = (lang) => {
         <div class="min-h-screen bg-gray-50-100 dark:bg-gray-900">
             <nav class="bg-gray-200 dark:bg-gray-800 border-b border-gray-300 dark:border-gray-700">
                 <!-- منوی اصلی -->
-                <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="w-full mx-auto px-4 sm:px-24">
                     <div class="flex justify-between h-16">
                         <div class="flex items-center">
                             <!-- لوگو -->
@@ -99,12 +99,12 @@ const setLanguage = (lang) => {
                                         </NavLink>
                                     </template>
                                     <NavLink :href="route('library')" :active="route().current('library')" class="text-black dark:text-white">
-                                        {{ $t('dictionary') }}
+                                        {{ $t('words_bank') }}
                                     </NavLink>
                                     <NavLink :href="route('learn')" :active="route().current('reports')" class="text-black dark:text-white">
                                         {{ $t('learn') }}
                                     </NavLink>
-                                    <NavLink :href="route('learn')" :active="route().current('reports')" class="text-black dark:text-white">
+                                    <NavLink :href="route('DailyTest')" :active="route().current('reports')" class="text-black dark:text-white">
                                         {{ $t('quiz') }}
                                     </NavLink>
                                 </div>
