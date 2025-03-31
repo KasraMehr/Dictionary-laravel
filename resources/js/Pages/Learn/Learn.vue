@@ -1,49 +1,52 @@
 <script setup>
-import { ref } from "vue";
+import { ref, watch } from "vue";
+import { useI18n } from "vue-i18n";
 import MainLayout from "@/Layouts/MainLayout.vue";
+
+const { locale, t } = useI18n();
 
 // لیست روش‌های یادگیری
 const learningMethods = ref([
   {
-    title: "🔰 یادگیری بر اساس سطح",
-    description: "از مبتدی تا پیشرفته، یادگیری متناسب با سطح شما",
+    title: t('learning_by_level'),
+    description: t('from_beginner_to_advanced'),
     link: "/levels",
     image: "/images/levels.png",
     stats: "150+",
-    statLabel: "دوره آموزشی",
+    statLabel: t('course'),
   },
   {
-    title: "📂 یادگیری بر اساس موضوع",
-    description: "کلمات و عبارات مرتبط با موضوعات مختلف",
+    title: t('learning_by_topic'),
+    description: t('topic_related_words'),
     link: "/topics",
     image: "/images/topics.png",
-    stats: "2000+",
-    statLabel: "کلمه یادگرفته‌شده",
+    stats: "20+",
+    statLabel: t('categories'),
   },
   {
-    title: "📖 یادگیری گرامر",
-    description: "یادگیری اصول و قواعد گرامری به صورت ساده و کاربردی",
+    title: t('learning_grammar'),
+    description: t('grammar_principles'),
     link: "/grammars",
     image: "/images/grammars.png",
     stats: "50+",
-    statLabel: "درس گرامری",
+    statLabel: t('grammar_lesson'),
   },
   {
-    title: "🤖 یادگیری با هوش مصنوعی",
-    description: "یادگیری تعاملی با AI (در دست توسعه)",
+    title: t('learning_with_ai'),
+    description: t('interactive_ai_learning'),
     link: "/learning/ai",
     image: "/images/AI.png",
     stats: "0",
-    statLabel: "درس فعال",
+    statLabel: t('active_lesson'),
     comingSoon: true,
   },
   {
-    title: "یادگیری با داستان",
-    description: "یادگیری زبان با خواندن داستان و ترجمه کلمات به صورت آنی (در دست توسعه)",
+    title: t('learning_with_story'),
+    description: t('story_based_learning'),
     link: "/learning/ai",
     image: "/images/story.png",
     stats: "0",
-    statLabel: "درس فعال",
+    statLabel: t('course'),
     comingSoon: true,
   },
 ]);
@@ -51,18 +54,22 @@ const learningMethods = ref([
 // لیست سایر امکانات یادگیری
 const extraFeatures = ref([
   {
-    title: "📝 آزمون تعیین سطح",
-    description: "سطح زبان خود را مشخص کنید و پیشرفت کنید",
+    title: t('placement_test'),
+    description: t('determine_your_level'),
     link: "/daily-test",
     bgColor: "bg-gray-500",
   },
   {
-    title: "🌟 کلمات روزانه",
-    description: "روزانه کلمات جدید یاد بگیرید و دایره لغات خود را تقویت کنید",
+    title: t('daily_words'),
+    description: t('learn_new_words_daily_des'),
     link: "/daily-words",
     bgColor: "bg-indigo-500",
   },
 ]);
+
+watch(locale, () => {
+    location.reload();
+});
 </script>
 
 <template>
@@ -83,13 +90,13 @@ const extraFeatures = ref([
         <div class="mt-6 flex justify-center gap-4 text-gray-800 dark:text-gray-200">
           <!-- Quiz Button -->
           <a href="/daily-test"
-             class="py-3 px-6 h-10 block w-fit bg-red-600 rounded-full shadow-lg text-sm font-semibold text-white transition-all duration-500 hover:bg-red-700 transform hover:scale-105">
+             class="py-3 px-6 h-10 block w-fit bg-red-600 rounded-full shadow-lg text-sm font-semibold text-white transition-all duration-500 hover:bg-white dark:hover:bg-gray-900 hover:text-red-600 transform hover:scale-105">
             {{ $t('quiz') }}
           </a>
 
           <!-- Learn Button -->
           <a href="/learning"
-             class="flex items-center justify-center gap-2 py-3 px-6 h-10 w-fit bg-white border border-red-600 rounded-full text-sm font-semibold text-red-600 shadow-lg transition-all duration-500 hover:bg-red-600 hover:text-white transform hover:scale-105 dark:bg-gray-900 dark:border-red-500 dark:text-red-400 dark:hover:bg-red-600 dark:hover:text-white">
+             class="flex items-center justify-center gap-2 py-3 px-6 h-10 w-fit bg-white border border-red-600 rounded-full text-sm font-semibold text-red-600 shadow-lg transition-all duration-500 hover:bg-red-600 hover:text-white transform hover:scale-105 dark:bg-gray-900 dark:border-red-600 dark:text-red-600 dark:hover:bg-red-600 dark:hover:text-white">
             {{ $t('learn') }}
           </a>
         </div>
