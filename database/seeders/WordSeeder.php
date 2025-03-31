@@ -14,7 +14,7 @@ class WordSeeder extends Seeder
 {
     public function run(): void
     {
-        $filePath = storage_path('app/words10k.txt');
+        $filePath = storage_path('app/words20k.txt');
         if (!file_exists($filePath)) {
             echo "❌ words.txt not found!\n";
             return;
