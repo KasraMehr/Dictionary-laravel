@@ -1,8 +1,5 @@
 <script setup>
-import { Head, } from "@inertiajs/vue3";
-import AuthenticationCardLogo from "@/Components/AuthenticationCardLogo.vue";
 import MainLayout from '@/Layouts/MainLayout.vue';
-import axios from "axios";
 import { ref } from "vue";
 
 const audioRefs = ref({});
@@ -75,12 +72,12 @@ const setDefaultImage = (event) => {
           </div>
         </transition>
 
-            <div class="w-full mx-auto sm:px-6 lg:px-8">
+            <div class="w-full px-4 sm:px-24">
               <button @click.stop="toggleFilter"
                   class="fixed bottom-4 right-4 bg-[#FF2D20] text-white px-4 py-2 rounded-full shadow-lg z-50">
                   {{ isFilterOpen ? '✖' : '⚙️' }} {{ $t('filters') }}
               </button>
-                <div class="bg-gray-200 dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg">
+                <div class="bg-gray-200 dark:bg-gray-800 overflow-hidden shadow-xl rounded-lg">
 
                   <div class="relative w-full max-w-xs sm:max-w-sm md:max-w-md lg:w-96 xl:w-[500px] mx-auto lg:mx-0 lg:justify-self-center mt-6 sm:mt-8 lg:mt-10">
                     <input v-model="searchTerm" @focus="openSearchModal" type="text" :placeholder="$t('search_word_or_meaning')"
@@ -138,31 +135,31 @@ const setDefaultImage = (event) => {
                         <h1 class="text-xl lg:text-2xl font-bold mb-6 px-5">{{ $t('word_list') }}</h1>
 
                         <div v-if="words.length > 0" class="space-y-2 border border-gray-700/50 rounded-xl mx-auto">
-                            <div v-for="(word, index) in words" :key="word.id"
+                            <div v-for="(word, index) in filteredWords" :key="word.id"
                                 class="p-4 xl:p-6 rounded-xl shadow-sm flex flex-col lg:grid lg:grid-cols-8 gap-4 lg:gap-6 xl:gap-8 items-start lg:items-center hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 hover:bg-gray-700/50 transform translate-y-0 hover:-translate-y-1 dark:text-white text-black">
                                 <!-- Word -->
                                 <div class="flex items-center w-full">
-                                    <div class="text-gray-400">{{ index + 1 }}</div>
+                                    <div class="text-gray-800 dark:text-gray-400">{{ index + 1 }}</div>
                                     <img :src="`/storage/${word.image}`" alt="Word Image" class="w-16 h-16 mx-6 object-cover rounded-lg" @error="setDefaultImage">
 
                                 </div>
                                 <!-- Mobile Labels and Content -->
                                 <div class="grid grid-cols-1 gap-2 w-full lg:hidden">
                                   <div class="flex flex-col">
-                                      <span class="text-gray-400 text-sm py-2">{{ $t('word') }}:</span>
+                                      <span class="text-gray-800 dark:text-gray-400 text-sm py-2">{{ $t('word') }}:</span>
                                       <span class="truncate p-2">{{ word.word }}</span>
                                   </div>
 
                                     <div class="flex flex-col">
-                                        <span class="text-gray-400 text-sm py-2">{{ $t('meaning') }}:</span>
+                                        <span class="text-gray-800 dark:text-gray-400 text-sm py-2">{{ $t('meaning') }}:</span>
                                         <span class="truncate p-2">{{ word . meaning }}</span>
                                     </div>
                                     <div class="flex flex-col">
-                                        <span class="text-gray-400 text-sm py-2">{{ $t('level') }}:</span>
+                                        <span class="text-gray-800 dark:text-gray-400 text-sm py-2">{{ $t('level') }}:</span>
                                         <span class="truncate p-2">{{ word . level }}</span>
                                     </div>
                                     <div class="flex flex-col">
-                                        <span class="text-gray-400 text-sm py-2">{{ $t('grammar') }}:</span>
+                                        <span class="text-gray-800 dark:text-gray-400 text-sm py-2">{{ $t('grammar') }}:</span>
                                         <span class="truncate p-2">{{ word . grammar }}</span>
                                     </div>
                                     <button
@@ -181,7 +178,7 @@ const setDefaultImage = (event) => {
                                         <source :src="`/storage/${word.voice}`" type="audio/mpeg">
                                       </audio>
                                     <div class="flex flex-col" v-if="word.categories !== []">
-                                        <span class="text-gray-400 text-sm py-2">{{ $t('categories') }}:</span>
+                                        <span class="text-gray-800 dark:text-gray-400 text-sm py-2">{{ $t('categories') }}:</span>
                                         <span class="truncate p-2">
                                             <span
                                                 v-for="(category, i) in (word.categories ? word.categories.slice(0, 3) : [])"
@@ -507,10 +504,15 @@ export default {
             return [...new Set(this.words.flatMap(word => word.categories.map(c => c.name)))];
         },
         uniqueLevels() {
-            return [...new Set(this.words.map(word => word.level))];
+            return ['-', 'A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
         },
         uniqueGrammarTypes() {
-            return [...new Set(this.words.map(word => word.grammar))];
+            return [
+                '-', 'noun', 'pronoun', 'verb', 'adjective', 'adverb', 'preposition', 'conjunction',
+                'interjection', 'article', 'determiner', 'numeral', 'auxiliary verb',
+                'modal verb', 'participle', 'gerund', 'infinitive', 'possessive pronoun',
+                'relative pronoun','demonstrative pronoun','reflexive pronoun','reciprocal pronoun','intensive pronoun'
+            ];
         },
         filteredWords() {
             let words = this.searchResults.length > 0 ? this.searchResults : this.words;
