@@ -455,6 +455,7 @@ export default {
     mounted() {
         this.isDarkMode = localStorage.getItem('theme') === 'dark';
         this.applyTheme();
+        document.documentElement.lang = this.$i18n.locale;
     },
     methods: {
         applyTheme() {
@@ -473,6 +474,6 @@ export default {
             console.log(localStorage.getItem('theme'));
 
         },
-    }
+    },
 };
 </script>
