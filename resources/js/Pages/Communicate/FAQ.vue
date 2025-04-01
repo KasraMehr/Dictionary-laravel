@@ -57,7 +57,7 @@ watch(locale, () => {
             {{ $t('translation_features_questions') }}
           </div>
         <div class="border border-gray-700 dark:border-gray-200 p-4 rounded-xl mb-4 transition-all duration-300 overflow-hidden"
-        :class="{ 'bg-red-50 border-red-600 shadow-md': activeIndex === index }">
+        :class="{ 'bg-red-50 dark:bg-gray-700 border-red-600 shadow-md': activeIndex === index }">
         <!-- دکمه سوال -->
         <button
           @click="toggleAccordion(index)"
