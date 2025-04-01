@@ -8,32 +8,31 @@ defineProps({
 
 </script>
 
+
 <template>
-  <MainLayout title="Daily Test">
-    <main class="mt-6">
-        <div class="flex flex-col items-center gap-6 overflow-hidden rounded-lg bg-gradient-to-br from-gray-400/50 to-gray-200/50 dark:from-gray-800/50 dark:to-gray-700/50 p-10 shadow-lg ring-1 ring-white/10 transition duration-300 hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 w-full backdrop-blur-sm">
-          <!-- بخش یادگیری -->
-          <div class="flex flex-col items-start gap-6 overflow-hidden rounded-lg bg-gradient-to-br from-gray-400/50 to-gray-200/50 dark:from-gray-800/50 dark:to-gray-700/50 p-6 shadow-lg ring-1 ring-white/10 transition duration-300 hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 lg:p-10 lg:pb-10 w-full backdrop-blur-sm">
-            <h2 class="text-xl font-bold text-[#FF2D20]">{{ $t('learning_section') }}</h2>
-            <p class="text-sm text-gray-700 dark:text-gray-300">{{ $t('learn_new_words_daily') }}</p>
+  <MainLayout title="Daily Words">
+    <main class="">
+        <div class="flex flex-col items-center justify-center min-h-screen bg-cover bg-center p-6 relative"
+             style="background-image: url('/images/dailyTestBackground.png');">
+            <div class="absolute inset-0 bg-black/30 backdrop-blur-sm"></div>
+                <div class="relative max-w-2xl w-full shadow-2xl rounded-2xl p-8 space-y-6 text-center backdrop-blur-xl border border-white/20">
+                    <h2 class="text-2xl font-bold text-red-800 text-center mb-4">{{ $t('learning_section') }}</h2>
+                    <p class="text-center text-gray-700 dark:text-gray-300 mb-6">{{ $t('learn_new_words_daily') }}</p>
 
-            <ul class="w-full space-y-2">
-              <p class="font-semibold text-lg my-4">{{ $t('daily_words') }} </p>
-              <li v-for="(word, index) in wordList" :key="index"
-                  class="p-1 bg-gray-700/50 rounded-lg text-white flex justify-between
-                         hover:bg-gray-600 transition-colors duration-200">
-
-                <a :href="`/word/${word.native_lang}-${word.translated_lang}/${word.id}`"
-                   class="flex justify-between items-center w-full h-full p-2">
-                  <span>{{ word.word }}</span>
-                  <button @click.stop="addToFavorites(word)"
-                          class="text-yellow-400 hover:text-yellow-600">⭐</button>
-                </a>
-
-              </li>
-            </ul>
-         </div>
-        </div>
+                    <div class="bg-gradient-to-br from-gray-400 to-gray-100 dark:from-gray-900 dark:to-gray-600 p-4 rounded-lg shadow">
+                        <p class="font-semibold text-lg text-gray-900 dark:text-gray-100 text-center mb-4">{{ $t('daily_words') }}</p>
+                        <ul class="space-y-2">
+                            <li v-for="(word, index) in wordList" :key="index"
+                                class="p-2 bg-gray-300 dark:bg-gray-700 rounded-lg text-gray-900 dark:text-white flex justify-between hover:bg-gray-500 dark:hover:bg-gray-600 transition duration-200">
+                                <a :href="`/word/${word.native_lang}-${word.translated_lang}/${word.id}`"
+                                   class="flex justify-between items-center w-full h-full">
+                                    <span class="font-medium">{{ word.word }}</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
     </main>
   </MainLayout>
 </template>
