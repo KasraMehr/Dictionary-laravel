@@ -183,7 +183,7 @@ class GeneralController extends Controller
                  array_splice($options, $correctIndex, 0, $word->meaning);
 
                  $quizQuestions[] = [
-                     'question' => "What is the meaning of '{$word->word}'?",
+                     'question' => "'{$word->word}'",
                      'options' => $options,
                      'correctIndex' => $correctIndex
                  ];
