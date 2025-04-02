@@ -64,13 +64,6 @@ function handleImageError() {
                                      d="M12 18.75a6 6 0 0 0 6-6v-1.5m-6 7.5a6 6 0 0 1-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 0 1-3-3V4.5a3 3 0 1 1 6 0v8.25a3 3 0 0 1-3 3Z"/>
                                    </svg>
                                  </button>
-
-                                 <button @click="openFilePicker" class="p-2 rounded-full bg-[#FF2D20] text-white hover:bg-[#e6261e] transition">
-                                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                     <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z" />
-                                     <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0ZM18.75 10.5h.008v.008h-.008V10.5Z" />
-                                   </svg>
-                                 </button>
                                  <input type="file" id="fileInput" accept="image/*" class="hidden" @change="handleFileUpload">
                                </div>
 
@@ -256,140 +249,144 @@ function handleImageError() {
 </template>
 
 <script>
-  export default {
-      data() {
-          return {
-              searchQuery: "",
-              searchResults: [],
-              showResults: false,
-              isVoiceModalOpen: false,
-              recognition: null,
-              inputText: '',
-              translatedText: '',
-              sourceLang: 'en',
-              targetLang: 'fa',
-              textAreaHeight: 100,
-              currentQuestionIndex: parseInt(localStorage.getItem("currentQuestionIndex")) || 0,
-              selectedAnswer: null,
-              correctAnswers: parseInt(localStorage.getItem("correctAnswers")) || 0,
-              showCongratulation: false,
-            };
-      },
-      watch: {
-          searchQuery(newQuery) {
+export default {
+    data() {
+        return {
+            searchQuery: "",
+            searchResults: [],
+            showResults: false,
+            isVoiceModalOpen: false,
+            recognition: null,
+            debounceTimer: null,
+            inputText: '',
+            translatedText: '',
+            sourceLang: 'en',
+            targetLang: 'fa',
+            textAreaHeight: 100,
+            currentQuestionIndex: parseInt(localStorage.getItem("currentQuestionIndex")) || 0,
+            selectedAnswer: null,
+            correctAnswers: parseInt(localStorage.getItem("correctAnswers")) || 0,
+            showCongratulation: false,
+        };
+    },
+    watch: {
+        searchQuery(newQuery) {
             if (newQuery.length > 2) {
-              this.fetchSearchResults(newQuery);
+                this.fetchSearchResults(newQuery);
             } else {
-              this.searchResults = [];
-              this.showResults = false;
+                this.searchResults = [];
+                this.showResults = false;
             }
-          },
         },
-        methods: {
-          async fetchSearchResults(query) {
+    },
+    methods: {
+        async fetchSearchResults(query) {
             try {
-              const response = await fetch(`/search?query=${query}`);
-              const results = await response.json();
-              this.searchResults = results.slice(0, 4);
-              this.showResults = true;
+                const response = await fetch(`/search?query=${query}`);
+                const results = await response.json();
+                this.searchResults = results.slice(0, 4);
+                this.showResults = true;
             } catch (error) {
-              console.error("Error fetching search results:", error);
+                console.error("Error fetching search results:", error);
             }
-          },
-          closeResults(event) {
+        },
+        closeResults(event) {
             if (!this.$refs.searchContainer.contains(event.target)) {
-              this.showResults = false;
+                this.showResults = false;
             }
-          },
-          async translateText() {
+        },
+        async translateText() {
             if (!this.inputText.trim()) {
-              this.translatedText = please_enter_text;
-              return;
+                this.translatedText = this.$t('please_enter_text'); // اطمینان از اینکه متن ورودی خالی نیست
+                return;
             }
 
             try {
-              const proxyUrl = "https://cors-anywhere.herokuapp.com/";
-              const apiUrl = `https://ftapi.pythonanywhere.com/translate?sl=${this.sourceLang}&dl=${this.targetLang}&text=${encodeURIComponent(this.inputText)}`;
+                // URL برای API Apertium
+                const apiUrl = `https://apertium.org/apy/translate?langpair=${this.sourceLang}|${this.targetLang}&q=${encodeURIComponent(this.inputText)}`;
 
-              const response = await fetch(proxyUrl + apiUrl, {
-                method: "GET",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-              });
+                // درخواست به API
+                const response = await fetch(apiUrl, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                });
 
-              if (!response.ok) {
-                throw new Error(`API Error: ${response.status} ${response.statusText}`);
-              }
+                if (!response.ok) {
+                    throw new Error(`API Error: ${response.status} ${response.statusText}`);
+                }
 
-              const data = await response.json();
-              this.translatedText = data["destination-text"] || t('no_translation_received');
+                // دریافت داده‌ها
+                const data = await response.json();
+
+                // بررسی نتیجه ترجمه
+                if (data.responseData && data.responseData.translatedText) {
+                    this.translatedText = data.responseData.translatedText; // نمایش متن ترجمه شده
+                } else {
+                    this.translatedText = this.$t('no_translation_received'); // اگر ترجمه ای دریافت نشد
+                }
+
             } catch (error) {
-              console.error("خطا در ترجمه:", error);
-              this.translatedText = t('error_occurred');
+                console.error("خطا در ترجمه:", error);
+                this.translatedText = this.$t('error_occurred'); // در صورت خطا
             }
-          },
-          swapLanguages() {
-              [this.sourceLang, this.targetLang] = [this.targetLang, this.sourceLang];
-          },
-          updateHeight() {
-              this.$nextTick(() => {
-                  const input = this.$refs.inputTextArea;
-                  this.textAreaHeight = input.scrollHeight;
-              });
-          },
-          startVoiceSearch() {
-      this.isVoiceModalOpen = true;
+        },
 
-      if ("webkitSpeechRecognition" in window) {
-        this.recognition = new webkitSpeechRecognition();
-        this.recognition.lang = "fa-IR";
-        this.recognition.continuous = false;
-        this.recognition.interimResults = false;
+    // تابع برای تعویض زبان‌ها
+        swapLanguages() {
+            [this.sourceLang, this.targetLang] = [this.targetLang, this.sourceLang];
+        },
 
-        this.recognition.onresult = (event) => {
-          const transcript = event.results[0][0].transcript;
-          console.log("متن تشخیص داده شده:", transcript);
-          this.$emit("voice-search", transcript);
-        };
+        startVoiceSearch() {
+            this.isVoiceModalOpen = true;
 
-        this.recognition.onerror = (event) => {
-          console.error("خطای تشخیص صدا:", event.error);
-        };
+            if ("webkitSpeechRecognition" in window) {
+                this.recognition = new webkitSpeechRecognition();
+                this.recognition.lang = "fa-IR";
+                this.recognition.continuous = false;
+                this.recognition.interimResults = true;
+                this.recognition.maxAlternatives = 3;
 
-        this.recognition.onend = () => {
-          this.isVoiceModalOpen = false;
-        };
+                this.recognition.onresult = (event) => {
+                    const transcript = event.results[0][0].transcript.trim();
+                    console.log("متن تشخیص داده شده:", transcript);
+                    this.searchQuery = transcript;
 
-        this.recognition.start();
-      } else {
-        alert(t('browser_no_voice_search'));
-      }
-    },
-    stopVoiceSearch() {
-      if (this.recognition) {
-        this.recognition.stop();
-      }
-      this.isVoiceModalOpen = false;
-    },
-    closeVoiceSearch() {
-      this.stopVoiceSearch();
-    },
-    openFilePicker() {
-        document.getElementById('fileInput').click();
-    },
-    handleFileUpload(event) {
-        const file = event.target.files[0];
-        if (file) {
-            // پردازش تصویر انتخاب‌شده
-            console.log("تصویر انتخاب شد:", file);
-            this.startOCR(file);
-        }
-    },
-    startOCR(file) {
-        alert(t('ocr_started_for') + file.name);
-    },
-    selectAnswer(index) {
+                    if (transcript) {
+                        this.debounceFetchSearch(transcript);
+                    }
+                };
+
+                this.recognition.onerror = (event) => {
+                    console.error("خطای تشخیص صدا:", event.error);
+                };
+
+                this.recognition.onend = () => {
+                    this.isVoiceModalOpen = false;
+                };
+
+                this.recognition.start();
+            } else {
+                alert("مرورگر شما از جستجوی صوتی پشتیبانی نمی‌کند.");
+            }
+        },
+        stopVoiceSearch() {
+            if (this.recognition) {
+                this.recognition.stop();
+            }
+            this.isVoiceModalOpen = false;
+        },
+        closeVoiceSearch() {
+            this.stopVoiceSearch();
+        },
+        debounceFetchSearch(query) {
+            clearTimeout(this.debounceTimer);
+            this.debounceTimer = setTimeout(() => {
+                this.fetchSearchResults(query);
+            }, 300);
+        },
+        selectAnswer(index) {
             if (this.selectedAnswer === null) {
                 this.selectedAnswer = index;
                 if (index === this.quizQuestions[this.currentQuestionIndex].correctIndex) {
@@ -420,14 +417,14 @@ function handleImageError() {
                 this.showCongratulation = false;
             }
         }
-      },
-      mounted() {
+    },
+    mounted() {
         document.addEventListener("click", this.closeResults);
-      },
-      beforeUnmount() {
+    },
+    beforeUnmount() {
         document.removeEventListener("click", this.closeResults);
-      },
-  };
+    },
+};
 </script>
 
 <style>
