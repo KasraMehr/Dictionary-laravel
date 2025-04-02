@@ -100,9 +100,9 @@ defineProps({
                                   hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 lg:p-10 lg:pb-10 w-full
                                   backdrop-blur-sm">
                           <h2 class="text-xl font-bold text-[#FF2D20]">{{ $t('synonyms_section') }}</h2>
-                          <p class="text-sm text-gray-700 dark:text-gray-300">your word's synonyms</p>
+                          <p class="text-sm text-gray-700 dark:text-gray-300">{{ $t('your_words_synonyms') }}</p>
                           <ul class="w-full space-y-2">
-                            <p class="font-semibold text-lg">{{ $t('synonyms') }}</p>
+                            <p class="font-semibold text-lg">{{ $t('synonym_words') }}</p>
                               <li v-for="(word, index) in synonyms" :key="index"
                                   class="p-1 bg-gray-700/50 rounded-lg text-white flex justify-between
                                          hover:bg-gray-600 transition-colors duration-200">
