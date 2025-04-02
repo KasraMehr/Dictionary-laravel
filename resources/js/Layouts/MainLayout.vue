@@ -391,7 +391,7 @@ const setLanguage = (lang) => {
                           </svg>
                       </a>
                       <a href="javascript:;"
-                          class="group cursor-pointer relative w-8 h-8 rounded-full transition-all duration-500 flex justify-center items-center hover:bg-gray-900 before:content[''] before:absolute before:bg-[url('././images/footer/instagram.png')] before:w-full before:h-full before:-z-10 mx-4">
+                          class="group cursor-pointer relative w-8 h-8 rounded-full transition-all duration-500 flex justify-center items-center hover:bg-gray-900 before:content[''] before:absolute before:w-full before:h-full before:-z-10 mx-4">
                           <svg class="w-8 h-8 text-white " width="26" height="26" viewBox="0 0 26 26" fill="none"
                               xmlns="http://www.w3.org/2000/svg">
                               <g clip-path="url(#clip0_8797_65643)">
