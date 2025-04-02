@@ -283,5 +283,10 @@
     "placement_test": "Placement test",
     "determine_your_level": "Determine your language level and progress",
     "daily_words": "Daily words",
-    "learn_new_words_daily_des": "Learn new words daily and expand your vocabulary"
+    "learn_new_words_daily_des": "Learn new words daily and expand your vocabulary",
+    "search_words_meanings": "Search in words and meanings",
+    "synonym_words": "Synonym words",
+    "synonyms_section": "Synonyms section",
+    "your_words_synonyms": "Your word's synonyms"
+
 }
