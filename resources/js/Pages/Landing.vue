@@ -53,7 +53,7 @@ function handleImageError() {
 
                          <!-- فیلد جستجو -->
                          <div ref="searchContainer" class="relative w-full max-w-xl mt-4">
-                             <input type="text" v-model="searchQuery" placeholder="search word ..."
+                             <input type="text" v-model="searchQuery" :placeholder="$t('search_words_meanings')"
                                  class="w-full p-4 text-lg border rounded-lg focus:ring-2 focus:ring-[#FF2D20] outline-none bg-white dark:bg-gray-800 dark:text-white">
 
                                  <div class="absolute inset-y-0 flex items-center gap-2"
