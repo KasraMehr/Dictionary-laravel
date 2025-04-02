@@ -231,84 +231,90 @@ const setDefaultImage = (event) => {
                 </div>
             </div>
         </div>
+
         <!-- Show Modal -->
-        <div v-if="showViewModal" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50"
-            @click="closeModal">
-            <div class="bg-white dark:bg-gray-800 border border-gray-700 p-6 sm:p-8 rounded-lg shadow-xl w-full max-w-5xl mx-4 max-h-[90vh] overflow-y-auto"
-                @click.stop>
+        <div v-if="showViewModal" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50" @click="closeModal">
+            <div class="bg-white dark:bg-gray-800 border border-gray-700 p-6 sm:p-8 rounded-lg shadow-xl w-full max-w-5xl mx-4 max-h-[90vh] overflow-y-auto" @click.stop>
                 <h2 class="text-xl lg:text-2xl font-bold mb-6 dark:text-white text-black border-b border-gray-700 pb-4">
                     {{ $t('word') }}
                 </h2>
 
-                <div class="space-y-6 mb-6">
-                    <!-- Word -->
-                    <div class="grid grid-cols-1 sm:grid-cols-6 gap-4 items-start">
-                        <strong class="dark:text-white text-black text-lg sm:col-span-1">{{ $t('word') }}:</strong>
-                        <span class="text-xl text-gray-800 dark:text-gray-300 sm:col-span-5">{{ selectedWord . word }}</span>
-                    </div>
+                <div class="space-y-6 mb-6 p-6 bg-gray-100 dark:bg-gray-800 rounded-xl shadow-lg border border-gray-300 dark:border-gray-700">
+                    <!-- Word & Audio -->
+                    <div class="flex items-center gap-4 mx-auto">
+                        <h1 class="text-3xl font-bold text-gray-900 dark:text-white">{{ selectedWord.word }}</h1>
 
-                    <!-- Meaning -->
-                    <div class="grid grid-cols-1 sm:grid-cols-6 gap-4 items-start">
-                        <strong class="dark:text-white text-black text-lg sm:col-span-1">{{ $t('meaning') }}:</strong>
-                        <span class="text-xl text-gray-800 dark:text-gray-300 sm:col-span-5">{{ selectedWord . meaning }}</span>
-                    </div>
+                        <!-- دکمه صدا -->
+                        <button @click="playAudio(selectedWord.id)"
+                            class="w-8 h-8 flex items-center justify-center bg-gray-400 dark:bg-gray-700 rounded-full">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-black dark:text-white"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M3 10v4"/>
+                                <path d="M7 5v14"/>
+                                <path d="M11 3v18"/>
+                                <path d="M15 6v12"/>
+                                <path d="M19 10v4"/>
+                            </svg>
+                        </button>
 
-                    <div class="grid grid-cols-1 sm:grid-cols-6 gap-4 items-start">
-                        <strong class="dark:text-white text-black text-lg sm:col-span-1">{{ $t('level') }}:</strong>
-                        <span class="text-xl text-gray-800 dark:text-gray-300 sm:col-span-5">{{ selectedWord . level }}</span>
-                    </div>
-
-                    <div class="grid grid-cols-1 sm:grid-cols-6 gap-4 items-start">
-                        <strong class="dark:text-white text-black text-lg sm:col-span-1">{{ $t('grammar') }}:</strong>
-                        <span class="text-xl text-gray-800 dark:text-gray-300 sm:col-span-5">{{ selectedWord . grammar }}</span>
-                    </div>
-
-                    <!-- Pronunciation -->
-                    <div class="grid grid-cols-1 sm:grid-cols-6 gap-4 items-start">
-                        <strong class="dark:text-white text-black text-lg sm:col-span-1">{{ $t('pronunciation') }}:</strong>
-                        <span class="text-lg text-gray-800 dark:text-gray-300 sm:col-span-5">{{ selectedWord . pronunciation }}</span>
-                    </div>
-
-                    <!-- Description -->
-                    <div class="grid grid-cols-1 sm:grid-cols-6 gap-4 items-start">
-                        <strong class="dark:text-white text-black text-lg sm:col-span-1">{{ $t('description') }}:</strong>
-                        <div
-                            class="text-gray-800 dark:text-gray-300 sm:col-span-5 break-words whitespace-pre-wrap min-h-[100px] bg-gray-800/50 p-4 rounded-lg border border-gray-700">
-                            {{ selectedWord . description }}
-                        </div>
-                    </div>
-
-                    <div v-if="selectedWord.voice_url" class="grid grid-cols-1 sm:grid-cols-6 gap-4 items-start">
-                        <strong class="dark:text-white text-black text-lg sm:col-span-1">{{ $t('audio_file') }}:</strong>
-                        <audio controls class="sm:col-span-5  p-2 ">
-                            <source :src="selectedWord.voice_url" type="audio/mp3" />
-                            Your browser does not support the audio element.
+                        <!-- فایل صوتی -->
+                        <audio :ref="el => setAudioRef(selectedWord.id, el)">
+                            <source :src="`/storage/${selectedWord.voice}`" type="audio/mpeg">
                         </audio>
                     </div>
 
-                    <!-- Image -->
-                    <div v-if="selectedWord.image_url" class="grid grid-cols-1 sm:grid-cols-6 gap-4 items-start">
-                        <strong class="dark:text-white text-black text-lg sm:col-span-1">{{ $t('image') }}:</strong>
-                        <img :src="selectedWord.image_url" alt="Word Image"
-                            class="sm:col-span-5 rounded-lg shadow-md" />
+                    <!-- Word Image -->
+                    <div class="flex justify-center">
+                        <img :src="`/storage/${selectedWord.image}`" alt="Word Image" class="w-24 h-24 sm:w-40 sm:h-30 md:w-60 md:h-40 lg:w-80 lg:h-60 object-cover rounded-lg shadow-md border border-gray-300 dark:border-gray-600 hover:scale-105 transition-transform duration-200" @error="setDefaultImage">
+                    </div>
+
+                    <!-- Meaning -->
+                    <div class="grid grid-cols-2 sm:grid-cols-6 gap-4 items-center">
+                        <strong class="text-lg font-semibold text-gray-900 dark:text-white sm:col-span-1">{{ $t('meaning') }}:</strong>
+                        <span class="text-xl text-gray-700 dark:text-gray-300 sm:col-span-5">{{ selectedWord.meaning }}</span>
+                    </div>
+
+                    <!-- Additional Info -->
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                        <div class="flex items-center">
+                            <strong class="text-lg font-semibold text-gray-900 dark:text-white">{{ $t('level') }}:</strong>
+                            <span class="mx-2 px-3 py-1 bg-green-200 dark:bg-green-700 text-green-800 dark:text-green-300 text-sm font-medium rounded-full">{{ selectedWord.level }}</span>
+                        </div>
+                        <div class="flex items-center">
+                            <strong class="text-lg font-semibold text-gray-900 dark:text-white">{{ $t('grammar') }}:</strong>
+                            <span class="mx-2 px-3 py-1 bg-blue-200 dark:bg-blue-700 text-blue-800 dark:text-blue-300 text-sm font-medium rounded-full">{{ selectedWord.grammar }}</span>
+                        </div>
+                    </div>
+
+                    <!-- Pronunciation -->
+                    <div class="grid grid-cols-2 sm:grid-cols-6 gap-4 items-center">
+                        <strong class="text-lg font-semibold text-gray-900 dark:text-white sm:col-span-1">{{ $t('pronunciation') }}:</strong>
+                        <span class="text-lg text-gray-700 dark:text-gray-300 sm:col-span-5 italic">{{ selectedWord.pronunciation }}</span>
                     </div>
 
                     <!-- Categories -->
                     <div class="flex flex-wrap gap-2 mt-3">
-                        <strong class="dark:text-white text-black text-lg sm:col-span-1 ml-16">{{ $t('categories') }}:</strong>
-                        <span v-for="category in selectedWord.categories" :key="categoryId"
-                            class="bg-gray-300 dark:bg-gray-600 dark:text-white text-black text-xs px-3 py-1 rounded-full flex items-center">
-                            {{ category . name }}
-                        </span>
+                        <strong class="text-lg font-semibold text-gray-900 dark:text-white">{{ $t('categories') }}:</strong>
+                        <span v-for="category in selectedWord.categories" :key="category.id" class="bg-gray-300 dark:bg-gray-600 text-black dark:text-white text-sm px-3 py-1 rounded-full">{{ category.name }}</span>
                     </div>
-                    <div class="flex justify-end gap-3 mt-8 border-t border-gray-700 pt-4">
-                    <a :href="`/word/${selectedWord.native_lang}-${selectedWord.translated_lang}/${selectedWord.id}`"
-                        class="px-6 py-2.5 bg-blue-500 dark:text-white text-black rounded-lg hover:bg-blue-700 transition-all duration-200
-                        focus:outline-none focus:ring-2 focus:ring-[#FF2D20] focus:ring-offset-2 focus:ring-offset-gray-800">
-                        {{ $t('view') }}
-                    </a>
+
+                    <!-- Description -->
+                    <div class="grid grid-cols-1 gap-4">
+                        <strong class="text-lg font-semibold text-gray-900 dark:text-white">{{ $t('description') }}:</strong>
+                        <div class="p-4 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-300 rounded-lg border border-gray-400 dark:border-gray-600">
+                            {{ selectedWord.description }}
+                        </div>
+                    </div>
+
+                    <!-- View Button -->
+                    <div class="flex justify-end mt-6">
+                        <a :href="`/word/${selectedWord.native_lang}-${selectedWord.translated_lang}/${selectedWord.id}`" class="px-6 py-2 bg-blue-500 dark:bg-blue-700 text-white rounded-lg hover:bg-blue-700 dark:hover:bg-blue-500 transition-all duration-200">
+                            {{ $t('view') }}
+                        </a>
                     </div>
                 </div>
+
             </div>
         </div>
     </MainLayout>
