@@ -144,39 +144,29 @@ const setDefaultImage = (event) => {
 
                                 </div>
                                 <!-- Mobile Labels and Content -->
-                                <div class="grid grid-cols-1 gap-2 w-full lg:hidden">
+                                <div class="grid grid-cols-2 gap-2 w-full lg:hidden">
                                   <div class="flex flex-col">
-                                      <span class="text-gray-800 dark:text-gray-400 text-sm py-2">{{ $t('word') }}:</span>
-                                      <span class="truncate p-2">{{ word.word }}</span>
+                                      <span class="text-gray-800 dark:text-gray-400 text-sm py-2">
+                                        {{ $t('word') }}: <span class="truncate text-lg p-2">{{ word.word }}</span>
+                                      </span>
+
                                   </div>
 
                                     <div class="flex flex-col">
-                                        <span class="text-gray-800 dark:text-gray-400 text-sm py-2">{{ $t('meaning') }}:</span>
-                                        <span class="truncate p-2">{{ word . meaning }}</span>
+                                        <span class="text-gray-800 dark:text-gray-400 text-sm py-2">
+                                          {{ $t('meaning') }}: <span class="truncate text-lg p-2">{{ word.meaning }}</span>
+                                        </span>
                                     </div>
                                     <div class="flex flex-col">
-                                        <span class="text-gray-800 dark:text-gray-400 text-sm py-2">{{ $t('level') }}:</span>
-                                        <span class="truncate p-2">{{ word . level }}</span>
+                                        <span class="text-gray-800 dark:text-gray-400 text-sm py-2">
+                                          {{ $t('level') }}: <span class="truncate text-base p-2">{{ word.level }}</span>
+                                        </span>
                                     </div>
                                     <div class="flex flex-col">
-                                        <span class="text-gray-800 dark:text-gray-400 text-sm py-2">{{ $t('grammar') }}:</span>
-                                        <span class="truncate p-2">{{ word . grammar }}</span>
+                                        <span class="text-gray-800 dark:text-gray-400 text-sm py-2">
+                                          {{ $t('grammar') }}: <span class="truncate text-base p-2">{{ word.grammar }}</span>
+                                        </span>
                                     </div>
-                                    <button
-                                        @click="playAudio(word.id)"
-                                        class="w-8 h-8 flex items-center justify-center bg-gray-400 dark:bg-gray-700 rounded-full"
-                                      >
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-black dark:text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                          <path d="M3 10v4"/>
-                                          <path d="M7 5v14"/>
-                                          <path d="M11 3v18"/>
-                                          <path d="M15 6v12"/>
-                                          <path d="M19 10v4"/>
-                                        </svg>
-                                      </button>
-                                      <audio :ref="el => setAudioRef(word.id, el)">
-                                        <source :src="`/storage/${word.voice}`" type="audio/mpeg">
-                                      </audio>
                                     <div class="flex flex-col" v-if="word.categories !== []">
                                         <span class="text-gray-800 dark:text-gray-400 text-sm py-2">{{ $t('categories') }}:</span>
                                         <span class="truncate p-2">
@@ -191,7 +181,7 @@ const setDefaultImage = (event) => {
                                 </div>
 
                                 <!-- Desktop Content -->
-                                <div class="font-medium truncate">
+                                <div class="hidden lg:block font-medium truncate">
                                   {{ word.word }}
                                 </div>
                                 <div class="hidden lg:block truncate">
