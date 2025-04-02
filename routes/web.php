@@ -9,7 +9,8 @@ use App\Http\Controllers\WordController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\TeamController;
-
+use App\Http\Controllers\ContactController;
+use Illuminate\Http\Request;
 
 
 Route::get('/', [GeneralController::class, 'landingData'])->name('landing');
@@ -29,6 +30,12 @@ Route::get('/topics', [LearnController::class, 'topics'])->name('topics');
 Route::get('/levels', [LearnController::class, 'levels'])->name('levels');
 Route::get('/grammars', [LearnController::class, 'grammars'])->name('grammars');
 Route::get('/word/{native_lang}-{translated_lang}/{id}', [WordController::class, 'show'])->name('word.show');
+
+Route::get('/csrf-token', function (Request $request) {
+    return response()->json(['csrf_token' => csrf_token()]);
+});
+
+Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 
 
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])->group(function ()
