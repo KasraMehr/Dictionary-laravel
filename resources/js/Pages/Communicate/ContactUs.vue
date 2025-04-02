@@ -16,11 +16,11 @@ import MainLayout from '@/Layouts/MainLayout.vue';
               <h2 class="text-black dark:text-white font-manrope text-4xl font-semibold leading-10 mb-9 text-center" :class="{ 'text-right': $i18n.locale === 'fa' || $i18n.locale === 'ar', 'text-left': $i18n.locale === 'en' }">
                 {{ $t('reach_out_to_us') }}
               </h2>
-              <form action="">
-                <input type="text" class="w-full h-14 shadow-sm bg-gray-200 dark:bg-gray-600 text-gray-600 dark:text-gray-100 placeholder-text-900 text-lg font-normal leading-7 rounded-full border border-gray-500 focus:outline-none py-2 px-4 mb-8" :placeholder="$t('name')">
-                <input type="email" class="w-full h-14 shadow-sm bg-gray-200 dark:bg-gray-600 text-gray-600 dark:text-gray-100 placeholder-text-400 text-lg font-normal leading-7 rounded-full border border-gray-500 focus:outline-none py-2 px-4 mb-8" :placeholder="$t('email')">
-                <textarea name="" id="text" class="w-full h-48 shadow-sm resize-none bg-gray-200 dark:bg-gray-600 text-gray-600 dark:text-gray-100 placeholder-text-400 text-lg font-normal leading-7 rounded-2xl border border-gray-500 focus:outline-none px-4 py-4 mb-8" :placeholder="$t('description')"></textarea>
-                <button class="w-full h-12 text-center text-white text-base font-semibold leading-6 rounded-full bg-red-600 shadow transition-all duration-700 hover:bg-red-800">{{ $t('send') }}</button>
+              <form @submit.prevent="submitForm">
+                  <input v-model="form.name" type="text" class="w-full h-14 shadow-sm bg-gray-200 dark:bg-gray-600 text-gray-600 dark:text-gray-100 placeholder-text-900 text-lg font-normal leading-7 rounded-full border border-gray-500 focus:outline-none py-2 px-4 mb-8" :placeholder="$t('name')">
+                  <input v-model="form.email" type="email" class="w-full h-14 shadow-sm bg-gray-200 dark:bg-gray-600 text-gray-600 dark:text-gray-100 placeholder-text-400 text-lg font-normal leading-7 rounded-full border border-gray-500 focus:outline-none py-2 px-4 mb-8" :placeholder="$t('email')">
+                  <textarea v-model="form.message" class="w-full h-48 shadow-sm resize-none bg-gray-200 dark:bg-gray-600 text-gray-600 dark:text-gray-100 placeholder-text-400 text-lg font-normal leading-7 rounded-2xl border border-gray-500 focus:outline-none px-4 py-4 mb-8" :placeholder="$t('description')"></textarea>
+                  <button type="submit" class="w-full h-12 text-center text-white text-base font-semibold leading-6 rounded-full bg-red-600 shadow transition-all duration-700 hover:bg-red-800">{{ $t('send') }}</button>
               </form>
             </div>
           </div>
@@ -112,3 +112,44 @@ import MainLayout from '@/Layouts/MainLayout.vue';
     </section>
   </MainLayout>
 </template>
+
+<script>
+  export default {
+      data() {
+          return {
+              form: {
+                  name: '',
+                  email: '',
+                  message: '',
+              },
+              csrfToken: '',
+          };
+      },
+      async mounted() {
+          const response = await fetch('/csrf-token');
+          const data = await response.json();
+          this.csrfToken = data.csrf_token;
+      },
+      methods: {
+          async submitForm() {
+            console.log(this.csrfToken);
+              try {
+                  const response = await fetch('/contact', {
+                      method: 'POST',
+                      headers: {
+                          'Content-Type': 'application/json',
+                          'X-CSRF-TOKEN': this.csrfToken,
+                      },
+                      body: JSON.stringify(this.form),
+                  });
+
+                  const data = await response.json();
+                  alert(data.message);
+              } catch (error) {
+                  console.error('Error:', error);
+              }
+          }
+      }
+  };
+
+</script>
