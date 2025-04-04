@@ -123,12 +123,12 @@ function handleImageError() {
 
                        <!-- بخش ورودی و خروجی -->
                        <div class="lg:flex lg:gap-4">
-                         <textarea v-model="inputText" class="w-full lg:w-1/2 p-4 border rounded-lg  bg-white dark:bg-gray-800 focus:ring-2 focus:ring-[#FF2D20] " placeholder="Enter text..."></textarea>
+                         <textarea v-model="inputText" class="w-full p-4 border rounded-lg  bg-white dark:bg-gray-800 focus:ring-2 focus:ring-[#FF2D20] lg:mx-5" placeholder="Enter text..."></textarea>
                          <!--mobile دکمه ترجمه -->
                          <button @click="translateText" class="block lg:hidden my-4 w-full bg-red-500 text-white p-2 rounded-lg hover:bg-red-600">
                            {{ $t('translate') }}
                          </button>
-                         <textarea v-model="translatedText" class="w-full lg:w-1/2 p-4 border rounded-lg bg-gray-100 dark:bg-gray-700 focus:ring-2 focus:ring-[#FF2D20]" readonly></textarea>
+                         <textarea v-model="translatedText" class="w-full p-4 border rounded-lg bg-gray-100 dark:bg-gray-700 focus:ring-2 focus:ring-[#FF2D20] lg:mx-5" readonly></textarea>
                        </div>
 
                        <!-- دکمه ترجمه -->
