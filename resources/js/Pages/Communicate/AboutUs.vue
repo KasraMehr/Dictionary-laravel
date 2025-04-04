@@ -221,8 +221,8 @@ onMounted(() => {
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative ">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-9">
                 <div class="img-box">
-                    <img src="https://pagedone.io/asset/uploads/1702034769.png" alt="About Us tailwind page"
-                        class="max-lg:mx-auto object-cover">
+                    <img src="/images/aboutUs/aboutUs.png" alt="About Us tailwind page"
+                        class="max-lg:mx-auto object-cover rounded-lg">
                 </div>
                 <div class="lg:pl-[100px] flex items-center">
                     <div class="data w-full">
@@ -243,8 +243,8 @@ onMounted(() => {
 
                 <div class="lg:pr-24 flex items-center">
                     <div class="data w-full">
-                        <img src="https://pagedone.io/asset/uploads/1702034785.png" alt="About Us tailwind page"
-                            class="block lg:hidden mb-9 mx-auto object-cover">
+                        <img src="/images/aboutUs/since2025.png" alt="About Us tailwind page"
+                            class="block lg:hidden mb-9 mx-auto object-cover rounded-lg">
                         <h2 class="font-manrope font-bold text-4xl lg:text-5xl text-black dark:text-white mb-9 max-lg:text-center">
                             {{ $t('since') }}
                         </h2>
@@ -254,8 +254,8 @@ onMounted(() => {
                     </div>
                 </div>
                 <div class="img-box ">
-                    <img src="https://pagedone.io/asset/uploads/1702034785.png" alt="About Us tailwind page"
-                        class="hidden lg:block object-cover">
+                    <img src="/images/aboutUs/since2025.png" alt="About Us tailwind page"
+                        class="hidden lg:block object-cover rounded-lg">
                 </div>
             </div>
         </div>
@@ -397,13 +397,13 @@ onMounted(() => {
                             </div>
                             <div class="text-center lg:text-left lg:max-w-xs flex-1">
                                 <div class="mb-5 pb-5 border-b border-solid border-gray-300">
-                                    <h6 class="text-lg text-black dark:text-white font-semibold mb-1">Harsh Patel</h6>
+                                    <h6 class="text-lg text-black dark:text-white font-semibold mb-1">kasra Mehralizadeh</h6>
                                     <span class="text-sm text-gray-500 dark:text-gray-400 group-hover:text-red-600">Co-Founder &
                                         CEO</span>
                                 </div>
                                 <p class="text-gray-500 dark:text-gray-400 leading-6 mb-7">
-                                    I am the co founder of pagedone and we’ve pushed our limit so far to make it
-                                    successful.
+                                    I am the co founder of Modern dictionary and we’ve pushed our limit so far to make it
+                                    usefull for people around the world.
                                 </p>
                                 <div class="flex items-center gap-4 justify-center lg:justify-start">
                                     <p
@@ -497,7 +497,7 @@ onMounted(() => {
                             </div>
                             <div class="text-center lg:text-left lg:max-w-xs flex-1">
                                 <div class="mb-5 pb-5 border-b border-solid border-gray-300">
-                                    <h6 class="text-lg text-black dark:text-white font-semibold mb-1">Harsh Patel</h6>
+                                    <h6 class="text-lg text-black dark:text-white font-semibold mb-1">kasra Mehralizadeh</h6>
                                     <span class="text-sm text-gray-500 dark:text-gray-400 group-hover:text-red-600">Co-Founder &
                                         CEO</span>
                                 </div>
@@ -592,8 +592,6 @@ onMounted(() => {
                 <div class="swiper-pagination"></div>
                 <div class="swiper-scrollbar"></div>
             </div>
-
-
         </div>
     </section>
 
