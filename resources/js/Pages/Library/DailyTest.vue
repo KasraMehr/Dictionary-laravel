@@ -55,12 +55,6 @@ defineProps({
                         {{ $t('next') }}
                     </button>
                 </div>
-
-                <!-- تایمر -->
-                <p class="text-xl font-bold mt-4" :class="{'text-red-600': timerCount <= 3, 'text-orange-500': timerCount > 3 && timerCount <= 5, 'text-green-700': timerCount >= 6}">
-                    {{ timerCount }}
-                </p>
-
                 <!-- پیام پایان آزمون -->
                 <p v-if="showCongratulation" class="mt-4 text-xl font-bold text-green-500">
                     🎉 {{ $t('congratulations') }}! You answered all questions correctly! 🎉
@@ -79,26 +73,12 @@ defineProps({
               selectedAnswer: null,
               correctAnswers: parseInt(localStorage.getItem("correctAnswers")) || 0,
               showCongratulation: false,
-              timerCount: 10,
-              timer: null,
           };
       },
       methods: {
-          startTimer() {
-              this.timerCount = 10;
-              this.timer = setInterval(() => {
-                  if (this.timerCount > 0) {
-                      this.timerCount--;
-                  } else {
-                      clearInterval(this.timer);
-                      this.nextQuestion();
-                  }
-              }, 1000);
-          },
           selectAnswer(index) {
               if (this.selectedAnswer === null) {
                   this.selectedAnswer = index;
-                  clearInterval(this.timer);
                   if (index === this.quizQuestions[this.currentQuestionIndex].correctIndex) {
                       this.correctAnswers++;
                       localStorage.setItem("correctAnswers", this.correctAnswers);
@@ -110,8 +90,7 @@ defineProps({
                   this.currentQuestionIndex++;
                   this.selectedAnswer = null;
                   localStorage.setItem("currentQuestionIndex", this.currentQuestionIndex);
-                  this.startTimer();
-              } else if (this.correctAnswers === 10) {
+              } else if (this.correctAnswers > 9) {
                   this.showCongratulation = true;
                   setTimeout(() => {
                       this.showCongratulation = false;
@@ -124,12 +103,10 @@ defineProps({
                   this.currentQuestionIndex--;
                   this.selectedAnswer = null;
                   localStorage.setItem("currentQuestionIndex", this.currentQuestionIndex);
-                  this.startTimer();
               }
           }
       },
       mounted() {
-          this.startTimer();
       }
   }
 </script>
