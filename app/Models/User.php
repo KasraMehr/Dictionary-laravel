@@ -114,4 +114,9 @@ class User extends Authenticatable
             })
             ->count();
     }
+
+    public function achievements()
+    {
+        return $this->belongsToMany(User::class, 'user_achievements', 'user_id', 'achievement_id');
+    }
 }
