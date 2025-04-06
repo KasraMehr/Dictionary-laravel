@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AchievementController;
 use App\Http\Middleware\TeamMemberMiddleware;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\GeneralController;
@@ -25,11 +26,13 @@ Route::get('/about-us', [GeneralController::class, 'aboutUs'])->name('aboutUs');
 Route::get('/contact-us', [GeneralController::class, 'contactUs'])->name('contactUs');
 Route::get('/FAQ', [GeneralController::class, 'FAQ'])->name('faq');
 
+Route::get('/achievements', [AchievementController::class, 'index']);
 Route::get('/learn', [LearnController::class, 'learn'])->name('learn');
 Route::get('/topics', [LearnController::class, 'topics'])->name('topics');
 Route::get('/levels', [LearnController::class, 'levels'])->name('levels');
 Route::get('/grammars', [LearnController::class, 'grammars'])->name('grammars');
 Route::get('/word/{native_lang}-{translated_lang}/{id}', [WordController::class, 'show'])->name('word.show');
+
 
 Route::get('/csrf-token', function (Request $request) {
     return response()->json(['csrf_token' => csrf_token()]);
