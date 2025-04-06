@@ -6,7 +6,7 @@ import MainLayout from "@/Layouts/MainLayout.vue";
 
 <template>
   <MainLayout title="Topics">
-    <div class="p-8 md:p-12 lg:px-24 mx-auto p-8">
+    <div class="md:p-12 lg:px-24 mx-auto p-8">
       <h1 class="text-2xl md:text-3xl font-bold text-black dark:text-white">
         آموزش زبان در حوزه‌های کاربردی و مفید
       </h1>
