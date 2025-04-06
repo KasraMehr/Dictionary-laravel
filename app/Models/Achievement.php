@@ -7,9 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Achievement extends Model
 {
       protected $fillable = [
-          'title', 'slug', 'description', 'category',
-          'icon', 'condition_type', 'condition_value',
-          'points', 'is_hidden',
+          'title', 'description', 'icon', 'type',
+          'goal',
       ];
 
       public function users()
