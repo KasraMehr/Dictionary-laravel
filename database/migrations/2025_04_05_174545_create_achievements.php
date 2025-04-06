@@ -14,14 +14,10 @@ return new class extends Migration
         Schema::create('achievements', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('slug')->unique();
             $table->text('description')->nullable();
-            $table->string('category'); // exam, grammar, topic, level, motivation
-            $table->string('icon')->nullable();
-            $table->string('condition_type'); // مثل test_count یا grammar_level
-            $table->string('condition_value'); // مثل 1 یا B1 یا travel
-            $table->integer('points')->default(0);
-            $table->boolean('is_hidden')->default(false);
+            $table->string('icon')->nullable(); // برای نمایش ایکون اچیومنت
+            $table->enum('type', ['grammar', 'topic', 'level', 'custom']); // دسته‌بندی
+            $table->integer('goal')->nullable();
             $table->timestamps();
         });
     }
