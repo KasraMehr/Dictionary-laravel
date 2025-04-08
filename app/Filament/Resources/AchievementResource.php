@@ -60,6 +60,12 @@ class AchievementResource extends Resource
     {
         return $table
             ->columns([
+
+                ImageColumn::make('icon')
+                    ->label('Icon')
+                    ->circular()
+                    ->height(40)
+                    ->width(40),
                 TextColumn::make('title')
                     ->label('Title')
                     ->sortable()
@@ -83,11 +89,6 @@ class AchievementResource extends Resource
                     ->label('Goal')
                     ->sortable(),
 
-                ImageColumn::make('icon')
-                    ->label('Icon')
-                    ->circular()
-                    ->height(40)
-                    ->width(40),
             ])
             ->filters([
                 //
