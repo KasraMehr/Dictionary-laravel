@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AchievementController;
+use App\Http\Middleware\IsTranslator;
 use App\Http\Middleware\TeamMemberMiddleware;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\GeneralController;
@@ -41,8 +42,9 @@ Route::get('/csrf-token', function (Request $request) {
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 
 
-Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',])->group(function ()
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function ()
 {
+    Route::middleware([IsTranslator::class])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     // Words Management Routes
@@ -74,4 +76,5 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
     // Chart data
     Route::get('/dashboard/chart-data', [DashboardController::class, 'getChartData'])->name('dashboard.chart-data');
 
+    });
 });
