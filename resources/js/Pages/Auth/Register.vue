@@ -19,6 +19,7 @@ const form = useForm({
     email: '',
     password: '',
     password_confirmation: '',
+    role: 'student',
     terms: false,
     'g-recaptcha-response': '',
 });
@@ -91,6 +92,34 @@ const submit = () => {
             <!-- Form Container -->
             <div class="flex flex-col gap-6 lg:w-1/3 overflow-hidden rounded-lg bg-gradient-to-br from-gray-400/50 to-gray-200/50 dark:from-gray-800/50 dark:to-gray-700/50 p-6 shadow-lg ring-1 ring-white/10 transition duration-300 hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 backdrop-blur-sm mt-6">
                 <form @submit.prevent="submit" dir="rtl" class="space-y-1">
+                    <div class="w-full flex justify-center my-6">
+                        <div class="flex gap-6 bg-gray-50 dark:bg-gray-700 p-2 rounded-2xl shadow-inner backdrop-blur-md">
+                            <button
+                                :class="[
+        form.role === 'student'
+          ? 'bg-red-700 text-white scale-105'
+          : 'bg-gray-300 text-black dark:bg-gray-800 dark:text-white',
+        'transition-all duration-300 ease-in-out px-6 py-2 rounded-xl font-bold shadow hover:shadow-lg'
+      ]"
+                                type="button"
+                                @click="form.role = 'student'"
+                            >
+                                زبان‌آموز
+                            </button>
+                            <button
+                                :class="[
+        form.role === 'teacher'
+          ? 'bg-red-700 text-white scale-105'
+          : 'bg-gray-300 text-black dark:bg-gray-800 dark:text-white',
+        'transition-all duration-300 ease-in-out px-6 py-2 rounded-xl font-bold shadow hover:shadow-lg'
+      ]"
+                                type="button"
+                                @click="form.role = 'teacher'"
+                            >
+                                استاد
+                            </button>
+                        </div>
+                    </div>
                     <div>
                         <InputLabel for="name" :value="$t('name')" class="text-black dark:text-white/90 text-lg" />
                         <TextInput
