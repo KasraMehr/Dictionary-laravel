@@ -1,15 +1,16 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Translator;
 
-use App\Models\Word;
+use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Word;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Log;
-use Inertia\Inertia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Inertia\Inertia;
 use Inertia\Response;
 
 class WordController extends Controller
@@ -30,32 +31,33 @@ class WordController extends Controller
             return $word;
         });
 
-        return Inertia::render('Words/Index', [
+        return Inertia::render('Translator/Words/Index', [
             'words' => $words,
             'categories' => $categories,
         ]);
     }
 
     /**
-    * Shows a specific word along with its categories.
-    *
-    * @param Request $request
-    * @param string $lang1
-    * @param string $lang2
-    * @param int $id
-    * @return Response
-    */
-    public function show(Request $request, string $lang1, string $lang2, int $id): Response
+     * Shows a specific word along with its categories.
+     *
+     * @param Request $request
+     * @param string $lang1
+     * @param string $lang2
+     * @param string $word
+     * @return Response
+     */
+    public function show(Request $request, string $lang1, string $lang2, string $word): Response
     {
-        $word = Word::with('categories')->findOrFail($id);
+        $word = Word::with('categories')
+            ->where('word', $word)
+            ->where('native_lang', $lang1)
+            ->where('translated_lang', $lang2)
+            ->firstOrFail();
 
         $dailyWords = Word::inRandomOrder()->take(5)->get(['id', 'word', 'native_lang', 'translated_lang']);
         $synonyms = Word::inRandomOrder()->take(5)->get(['id', 'word', 'meaning', 'native_lang', 'translated_lang']);
 
-        //$word->image_url = $word->image ? Storage::disk('liara')->url($word->image) : null;
-        //$word->voice_url = $word->voice ? Storage::disk('liara')->url($word->voice) : null;
-
-        return Inertia::render('Words/Word', [
+        return Inertia::render('Translator/Words/Word', [
             'word' => $word,
             'dailyWords' => $dailyWords,
             'synonyms' => $synonyms

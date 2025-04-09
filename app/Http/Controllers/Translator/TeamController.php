@@ -1,16 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Translator;
 
-use App\Events\CategoryAdded;
-use App\Events\WordAdded;
+use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Team;
-use App\Models\Word;
 use Illuminate\Http\JsonResponse;
-use Inertia\Inertia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Inertia\Inertia;
 use Inertia\Response;
 
 
@@ -85,7 +83,7 @@ class TeamController extends Controller
           return $word;
         });
 
-        return Inertia::render('Words/Index', [
+        return Inertia::render('Translator/Words/Index', [
           'words' => $words,
           'categories' => $categories,
           'team' => [
@@ -126,7 +124,7 @@ class TeamController extends Controller
     public function team_categories(Team $team): Response
     {
       $categories = $team->categories()->withCount('words')->get();
-      return Inertia::render('Words/categories', [
+      return Inertia::render('Translator/Words/categories', [
         'categories' => $categories,
         'team' => [
             'id' => $team->id,

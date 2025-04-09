@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Translator;
 
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use App\Models\Word;
-use App\Models\User;
+use App\Http\Controllers\Controller;
 use App\Models\Team;
-use Inertia\Inertia;
+use App\Models\User;
+use App\Models\Word;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
+use Inertia\Inertia;
 use Inertia\Response;
 
 class DashboardController extends Controller
@@ -53,7 +53,7 @@ class DashboardController extends Controller
             })
             ->toArray();
 
-        return Inertia::render('Dashboard', [
+        return Inertia::render('Translator/Dashboard', [
             'chartData' => $chartData,
             'words' => Word::latest()->take(5)->get()->toArray(),
             'users' => $users,

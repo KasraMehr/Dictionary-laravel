@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Translator;
 
+use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -19,7 +20,7 @@ class CategoryController extends Controller
     public function index(): Response
     {
         $categories = Category::withCount('words')->get();
-        return Inertia::render('Words/categories', [
+        return Inertia::render('Translator/Words/categories', [
             'categories' => $categories,
         ]);
     }
