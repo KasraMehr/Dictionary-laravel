@@ -75,7 +75,7 @@ const submit = () => {
 <template>
     <Head title="Sign up" />
     <div class="bg-gray-200 dark:bg-gray-800 min-h-screen">
-        <img class="fixed inset-0 w-full h-full object-cover opacity-10" src="/logo.svg"/>
+        <img class="fixed inset-0 w-full h-full object-cover opacity-10" src="/logo.svg" alt="logo"/>
 
         <div class="relative min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0">
             <!-- Logo Container -->
@@ -93,7 +93,7 @@ const submit = () => {
             <div class="flex flex-col gap-6 lg:w-1/3 overflow-hidden rounded-lg bg-gradient-to-br from-gray-400/50 to-gray-200/50 dark:from-gray-800/50 dark:to-gray-700/50 p-6 shadow-lg ring-1 ring-white/10 transition duration-300 hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 backdrop-blur-sm mt-6">
                 <form @submit.prevent="submit" dir="rtl" class="space-y-1">
                     <div class="w-full flex justify-center my-6">
-                        <div class="flex gap-6 bg-gray-50 dark:bg-gray-700 p-2 rounded-2xl shadow-inner backdrop-blur-md">
+                        <div class="flex gap-6 bg-gray-500 dark:bg-gray-700 p-2 rounded-2xl shadow-inner backdrop-blur-md">
                             <button
                                 :class="[
         form.role === 'student'
