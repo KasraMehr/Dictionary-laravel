@@ -222,7 +222,7 @@ onMounted(() => {
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-9">
                 <div class="img-box">
                     <img src="/images/aboutUs/aboutUs.png" alt="About Us tailwind page"
-                        class="max-lg:mx-auto object-cover rounded-lg">
+                         class="max-lg:mx-auto object-cover rounded-lg">
                 </div>
                 <div class="lg:pl-[100px] flex items-center">
                     <div class="data w-full">
@@ -244,7 +244,7 @@ onMounted(() => {
                 <div class="lg:pr-24 flex items-center">
                     <div class="data w-full">
                         <img src="/images/aboutUs/since2025.png" alt="About Us tailwind page"
-                            class="block lg:hidden mb-9 mx-auto object-cover rounded-lg">
+                             class="block lg:hidden mb-9 mx-auto object-cover rounded-lg">
                         <h2 class="font-manrope font-bold text-4xl lg:text-5xl text-black dark:text-white mb-9 max-lg:text-center">
                             {{ $t('since') }}
                         </h2>
@@ -255,7 +255,7 @@ onMounted(() => {
                 </div>
                 <div class="img-box ">
                     <img src="/images/aboutUs/since2025.png" alt="About Us tailwind page"
-                        class="hidden lg:block object-cover rounded-lg">
+                         class="hidden lg:block object-cover rounded-lg">
                 </div>
             </div>
         </div>

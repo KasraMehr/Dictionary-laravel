@@ -27,7 +27,7 @@ import MainLayout from '@/Layouts/MainLayout.vue';
           <div class="lg:max-w-xl w-full h-[600px] flex items-center justify-center bg-gray-500 dark:bg-gray-700 rounded-lg">
             <div class="">
               <div class="lg:w-96 w-auto h-auto bg-gray-200 dark:bg-gray-800 shadow-xl lg:p-6 p-4 rounded-xl">
-                <a :href="route('dashboard')" class="cursor-pointer flex items-center justify-center space-x-2 mb-4">
+                <a :href="route('landing')" class="cursor-pointer flex items-center justify-center space-x-2 mb-4">
                   <img src="/logo.svg" alt="logo" class="w-16 h-16">
                   <div class="text-xl text-black dark:text-white font-semibold">
                     {{ $t('modern_dictionary') }}
