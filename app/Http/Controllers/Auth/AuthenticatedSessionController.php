@@ -66,7 +66,15 @@ class AuthenticatedSessionController extends Controller
         if (Auth::attempt($request->only('email', 'password'), $request->boolean('remember'))) {
             $request->session()->regenerate();
 
-            return redirect()->intended(RouteServiceProvider::HOME);
+            if (Auth::user()->role === 'translator') {
+                return redirect()->route('translator.dashboard');
+            } elseif (Auth::user()->role === 'teacher') {
+                return redirect()->route('teacher.dashboard');
+            } elseif (Auth::user()->role === 'student') {
+                return redirect()->route('student.dashboard');
+            }
+
+            return redirect()->intended('/landing');
         }
 
         throw ValidationException::withMessages([
