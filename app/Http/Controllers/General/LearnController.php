@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\General;
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Inertia\Inertia;
 
@@ -11,26 +11,26 @@ class LearnController extends Controller
 {
     public function learn()
     {
-      return Inertia::render('Learn/Learn');
+      return Inertia::render('General/Learn/Learn');
     }
 
     public function topics()
     {
       $categories = Category::withCount('words')->get();
 
-      return Inertia::render('Learn/Topics', [
+      return Inertia::render('General/Learn/Topics', [
           'categories' => $categories,
       ]);
     }
 
     public function levels()
     {
-        return Inertia::render('Learn/Levels');
+        return Inertia::render('General/Learn/Levels');
     }
 
     public function grammars()
     {
-        return Inertia::render('Learn/Grammars');
+        return Inertia::render('General/Learn/Grammars');
     }
 
 }

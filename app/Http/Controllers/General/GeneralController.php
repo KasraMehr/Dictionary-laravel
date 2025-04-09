@@ -1,19 +1,18 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\General;
 
+use App\Http\Controllers\Controller;
+use App\Models\Team;
+use App\Models\User;
+use App\Models\Word;
+use GuzzleHttp\Client;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Services\ElasticsearchService;
 use Illuminate\Support\Facades\Route;
-use App\Models\Word;
-use App\Models\User;
-use App\Models\Team;
-use App\Models\Category;
 use Inertia\Inertia;
 use Inertia\Response;
-use GuzzleHttp\Client;
 
 
 class GeneralController extends Controller
@@ -34,7 +33,7 @@ class GeneralController extends Controller
             $word->categories = $word->categories ?? collect([]);
         });
 
-        return Inertia::render('Library/Index', [
+        return Inertia::render('General/Dictionary/Index', [
             'words' => $words->items(),
             'pagination' => [
                 'current_page' => $words->currentPage(),
@@ -96,7 +95,7 @@ class GeneralController extends Controller
       }
 
       /**
-      * checks if ElasticSearch is avalable or not.
+      * checks if ElasticSearch is available or not.
       *
       * @return bool
       */
@@ -124,7 +123,6 @@ class GeneralController extends Controller
          $totalTeams = Team::count();
          $totalWords = Word::count();
 
-           // اگر کلمات در سشن نباشند، تولید و ذخیره کن
            if (!session()->has('wordList')) {
                session(['wordList' => Word::inRandomOrder()->take(5)->get(['id', 'word', 'meaning', 'native_lang', 'translated_lang'])]);
            }
@@ -154,7 +152,7 @@ class GeneralController extends Controller
                session(['quizQuestions' => $quizQuestions]);
            }
 
-           return Inertia::render('Landing', [
+           return Inertia::render('General/Landing', [
                'canLogin' => Route::has('login'),
                'canRegister' => Route::has('register'),
                'totalUsers' => $totalUsers,
@@ -165,7 +163,7 @@ class GeneralController extends Controller
            ]);
        }
 
-       public function DailyTest()
+       public function DailyTest(): Response
        {
          if (!session()->has('quizQuestions')) {
              $words = Word::inRandomOrder()->take(10)->get(['id', 'word', 'meaning']);
@@ -192,35 +190,35 @@ class GeneralController extends Controller
              session(['quizQuestions' => $quizQuestions]);
          }
 
-         return Inertia::render('Library/DailyTest', [
+         return Inertia::render('General/Dictionary/DailyTest', [
              'quizQuestions' => session('quizQuestions'),
          ]);
        }
 
-       public function DailyWords()
+       public function DailyWords(): Response
        {
          if (!session()->has('wordList')) {
              session(['wordList' => Word::inRandomOrder()->take(5)->get(['id', 'word', 'meaning', 'native_lang', 'translated_lang'])]);
          }
 
-         return Inertia::render('Library/DailyWords', [
+         return Inertia::render('General/Dictionary/DailyWords', [
            'wordList' => session('wordList'),
          ]);
        }
 
 
-      public function aboutUs()
+      public function aboutUs(): Response
       {
-          return Inertia::render('Communicate/AboutUs');
+          return Inertia::render('General/Communicate/AboutUs');
       }
 
-      public function contactUs()
+      public function contactUs(): Response
       {
-          return Inertia::render('Communicate/ContactUs');
+          return Inertia::render('General/Communicate/ContactUs');
       }
 
-      public function FAQ()
+      public function FAQ(): Response
       {
-          return Inertia::render('Communicate/FAQ');
+          return Inertia::render('General/Communicate/FAQ');
       }
 }
