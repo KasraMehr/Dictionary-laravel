@@ -1,18 +1,20 @@
 <?php
 
-use App\Http\Controllers\AchievementController;
+use App\Http\Controllers\General\AchievementController;
+use App\Http\Controllers\General\ContactController;
+use App\Http\Controllers\General\GeneralController;
+use App\Http\Controllers\General\LearnController;
+use App\Http\Controllers\General\ReportController;
+use App\Http\Controllers\Translator\CategoryController;
+use App\Http\Controllers\Translator\DashboardController;
+use App\Http\Controllers\Translator\TeamController;
+use App\Http\Controllers\Translator\WordController;
+use App\Http\Middleware\IsStudent;
+use App\Http\Middleware\IsTeacher;
 use App\Http\Middleware\IsTranslator;
 use App\Http\Middleware\TeamMemberMiddleware;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\GeneralController;
-use App\Http\Controllers\LearnController;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\WordController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\ReportController;
-use App\Http\Controllers\TeamController;
-use App\Http\Controllers\ContactController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', [GeneralController::class, 'landingData'])->name('landing');
@@ -32,7 +34,7 @@ Route::get('/learn', [LearnController::class, 'learn'])->name('learn');
 Route::get('/topics', [LearnController::class, 'topics'])->name('topics');
 Route::get('/levels', [LearnController::class, 'levels'])->name('levels');
 Route::get('/grammars', [LearnController::class, 'grammars'])->name('grammars');
-Route::get('/word/{native_lang}-{translated_lang}/{id}', [WordController::class, 'show'])->name('word.show');
+Route::get('/word/{native_lang}-{translated_lang}/{word}', [WordController::class, 'show'])->name('word.show');
 
 
 Route::get('/csrf-token', function (Request $request) {
@@ -44,37 +46,96 @@ Route::post('/contact', [ContactController::class, 'store'])->name('contact.stor
 
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function ()
 {
-    Route::middleware([IsTranslator::class])->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::middleware([IsTranslator::class])->prefix('translator')->name('translator.')->group(function () {
 
-    // Words Management Routes
-    Route::get('/words', [WordController::class, 'index'])->name('words.index');
-    Route::post('/words', [WordController::class, 'store'])->name('words.store');
-    Route::get('/words/{word}', [WordController::class, 'show'])->name('words.show'); // Show specific word
-    Route::put('/words/{word}', [WordController::class, 'update'])->name('words.update'); // Update word
-    Route::delete('/words/{word}', [WordController::class, 'destroy'])->name('words.destroy'); // Delete word
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    // Category Management Routes
-    Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
-    Route::post('/categories', [CategoryController::class, 'store'])->name('categories.store');
-    Route::get('/categories/{id}/words', [CategoryController::class, 'getCategoryWords']); //get the words of a category
-    Route::put('/categories/{category}', [CategoryController::class, 'update'])->name('categories.update'); // Update category
-    Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy'); // Delete category
+        // Words Management Routes
+        Route::get('/words', [WordController::class, 'index'])->name('words.index');
+        Route::post('/words', [WordController::class, 'store'])->name('words.store');
+        Route::get('/words/{word}', [WordController::class, 'show'])->name('words.show'); // Show specific word
+        Route::put('/words/{word}', [WordController::class, 'update'])->name('words.update'); // Update word
+        Route::delete('/words/{word}', [WordController::class, 'destroy'])->name('words.destroy'); // Delete word
 
-    // Team Management Routes
-    Route::get('/teams', [TeamController::class, 'index'])->name('teams.index');
-    Route::post('/teams/{team}/join-request', [TeamController::class, 'sendJoinRequest'])->name('teams.join-request');
-    Route::delete('/teams/{team}/leave-team', [TeamController::class, 'leave'])->name('teams.leave-team');
+        // Category Management Routes
+        Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
+        Route::post('/categories', [CategoryController::class, 'store'])->name('categories.store');
+        Route::get('/categories/{id}/words', [CategoryController::class, 'getCategoryWords']); //get the words of a category
+        Route::put('/categories/{category}', [CategoryController::class, 'update'])->name('categories.update'); // Update category
+        Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy'); // Delete category
 
-    Route::middleware([TeamMemberMiddleware::class])->group(function () {
-        Route::get('/team/{team}/words', [TeamController::class, 'team_words'])->name('team.words');
-        Route::post('/team/{team}/words/add-word', [TeamController::class, 'addWordToTeam'])->name('team.addWord');
-        Route::get('/team/{team}/categories', [TeamController::class, 'team_categories'])->name('team.categories');
-        Route::post('/team/{team}/categories/add-category', [TeamController::class, 'addCategory'])->name('team.addCategory');
+        // Team Management Routes
+        Route::get('/teams', [TeamController::class, 'index'])->name('teams.index');
+        Route::post('/teams/{team}/join-request', [TeamController::class, 'sendJoinRequest'])->name('teams.join-request');
+        Route::delete('/teams/{team}/leave-team', [TeamController::class, 'leave'])->name('teams.leave-team');
+
+        Route::middleware([TeamMemberMiddleware::class])->prefix('team')->name('team.')->group(function () {
+            Route::get('/{team}/words', [TeamController::class, 'team_words'])->name('words');
+            Route::post('/{team}/words/add-word', [TeamController::class, 'addWordToTeam'])->name('addWord');
+            Route::get('/{team}/categories', [TeamController::class, 'team_categories'])->name('categories');
+            Route::post('/{team}/categories/add-category', [TeamController::class, 'addCategory'])->name('addCategory');
+        });
+
+        // Chart data
+        Route::get('/dashboard/chart-data', [DashboardController::class, 'getChartData'])->name('dashboard.chart-data');
     });
 
-    // Chart data
-    Route::get('/dashboard/chart-data', [DashboardController::class, 'getChartData'])->name('dashboard.chart-data');
+    Route::middleware([IsTeacher::class])->prefix('teacher')->name('teacher.')->group(function () {
 
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+        // Course Management Routes
+        Route::get('/courses', [WordController::class, 'index'])->name('words.index');
+        Route::post('/courses/create', [WordController::class, 'store'])->name('words.store');
+        Route::get('/courses/{course}', [WordController::class, 'show'])->name('words.show'); // Show specific word
+        Route::put('/courses/{course}', [WordController::class, 'update'])->name('words.update'); // Update word
+        Route::delete('/courses/{course}', [WordController::class, 'destroy'])->name('words.destroy'); // Delete word
+
+        // Lessons Management Routes
+        Route::get('/courses/{course}/lessons', [WordController::class, 'index'])->name('words.index');
+        Route::post('/courses/{course}/lessons/create', [WordController::class, 'store'])->name('words.store');
+        Route::get('courses/{course}/lessons/{lesson}', [WordController::class, 'show'])->name('words.show'); // Show specific word
+        Route::put('courses/{course}/lessons/{lesson}', [WordController::class, 'update'])->name('words.update'); // Update word
+        Route::delete('courses/{course}/lessons/{lesson}', [WordController::class, 'destroy'])->name('words.destroy'); // Delete word
+
+        // Students Management Routes
+        Route::get('/courses/{course}/students', [WordController::class, 'index'])->name('words.index');
+        Route::post('/courses/{course}/students/{student}/grades/create', [WordController::class, 'store'])->name('words.store');
+        Route::get('/courses/{course}/students/{student}/grades', [WordController::class, 'show'])->name('words.show'); // Show specific word
+        Route::put('/courses/{course}/students/{student}/grades/edit', [WordController::class, 'update'])->name('words.update'); // Update word
+        Route::delete('courses/{course}/lessons/{lesson}', [WordController::class, 'destroy'])->name('words.destroy'); // Delete word
+
+        // Resources Management Routes
+        Route::get('/courses/{course}/resources', [WordController::class, 'index'])->name('words.index');
+        Route::post('/courses/{course}/resources/create', [WordController::class, 'store'])->name('words.store');
+        Route::get('/courses/{course}/feedback/{feedback}/reply', [WordController::class, 'show'])->name('words.show'); // Show specific word
+        Route::get('/courses/{course}/reports/activities', [WordController::class, 'update'])->name('words.update'); // Update word
+        Route::get('/courses/{course}/reports/grades', [WordController::class, 'destroy'])->name('words.destroy'); // Delete word
+    });
+
+    Route::middleware([IsStudent::class])->prefix('student')->name('student.')->group(function () {
+
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+        Route::get('/courses', [WordController::class, 'index'])->name('words.index');
+        Route::get('/courses/{id}', [WordController::class, 'show'])->name('words.show'); // Show specific word
+        Route::post('/courses/{id}/enroll', [WordController::class, 'store'])->name('words.store');
+        Route::get('/my-courses', [WordController::class, 'show'])->name('words.show'); // Show specific word
+
+        // Lessons Management Routes
+        Route::get('/courses/{course_id}/lessons', [WordController::class, 'index'])->name('words.index');
+        Route::post('/lessons/{id}/mark-complete', [WordController::class, 'store'])->name('words.store');
+        Route::get('/lessons/{id}', [WordController::class, 'show'])->name('words.show'); // Show specific word
+
+        // Quiz Management Routes
+        Route::get('/lessons/{id}/exercises', [WordController::class, 'index'])->name('words.index');
+        Route::post('/exercises/{id}/submit', [WordController::class, 'store'])->name('words.store');
+        Route::get('/quizzes/{lesson_id}', [WordController::class, 'show'])->name('words.show'); // Show specific word
+        Route::post('//quizzes/{id}/submit', [WordController::class, 'store'])->name('words.store');
+        Route::get('/results/quizzes', [WordController::class, 'show'])->name('words.show'); // Show specific word
+
+        // Progress Management Routes
+        Route::get('/progress', [WordController::class, 'index'])->name('words.index');
+        Route::get('/progress/{course_id}', [WordController::class, 'index'])->name('words.index');
     });
 });
