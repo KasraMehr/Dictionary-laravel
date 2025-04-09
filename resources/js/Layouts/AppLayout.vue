@@ -45,7 +45,7 @@ const logout = () => {
 
 <template>
     <div :dir="locale === 'en' ? 'ltr' : 'rtl'">
-        <Head :title="title"></Head>
+        <Head><title>Translator</title></Head>
 
         <Banner />
 
@@ -64,16 +64,16 @@ const logout = () => {
 
                             <div class="hidden sm:flex items-center sm:items-stretch overflow-x-auto sm:overflow-x-visible ms-4 text-black dark:text-white">
                                 <div class="flex gap-2 sm:gap-8 ">
-                                    <NavLink :href="route('dashboard')" :active="route().current('dashboard')" class="text-black dark:text-white">
+                                    <NavLink :href="route('translator.dashboard')" :active="route().current('translator.dashboard')" class="text-black dark:text-white">
                                         {{ $t('dashboard') }}
                                     </NavLink>
-                                    <NavLink :href="route('words.index')" :active="route().current('words.index')" class="text-black dark:text-white">
+                                    <NavLink :href="route('translator.words.index')" :active="route().current('translator.words.index')" class="text-black dark:text-white">
                                         {{ $t('words') }}
                                     </NavLink>
-                                    <NavLink :href="route('categories.index')" :active="route().current('categories.index')" class="text-black dark:text-white">
+                                    <NavLink :href="route('translator.categories.index')" :active="route().current('translator.categories.index')" class="text-black dark:text-white">
                                         {{ $t('categories') }}
                                     </NavLink>
-                                    <NavLink :href="route('teams.index')" :active="route().current('teams.index')" class="text-black dark:text-white">
+                                    <NavLink :href="route('translator.teams.index')" :active="route().current('translator.teams.index')" class="text-black dark:text-white">
                                         {{ $t('teams') }}
                                     </NavLink>
                                 </div>
@@ -265,16 +265,16 @@ const logout = () => {
                 <!-- منوی موبایل -->
                 <div :class="{'block': showingNavigationDropdown, 'hidden': ! showingNavigationDropdown}" class="sm:hidden">
                     <div class="pt-2 pb-3 space-y-1">
-                        <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
+                        <ResponsiveNavLink :href="route('translator.dashboard')" :active="route().current('translator.dashboard')">
                             {{ $t('dashboard') }}
                         </ResponsiveNavLink>
-                        <ResponsiveNavLink :href="route('words.index')" :active="route().current('words.index')">
+                        <ResponsiveNavLink :href="route('translator.words.index')" :active="route().current('translator.words.index')">
                             {{ $t('words') }}
                         </ResponsiveNavLink>
-                        <ResponsiveNavLink :href="route('categories.index')" :active="route().current('categories.index')">
+                        <ResponsiveNavLink :href="route('translator.categories.index')" :active="route().current('translator.categories.index')">
                             {{ $t('categories') }}
                         </ResponsiveNavLink>
-                        <ResponsiveNavLink :href="route('teams.index')" :active="route().current('teams.index')">
+                        <ResponsiveNavLink :href="route('translator.teams.index')" :active="route().current('translator.teams.index')">
                             {{ $t('teams') }}
                         </ResponsiveNavLink>
                     </div>

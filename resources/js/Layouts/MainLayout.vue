@@ -87,7 +87,7 @@ const setLanguage = (lang) => {
 
                             <div class="hidden sm:flex items-center sm:items-stretch overflow-x-auto sm:overflow-x-visible ms-4 text-black dark:text-white">
                                 <div class="flex gap-2 sm:gap-8 ">
-                                    <NavLink v-if="$page.props.auth.user" :href="route('dashboard')" :active="route().current('dashboard')" class="text-black dark:text-white">
+                                    <NavLink v-if="$page.props.auth.user" :href="route('translator.dashboard')" :active="route().current('dashboard')" class="text-black dark:text-white">
                                         {{ $t('dashboard') }}
                                     </NavLink>
                                     <template v-else>
@@ -101,10 +101,10 @@ const setLanguage = (lang) => {
                                     <NavLink :href="route('library')" :active="route().current('library')" class="text-black dark:text-white">
                                         {{ $t('words_bank') }}
                                     </NavLink>
-                                    <NavLink :href="route('learn')" :active="route().current('reports')" class="text-black dark:text-white">
+                                    <NavLink :href="route('learn')" :active="route().current('learn')" class="text-black dark:text-white">
                                         {{ $t('learn') }}
                                     </NavLink>
-                                    <NavLink :href="route('DailyTest')" :active="route().current('reports')" class="text-black dark:text-white">
+                                    <NavLink :href="route('DailyTest')" :active="route().current('DailyTest')" class="text-black dark:text-white">
                                         {{ $t('quiz') }}
                                     </NavLink>
                                 </div>
@@ -194,7 +194,7 @@ const setLanguage = (lang) => {
                 <transition name="mobile-menu">
                   <div v-if="showingNavigationDropdown" class="sm:hidden">
                     <div class="pt-2 pb-3 space-y-1">
-                      <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')" v-if="$page.props.auth.user">
+                      <ResponsiveNavLink :href="route('translator.dashboard')" :active="route().current('dashboard')" v-if="$page.props.auth.user">
                         {{ $t('dashboard') }}
                       </ResponsiveNavLink>
                       <template v-else>
@@ -206,17 +206,14 @@ const setLanguage = (lang) => {
                         </ResponsiveNavLink>
                       </template>
                       <ResponsiveNavLink :href="route('library')" :active="route().current('library')">
-                        {{ $t('library') }}
+                        {{ $t('words_bank') }}
                       </ResponsiveNavLink>
-                      <ResponsiveNavLink :href="route('reports')" :active="route().current('reports')">
-                        {{ $t('reports') }}
+                      <ResponsiveNavLink :href="route('learn')" :active="route().current('learn')">
+                        {{ $t('learn') }}
                       </ResponsiveNavLink>
-                      <a href="https://docs.modern-dictionary.com/"
-                      class="block w-full ps-3 pe-4 py-2 border-l-4 border-transparent text-start text-base font-medium text-gray-700 dark:text-white hover:text-gray-900 dark:hover:text-white/90 hover:ring-black dark:hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300 hover:bg-gray-200 dark:hover:bg-gray-700/50 focus:outline-none"
-                      target="_blank"
-                      rel="noopener noreferrer">
-                        {{ $t('documentation') }}
-                      </a>
+                      <ResponsiveNavLink :href="route('DailyTest')" :active="route().current('DailyTest')">
+                          {{ $t('quiz') }}
+                      </ResponsiveNavLink>
                     </div>
                     <div class="border-t border-gray-700 dark:border-gray-500">
                       <ResponsiveNavLink class="text-black dark:text-white" v-for="lang in languages" :key="lang.code" as="button" @click="setLanguage(lang.code)">
