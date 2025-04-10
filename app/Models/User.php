@@ -121,4 +121,14 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(User::class, 'user_achievements', 'user_id', 'achievement_id');
     }
+
+    public function courses(): BelongsToMany
+    {
+        return $this->belongsToMany(Course::class, 'course_user', 'user_id', 'course_id');
+    }
+
+    public function quizzes(): BelongsToMany
+    {
+        return $this->belongsToMany(Quiz::class, 'user_quiz_attempts', 'user_id', 'quiz_id');
+    }
 }
