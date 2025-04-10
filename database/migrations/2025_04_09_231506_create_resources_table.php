@@ -16,6 +16,8 @@ return new class extends Migration
           $table->foreignId('course_id')->nullable()->constrained()->onDelete('cascade');
           $table->string('title');
           $table->string('file_path')->nullable();
+          $table->string('type')->default('pdf');
+          $table->text('description')->nullable();
           $table->timestamps();
         });
     }
