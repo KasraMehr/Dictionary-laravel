@@ -9,6 +9,7 @@ use App\Http\Controllers\Translator\CategoryController;
 use App\Http\Controllers\Translator\DashboardController;
 use App\Http\Controllers\Translator\TeamController;
 use App\Http\Controllers\Translator\WordController;
+use App\Http\Controllers\Teacher\CourseController;
 use App\Http\Middleware\IsStudent;
 use App\Http\Middleware\IsTeacher;
 use App\Http\Middleware\IsTranslator;
@@ -82,21 +83,18 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
 
     Route::middleware([IsTeacher::class])->prefix('teacher')->name('teacher.')->group(function () {
 
-        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+        Route::get('/dashboard', [CourseController::class, 'dashboard'])->name('dashboard');
 
-        // Course Management Routes
-        Route::get('/courses', [WordController::class, 'index'])->name('words.index');
-        Route::post('/courses/create', [WordController::class, 'store'])->name('words.store');
-        Route::get('/courses/{course}', [WordController::class, 'show'])->name('words.show'); // Show specific word
-        Route::put('/courses/{course}', [WordController::class, 'update'])->name('words.update'); // Update word
-        Route::delete('/courses/{course}', [WordController::class, 'destroy'])->name('words.destroy'); // Delete word
+        Route::resource('courses', CourseController::class)
+        ->names('courses');
 
-        // Lessons Management Routes
-        Route::get('/courses/{course}/lessons', [WordController::class, 'index'])->name('words.index');
-        Route::post('/courses/{course}/lessons/create', [WordController::class, 'store'])->name('words.store');
-        Route::get('courses/{course}/lessons/{lesson}', [WordController::class, 'show'])->name('words.show'); // Show specific word
-        Route::put('courses/{course}/lessons/{lesson}', [WordController::class, 'update'])->name('words.update'); // Update word
-        Route::delete('courses/{course}/lessons/{lesson}', [WordController::class, 'destroy'])->name('words.destroy'); // Delete word
+        Route::prefix('courses/{course}')->group(function () {
+            Route::resource('lessons', \App\Http\Controllers\Teacher\LessonController::class)
+                ->names('courses.lessons');
+
+            Route::resource('quizzes', \App\Http\Controllers\Teacher\QuizController::class)
+                ->names('courses.quizzes');
+        });
 
         // Students Management Routes
         Route::get('/courses/{course}/students', [WordController::class, 'index'])->name('words.index');
