@@ -15,13 +15,13 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('slug')->unique();
+            $table->string('trailer_url')->nullable();
             $table->text('description')->nullable();
             $table->string('level'); // A1, B2, etc
-            $table->string('topic')->nullable(); // grammar, speaking, etc.
+            $table->string('topic')->nullable();
             $table->boolean('is_free')->default(true);
             $table->string('thumbnail')->nullable();
             $table->string('language')->default('en');
-            $table->integer('duration_minutes')->default(0);
             $table->foreignId('created_by')->constrained('users')->onDelete('cascade');
             $table->enum('status', ['draft', 'published'])->default('draft');
             $table->timestamps();
