@@ -97,6 +97,7 @@ const logout = () => {
                                 </button>
                             </div>
 
+                            <!-- chnage language dropdown -->
                             <div class="relative ms-6">
                                 <Dropdown align="right" width="48">
                                     <template #trigger>
