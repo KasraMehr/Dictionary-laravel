@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class Course extends Model
 {
     protected $fillable = ['title', 'slug', 'trailer_url', 'description', 'level', 'topic',
-     'is_free', 'thumbnail', 'language', 'status'];
+     'is_free', 'thumbnail', 'language', 'status', 'created_by' ];
 
     public function users(): BelongsToMany
     {
