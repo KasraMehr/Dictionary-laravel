@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Resource extends Model
 {
-  protected $fillable = ['title', 'file_path'];
+  protected $fillable = ['title', 'file_path', 'type', 'description'];
 
   public function course(): BelongsTo
   {
