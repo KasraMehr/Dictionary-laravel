@@ -96,6 +96,20 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
                 ->names('courses.quizzes');
         });
 
+        Route::resource('quizzes', \App\Http\Controllers\Teacher\QuizController::class)
+        ->names('quizzes');
+
+        Route::prefix('quizzes/{quiz}/questions')->group(function () {
+            Route::get('/', [\App\Http\Controllers\Teacher\QuizController::class, 'questionsIndex'])
+                ->name('quizzes.questions.index');
+            Route::get('/create', [\App\Http\Controllers\Teacher\QuizController::class, 'questionsCreate'])
+                ->name('quizzes.questions.create');
+        });
+
+        Route::resource('questions', \App\Http\Controllers\Teacher\QuestionController::class)
+            ->except(['index', 'create'])
+            ->names('questions');
+
         // Students Management Routes
         Route::get('/courses/{course}/students', [WordController::class, 'index'])->name('words.index');
         Route::post('/courses/{course}/students/{student}/grades/create', [WordController::class, 'store'])->name('words.store');
