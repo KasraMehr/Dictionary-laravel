@@ -3,64 +3,64 @@
 namespace App\Http\Controllers\Teacher;
 
 use App\Http\Controllers\Controller;
+use App\Models\Question;
+use App\Models\Quiz;
 use Illuminate\Http\Request;
 
 class QuestionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-     public function index(Quiz $quiz)
-     {
-         $questions = $quiz->questions()->paginate(10);
-         return view('teacher.questions.index', compact('quiz', 'questions'));
-     }
+  public function store(Request $request)
+      {
+          $validated = $request->validate([
+              'question_text' => 'required|string',
+              'question_type' => 'required|in:mcq,fill_blank,match,text',
+              'options' => 'required_if:question_type,mcq|array',
+              'correct_answer' => 'required|string',
+              'points' => 'required|integer|min:1',
+              'quiz_id' => 'required|exists:quizzes,id',
+          ]);
 
-     public function create(Quiz $quiz)
-     {
-         return view('teacher.questions.create', compact('quiz'));
-     }
+          // برای سوالات MCQ، correct_answer باید اندیس گزینه صحیح باشد
+          if ($validated['question_type'] === 'mcq') {
+              $validated['options'] = array_values($validated['options']);
+          }
 
-     public function store(Request $request, Quiz $quiz)
-     {
-         $validated = $request->validate([
-             'question_text' => 'required|string',
-             'question_type' => 'required|in:mcq,fill_blank,match,text',
-             'options' => 'nullable|array',
-             'correct_answer' => 'required|array',
-             'points' => 'required|integer|min:1',
-         ]);
+          Question::create($validated);
 
-         $validated['quiz_id'] = $quiz->id;
+          return redirect()->route('teacher.quizzes.questions.index', $validated['quiz_id'])
+              ->with('success', 'سوال با موفقیت ایجاد شد.');
+      }
 
-         Question::create($validated);
+      public function edit(Question $question)
+      {
+          return inertia('Teacher/Quiz/Question/Edit', [
+              'question' => $question,
+              'quiz' => $question->quiz,
+          ]);
+      }
 
-         return redirect()->route('teacher.quizzes.questions.index', $quiz)->with('success', 'سوال با موفقیت ثبت شد.');
-     }
+      public function update(Request $request, Question $question)
+      {
+          $validated = $request->validate([
+              'question_text' => 'required|string',
+              'question_type' => 'required|in:mcq,fill_blank,match,text',
+              'options' => 'required_if:question_type,mcq|array',
+              'correct_answer' => 'required|string',
+              'points' => 'required|integer|min:1',
+          ]);
 
-     public function edit(Quiz $quiz, Question $question)
-     {
-         return view('teacher.questions.edit', compact('quiz', 'question'));
-     }
+          $question->update($validated);
 
-     public function update(Request $request, Quiz $quiz, Question $question)
-     {
-         $validated = $request->validate([
-             'question_text' => 'required|string',
-             'question_type' => 'required|in:mcq,fill_blank,match,text',
-             'options' => 'nullable|array',
-             'correct_answer' => 'required|array',
-             'points' => 'required|integer|min:1',
-         ]);
+          return redirect()->route('teacher.quizzes.questions.index', $question->quiz_id)
+              ->with('success', 'سوال با موفقیت به‌روزرسانی شد.');
+      }
 
-         $question->update($validated);
+      public function destroy(Question $question)
+      {
+          $quiz_id = $question->quiz_id;
+          $question->delete();
 
-         return redirect()->route('teacher.quizzes.questions.index', $quiz)->with('success', 'سوال بروزرسانی شد.');
-     }
-
-     public function destroy(Quiz $quiz, Question $question)
-     {
-         $question->delete();
-         return back()->with('success', 'سوال حذف شد.');
-     }
+          return redirect()->route('teacher.quizzes.questions.index', $quiz_id)
+              ->with('success', 'سوال با موفقیت حذف شد.');
+      }
 }
