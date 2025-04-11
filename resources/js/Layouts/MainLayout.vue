@@ -87,7 +87,13 @@ const setLanguage = (lang) => {
 
                             <div class="hidden sm:flex items-center sm:items-stretch overflow-x-auto sm:overflow-x-visible ms-4 text-black dark:text-white">
                                 <div class="flex gap-2 sm:gap-8 ">
-                                    <NavLink v-if="$page.props.auth.user" :href="route('translator.dashboard')" :active="route().current('dashboard')" class="text-black dark:text-white">
+                                    <NavLink v-if="$page.props.auth.user.role === 'translator'" :href="route('translator.dashboard')" :active="route().current('dashboard')" class="text-black dark:text-white">
+                                        {{ $t('dashboard') }}
+                                    </NavLink>
+                                    <NavLink v-else-if="$page.props.auth.user.role === 'teacher'" :href="route('teacher.dashboard')" :active="route().current('dashboard')" class="text-black dark:text-white">
+                                        {{ $t('dashboard') }}
+                                    </NavLink>
+                                    <NavLink v-else-if="$page.props.auth.user.role === 'student'" :href="route('student.dashboard')" :active="route().current('dashboard')" class="text-black dark:text-white">
                                         {{ $t('dashboard') }}
                                     </NavLink>
                                     <template v-else>
