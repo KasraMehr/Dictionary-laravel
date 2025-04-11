@@ -33,6 +33,10 @@ const viewCourseDetails = (course) => {
     selectedCourse.value = course;
     showDetailsModal.value = true;
 };
+
+const setDefaultImage = (event) => {
+  event.target.src = "/images/default-image.jpg";
+};
 </script>
 
 <template>
@@ -81,7 +85,7 @@ const viewCourseDetails = (course) => {
                                     <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                                         آزمون‌ها
                                     </th>
-                                    <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                    <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                                         اقدامات
                                     </th>
                                 </tr>
@@ -91,9 +95,9 @@ const viewCourseDetails = (course) => {
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="flex items-center">
                                             <div class="flex-shrink-0 h-10 w-10">
-                                                <img class="h-10 w-10 rounded-full" :src="course.thumbnail" alt="">
+                                                <img class="h-10 w-10 rounded-full" :src="`/storage/${course.thumbnail}`"  alt="${course.thumbnail}" @error="setDefaultImage">
                                             </div>
-                                            <div class="mr-4">
+                                            <div class="mx-4">
                                                 <div class="text-sm font-medium text-gray-900 dark:text-gray-100">
                                                     {{ course.title }}
                                                 </div>
@@ -177,7 +181,7 @@ const viewCourseDetails = (course) => {
                     <SecondaryButton @click="showDeleteModal = false">
                         انصراف
                     </SecondaryButton>
-                    <DangerButton class="mr-3" @click="confirmDelete">
+                    <DangerButton class="mx-3" @click="confirmDelete">
                         تایید حذف
                     </DangerButton>
                 </div>
