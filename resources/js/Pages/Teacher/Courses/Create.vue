@@ -8,7 +8,7 @@
 
         <div class="py-8">
             <div class="w-full mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden">
+                <div class="bg-white dark:bg-gray-950 rounded-xl shadow-md overflow-hidden">
                     <div class="p-6 sm:p-8">
                         <form @submit.prevent="submitForm" class="space-y-6">
                             <!-- Grid برای بخش‌های اصلی -->
