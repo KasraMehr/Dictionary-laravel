@@ -9,62 +9,94 @@ use Illuminate\Http\Request;
 
 class QuizController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-     public function index(Course $course)
-     {
-         $quizzes = $course->quizzes()->latest()->get();
-         return view('teacher.quizzes.index', compact('course', 'quizzes'));
-     }
+      public function index()
+      {
+          $quizzes = Quiz::with('course')
+              ->get();
 
-     public function create(Course $course)
-     {
-         return view('teacher.quizzes.create', compact('course'));
-     }
+          return inertia('Teacher/Quiz/Index', compact('quizzes'));
+      }
 
-     public function store(Request $request)
-    {
-        $validated = $request->validate([
-            'title' => 'required|string',
-            'type' => 'required|in:lesson,final,placement',
-            'course_id' => 'nullable|exists:courses,id',
-            'level' => 'nullable|string',
-            'time_limit' => 'nullable|integer|min:0',
-            'pass_score' => 'required|integer|min:0|max:100',
-            'status' => 'required|in:active,inactive',
-        ]);
+      public function create()
+      {
+          $courses = Course::where('created_by', auth()->id())
+              ->where('status', 'published')
+              ->get();
 
-        Quiz::create($validated);
+          return inertia('Teacher/Quiz/Create', compact('courses'));
+      }
 
-        return redirect()->route('teacher.quizzes.index')->with('success', 'آزمون با موفقیت ساخته شد.');
-    }
+      public function store(Request $request)
+      {
+          $validated = $request->validate([
+              'title' => 'required|string|max:255',
+              'type' => 'required|in:lesson,final,placement',
+              'course_id' => 'nullable|exists:courses,id',
+              'level' => 'nullable|string',
+              'time_limit' => 'required|integer|min:0',
+              'pass_score' => 'required|integer|min:0|max:100',
+              'status' => 'required|in:active,inactive',
+          ]);
 
-    public function edit(Quiz $quiz)
-    {
-        $courses = Course::all();
-        return view('teacher.quizzes.edit', compact('quiz', 'courses'));
-    }
+          $validated['created_by'] = auth()->id();
 
-    public function update(Request $request, Quiz $quiz)
-    {
-        $validated = $request->validate([
-            'title' => 'required|string',
-            'type' => 'required|in:lesson,final,placement',
-            'course_id' => 'nullable|exists:courses,id',
-            'level' => 'nullable|string',
-            'time_limit' => 'nullable|integer|min:0',
-            'pass_score' => 'required|integer|min:0|max:100',
-            'status' => 'required|in:active,inactive',
-        ]);
+          Quiz::create($validated);
 
-        $quiz->update($validated);
+          return redirect()->route('teacher.quizzes.index')
+              ->with('success', 'آزمون با موفقیت ایجاد شد.');
+      }
 
-        return redirect()->route('teacher.quizzes.index')->with('success', 'آزمون بروزرسانی شد.');
-    }
-     public function destroy(Course $course, Quiz $quiz)
-     {
-         $quiz->delete();
-         return redirect()->route('teacher.courses.quizzes.index', $course->id)->with('success', 'آزمون حذف شد.');
-     }
+      public function edit(Quiz $quiz)
+      {
+          $courses = Course::where('created_by', auth()->id())
+              ->where('status', 'published')
+              ->get();
+
+          return inertia('Teacher/Quiz/Edit', [
+              'quiz' => $quiz,
+              'courses' => $courses,
+          ]);
+      }
+
+      public function update(Request $request, Quiz $quiz)
+      {
+          $validated = $request->validate([
+              'title' => 'required|string|max:255',
+              'type' => 'required|in:lesson,final,placement',
+              'course_id' => 'nullable|exists:courses,id',
+              'level' => 'nullable|string',
+              'time_limit' => 'required|integer|min:0',
+              'pass_score' => 'required|integer|min:0|max:100',
+              'status' => 'required|in:active,inactive',
+          ]);
+
+          $quiz->update($validated);
+
+          return redirect()->route('teacher.quizzes.index')
+              ->with('success', 'آزمون با موفقیت به‌روزرسانی شد.');
+      }
+
+      public function destroy(Quiz $quiz)
+      {
+          $quiz->delete();
+
+          return redirect()->route('teacher.quizzes.index')
+              ->with('success', 'آزمون با موفقیت حذف شد.');
+      }
+
+      public function questionsIndex(Quiz $quiz)
+      {
+          $quiz->load('questions');
+
+          return inertia('Teacher/Quiz/Question/Index', [
+              'quiz' => $quiz,
+          ]);
+      }
+
+      public function questionsCreate(Quiz $quiz)
+      {
+          return inertia('Teacher/Quiz/Question/Create', [
+              'quiz' => $quiz,
+          ]);
+      }
 }
