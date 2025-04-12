@@ -5,6 +5,10 @@ use App\Http\Controllers\General\ContactController;
 use App\Http\Controllers\General\GeneralController;
 use App\Http\Controllers\General\LearnController;
 use App\Http\Controllers\General\ReportController;
+use App\Http\Controllers\Teacher\QuestionController;
+use App\Http\Controllers\Teacher\QuizController;
+use App\Http\Controllers\Teacher\ResourceController;
+use App\Http\Controllers\Teacher\StudentController;
 use App\Http\Controllers\Translator\CategoryController;
 use App\Http\Controllers\Translator\DashboardController;
 use App\Http\Controllers\Translator\TeamController;
@@ -92,37 +96,28 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
             Route::resource('lessons', \App\Http\Controllers\Teacher\LessonController::class)
                 ->names('courses.lessons');
 
-            Route::resource('quizzes', \App\Http\Controllers\Teacher\QuizController::class)
+            Route::resource('quizzes', QuizController::class)
                 ->names('courses.quizzes');
         });
 
-        Route::resource('quizzes', \App\Http\Controllers\Teacher\QuizController::class)
-        ->names('quizzes');
+        Route::resource('quizzes', QuizController::class)->names('quizzes');
 
         Route::prefix('quizzes/{quiz}/questions')->group(function () {
-            Route::get('/', [\App\Http\Controllers\Teacher\QuizController::class, 'questionsIndex'])
+            Route::get('/', [QuizController::class, 'questionsIndex'])
                 ->name('quizzes.questions.index');
-            Route::get('/create', [\App\Http\Controllers\Teacher\QuizController::class, 'questionsCreate'])
+            Route::get('/create', [QuizController::class, 'questionsCreate'])
                 ->name('quizzes.questions.create');
         });
 
-        Route::resource('questions', \App\Http\Controllers\Teacher\QuestionController::class)
-            ->except(['index', 'create'])
-            ->names('questions');
+        Route::resource('questions', QuestionController::class)->except(['index', 'create'])->names('questions');
 
-        // Students Management Routes
-        Route::get('/courses/{course}/students', [WordController::class, 'index'])->name('words.index');
-        Route::post('/courses/{course}/students/{student}/grades/create', [WordController::class, 'store'])->name('words.store');
-        Route::get('/courses/{course}/students/{student}/grades', [WordController::class, 'show'])->name('words.show'); // Show specific word
-        Route::put('/courses/{course}/students/{student}/grades/edit', [WordController::class, 'update'])->name('words.update'); // Update word
-        Route::delete('courses/{course}/lessons/{lesson}', [WordController::class, 'destroy'])->name('words.destroy'); // Delete word
+        Route::get('/students', [StudentController::class, 'index'])->name('students.index');
+        Route::get('/students/{student}', [StudentController::class, 'show'])->name('students.show');
+        Route::post('/students/{student}/level', [StudentController::class, 'updateLevel'])->name('students.update-level');
+        Route::post('/students/{student}/note', [StudentController::class, 'addNote'])->name('students.add-note');
 
-        // Resources Management Routes
-        Route::get('/courses/{course}/resources', [WordController::class, 'index'])->name('words.index');
-        Route::post('/courses/{course}/resources/create', [WordController::class, 'store'])->name('words.store');
-        Route::get('/courses/{course}/feedback/{feedback}/reply', [WordController::class, 'show'])->name('words.show'); // Show specific word
-        Route::get('/courses/{course}/reports/activities', [WordController::class, 'update'])->name('words.update'); // Update word
-        Route::get('/courses/{course}/reports/grades', [WordController::class, 'destroy'])->name('words.destroy'); // Delete word
+        Route::resource('resources', ResourceController::class)->names('resources');
+
     });
 
     Route::middleware([IsStudent::class])->prefix('student')->name('student.')->group(function () {
