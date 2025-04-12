@@ -6,59 +6,96 @@ use App\Http\Controllers\Controller;
 use App\Models\Resource;
 use App\Models\Course;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ResourceController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-     public function index(Course $course)
-     {
-         $resources = $course->resources()->paginate(10);
-         return view('teacher.resources.index', compact('course', 'resources'));
-     }
+    public function index(Request $request)
+    {
+        $resources = Resource::with('course')
+            ->when($request->course_id, fn($q) => $q->where('course_id', $request->course_id))
+            ->latest()
+            ->paginate(12);
 
-     public function create(Course $course)
-     {
-         return view('teacher.resources.create', compact('course'));
-     }
+        $courses = Course::pluck('title', 'id');
 
-     public function store(Request $request, Course $course)
-     {
-         $validated = $request->validate([
-             'title' => 'required|string|max:255',
-             'file_url' => 'nullable|string',
-             'type' => 'required|string',
-             'description' => 'nullable|string',
-         ]);
+        return inertia('Teacher/Resources/Index', [
+            'resources' => $resources,
+            'courses' => $courses,
+            'filters' => $request->only(['course_id'])
+        ]);
+    }
 
-         $course->resources()->create($validated);
+    public function create()
+    {
+        return inertia('Teacher/Resources/Create', [
+            'courses' => Course::pluck('title', 'id')
+        ]);
+    }
 
-         return redirect()->route('teacher.courses.resources.index', $course)->with('success', 'منبع اضافه شد.');
-     }
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'course_id' => 'nullable|exists:courses,id',
+            'description' => 'nullable|string',
+            'file' => 'required|file|mimes:pdf,doc,docx,ppt,pptx,xls,xlsx,zip,mp4,mov,avi|max:20480' // 20MB
+        ]);
 
-     public function edit(Course $course, Resource $resource)
-     {
-         return view('teacher.resources.edit', compact('course', 'resource'));
-     }
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            $validated['file_path'] = $file->store('resources', 'public');
+            $validated['type'] = $file->getClientOriginalExtension();
+        }
 
-     public function update(Request $request, Course $course, Resource $resource)
-     {
-         $validated = $request->validate([
-             'title' => 'required|string|max:255',
-             'file_url' => 'nullable|string',
-             'type' => 'required|string',
-             'description' => 'nullable|string',
-         ]);
+        Resource::create($validated);
 
-         $resource->update($validated);
+        return redirect()->route('teacher.resources.index')
+            ->with('success', 'منبع جدید با موفقیت ایجاد شد');
+    }
 
-         return redirect()->route('teacher.courses.resources.index', $course)->with('success', 'منبع بروزرسانی شد.');
-     }
+    public function edit(Resource $resource)
+    {
+        return inertia('Teacher/Resources/Edit', [
+            'resource' => $resource,
+            'courses' => Course::pluck('title', 'id')
+        ]);
+    }
 
-     public function destroy(Course $course, Resource $resource)
-     {
-         $resource->delete();
-         return back()->with('success', 'منبع حذف شد.');
-     }
+    public function update(Request $request, Resource $resource)
+    {
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'course_id' => 'nullable|exists:courses,id',
+            'description' => 'nullable|string',
+            'file' => 'nullable|file|mimes:pdf,doc,docx,ppt,pptx,xls,xlsx,zip,mp4,mov,avi|max:20480'
+        ]);
+
+        if ($request->hasFile('file')) {
+            // حذف فایل قبلی
+            if ($resource->file_path) {
+                Storage::disk('public')->delete($resource->file_path);
+            }
+
+            $file = $request->file('file');
+            $validated['file_path'] = $file->store('resources', 'public');
+            $validated['type'] = $file->getClientOriginalExtension();
+        }
+
+        $resource->update($validated);
+
+        return redirect()->route('teacher.resources.index')
+            ->with('success', 'منبع با موفقیت به‌روزرسانی شد');
+    }
+
+    public function destroy(Resource $resource)
+    {
+        if ($resource->file_path) {
+            Storage::disk('public')->delete($resource->file_path);
+        }
+
+        $resource->delete();
+
+        return back()->with('success', 'منبع با موفقیت حذف شد');
+    }
 }
