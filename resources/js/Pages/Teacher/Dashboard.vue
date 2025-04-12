@@ -1,8 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue';
-import axios from 'axios';
 import TeacherLayout from '@/Layouts/TeacherLayout.vue';
-import MainDashboard from '@/Components/MainDashboard.vue';
 </script>
 <template>
       <TeacherLayout title="Dashboard">
