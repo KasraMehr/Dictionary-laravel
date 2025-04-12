@@ -131,4 +131,18 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Quiz::class, 'user_quiz_attempts', 'user_id', 'quiz_id');
     }
+
+    public function students(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'teacher_student', 'teacher_id', 'student_id')
+            ->withPivot('level', 'notes')
+            ->withTimestamps();
+    }
+
+    public function teachers(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'teacher_student', 'student_id', 'teacher_id')
+            ->withPivot('level', 'notes')
+            ->withTimestamps();
+    }
 }
