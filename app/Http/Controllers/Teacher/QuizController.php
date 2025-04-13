@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Quiz;
 use App\Models\Course;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class QuizController extends Controller
 {
@@ -18,9 +20,7 @@ class QuizController extends Controller
 
       public function create()
       {
-          $courses = Course::where('created_by', auth()->id())
-              ->where('status', 'published')
-              ->get();
+          $courses = Course::all();
 
           return inertia('Teacher/Quiz/Create', compact('courses'));
       }
@@ -43,6 +43,20 @@ class QuizController extends Controller
 
           return redirect()->route('teacher.quizzes.index')
               ->with('success', 'آزمون با موفقیت ایجاد شد.');
+      }
+
+      public function show(Quiz $quiz)
+      {
+          $quiz->load([
+              'users',
+              'questions',
+              'course',
+              'course_lesson'
+          ]);
+
+          return Inertia::render('Teacher/Quiz/Show', [
+              'quiz' => $quiz
+          ]);
       }
 
       public function edit(Quiz $quiz)
