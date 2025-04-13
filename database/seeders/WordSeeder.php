@@ -24,6 +24,8 @@ class WordSeeder extends Seeder
         $translator = new GoogleTranslate('fa');
         $client = new Client();
 
+        $generated_words_num = 0;
+
         foreach ($words as $word) {
             $word = trim($word);
             if (empty($word)) continue;
@@ -60,8 +62,9 @@ class WordSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now()
             ]);
+            $generated_words_num++;
 
-            echo "✅ Added: $word → meaning: $meaning\n pronunciation → $pronunciation \n description → $description \n image → $imagePath\n voiceFileName → $voicePath";
+            echo "\n$generated_words_num\n ✅ Added: $word → meaning: $meaning\n pronunciation → $pronunciation \n description → $description \n image → $imagePath\n voiceFileName → $voicePath";
         }
     }
 
