@@ -7,13 +7,10 @@ const props = defineProps({
     quiz: Object
 });
 
-// محاسبه تعداد شرکت‌کنندگان
 const participantsCount = computed(() => props.quiz.users?.length || 0);
 
-// محاسبه تعداد سوالات
 const questionsCount = computed(() => props.quiz.questions?.length || 0);
 
-// فرمت زمان
 const formatTime = (minutes) => {
     if (!minutes) return 'نامحدود';
     return `${minutes} دقیقه`;
