@@ -2,7 +2,7 @@
 import { Link } from '@inertiajs/vue3';
 import TeacherLayout from '@/Layouts/TeacherLayout.vue';
 import Pagination from '@/Components/Pagination.vue';
-import { ref } from 'vue';
+import {ref, watch} from 'vue';
 import {getFileIconComponent} from "@/utils/fileIcons.js";
 import {useStepper as $inertia} from "@vueuse/core";
 
@@ -13,6 +13,20 @@ const props = defineProps({
 });
 
 const search = ref(props.filters.course_id);
+
+const selectedCourse = ref('');
+
+// مشاهده تغییرات در filters
+watch(() => props.filters, (newFilters) => {
+    selectedCourse.value = newFilters?.course_id || '';
+}, { immediate: true });
+
+const handleCourseChange = () => {
+    $inertia.get(route('teacher.resources.index'),
+        { course_id: selectedCourse.value || null },
+        { preserveState: true }
+    );
+};
 </script>
 
 <template>
@@ -27,8 +41,11 @@ const search = ref(props.filters.course_id);
                     <div class="p-6">
                         <div class="flex justify-between items-center mb-6">
                             <div class="flex items-center space-x-4">
-                                <select v-model="search" @change="$inertia.get(route('teacher.resources.index'), { course_id: search })"
-                                        class="border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 rounded-md shadow-sm">
+                                <select
+                                    v-model="selectedCourse"
+                                    @change="handleCourseChange"
+                                    class="border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 rounded-md shadow-sm"
+                                >
                                     <option value="">همه دوره‌ها</option>
                                     <option v-for="(title, id) in courses" :key="id" :value="id">
                                         {{ title }}
