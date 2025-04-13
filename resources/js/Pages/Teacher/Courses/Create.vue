@@ -169,18 +169,18 @@
                             </div>
 
                             <!-- دکمه‌های فرم -->
-                            <div class="flex justify-end space-x-3 pt-6 border-t border-gray-200 dark:border-gray-700">
+                            <div class="flex justify-end pt-6 border-t border-gray-200 dark:border-gray-700">
                                 <button
                                     type="button"
                                     @click="cancelForm"
-                                    class="px-6 py-2 rounded-lg border border-gray-300 dark:border-gray-600 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                    class="px-6 py-2 mx-2 rounded-lg border border-gray-300 dark:border-gray-600 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                                 >
                                     انصراف
                                 </button>
                                 <PrimaryButton
                                     type="submit"
                                     :disabled="form.processing"
-                                    class="px-6 py-2 rounded-lg text-sm font-medium"
+                                    class="px-6 py-2 mx-2 rounded-lg text-sm font-medium"
                                 >
                                     <span v-if="form.processing">
                                         <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
