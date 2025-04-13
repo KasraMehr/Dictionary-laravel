@@ -48,9 +48,62 @@ const logout = () => {
   <Head :title="title"><title>Teacher</title></Head>
   <div class="flex min-h-screen bg-gray-200 dark:bg-gray-800"  :dir="locale === 'en' ? 'ltr' : 'rtl'">
     <!-- Sidebar -->
-    <aside class="hidden md:block w-64 bg-gray-100 dark:bg-gray-900 border-r shadow-md">
-      <div class="p-6 text-red-600 font-bold text-xl border-b">پنل استاد</div>
-      <nav class="my-6 space-y-2 px-2">
+      <aside class="hidden md:flex md:flex-col md:w-72 h-screen right-0 top-0 bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 border-l border-gray-200 dark:border-gray-700 shadow-xl">
+          <!-- Header Section -->
+          <div class="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+              <!-- User Profile with Dropdown -->
+              <div class="relative group">
+                  <button class="flex items-center focus:outline-none">
+                      <div class="relative mx-1">
+                          <img class="size-10 rounded-full object-cover border-2 border-red-600"
+                               :src="$page.props.auth.user.profile_photo_url"
+                               :alt="$page.props.auth.user.name">
+                          <span class="absolute bottom-0 right-0 size-3 bg-green-500 rounded-full border-2 border-white dark:border-gray-800"></span>
+                      </div>
+                      <span class="hidden lg:inline-block mx-1 font-medium text-gray-700 dark:text-gray-300">
+                          {{ $page.props.auth.user.name }}
+                      </span>
+                      <svg class="size-4 text-gray-500 dark:text-gray-400 transform group-hover:rotate-180 transition-transform"
+                           xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                      </svg>
+                  </button>
+
+                  <!-- Dropdown Content -->
+                  <div class="absolute z-10 mt-3 right-0 w-56 origin-top-right rounded-md bg-white dark:bg-gray-800 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform group-hover:translate-y-0 translate-y-1">
+                      <div class="py-1">
+                          <!-- Profile Section -->
+                          <div class="px-4 py-3 border-b border-gray-100 dark:border-gray-700">
+                              <p class="text-sm text-gray-900 dark:text-white font-medium">{{ $page.props.auth.user.name }}</p>
+                              <p class="text-xs text-gray-500 dark:text-gray-400 truncate">{{ $page.props.auth.user.email }}</p>
+                          </div>
+
+                          <!-- Navigation Links -->
+                          <DropdownLink :href="route('profile.show')" class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
+                            <span class="flex items-center gap-1">
+                              <svg class="size-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                              </svg>
+                              {{ $t('profile') }}
+                            </span>
+                          </DropdownLink>
+
+
+                          <!-- Logout Button -->
+                          <form @submit.prevent="logout" class="border-t border-gray-100 dark:border-gray-700">
+                              <button type="submit" class="flex items-center w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-gray-700">
+                                  <svg class="mx-3 size-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                                  </svg>
+                                  {{ $t('logout') }}
+                              </button>
+                          </form>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+        <nav class="my-6 space-y-2 px-2">
         <NavItem icon="home" label="داشبورد" to="/teacher/dashboard" />
         <NavItem icon="book" label="دوره‌ها" to="/teacher/courses" />
         <NavItem icon="file-text" label="آزمون‌ها" to="/teacher/quizzes" />
