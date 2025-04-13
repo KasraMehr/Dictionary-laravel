@@ -5,6 +5,7 @@ use App\Http\Controllers\General\ContactController;
 use App\Http\Controllers\General\GeneralController;
 use App\Http\Controllers\General\LearnController;
 use App\Http\Controllers\General\ReportController;
+use App\Http\Controllers\Teacher\CourseLessonController;
 use App\Http\Controllers\Teacher\QuestionController;
 use App\Http\Controllers\Teacher\QuizController;
 use App\Http\Controllers\Teacher\ResourceController;
@@ -93,8 +94,17 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
         ->names('courses');
 
         Route::prefix('courses/{course}')->group(function () {
-            Route::resource('lessons', \App\Http\Controllers\Teacher\LessonController::class)
-                ->names('courses.lessons');
+            Route::get('/lessons/create', [CourseLessonController::class, 'create'])
+                ->name('courses.lessons.create');
+
+            Route::post('/lessons', [CourseLessonController::class, 'store'])
+                ->name('courses.lessons.store');
+
+            Route::get('/lessons/{lesson}/edit', [CourseLessonController::class, 'edit'])
+                ->name('courses.lessons.edit');
+
+            Route::put('/lessons/{lesson}', [CourseLessonController::class, 'update'])
+                ->name('courses.lessons.update');
 
             Route::resource('quizzes', QuizController::class)
                 ->names('courses.quizzes');
