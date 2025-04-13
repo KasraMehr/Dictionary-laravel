@@ -11,8 +11,7 @@ class QuizController extends Controller
 {
       public function index()
       {
-          $quizzes = Quiz::with('course')
-              ->get();
+          $quizzes = Quiz::with('course')->get();
 
           return inertia('Teacher/Quiz/Index', compact('quizzes'));
       }
