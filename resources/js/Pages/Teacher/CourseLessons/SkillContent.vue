@@ -18,7 +18,7 @@ const updateContent = (value) => {
 </script>
 
 <template>
-    <div>
+    <div class="text-black dark:text-white">
         <!-- محتوای مخصوص هر مهارت -->
         <div v-if="skill === 'reading'">
             <label class="block text-sm text-gray-600 dark:text-gray-400 mb-2">
