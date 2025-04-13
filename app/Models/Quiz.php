@@ -15,7 +15,7 @@ class Quiz extends Model
 
   public function users(): BelongsToMany
   {
-      return $this->belongsToMany(User::class, 'quiz_user', 'quiz_id', 'user_id');
+      return $this->belongsToMany(User::class, 'user_quiz_attempts', 'quiz_id', 'user_id');
   }
 
   public function course(): BelongsTo
