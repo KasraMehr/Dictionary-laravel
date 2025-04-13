@@ -24,26 +24,26 @@ const quizzesCount = computed(() => props.course.quizzes?.length || 0);
                     <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-100">
                         {{ course.title }}
                     </h2>
-                    <div class="flex items-center mt-2 space-x-4">
-                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
+                    <div class="flex items-center mt-2">
+                        <span class="inline-flex items-center px-2.5 py-0.5 mx-2 rounded-full text-xs font-medium"
                             :class="{
                                 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200': course.status === 'published',
                                 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200': course.status === 'draft'
                             }">
                             {{ course.status === 'published' ? 'منتشر شده' : 'پیش‌نویس' }}
                         </span>
-                        <span class="text-sm text-gray-600 dark:text-gray-400">
+                        <span class="text-sm text-gray-600 dark:text-gray-400 mx-2">
                             سطح: {{ course.level }}
                         </span>
                     </div>
                 </div>
-                <div class="flex space-x-3">
+                <div class="flex">
                     <Link :href="route('teacher.courses.edit', course.id)"
-                        class="inline-flex items-center px-4 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        class="inline-flex items-center px-4 py-2 mx-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600">
                         ویرایش دوره
                     </Link>
                     <Link :href="route('teacher.courses.lessons.create', course.id)"
-                        class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700">
+                        class="inline-flex items-center px-4 py-2 mx-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700">
                         افزودن درس جدید
                     </Link>
                 </div>
@@ -63,7 +63,7 @@ const quizzesCount = computed(() => props.course.quizzes?.length || 0);
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
                                         </svg>
                                     </div>
-                                    <div class="ml-4">
+                                    <div class="mx-4">
                                         <h3 class="text-lg font-medium text-blue-800 dark:text-blue-200">دانشجویان</h3>
                                         <p class="text-2xl font-semibold text-blue-600 dark:text-blue-300">{{ studentsCount }}</p>
                                     </div>
@@ -78,7 +78,7 @@ const quizzesCount = computed(() => props.course.quizzes?.length || 0);
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                                         </svg>
                                     </div>
-                                    <div class="ml-4">
+                                    <div class="mx-4">
                                         <h3 class="text-lg font-medium text-green-800 dark:text-green-200">تعداد دروس</h3>
                                         <p class="text-2xl font-semibold text-green-600 dark:text-green-300">{{ lessonsCount }}</p>
                                     </div>
@@ -93,7 +93,7 @@ const quizzesCount = computed(() => props.course.quizzes?.length || 0);
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                                         </svg>
                                     </div>
-                                    <div class="ml-4">
+                                    <div class="mx-4">
                                         <h3 class="text-lg font-medium text-purple-800 dark:text-purple-200">آزمون‌ها</h3>
                                         <p class="text-2xl font-semibold text-purple-600 dark:text-purple-300">{{ quizzesCount }}</p>
                                     </div>
