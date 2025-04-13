@@ -78,7 +78,7 @@
 
 <script setup>
 import TeacherLayout from '@/Layouts/TeacherLayout.vue';
-import { Head, Link } from '@inertiajs/vue3';
+import { Head, Link, router } from '@inertiajs/vue3';
 
 defineProps({
   quizzes: Array
@@ -86,7 +86,14 @@ defineProps({
 
 const deleteQuiz = (quiz) => {
   if (confirm('آیا از حذف این آزمون اطمینان دارید؟')) {
-    router.delete(route('teacher.quizzes.destroy', quiz.id));
+    router.delete(route('teacher.quizzes.destroy', quiz.id), {
+      onSuccess: () => {
+        console.log('آزمون حذف شد');
+      },
+      onError: (errors) => {
+        console.error('خطا در حذف آزمون:', errors);
+      }
+    });
   }
 };
 </script>
