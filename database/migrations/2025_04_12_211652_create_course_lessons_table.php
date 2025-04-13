@@ -15,10 +15,11 @@ return new class extends Migration
             $table->id();
             $table->foreignId('course_id')->constrained()->onDelete('cascade');
             $table->string('title');
-            $table->text('content')->nullable(); // یا می‌تونه html باشه
-            $table->string('video_url')->nullable();
+            $table->text('description')->nullable();
+            $table->json('skills');
+            $table->json('content');
+            $table->foreignId('quiz_id')->nullable()->constrained()->nullOnDelete();
             $table->integer('order')->default(0);
-            $table->foreignId('quiz_id')->nullable()->constrained()->nullOnDelete(); // آزمون مرتبط با درس
             $table->timestamps();
         });
     }
