@@ -27,7 +27,8 @@ class QuestionController extends Controller
 
           Question::create($validated);
 
-          return redirect()->route('teacher.quizzes.questions.index', $validated['quiz_id'])
+          $quiz = Quiz::findOrFail($validated['quiz_id']);
+          return redirect()->route('teacher.quizzes.show', $quiz)
               ->with('success', 'سوال با موفقیت ایجاد شد.');
       }
 
