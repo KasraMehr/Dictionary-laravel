@@ -48,10 +48,10 @@
             </td>
             <td class="px-6 py-4 text-sm flex items-center gap-4">
               <Link
-                :href="route('teacher.quizzes.questions.index', quiz.id)"
+                :href="route('teacher.quizzes.show', quiz.id)"
                 class="relative text-indigo-600 hover:text-indigo-800 transition duration-200 after:content-[''] after:block after:w-0 after:h-[2px] after:bg-indigo-600 hover:after:w-full after:transition-all after:duration-300"
               >
-                سوالات
+                مشاهده
               </Link>
 
               <Link
