@@ -189,27 +189,35 @@ const setDefaultImage = (event) => {
         </Modal>
 
         <!-- مودال مشاهده جزئیات دوره -->
-        <Modal :show="showDetailsModal" max-width="4xl" @close="showDetailsModal = false">
+        <Modal :show="showDetailsModal" max-width="2xl" @close="showDetailsModal = false">
             <div class="p-6" v-if="selectedCourse">
                 <div class="flex justify-between items-start">
                     <div>
-                        <h2 class="text-2xl font-bold text-gray-900 dark:text-gray-100">
+                      <div class="flex">
+                        <h2 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mx-4">
                             {{ selectedCourse.title }}
                         </h2>
+                        <Link :href="route('teacher.courses.show', selectedCourse.id)" as="button">
+                        <SecondaryButton>
+                            مشاهده
+                        </SecondaryButton>
+                        </Link>
+                        </div>
                         <p class="mt-2 text-gray-600 dark:text-gray-400">
                             {{ selectedCourse.description }}
                         </p>
                     </div>
-                    <div class="flex space-x-2">
-                        <span class="px-3 py-1 rounded-full text-xs font-medium"
+                    <div class="flex">
+                        <span class="px-3 py-1 rounded-full text-xs font-medium mx-2"
                             :class="{
-                                'bg-green-100 text-green-800': selectedCourse.status === 'فعال',
-                                'bg-yellow-100 text-yellow-800': selectedCourse.status === 'در حال بررسی',
-                                'bg-red-100 text-red-800': selectedCourse.status === 'غیرفعال'
+                              'bg-green-100 text-green-800': selectedCourse.status === 'published',
+                              'bg-yellow-100 text-yellow-800': selectedCourse.status === 'draft',
+                              'bg-red-100 text-red-800': selectedCourse.status === 'archived',
+                              'bg-gray-100 text-gray-800': !['published','draft','archived'].includes(selectedCourse.status)
                             }">
                             {{ selectedCourse.status }}
                         </span>
-                        <span class="px-3 py-1 rounded-full text-xs font-medium"
+                        <span class="px-3 py-1 rounded-full text-xs font-medium mx-2"
                             :class="{
                                 'bg-blue-100 text-blue-800': selectedCourse.is_free,
                                 'bg-purple-100 text-purple-800': !selectedCourse.is_free
