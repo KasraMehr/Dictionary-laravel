@@ -19,7 +19,7 @@
                                     <TextInput
                                         id="title"
                                         v-model="form.title"
-                                        class="mt-2 w-full"
+                                        class="mt-2 w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 shadow-sm focus:border-red-500 focus:ring-red-600"
                                         :error="form.errors.title"
                                         required
                                     />
@@ -76,7 +76,7 @@
                                     <TextInput
                                         id="topic"
                                         v-model="form.topic"
-                                        class="mt-2 w-full"
+                                        class="mt-2 w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 shadow-sm focus:border-red-500 focus:ring-red-600"
                                         :error="form.errors.topic"
                                     />
                                 </div>
@@ -89,7 +89,7 @@
                                                 type="radio"
                                                 v-model="form.status"
                                                 value="draft"
-                                                class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 dark:border-gray-600 dark:bg-gray-700"
+                                                class="h-4 w-4 text-red-600 focus:ring-red-700 border-gray-300 dark:border-gray-600 dark:bg-gray-700"
                                                 required
                                             />
                                             <span class="text-sm text-gray-700 dark:text-gray-300">پیش‌نویس</span>
@@ -99,7 +99,7 @@
                                                 type="radio"
                                                 v-model="form.status"
                                                 value="published"
-                                                class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 dark:border-gray-600 dark:bg-gray-700"
+                                                class="h-4 w-4 text-red-600 focus:ring-red-700 border-gray-300 dark:border-gray-600 dark:bg-gray-700"
                                             />
                                             <span class="text-sm text-gray-700 dark:text-gray-300">منتشر شده</span>
                                         </label>
