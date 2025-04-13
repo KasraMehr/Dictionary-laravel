@@ -9,15 +9,45 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class CourseLesson extends Model
 {
-  protected $fillable = ['title', 'content', 'video_url', 'order'];
+    protected $fillable = [
+        'title',
+        'description',
+        'skills',
+        'content',
+        'quiz_id',
+        'order'
+    ];
 
-  public function course(): BelongsTo
-  {
-      return $this->belongsTo(Course::class);
-  }
+    protected $casts = [
+        'skills' => 'array',
+        'content' => 'array'
+    ];
 
-  public function quiz(): HasOne
-  {
-      return $this->HasOne(Quiz::class, 'quiz_id');
-  }
+    // لیست مهارت‌های قابل انتخاب
+    public const SKILLS = [
+        'reading' => 'خواندن',
+        'writing' => 'نوشتن',
+        'speaking' => 'صحبت کردن',
+        'listening' => 'گوش کردن',
+        'vocabulary' => 'واژگان',
+        'grammar' => 'دستور زبان'
+    ];
+
+    public function course(): BelongsTo
+    {
+        return $this->belongsTo(Course::class);
+    }
+
+    public function quiz(): BelongsTo
+    {
+        return $this->belongsTo(Quiz::class);
+    }
+
+    // برای نمایش مهارت‌های انتخاب شده
+    public function getSelectedSkillsAttribute(): array
+    {
+        return array_map(function($skill) {
+            return self::SKILLS[$skill] ?? $skill;
+        }, $this->skills ?? []);
+    }
 }
