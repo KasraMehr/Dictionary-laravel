@@ -9,11 +9,22 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class Course extends Model
 {
     protected $fillable = ['title', 'slug', 'trailer_url', 'description', 'level', 'topic',
-     'is_free', 'thumbnail', 'language', 'status', 'created_by' ];
+     'is_free', 'thumbnail', 'language', 'duration_minutes', 'status', 'lessons_count',
+        'students_count', 'price', 'certificate_template', 'created_by' ];
 
     public function users(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'course_user', 'course_id', 'user_id');
+        return $this->belongsToMany(User::class)
+            ->using(CourseUser::class)
+            ->withPivot([
+                'enrolled_at',
+                'progress',
+                'is_favorite',
+                'completed_at',
+                'rating',
+                'review',
+                'last_accessed_at'
+            ]);
     }
 
     public function course_lessons(): HasMany
