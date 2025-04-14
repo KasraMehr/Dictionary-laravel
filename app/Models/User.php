@@ -16,7 +16,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\Permission\Traits\HasRoles;
 
-
+/**
+ * @property string $role
+ */
 class User extends Authenticatable
 {
     use HasApiTokens;
@@ -117,7 +119,7 @@ class User extends Authenticatable
             ->count();
     }
 
-    public function achievements()
+    public function achievements(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'user_achievements', 'user_id', 'achievement_id');
     }
