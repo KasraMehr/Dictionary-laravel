@@ -43,7 +43,7 @@ Route::get('/grammars', [LearnController::class, 'grammars'])->name('grammars');
 Route::get('/word/{native_lang}-{translated_lang}/{word}', [WordController::class, 'show'])->name('word.show');
 
 
-Route::get('/csrf-token', function (Request $request) {
+Route::get('/csrf-token', function () {
     return response()->json(['csrf_token' => csrf_token()]);
 });
 
