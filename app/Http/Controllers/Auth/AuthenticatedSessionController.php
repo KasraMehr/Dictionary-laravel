@@ -46,35 +46,19 @@ class AuthenticatedSessionController extends Controller
         $request->validate([
             'email' => 'required|string|email',
             'password' => 'required|string',
-            'g-recaptcha-response' => 'required|string',
         ]);
-
-        // Verify reCAPTCHA
-        $response = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
-            'secret' => env('RECAPTCHA_SECRET_KEY'),
-            'response' => $request->input('g-recaptcha-response'),
-            'remoteip' => $request->ip(),
-        ]);
-
-        if (!$response->json('success')) {
-            throw ValidationException::withMessages([
-                'g-recaptcha-response' => ['The reCAPTCHA verification failed. Please try again.'],
-            ]);
-        }
 
         // Attempt to authenticate
         if (Auth::attempt($request->only('email', 'password'), $request->boolean('remember'))) {
             $request->session()->regenerate();
 
-            if (Auth::user()->role === 'translator') {
-                return redirect()->route('translator.dashboard');
-            } elseif (Auth::user()->role === 'teacher') {
-                return redirect()->route('teacher.dashboard');
-            } elseif (Auth::user()->role === 'student') {
-                return redirect()->route('student.dashboard');
-            }
+            return redirect()->intended(match(auth()->user()->role) {
+                'translator' => route('translator.dashboard'),
+                'teacher' => route('teacher.dashboard'),
+                'student' => route('student.dashboard'),
+                default => '/dashboard'
+            });
 
-            return redirect()->intended('/landing');
         }
 
         throw ValidationException::withMessages([
