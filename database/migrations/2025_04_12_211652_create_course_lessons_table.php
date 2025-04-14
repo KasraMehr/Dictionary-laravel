@@ -20,6 +20,11 @@ return new class extends Migration
             $table->json('content');
             $table->foreignId('quiz_id')->nullable()->constrained()->nullOnDelete();
             $table->integer('order')->default(0);
+            $table->unsignedInteger('duration_minutes')->default(0)->after('order'); // مدت زمان درس
+            $table->boolean('is_preview')->default(false)->after('duration_minutes'); // آیا پیش‌نمایش رایگان است
+            $table->string('video_url')->nullable()->after('content'); // لینک ویدیو
+            $table->string('thumbnail')->nullable()->after('video_url'); // تصویر درس
+            $table->json('attachments')->nullable()->after('thumbnail'); // فایل‌های ضمیمه
             $table->timestamps();
         });
     }
