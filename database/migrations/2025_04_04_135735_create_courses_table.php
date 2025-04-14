@@ -22,6 +22,11 @@ return new class extends Migration
             $table->boolean('is_free')->default(true);
             $table->string('thumbnail')->nullable();
             $table->string('language')->default('en');
+            $table->unsignedInteger('duration_minutes')->default(0)->after('language');
+            $table->unsignedInteger('lessons_count')->default(0)->after('duration_minutes');
+            $table->unsignedInteger('students_count')->default(0)->after('lessons_count');
+            $table->decimal('price', 10, 2)->nullable()->after('is_free');
+            $table->string('certificate_template')->nullable()->after('price');
             $table->foreignId('created_by')->constrained('users')->onDelete('cascade');
             $table->enum('status', ['draft', 'published'])->default('draft');
             $table->timestamps();
