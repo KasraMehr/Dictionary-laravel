@@ -19,16 +19,11 @@ const form = useForm({
     password: '',
     remember: false,
 });
-
-const recaptchaLoaded = ref(false);
-
+ref(false);
 const submit = () => {
     form.post(route('login'), {
         onFinish: () => {
             form.reset('password');
-            if (window.grecaptcha) {
-                window.grecaptcha.reset();
-            }
         },
     });
 };
