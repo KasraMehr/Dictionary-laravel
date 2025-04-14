@@ -5,6 +5,7 @@ use App\Http\Controllers\General\ContactController;
 use App\Http\Controllers\General\GeneralController;
 use App\Http\Controllers\General\LearnController;
 use App\Http\Controllers\General\ReportController;
+use App\Http\Controllers\Student\StudentCourseController;
 use App\Http\Controllers\Student\StudentDashboard;
 use App\Http\Controllers\Teacher\CourseLessonController;
 use App\Http\Controllers\Teacher\QuestionController;
@@ -134,10 +135,14 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
 
         Route::get('/dashboard', [StudentDashboard::class, 'index'])->name('dashboard');
 
-        Route::get('/courses', [WordController::class, 'index'])->name('words.index');
-        Route::get('/courses/{id}', [WordController::class, 'show'])->name('words.show'); // Show specific word
-        Route::post('/courses/{id}/enroll', [WordController::class, 'store'])->name('words.store');
-        Route::get('/my-courses', [WordController::class, 'show'])->name('words.show'); // Show specific word
+        Route::get('/courses', [StudentCourseController::class, 'index'])
+            ->name('courses.index');
+
+        Route::get('/courses/{course}', [StudentCourseController::class, 'show'])
+            ->name('courses.show');
+
+        Route::delete('/courses/{course}', [StudentCourseController::class, 'destroy'])
+            ->name('courses.destroy');
 
         // Lessons Management Routes
         Route::get('/courses/{course_id}/lessons', [WordController::class, 'index'])->name('words.index');
