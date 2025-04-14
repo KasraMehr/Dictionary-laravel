@@ -21,6 +21,7 @@
         "vue": "^3.3.13"
     },
     "dependencies": {
+        "@heroicons/vue": "^2.2.0",
         "@vueuse/core": "^13.1.0",
         "chart.js": "^4.4.7",
         "lucide-vue-next": "^0.487.0",
