@@ -5,6 +5,7 @@ use App\Http\Controllers\General\ContactController;
 use App\Http\Controllers\General\GeneralController;
 use App\Http\Controllers\General\LearnController;
 use App\Http\Controllers\General\ReportController;
+use App\Http\Controllers\Student\StudentDashboard;
 use App\Http\Controllers\Teacher\CourseLessonController;
 use App\Http\Controllers\Teacher\QuestionController;
 use App\Http\Controllers\Teacher\QuizController;
@@ -19,7 +20,6 @@ use App\Http\Middleware\IsStudent;
 use App\Http\Middleware\IsTeacher;
 use App\Http\Middleware\IsTranslator;
 use App\Http\Middleware\TeamMemberMiddleware;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 
@@ -132,7 +132,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
 
     Route::middleware([IsStudent::class])->prefix('student')->name('student.')->group(function () {
 
-        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+        Route::get('/dashboard', [StudentDashboard::class, 'index'])->name('dashboard');
 
         Route::get('/courses', [WordController::class, 'index'])->name('words.index');
         Route::get('/courses/{id}', [WordController::class, 'show'])->name('words.show'); // Show specific word
