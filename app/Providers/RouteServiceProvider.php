@@ -10,7 +10,7 @@ class RouteServiceProvider extends ServiceProvider
     /**
      * مسیر پیش‌فرض بعد از لاگین
      */
-    public const HOME = '/landing';
+     public const HOME = '/redirect-after-login';
 
     /**
      * Bootstrap your route-related services.
