@@ -39,7 +39,6 @@ const { locale } = useI18n();
 const setLanguage = (lang) => {
     locale.value = lang;
     localStorage.setItem('locale', lang);
-    // location.reload();
     console.log(lang);
 };
 
@@ -74,11 +73,11 @@ const setLanguage = (lang) => {
 
         <div class="min-h-screen bg-gray-50-100 dark:bg-gray-900">
             <nav class="bg-gray-200 dark:bg-gray-800 border-b border-gray-300 dark:border-gray-700">
-                <!-- منوی اصلی -->
+                <!-- Main Menu -->
                 <div class="w-full mx-auto px-4 sm:px-24">
                     <div class="flex justify-between h-16">
                         <div class="flex items-center">
-                            <!-- لوگو -->
+                            <!-- Logo -->
                             <div class="shrink-0 flex items-center h-full">
                                 <Link :href="route('landing')">
                                     <img src="/logo.svg" alt="logo" class="h-full w-auto max-h-16 object-contain" />
@@ -119,7 +118,7 @@ const setLanguage = (lang) => {
 
                         <div class="hidden sm:flex sm:items-center sm:ms-6">
 
-                            <!-- دکمه تغییر تم -->
+                            <!-- Change Theme Button -->
                             <div>
                                 <button @click="toggleTheme" class="p-2 rounded-full bg-white dark:bg-gray-700">
                                     <svg v-if="isDarkMode" class="w-6 h-6 text-gray-800 dark:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -167,7 +166,7 @@ const setLanguage = (lang) => {
                             </div>
                         </div>
 
-                        <!-- منوی موبایل -->
+                        <!-- Mobile Menu -->
                         <div class="-me-2 flex items-center sm:hidden">
                             <button  id="mobile_menu" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-900 focus:text-gray-500 dark:focus:text-gray-400 transition duration-150 ease-in-out" @click="showingNavigationDropdown = ! showingNavigationDropdown">
                                 <svg
@@ -196,7 +195,7 @@ const setLanguage = (lang) => {
                     </div>
                 </div>
 
-                <!-- منوی موبایل -->
+                <!-- Mobile Menu -->
                 <transition name="mobile-menu">
                   <div v-if="showingNavigationDropdown" class="sm:hidden">
                     <div class="pt-2 pb-3 space-y-1">
@@ -243,14 +242,14 @@ const setLanguage = (lang) => {
                 </transition>
             </nav>
 
-            <!-- سرصفحه -->
+            <!-- Header -->
             <header v-if="$slots.header" class="bg-gray-200 dark:bg-gray-800 shadow">
                 <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                     <slot name="header" />
                 </div>
             </header>
 
-            <!-- محتوای صفحه -->
+            <!-- Page Content -->
             <main>
                 <slot />
             </main>

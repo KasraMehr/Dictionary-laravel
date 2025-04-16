@@ -51,11 +51,11 @@ const logout = () => {
 
         <div class="min-h-screen bg-gray-50-100 dark:bg-gray-900">
             <nav :class="{ 'fixed top-0 left-0 w-full bg-gray-100 dark:bg-gray-800 z-50 shadow-md': isHeaderFixed }">
-                <!-- منوی اصلی -->
+                <!-- Main Menu -->
                 <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="flex justify-between h-16">
                         <div class="flex items-center">
-                            <!-- لوگو -->
+                            <!-- Logo -->
                             <div class="shrink-0 flex items-center h-full">
                                 <Link :href="route('landing')">
                                     <img src="/logo.svg" alt="logo" class="h-full w-auto max-h-16 object-contain" />
@@ -82,7 +82,7 @@ const logout = () => {
 
                         <div class="hidden sm:flex sm:items-center sm:ms-6">
 
-                            <!-- دکمه تغییر تم -->
+                            <!-- change theme button -->
                             <div>
                                 <button @click="toggleTheme" class="p-2 rounded-full bg-gray-400 dark:bg-gray-700">
                                     <svg v-if="isDarkMode" class="w-6 h-6 text-gray-800 dark:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -131,7 +131,7 @@ const logout = () => {
                             </div>
 
                             <div class="ms-3 relative">
-                                <!-- منوی تیم‌ها -->
+                                <!-- Teams Menu -->
                                 <Dropdown v-if="$page.props.jetstream.hasTeamFeatures" align="right" width="60">
                                     <template #trigger>
                                         <span class="inline-flex rounded-md">
@@ -147,12 +147,12 @@ const logout = () => {
 
                                     <template #content>
                                         <div class="w-60">
-                                            <!-- مدیریت تیم -->
+                                            <!-- Team management -->
                                             <div class="block px-4 py-2 text-xs text-gray-400">
                                                 {{ $t('team_management') }}
                                             </div>
 
-                                            <!-- تنظیمات تیم -->
+                                            <!-- Team Management dropdown-->
                                             <DropdownLink :href="route('teams.show', $page.props.auth.user.current_team.id)">
                                                 {{ $t('team_settings') }}
                                             </DropdownLink>
@@ -161,7 +161,7 @@ const logout = () => {
                                                 {{ $t('create_team') }}
                                             </DropdownLink>
 
-                                            <!-- تغییر تیم -->
+                                            <!-- Change Team -->
                                             <template v-if="$page.props.auth.user.all_teams.length > 1">
                                                 <div class="border-t border-gray-200 dark:border-gray-600" />
 
@@ -188,7 +188,7 @@ const logout = () => {
                                 </Dropdown>
                             </div>
 
-                            <!-- منوی تنظیمات -->
+                            <!-- Setting Menu -->
                             <div class="ms-3 relative">
                                 <Dropdown align="right" width="48">
                                     <template #trigger>
@@ -208,7 +208,7 @@ const logout = () => {
                                     </template>
 
                                     <template #content>
-                                        <!-- مدیریت حساب کاربری -->
+                                        <!-- Account Management -->
                                         <div class="block px-4 py-2 text-xs text-gray-400">
                                             {{ $t('account_management') }}
                                         </div>
@@ -223,7 +223,7 @@ const logout = () => {
 
                                         <div class="border-t border-gray-200 dark:border-gray-600" />
 
-                                        <!-- خروج -->
+                                        <!-- Exit -->
                                         <form @submit.prevent="logout">
                                             <DropdownLink as="button">
                                                 {{ $t('logout') }}
@@ -234,7 +234,7 @@ const logout = () => {
                             </div>
                         </div>
 
-                        <!-- منوی موبایل -->
+                        <!-- Mobile Menu -->
                         <div class="-me-2 flex items-center sm:hidden">
                             <button id="mobile_menu" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-900 focus:text-gray-500 dark:focus:text-gray-400 transition duration-150 ease-in-out" @click="showingNavigationDropdown = ! showingNavigationDropdown">
                                 <svg
@@ -263,7 +263,7 @@ const logout = () => {
                     </div>
                 </div>
 
-                <!-- منوی موبایل -->
+                <!-- Mobile Menu -->
                 <div :class="{'block': showingNavigationDropdown, 'hidden': ! showingNavigationDropdown}" class="sm:hidden">
                     <div class="pt-2 pb-3 space-y-1">
                         <ResponsiveNavLink :href="route('translator.dashboard')" :active="route().current('translator.dashboard')">
@@ -305,7 +305,7 @@ const logout = () => {
                     </div>
 
 
-                    <!-- تنظیمات موبایل -->
+                    <!-- Mobile Setting -->
                     <div class="pt-4 pb-1 border-t border-gray-700 dark:border-gray-500">
                         <div class="flex items-center px-4">
                             <div v-if="$page.props.jetstream.managesProfilePhotos" class="shrink-0 me-3">
@@ -331,14 +331,14 @@ const logout = () => {
                                 {{ $t('api_tokens') }}
                             </ResponsiveNavLink>
 
-                            <!-- خروج -->
+                            <!-- Exit -->
                             <form method="POST" @submit.prevent="logout">
                                 <ResponsiveNavLink as="button">
                                     {{ $t('logout') }}
                                 </ResponsiveNavLink>
                             </form>
 
-                            <!-- مدیریت تیم در موبایل -->
+                            <!-- Team Management in mobile -->
                             <template v-if="$page.props.jetstream.hasTeamFeatures">
                                 <div class="border-t border-gray-700 dark:border-gray-500" />
 
@@ -346,7 +346,7 @@ const logout = () => {
                                     {{ $t('team_management') }}
                                 </div>
 
-                                <!-- تنظیمات تیم -->
+                                <!-- Mobile Setting -->
                                 <ResponsiveNavLink :href="route('teams.show', $page.props.auth.user.current_team)" :active="route().current('teams.show')">
                                     {{ $t('team_settings') }}
                                 </ResponsiveNavLink>
@@ -355,7 +355,7 @@ const logout = () => {
                                     {{ $t('create_team') }}
                                 </ResponsiveNavLink>
 
-                                <!-- تغییر تیم -->
+                                <!-- Change theme -->
                                 <template v-if="$page.props.auth.user.all_teams.length > 1">
                                     <div class="border-t border-gray-700 dark:border-gray-500" />
 
@@ -382,14 +382,14 @@ const logout = () => {
                 </div>
             </nav>
 
-            <!-- سرصفحه -->
+            <!-- Header -->
             <header v-if="$slots.header" class="bg-gray-200 dark:bg-gray-800 shadow relative">
                 <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                     <slot name="header" />
                 </div>
             </header>
 
-            <!-- محتوای صفحه -->
+            <!-- Page Content -->
             <main>
                 <slot />
             </main>
@@ -430,7 +430,7 @@ const logout = () => {
               console.log(localStorage.getItem('theme'));
           },
           handleScroll() {
-              this.isHeaderFixed = window.scrollY > 60; // بعد از 60 پیکسل اسکرول، هدر فیکس شود
+              this.isHeaderFixed = window.scrollY > 60;
           }
       }
   };
