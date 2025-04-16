@@ -137,7 +137,7 @@
                                 </div>
                                 <span class="text-gray-700 dark:text-gray-300">کلمات یادگرفته شده</span>
                             </div>
-                            <span class="font-medium">428</span>
+                            <span class="font-medium text-gray-700 dark:text-gray-100">428</span>
                         </div>
 
                         <div class="flex items-center justify-between">
@@ -147,7 +147,7 @@
                                 </div>
                                 <span class="text-gray-700 dark:text-gray-300">روزهای فعال</span>
                             </div>
-                            <span class="font-medium">24</span>
+                            <span class="font-medium text-gray-700 dark:text-gray-100">24</span>
                         </div>
 
                         <div class="flex items-center justify-between">
@@ -157,7 +157,7 @@
                                 </div>
                                 <span class="text-gray-700 dark:text-gray-300">زمان مطالعه</span>
                             </div>
-                            <span class="font-medium">18h 45m</span>
+                            <span class="font-medium text-gray-700 dark:text-gray-100">18h 45m</span>
                         </div>
 
                         <div class="pt-4 border-t border-gray-100 dark:border-gray-700">
