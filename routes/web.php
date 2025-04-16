@@ -7,6 +7,7 @@ use App\Http\Controllers\General\LearnController;
 use App\Http\Controllers\General\ReportController;
 use App\Http\Controllers\Student\StudentCourseController;
 use App\Http\Controllers\Student\StudentDashboard;
+use App\Http\Controllers\Student\StudentQuizController;
 use App\Http\Controllers\Teacher\CourseLessonController;
 use App\Http\Controllers\Teacher\QuestionController;
 use App\Http\Controllers\Teacher\QuizController;
@@ -158,6 +159,11 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
         Route::get('/courses/{course_id}/lessons', [WordController::class, 'index'])->name('words.index');
         Route::post('/lessons/{id}/mark-complete', [WordController::class, 'store'])->name('words.store');
         Route::get('/lessons/{id}', [WordController::class, 'show'])->name('words.show'); // Show specific word
+
+        Route::get('/quizzes', [StudentQuizController::class, 'index'])->name('quiz.index');
+        Route::get('/quizzes/{quiz}', [StudentQuizController::class, 'show'])->name('quiz.show');
+        Route::post('/quizzes/{quiz}/submit', [StudentQuizController::class, 'submit'])->name('quiz.submit');
+        Route::get('/quizzes/{quiz}/result', [StudentQuizController::class, 'result'])->name('quiz.result');
 
         // Quiz Management Routes
         Route::get('/lessons/{id}/exercises', [WordController::class, 'index'])->name('words.index');
