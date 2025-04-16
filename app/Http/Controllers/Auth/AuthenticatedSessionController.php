@@ -56,7 +56,7 @@ class AuthenticatedSessionController extends Controller
                 'translator' => route('translator.dashboard'),
                 'teacher' => route('teacher.dashboard'),
                 'student' => route('student.dashboard'),
-                default => '/dashboard'
+                default => '/landing'
             });
 
         }
