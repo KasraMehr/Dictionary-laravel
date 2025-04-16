@@ -52,17 +52,17 @@ class StudentCourseController extends Controller
 
     public function show(Course $course)
     {
-        $course->load(['category', 'teacher', 'lessons'])
-            ->loadCount('lessons');
+        // $course->load(['category', 'teacher', 'lessons'])
+        //     ->loadCount('lessons');
 
         return inertia('Student/Courses/Show', [
-            'course' => $course,
-            'progress' => auth()->user()
-                ->courses()
-                ->where('course_id', $course->id)
-                ->first()
-                ->pivot
-                ->progress
+            // 'course' => $course,
+            // 'progress' => auth()->user()
+            //     ->courses()
+            //     ->where('course_id', $course->id)
+            //     ->first()
+            //     ->pivot
+            //     ->progress
         ]);
     }
 
