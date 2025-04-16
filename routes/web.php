@@ -50,6 +50,16 @@ Route::get('/csrf-token', function () {
 
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 
+Route::get('/redirect-after-login', function () {
+    $user = auth()->user();
+
+    return redirect()->to(match($user->role) {
+        'translator' => route('translator.dashboard'),
+        'teacher' => route('teacher.dashboard'),
+        'student' => route('student.dashboard'),
+        default => '/landing'
+    });
+})->middleware(['auth', 'verified']);
 
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function ()
 {
