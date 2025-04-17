@@ -50,4 +50,11 @@ class CourseLesson extends Model
             return self::SKILLS[$skill] ?? $skill;
         }, $this->skills ?? []);
     }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'course_lesson_user')
+                    ->withPivot('completed', 'progress', 'started_at', 'completed_at')
+                    ->withTimestamps();
+    }
 }
