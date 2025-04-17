@@ -15,10 +15,27 @@ class StudentQuizController extends Controller
      */
     public function index()
     {
-      $quizzes = Quiz::where('status', 'active')->get();
-      return inertia('Student/Quiz/Index', [
-          'quizzes' => $quizzes,
-      ]);
+      $quizzes = Quiz::where('status', 'active')->get()->map(function ($quiz) {
+              return [
+                  'id' => $quiz->id,
+                  'title' => $quiz->title,
+                  'description' => $quiz->description ?? '',
+                  'level' => $quiz->level ?? 'نامشخص',
+                  'time_limit' => $quiz->time_limit,
+                  'pass_score' => $quiz->pass_score,
+                  'status' => $quiz->status,
+                  'type' => match ($quiz->type) {
+                      'lesson' => 'course',
+                      'final' => 'free',
+                      'placement' => 'practice',
+                      default => 'unknown'
+                  },
+              ];
+          });
+
+          return Inertia::render('Student/Quiz/Index', [
+              'quizzes' => $quizzes,
+          ]);
     }
 
     /**
