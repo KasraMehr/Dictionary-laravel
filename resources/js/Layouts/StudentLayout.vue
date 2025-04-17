@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue'
-import {Head, router} from '@inertiajs/vue3'
+import {Head, router, Link} from '@inertiajs/vue3'
 import {
     ChevronLeftIcon,
     ChevronRightIcon,
@@ -66,12 +66,14 @@ const logout = () => {
             <!-- Logo & Quick Actions -->
             <div class="p-6 border-b border-white/30 dark:border-gray-700/30">
                 <div class="flex items-center justify-between">
-                    <h1 v-if="!miniMode" class="text-2xl font-bold text-red-600">
-                        Modern Dictionary
+                  <Link href="/" class="text-red-600 no-underline">
+                    <h1 v-if="!miniMode" class="text-2xl font-bold">
+                      Modern Dictionary
                     </h1>
-                    <h1 v-else class="text-xl font-bold text-red-600">
-                        MD
+                    <h1 v-else class="text-xl font-bold">
+                      MD
                     </h1>
+                  </Link>
                     <button @click="toggleMiniMode" class="p-1 rounded-full hover:bg-white/50 dark:hover:bg-gray-700/30 text-gray-700 dark:text-gray-100 shadow-sm">
                         <ChevronRightIcon v-if="!miniMode" class="w-5 h-5" />
                         <ChevronLeftIcon v-else class="w-5 h-5" />
