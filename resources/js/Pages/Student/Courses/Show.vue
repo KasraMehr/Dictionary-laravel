@@ -100,7 +100,7 @@
           </div>
 
           <!-- ناوبری بین درس‌ها -->
-          <div class="flex justify-between mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
+          <div class="flex justify-between mt-8 pt-6 border-t text-gray-700 dark:text-gray-200 border-gray-200 dark:border-gray-700">
             <button v-if="previousLesson"
                     @click="activeLesson = previousLesson"
                     class="flex items-center gap-2 px-4 py-2 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors">
@@ -134,15 +134,21 @@ import {
 } from '@heroicons/vue/24/outline'
 import StudentLayout from "@/Layouts/StudentLayout.vue"
 
+const { course } = defineProps({
+  course: Object,
+  // lessons: Array,
+  // progress: Number
+});
+
 // داده‌های فیک
-const course = ref({
-  id: 1,
-  title: 'آموزش پیشرفته Vue.js',
-  description: 'دوره جامع آموزش Vue.js از مقدماتی تا پیشرفته',
-  image_url: 'https://images.unsplash.com/photo-1626785774573-4b799315345d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-  skills: ['خواندن', 'نوشتن', 'واژگان'],
-  progress: 65
-})
+// const course = ref({
+//   id: 1,
+//   title: 'آموزش پیشرفته Vue.js',
+//   description: 'دوره جامع آموزش Vue.js از مقدماتی تا پیشرفته',
+//   image_url: 'https://images.unsplash.com/photo-1626785774573-4b799315345d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
+//   skills: ['خواندن', 'نوشتن', 'واژگان'],
+//   progress: 65
+// })
 
 const lessons = ref([
   {
