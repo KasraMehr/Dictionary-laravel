@@ -114,52 +114,24 @@
 import { ref, computed } from 'vue';
 import StudentLayout from '@/Layouts/StudentLayout.vue';
 
-// دیتای نمونه با جزئیات بیشتر
-const quizzes = ref([
-  {
-    id: 1,
-    title: "آزمون لغات پیشرفته",
-    description: "سنجش دایره لغات شما در سطح C1",
-    level: "پیشرفته",
-    time_limit: 25,
-    pass_score: 80,
-    status: "active",
-    type: "course"
-  },
-  {
-    id: 2,
-    title: "گرامر IELTS",
-    description: "تمرین ساختارهای پیچیده گرامری",
-    level: "متوسط",
-    time_limit: 30,
-    pass_score: 75,
-    status: "completed",
-    type: "free"
-  },
-  {
-    id: 3,
-    title: "مکالمه روزمره",
-    description: "اصطلاحات پرکاربرد انگلیسی",
-    level: "مبتدی",
-    time_limit: 15,
-    pass_score: 70,
-    status: "upcoming",
-    type: "practice"
-  }
-]);
+const props = defineProps({
+  quizzes: Array
+});
 
 const tabs = ref([
-  { id: 'all', label: 'همه آزمون‌ها' },
-  { id: 'course', label: 'دوره‌ای' },
-  { id: 'free', label: 'آزاد' },
-  { id: 'practice', label: 'تمرینی' }
+  { id: 'course', label: 'درسی' },
+  { id: 'free', label: 'پایانی' },
+  { id: 'practice', label: 'تعیین سطح' },
+  { id: 'unknown', label: 'نامشخص' }
 ]);
 
 const activeTab = ref('all');
 const searchQuery = ref('');
 
 const filteredQuizzes = computed(() => {
-  return quizzes.value.filter(quiz => {
+  // Access quizzes directly from props
+  const quizList = props.quizzes ?? [];
+  return quizList.filter(quiz => {
     const matchesTab = activeTab.value === 'all' || quiz.type === activeTab.value;
     const matchesSearch = quiz.title.toLowerCase().includes(searchQuery.value.toLowerCase());
     return matchesTab && matchesSearch;
