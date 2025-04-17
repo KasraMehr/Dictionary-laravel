@@ -2,6 +2,10 @@
 import { ref, computed } from 'vue';
 import StudentLayout from "@/Layouts/StudentLayout.vue";
 
+const props = defineProps({
+  quiz: Object
+});
+
 // دیتای آماده برای آزمون و سوالات
 const mockQuizzes = [
   {
@@ -48,14 +52,14 @@ const mockQuizzes = [
     <div class="bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg border-b border-white/30 dark:border-gray-700/30 p-4 shadow-sm">
       <div class="container mx-auto flex justify-between items-center">
         <h1 class="text-2xl font-bold text-red-600">{{ quiz.title }}</h1>
-        <div class="flex items-center space-x-4" :class="locale === 'fa' ? 'space-x-reverse' : ''">
-          <div class="bg-white/80 dark:bg-gray-800/50 px-4 py-2 rounded-xl shadow-soft">
+        <div class="flex items-center" :class="locale === 'fa' ? 'space-x-reverse' : ''">
+          <div class="bg-white/80 dark:bg-gray-800/50 px-4 py-2 mx-2 rounded-xl shadow-soft">
             <span class="text-gray-700 dark:text-gray-300">زمان: </span>
-            <span class="font-medium">{{ quiz.time_limit }} دقیقه</span>
+            <span class="font-medium text-gray-800 dark:text-gray-200">{{ quiz.time_limit }} دقیقه</span>
           </div>
-          <div class="bg-white/80 dark:bg-gray-800/50 px-4 py-2 rounded-xl shadow-soft">
+          <div class="bg-white/80 dark:bg-gray-800/50 px-4 py-2 mx-2 rounded-xl shadow-soft">
             <span class="text-gray-700 dark:text-gray-300">حداقل نمره: </span>
-            <span class="font-medium">{{ quiz.pass_score }}</span>
+            <span class="font-medium text-gray-800 dark:text-gray-200">{{ quiz.pass_score }}</span>
           </div>
         </div>
       </div>
@@ -303,39 +307,39 @@ import {     ArrowLeftIcon,
       return {
         quizStarted: false,
         quizCompleted: false,
-        quiz: {
-          title: "آزمون نمونه لغات انگلیسی",
-          time_limit: 5, // minutes
-          pass_score: 70,
-          questions: [
-            {
-              id: 1,
-              question_text: "معنی کلمه 'Eloquent' چیست؟",
-              question_type: "multiple_choice",
-              options: ["بی‌ربط", "فصیح و بلیغ", "عجول", "مبهم"],
-              correct_answer: "فصیح و بلیغ"
-            },
-            {
-              id: 2,
-              question_text: "کلمه 'Pragmatic' به معنای عمل‌گرا است.",
-              question_type: "true_false",
-              correct_answer: true
-            },
-            {
-              id: 3,
-              question_text: "معنی کلمه 'Ephemeral' را در یک کلمه بنویسید.",
-              question_type: "short_answer",
-              correct_answer: "زودگذر"
-            },
-            {
-              id: 4,
-              question_text: "کدام گزینه مترادف 'Benevolent' نیست؟",
-              question_type: "multiple_choice",
-              options: ["نیکوکار", "خیرخواه", "سخاوتمند", "خسیس"],
-              correct_answer: "خسیس"
-            }
-          ]
-        },
+        // quiz: {
+        //   title: "آزمون نمونه لغات انگلیسی",
+        //   time_limit: 5, // minutes
+        //   pass_score: 70,
+        //   questions: [
+        //     {
+        //       id: 1,
+        //       question_text: "معنی کلمه 'Eloquent' چیست؟",
+        //       question_type: "multiple_choice",
+        //       options: ["بی‌ربط", "فصیح و بلیغ", "عجول", "مبهم"],
+        //       correct_answer: "فصیح و بلیغ"
+        //     },
+        //     {
+        //       id: 2,
+        //       question_text: "کلمه 'Pragmatic' به معنای عمل‌گرا است.",
+        //       question_type: "true_false",
+        //       correct_answer: true
+        //     },
+        //     {
+        //       id: 3,
+        //       question_text: "معنی کلمه 'Ephemeral' را در یک کلمه بنویسید.",
+        //       question_type: "short_answer",
+        //       correct_answer: "زودگذر"
+        //     },
+        //     {
+        //       id: 4,
+        //       question_text: "کدام گزینه مترادف 'Benevolent' نیست؟",
+        //       question_type: "multiple_choice",
+        //       options: ["نیکوکار", "خیرخواه", "سخاوتمند", "خسیس"],
+        //       correct_answer: "خسیس"
+        //     }
+        //   ]
+        // },
         currentQuestionIndex: 0,
         selectedAnswer: null,
         shortAnswer: "",
