@@ -5,14 +5,14 @@
         <div class="flex items-center justify-between">
             <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-100">دوره‌های من</h2>
             <div class="relative">
-                <button @click="showFilters = !showFilters" class="flex items-center gap-2 px-4 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-<!--                    <FilterIcon class="w-5 h-5" />-->
+                <button @click="showFilters = !showFilters" class="flex items-center gap-2 px-4 py-2 bg-white text-gray-800 dark:text-gray-200 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                   <FunnelIcon class="w-5 h-5" />
                     <span>فیلترها</span>
                 </button>
 
                 <!-- Filter Dropdown -->
-                <div v-if="showFilters" class="absolute right-0 mt-2 w-56 bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 z-10">
-                    <div class="p-4 space-y-3">
+                <div v-if="showFilters" class="absolute left-0 mt-2 w-56 bg-white text-gray-700 dark:text-gray-300 dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 z-10">
+                    <div class="p-4 mx-auto space-y-3">
                         <div>
                             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">وضعیت دوره</label>
                             <select v-model="filters.status" class="w-full text-sm border-gray-200 dark:border-gray-700 rounded bg-gray-50 dark:bg-gray-700">
@@ -82,25 +82,20 @@
         <!-- Courses Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <div
-                v-if="fakecourses.length > 0"
-                v-for="course in fakecourses"
+                v-if="courses?.data?.length > 0"
+                v-for="course in courses.data"
                 :key="course.id"
                 class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-md transition-shadow overflow-hidden"
             >
                 <div class="relative">
-                    <img :src="course.image_url" class="w-full h-48 object-cover" />
-                    <div class="absolute bottom-3 left-3 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm px-2 py-1 rounded-lg text-sm font-medium">
-<!--                        {{ course.category.name }}-->
-                        کتگوری
-                    </div>
-
+                    <img :src="`/storage/${course.thumbnail}`"  alt="${course.thumbnail}" @error="setDefaultImage" class="w-full h-48 object-cover" />
                 </div>
 
                 <div class="p-4">
                     <div class="flex items-start justify-between">
                         <div>
                             <h3 class="font-bold text-lg text-gray-800 dark:text-gray-100 mb-1">{{ course.title }}</h3>
-                            <p class="text-sm text-gray-500 dark:text-gray-400">{{ course.created_by.name }}</p>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">{{ course.creator_name }}</p>
                         </div>
                         <div class="flex items-center space-x-1 text-yellow-500">
                             <StarIcon v-for="i in 5" :key="i" class="w-4 h-4" :class="{'text-gray-300 dark:text-gray-600': i > course.rating}" />
@@ -110,25 +105,26 @@
                     <div class="mt-4">
                         <div class="flex items-center justify-between text-sm mb-1">
                             <span class="text-gray-500 dark:text-gray-400">پیشرفت</span>
-                            <span class="font-medium">{{ course.pivot.progress }}%</span>
+                            <span v-if="course.pivot" class="font-medium">{{ course.pivot.progress }}%</span>
                         </div>
                         <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
                             <div
+                                v-if="course.pivot"
                                 class="h-2 rounded-full"
                                 :class="{
-                  'bg-green-500': course.pivot.progress === 100,
-                  'bg-blue-500': course.pivot.progress < 100 && course.pivot.progress > 0,
-                  'bg-gray-400': course.pivot.progress === 0
-                }"
+                                  'bg-green-500': course.pivot.progress === 100,
+                                  'bg-blue-500': course.pivot.progress < 100 && course.pivot.progress > 0,
+                                  'bg-gray-400': course.pivot.progress === 0
+                                }"
                                 :style="`width: ${course.pivot.progress}%`"
                             ></div>
                         </div>
                     </div>
 
                     <div class="mt-4 flex items-center justify-between">
-            <span class="text-xs text-gray-500 dark:text-gray-400">
-              تاریخ شروع: {{ formatDate(course.pivot.enrolled_at) }}
-            </span>
+                      <span v-if="course.pivot" class="text-xs text-gray-500 dark:text-gray-400">
+                        تاریخ شروع: {{ formatDate(course.pivot.enrolled_at) }}
+                      </span>
                         <div class="flex gap-2">
                             <button
                                 @click="continueCourse(course)"
@@ -137,7 +133,7 @@
                                 ادامه یادگیری
                             </button>
                             <button
-                                v-if="course.pivot.progress < 100"
+                                v-if="course.pivot && course.pivot.progress < 100"
                                 @click="showCourseDetails(course)"
                                 class="px-3 py-1.5 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 text-sm rounded-lg transition-colors"
                             >
@@ -150,7 +146,7 @@
         </div>
 
         <!-- Empty State -->
-        <div v-if="fakecourses.length === 0" class="text-center py-12">
+        <div v-if="courses.length === 0" class="text-center py-12">
             <div class="mx-auto w-24 h-24 text-gray-400">
                 <BookOpenIcon class="w-full h-full" />
             </div>
@@ -244,15 +240,18 @@ import {
     BookOpenIcon,
     ClockIcon,
     CheckCircleIcon,
-    StarIcon
+    StarIcon,
+    FunnelIcon
 } from '@heroicons/vue/24/outline'
 import Modal from '@/Components/Modal.vue'
 import StudentLayout from "@/Layouts/StudentLayout.vue";
 
-const props = defineProps({
-    courses: Array,
-    stats: Object
-})
+const { courses, stats } = defineProps({
+  courses: Array,
+  stats: Object
+});
+
+console.log(courses);
 
 const fakecourses = ref([
     {
@@ -364,4 +363,8 @@ const unrollCourse = (course) => {
 const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString('fa-IR')
 }
+
+const setDefaultImage = (event) => {
+  event.target.src = "/images/default-image.jpg";
+};
 </script>
