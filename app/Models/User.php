@@ -139,6 +139,13 @@ class User extends Authenticatable
             ]);
     }
 
+    public function lessons()
+    {
+        return $this->belongsToMany(CourseLesson::class, 'course_lesson_user')
+                    ->withPivot('completed', 'progress', 'started_at', 'completed_at')
+                    ->withTimestamps();
+    }
+
     public function quizzes(): BelongsToMany
     {
         return $this->belongsToMany(Quiz::class, 'user_quiz_attempts', 'user_id', 'quiz_id');
