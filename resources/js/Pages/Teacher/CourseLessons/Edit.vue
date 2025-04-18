@@ -1,17 +1,19 @@
 <script setup>
 import { useForm } from '@inertiajs/vue3';
-import SkillContent from '@/Components/Teacher/CourseLessons/SkillContent.vue';
+import SkillContent from './SkillContent.vue';
+import TeacherLayout from '@/Layouts/TeacherLayout.vue';
 
 const props = defineProps({
     course: Object,
+    lesson: Object,
     skills: Object
 });
 
 const form = useForm({
-    title: '',
-    description: '',
-    skills: [],
-    content: {},
+    title: props.lesson.title,
+    description: props.lesson.title,
+    skills: props.lesson.title,
+    content: props.lesson.title,
     quiz_id: null
 });
 
@@ -30,15 +32,13 @@ const removeSkill = (skill) => {
 
 <template>
     <TeacherLayout title="ایجاد درس جدید">
-        <template #header>
             <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-200">
                 ایجاد درس جدید برای دوره: {{ course.title }}
             </h2>
-        </template>
 
         <div class="py-6">
             <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="bg-white dark:bg-gray-900 overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6">
                         <form @submit.prevent="form.post(route('teacher.course-lessons.store', course.id))">
                             <!-- اطلاعات پایه درس -->
