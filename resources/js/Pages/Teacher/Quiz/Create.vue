@@ -1,24 +1,39 @@
 <template>
   <TeacherLayout>
     <Head :title="quiz ? 'ویرایش آزمون' : 'ایجاد آزمون جدید'" />
+    <div class="flex items-center justify-between">
+        <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-100 flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-blue-500" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm5 6a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V8z" clip-rule="evenodd" />
+            </svg>
+              ایجاد آزمون جدید
+        </h2>
+        <Link
+            :href="route('teacher.quizzes.index')"
+            class="flex items-center text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
+        >
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+            </svg>
+            بازگشت به لیست آزمون ها
+        </Link>
+    </div>
 
     <div class="max-w-4xl mx-auto py-6 sm:px-6 lg:px-8">
-      <div class="bg-white dark:bg-gray-700 shadow rounded-lg p-6">
-        <h2 class="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-6">{{ quiz ? 'ویرایش آزمون' : 'ایجاد آزمون جدید' }}</h2>
-
+      <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden p-6">
         <form @submit.prevent="submit">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <!-- عنوان آزمون -->
             <div class="md:col-span-2">
               <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">عنوان آزمون *</label>
-              <input v-model="form.title" type="text" class="w-full rounded-md border-gray-300 bg-gray-200 dark:bg-gray-900 text-gray-800 dark:text-gray-200 shadow-sm">
+              <input v-model="form.title" type="text" class="w-full rounded-md border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all">
               <p v-if="form.errors.title" class="mt-1 text-sm text-red-600">{{ form.errors.title }}</p>
             </div>
 
             <!-- نوع آزمون -->
             <div>
               <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">نوع آزمون *</label>
-              <select v-model="form.type" class="w-full rounded-md border-gray-300 bg-gray-200 dark:bg-gray-900 text-gray-800 dark:text-gray-200 shadow-sm">
+              <select v-model="form.type" class="w-full rounded-md border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all">
                 <option value="lesson">آزمون درس</option>
                 <option value="final">آزمون پایانی</option>
                 <option value="placement">آزمون تعیین سطح</option>
@@ -28,7 +43,7 @@
             <!-- دوره مرتبط -->
             <div>
               <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">دوره مرتبط</label>
-              <select v-model="form.course_id" class="w-full rounded-md border-gray-300 bg-gray-200 dark:bg-gray-900 text-gray-800 dark:text-gray-200 shadow-sm">
+              <select v-model="form.course_id" class="w-full rounded-md border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all">
                 <option value="">-- بدون دوره --</option>
                 <option v-for="course in courses" :key="course.id" :value="course.id">{{ course.title }}</option>
               </select>
@@ -37,7 +52,7 @@
             <!-- سطح -->
             <div>
               <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">سطح</label>
-              <select v-model="form.level" class="w-full rounded-md border-gray-300 bg-gray-200 dark:bg-gray-900 text-gray-800 dark:text-gray-200 shadow-sm">
+              <select v-model="form.level" class="w-full rounded-md border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all">
                 <option value="">-- انتخاب کنید --</option>
                 <option value="A1">A1 (مبتدی)</option>
                 <option value="A2">A2 (مقدماتی)</option>
@@ -51,14 +66,14 @@
             <!-- زمان محدود -->
             <div>
               <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">زمان محدود (دقیقه)</label>
-              <input v-model.number="form.time_limit" type="number" min="0" class="w-full rounded-md border-gray-300 bg-gray-200 dark:bg-gray-900 text-gray-800 dark:text-gray-200 shadow-sm">
+              <input v-model.number="form.time_limit" type="number" min="0" class="w-full rounded-md border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all">
               <p class="mt-1 text-xs text-gray-500">0 به معنای بدون محدودیت زمانی</p>
             </div>
 
             <!-- نمره قبولی -->
             <div>
               <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">نمره قبولی (درصد)</label>
-              <input v-model.number="form.pass_score" type="number" min="0" max="100" class="w-full rounded-md border-gray-300 bg-gray-200 dark:bg-gray-900 text-gray-800 dark:text-gray-200 shadow-sm">
+              <input v-model.number="form.pass_score" type="number" min="0" max="100" class="w-full rounded-md border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all">
             </div>
 
             <!-- وضعیت -->
