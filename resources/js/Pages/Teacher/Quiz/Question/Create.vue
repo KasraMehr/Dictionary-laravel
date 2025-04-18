@@ -1,6 +1,27 @@
 <template>
   <TeacherLayout>
-    <Head :title="question ? 'ویرایش سوال' : 'ایجاد سوال جدید'" />
+    <div class="flex items-center justify-between">
+        <div>
+            <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-100 flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-blue-500" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+                </svg>
+                ایجاد سوال جدید
+            </h2>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                آزمون: <span class="font-medium text-gray-700 dark:text-gray-300">{{ props.quiz.title }}</span>
+            </p>
+        </div>
+        <Link
+            :href="route('teacher.quizzes.show', quiz.id)"
+            class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-gray-500 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+        >
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+            </svg>
+            بازگشت
+        </Link>
+    </div>
 
     <div class="max-w-4xl mx-auto py-6 sm:px-6 lg:px-8">
       <div class="bg-white dark:bg-gray-700 shadow rounded-lg p-6">
@@ -143,6 +164,9 @@ const removeOption = (index) => {
 };
 
 const submit = () => {
+  if (form.question_type === 'mcq') {
+    form.correct_answer = form.correct_answer.toString();
+  }
   props.question
     ? form.put(route('teacher.questions.update', props.question.id))
     : form.post(route('teacher.questions.store'));
