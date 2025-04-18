@@ -2,7 +2,7 @@
 <script setup>
 import TeacherLayout from '@/Layouts/TeacherLayout.vue';
 import { useForm, Link } from '@inertiajs/vue3';
-import { getFileIconComponent } from '@/Utils/fileIcons';
+import {getFileIconComponent} from "@/utils/fileIcons.js";
 
 const props = defineProps({
     resource: Object,
