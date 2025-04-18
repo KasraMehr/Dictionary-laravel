@@ -48,6 +48,7 @@ class CourseController extends Controller
             'level' => 'required|string|in:A1,A2,B1,B2,C1,C2',
             'topic' => 'nullable|string|max:255',
             'is_free' => 'boolean',
+            'price' => 'nullable|numeric|min:0',
             'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'trailer_url' => 'nullable|url',
             'language' => 'required|string|max:2',
@@ -58,7 +59,7 @@ class CourseController extends Controller
             $count = Course::where('slug', $slug)->count();
 
             if ($count > 0) {
-                $slug = $slug . '-' . time(); // اضافه کردن timestamp برای منحصر به فرد بودن
+                $slug = $slug . '-' . time();
             }
 
 
@@ -105,6 +106,7 @@ class CourseController extends Controller
           'level' => 'required|in:A1,A2,B1,B2,C1,C2',
           'topic' => 'nullable|string|max:255',
           'is_free' => 'boolean',
+          'price' => 'nullable|numeric|min:0',
           'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
           'trailer_url' => 'nullable|url',
           'language' => 'required|string|max:2',
