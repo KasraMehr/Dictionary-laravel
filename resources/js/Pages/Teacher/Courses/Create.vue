@@ -108,14 +108,34 @@
 
                                 <!-- نوع دوره و تصویر -->
                                 <div>
-                                    <label class="flex items-center space-x-2 space-x-reverse">
-                                        <input
-                                            type="checkbox"
-                                            v-model="form.is_free"
-                                            class="h-4 w-4 rounded text-indigo-600 focus:ring-indigo-500 border-gray-300 dark:border-gray-600 dark:bg-gray-700"
-                                        />
-                                        <span class="text-sm text-gray-700 dark:text-gray-300">دوره رایگان است</span>
-                                    </label>
+                                  <label class="flex items-center space-x-2 space-x-reverse">
+                                    <input
+                                      type="checkbox"
+                                      v-model="form.is_free"
+                                      class="h-4 w-4 rounded text-indigo-600 focus:ring-indigo-500 border-gray-300 dark:border-gray-600 dark:bg-gray-700"
+                                    />
+                                    <span class="text-sm text-gray-700 dark:text-gray-300">دوره رایگان است</span>
+                                  </label>
+
+                                  <!-- فیلد قیمت وقتی is_free false باشه -->
+                                  <Transition
+                                    enter-active-class="transition duration-300 ease-out"
+                                    enter-from-class="opacity-0 max-h-0"
+                                    enter-to-class="opacity-100 max-h-40"
+                                    leave-active-class="transition duration-300 ease-in"
+                                    leave-from-class="opacity-100 max-h-40"
+                                    leave-to-class="opacity-0 max-h-0"
+                                  >
+                                    <div v-if="!form.is_free" class="mt-8">
+                                      <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">قیمت دوره (تومان)</label>
+                                      <input
+                                        type="text"
+                                        v-model="formattedPrice"
+                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:bg-gray-800 dark:border-gray-600 dark:text-white"
+                                        placeholder="مثلاً 250,000"
+                                      />
+                                    </div>
+                                  </Transition>
                                 </div>
 
                                 <div class="md:col-span-2">
@@ -123,8 +143,8 @@
                                     <div class="mt-2 flex items-center space-x-4 space-x-reverse">
                                         <div class="shrink-0">
                                             <img
-                                                v-if="form.thumbnail && typeof form.thumbnail === 'string'"
-                                                :src="'/storage/' + form.thumbnail"
+                                                v-if="thumbnailPreview"
+                                                :src="thumbnailPreview"
                                                 class="h-24 w-24 rounded-lg object-cover border border-gray-200 dark:border-gray-600"
                                             />
                                             <img
@@ -143,7 +163,7 @@
                                             <input
                                                 type="file"
                                                 id="thumbnail"
-                                                @change="form.thumbnail = $event.target.files[0]"
+                                                @change="handleThumbnailChange"
                                                 accept="image/*"
                                                 class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 dark:file:bg-indigo-900 dark:file:text-indigo-200 dark:hover:file:bg-indigo-800"
                                             />
@@ -204,6 +224,7 @@
 
 <script setup>
 import { Head, useForm } from '@inertiajs/vue3';
+import { ref, watch, onMounted, computed } from 'vue';
 import TeacherLayout from '@/Layouts/TeacherLayout.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import TextInput from '@/Components/TextInput.vue';
@@ -225,11 +246,44 @@ const form = useForm({
     level: props.course?.level || 'A1',
     topic: props.course?.topic || '',
     is_free: props.course?.is_free ?? true,
+    price: props.course?.price || null,
     thumbnail: props.course?.thumbnail || null,
     trailer_url: props.course?.trailer_url || '',
     language: props.course?.language || 'fa',
     status: props.course?.status || 'draft'
 });
+
+const formattedPrice = ref('');
+
+watch(formattedPrice, (newVal) => {
+  const plainValue = newVal.replace(/,/g, ''); // حذف کاماها
+  if (!isNaN(plainValue)) {
+    // آپدیت فیلد اصلی فرم بدون کاما
+    form.price = plainValue;
+
+    // نمایش جدا شده در input
+    formattedPrice.value = Number(plainValue).toLocaleString('en-US');
+  }
+});
+
+
+const thumbnailPreview = ref(
+    typeof form.thumbnail === 'string' ? '/storage/' + form.thumbnail : null
+);
+
+const handleThumbnailChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+        form.thumbnail = file;
+
+        // اگر قبلاً preview داشت، آدرس blob قبلی رو آزاد کن
+        if (thumbnailPreview.value && thumbnailPreview.value.startsWith('blob:')) {
+            URL.revokeObjectURL(thumbnailPreview.value);
+        }
+
+        thumbnailPreview.value = URL.createObjectURL(file);
+    }
+};
 
 const submitForm = () => {
     props.course
