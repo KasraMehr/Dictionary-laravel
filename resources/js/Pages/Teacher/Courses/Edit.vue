@@ -111,31 +111,36 @@ const submit = () => {
     <Head :title="'ویرایش دوره - ' + course.title" />
 
     <TeacherLayout>
-        <template #header>
-            <div class="flex justify-between items-center">
-                <h2 class="font-bold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                    ویرایش دوره: {{ course.title }}
-                </h2>
-                <Link :href="route('teacher.courses.index')" as="button">
-                    <PrimaryButton>
-                        بازگشت به لیست دوره‌ها
-                    </PrimaryButton>
-                </Link>
-            </div>
-        </template>
+      <div class="flex items-center justify-between">
+          <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-100 flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-blue-500" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+              </svg>
+                ویرایش دوره: {{ course.title }}
+          </h2>
+          <Link
+              :href="route('teacher.courses.index')"
+              class="flex items-center text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
+          >
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+              </svg>
+              بازگشت به لیست دوره ها
+          </Link>
+      </div>
 
         <div class="py-6">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white dark:bg-gray-950 overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden">
                     <form @submit.prevent="submit" class="p-6 space-y-6">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <!-- عنوان دوره -->
                             <div class="md:col-span-2">
                                 <InputLabel for="title" value="عنوان دوره *" />
-                                <TextInput
+                                <input
                                     id="title"
                                     type="text"
-                                    class="mt-1 block w-full"
+                                    class="w-full rounded-md border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
                                     v-model="form.title"
                                     required
                                     autofocus
@@ -190,10 +195,10 @@ const submit = () => {
                             <!-- موضوع دوره -->
                             <div>
                                 <InputLabel for="topic" value="موضوع دوره" />
-                                <TextInput
+                                <input
                                     id="topic"
                                     type="text"
-                                    class="mt-1 block w-full"
+                                    class="w-full rounded-md border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
                                     v-model="form.topic"
                                 />
                                 <InputError class="mt-2" :message="form.errors.topic" />
@@ -310,10 +315,10 @@ const submit = () => {
                             <!-- لینک تریلر -->
                             <div class="md:col-span-2">
                                 <InputLabel for="trailer_url" value="لینک تریلر دوره (اختیاری)" />
-                                <TextInput
+                                <input
                                     id="trailer_url"
                                     type="url"
-                                    class="mt-1 block w-full"
+                                    class="w-full rounded-md border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
                                     v-model="form.trailer_url"
                                     placeholder="https://www.youtube.com/watch?v=..."
                                 />
