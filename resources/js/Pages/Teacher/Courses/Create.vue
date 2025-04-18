@@ -2,13 +2,27 @@
     <Head :title="props.course ? 'ویرایش دوره' : 'ایجاد دوره جدید'" />
 
     <TeacherLayout>
-            <h2 class="text-2xl font-bold text-gray-900 dark:text-gray-100">
-                {{ props.course ? 'ویرایش دوره' : 'ایجاد دوره جدید' }}
-            </h2>
+      <div class="flex items-center justify-between">
+          <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-100 flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-blue-500" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm5 6a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V8z" clip-rule="evenodd" />
+              </svg>
+              افزودن دوره جدید
+          </h2>
+          <Link
+              :href="route('teacher.courses.index')"
+              class="flex items-center text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
+          >
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+              </svg>
+              بازگشت به لیست دوره ها
+          </Link>
+      </div>
 
         <div class="py-8">
             <div class="w-full mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="bg-white dark:bg-gray-950 rounded-xl shadow-md overflow-hidden">
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden">
                     <div class="p-6 sm:p-8">
                         <form @submit.prevent="submitForm" class="space-y-6">
                             <!-- Grid برای بخش‌های اصلی -->
@@ -16,10 +30,10 @@
                                 <!-- عنوان دوره -->
                                 <div class="md:col-span-2">
                                     <InputLabel for="title" value="عنوان دوره *" />
-                                    <TextInput
+                                    <input
                                         id="title"
                                         v-model="form.title"
-                                        class="mt-2 w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 shadow-sm focus:border-red-500 focus:ring-red-600"
+                                        class="mt-2 w-full rounded-md border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
                                         :error="form.errors.title"
                                         required
                                     />
@@ -73,10 +87,10 @@
                                 <!-- موضوع و وضعیت دوره -->
                                 <div>
                                     <InputLabel for="topic" value="موضوع دوره" />
-                                    <TextInput
+                                    <input
                                         id="topic"
                                         v-model="form.topic"
-                                        class="mt-2 w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 shadow-sm focus:border-red-500 focus:ring-red-600"
+                                        class="mt-2 w-full rounded-md border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
                                         :error="form.errors.topic"
                                     />
                                 </div>
@@ -177,12 +191,12 @@
                                 <!-- لینک تریلر -->
                                 <div class="md:col-span-2">
                                     <InputLabel for="trailer_url" value="لینک تریلر دوره (اختیاری)" />
-                                    <TextInput
+                                    <input
                                         id="trailer_url"
                                         v-model="form.trailer_url"
                                         type="url"
                                         placeholder="https://www.youtube.com/watch?v=..."
-                                        class="mt-2 w-full"
+                                        class="w-full rounded-md border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
                                         :error="form.errors.trailer_url"
                                     />
                                 </div>
@@ -223,7 +237,7 @@
 </template>
 
 <script setup>
-import { Head, useForm } from '@inertiajs/vue3';
+import { Head, useForm, Link } from '@inertiajs/vue3';
 import { ref, watch, onMounted, computed } from 'vue';
 import TeacherLayout from '@/Layouts/TeacherLayout.vue';
 import InputLabel from '@/Components/InputLabel.vue';
