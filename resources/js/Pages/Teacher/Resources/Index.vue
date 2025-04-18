@@ -2,7 +2,7 @@
 import { Link } from '@inertiajs/vue3';
 import TeacherLayout from '@/Layouts/TeacherLayout.vue';
 import Pagination from '@/Components/Pagination.vue';
-import {ref, watch} from 'vue';
+import {ref, watch, computed} from 'vue';
 import {getFileIconComponent} from "@/utils/fileIcons.js";
 import {useStepper as $inertia} from "@vueuse/core";
 
@@ -20,12 +20,12 @@ watch(() => props.filters, (newFilters) => {
     selectedCourse.value = newFilters?.course_id || '';
 }, { immediate: true });
 
-const handleCourseChange = () => {
-    $inertia.get(route('teacher.resources.index'),
-        { course_id: selectedCourse.value || null },
-        { preserveState: true }
-    );
-};
+const filteredResources = computed(() => {
+    if (!selectedCourse.value) {
+        return props.resources.data;
+    }
+    return props.resources.data.filter(resource => resource.course_id === parseInt(selectedCourse.value));
+});
 </script>
 
 <template>
@@ -40,16 +40,16 @@ const handleCourseChange = () => {
                     <div class="p-6">
                         <div class="flex justify-between items-center mb-6">
                             <div class="flex items-center space-x-4">
-                                <select
-                                    v-model="selectedCourse"
-                                    @change="handleCourseChange"
-                                    class="border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 rounded-md shadow-sm"
-                                >
-                                    <option value="">همه دوره‌ها</option>
-                                    <option v-for="(title, id) in courses" :key="id" :value="id">
-                                        {{ title }}
-                                    </option>
-                                </select>
+                              <select
+                                  v-model="selectedCourse"
+                                  class="border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 rounded-md shadow-sm"
+                              >
+                                  <option value="">همه دوره‌ها</option>
+                                  <option v-for="(title, id) in props.courses" :key="id" :value="id">
+                                      {{ title }}
+                                  </option>
+                              </select>
+
                             </div>
 
                             <Link :href="route('teacher.resources.create')"
@@ -78,7 +78,7 @@ const handleCourseChange = () => {
                                 </thead>
                                 <tbody class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700">
                                 <tr
-                                    v-for="resource in resources.data"
+                                    v-for="resource in filteredResources"
                                     :key="resource.id"
                                     class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
                                 >
