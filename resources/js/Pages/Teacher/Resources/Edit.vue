@@ -59,7 +59,7 @@ const deleteCurrentFile = () => {
                                     type="text"
                                     required
                                     placeholder="عنوان منبع آموزشی"
-                                    class="block w-full px-4 py-2.5 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                                    class="block w-full px-4 py-2.5 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-red-500 transition-all"
                                 >
                                 <p v-if="form.errors.title" class="mt-2 text-sm text-red-600 dark:text-red-400">
                                     {{ form.errors.title }}
