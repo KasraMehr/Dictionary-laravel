@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import { Head, Link, useForm, router } from '@inertiajs/vue3';
 import TeacherLayout from '@/Layouts/TeacherLayout.vue';
 import InputLabel from '@/Components/InputLabel.vue';
@@ -20,11 +20,33 @@ const form = useForm({
     level: props.course.level,
     topic: props.course.topic,
     is_free: props.course.is_free,
+    price: props.course.price || null,
     thumbnail: null,
     current_thumbnail: props.course.thumbnail,
     trailer_url: props.course.trailer_url,
     language: props.course.language,
     status: props.course.status,
+});
+
+const formattedPrice = ref('');
+
+watch(
+  () => form.price,
+  (newVal) => {
+    if (newVal !== null && newVal !== undefined && newVal !== '') {
+      formattedPrice.value = Number(newVal).toLocaleString('en-US');
+    } else {
+      formattedPrice.value = '';
+    }
+  },
+  { immediate: true }
+);
+
+watch(formattedPrice, (newVal) => {
+  const plainValue = newVal.replace(/,/g, '');
+  if (!isNaN(plainValue)) {
+    form.price = plainValue;
+  }
 });
 
 const thumbnailPreview = ref(null);
@@ -50,13 +72,39 @@ const removeCurrentThumbnail = () => {
 };
 
 const submit = () => {
-    form.put(route('teacher.courses.update', props.course.id), {
-        preserveScroll: true,
-        onSuccess: () => {
-            form.reset();
-        },
-    });
+  const method = props.course ? 'post' : 'post';
+  const url = props.course
+    ? route('teacher.courses.update', props.course.id)
+    : route('teacher.courses.store');
+
+  form.transform((data) => {
+    const formData = new FormData();
+
+    for (const key in data) {
+      if (data[key] !== null && data[key] !== undefined) {
+        formData.append(key, data[key]);
+      }
+    }
+
+    // اگر کاربر بخواد تصویر قبلی رو حذف کنه
+    if (removeThumbnail.value) {
+      formData.append('remove_thumbnail', true);
+    }
+
+    // اگر course وجود داشت و می‌خوایم آپدیت کنیم، باید از Method Spoofing استفاده کنیم
+    if (props.course) {
+      formData.append('_method', 'PUT');
+    }
+
+    return formData;
+  }).submit(method, url, {
+    forceFormData: true,
+    onSuccess: () => {
+      removeThumbnail.value = false;
+    }
+  });
 };
+
 </script>
 
 <template>
@@ -180,14 +228,35 @@ const submit = () => {
 
                             <!-- نوع دوره -->
                             <div>
-                                <label class="flex items-center space-x-2 space-x-reverse">
-                                    <input
-                                        type="checkbox"
-                                        v-model="form.is_free"
-                                        class="h-4 w-4 rounded text-indigo-600 focus:ring-indigo-500 border-gray-300 dark:border-gray-600 dark:bg-gray-700"
+                              <label class="flex items-center space-x-2 space-x-reverse">
+                                <input
+                                  type="checkbox"
+                                  v-model="form.is_free"
+                                  class="h-4 w-4 rounded text-indigo-600 focus:ring-indigo-500 border-gray-300 dark:border-gray-600 dark:bg-gray-700"
+                                />
+                                <span class="text-sm text-gray-700 dark:text-gray-300">دوره رایگان است</span>
+                              </label>
+
+                              <!-- فیلد قیمت وقتی is_free false باشه -->
+                              <Transition
+                                enter-active-class="transition duration-300 ease-out"
+                                enter-from-class="opacity-0 max-h-0"
+                                enter-to-class="opacity-100 max-h-40"
+                                leave-active-class="transition duration-300 ease-in"
+                                leave-from-class="opacity-100 max-h-40"
+                                leave-to-class="opacity-0 max-h-0"
+                              >
+                                <div v-if="!form.is_free" class="mt-8">
+                                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">قیمت دوره (تومان)</label>
+                                  <input
+                                      type="text"
+                                      id="price"
+                                      v-model="formattedPrice"
+                                      class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm dark:bg-gray-800 dark:border-gray-600 dark:text-white"
+                                      placeholder="مثلاً 250,000"
                                     />
-                                    <span class="text-sm text-gray-700 dark:text-gray-300">دوره رایگان است</span>
-                                </label>
+                                </div>
+                              </Transition>
                             </div>
 
                             <!-- تصویر دوره -->
