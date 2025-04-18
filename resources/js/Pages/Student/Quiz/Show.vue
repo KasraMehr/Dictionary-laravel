@@ -140,7 +140,7 @@ const mockQuizzes = [
           </h3>
 
           <!-- Options -->
-          <div v-if="currentQuestion.question_type === 'multiple_choice'" class="space-y-3">
+          <div v-if="currentQuestion.question_type === 'mcq'" class=" grid grid-cols-2 gap-4">
             <div
               v-for="(option, index) in currentQuestion.options"
               :key="index"
@@ -151,15 +151,15 @@ const mockQuizzes = [
                 'bg-white/50 dark:bg-gray-700/50': selectedAnswer !== option
               }"
             >
-              <div class="flex items-center" :class="locale === 'fa' ? 'space-x-reverse space-x-3' : 'space-x-3'">
+              <div class="flex items-center">
                 <div class="flex-shrink-0 w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all"
                   :class="{
                     'border-red-600 bg-red-600 text-white': selectedAnswer === option,
                     'border-gray-300 dark:border-gray-600': selectedAnswer !== option
                   }">
-                  <span class="text-xs font-medium">{{ String.fromCharCode(65 + index) }}</span>
+                  <span class="text-xs text-gray-700 dark:text-gray-300 font-medium">{{ String.fromCharCode(65 + index) }}</span>
                 </div>
-                <span class="text-gray-800 dark:text-gray-200">{{ option }}</span>
+                <span class="text-gray-800 dark:text-gray-200 mx-2">{{ option }}</span>
               </div>
             </div>
           </div>
@@ -230,7 +230,7 @@ const mockQuizzes = [
       </div>
 
       <!-- Quiz Results Screen -->
-      <div v-if="quizCompleted" class="max-w-2xl mx-auto bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl shadow-soft border border-white/30 dark:border-gray-700/30 p-8 text-center">
+      <div v-if="quizCompleted" class="fixed inset-0 z-50 max-w-2xl mx-auto bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl shadow-soft border border-white/30 dark:border-gray-700/30 p-8 text-center">
         <div class="mb-8">
           <div class="w-24 h-24 mx-auto mb-6 rounded-full bg-green-100 dark:bg-green-900/50 flex items-center justify-center">
             <CheckCircleIcon class="w-12 h-12 text-green-600 dark:text-green-400" v-if="passed" />
@@ -307,6 +307,7 @@ import {     ArrowLeftIcon,
       return {
         quizStarted: false,
         quizCompleted: false,
+        showResultModal: false,
         // quiz: {
         //   title: "آزمون نمونه لغات انگلیسی",
         //   time_limit: 5, // minutes
@@ -439,6 +440,7 @@ import {     ArrowLeftIcon,
         clearInterval(this.timer)
         this.quizCompleted = true
         this.calculateResults()
+        this.showResultModal = true
       },
 
       calculateResults() {
@@ -486,7 +488,7 @@ import {     ArrowLeftIcon,
 
       questionTypeLabel(type) {
         return {
-          'multiple_choice': 'چند گزینه‌ای',
+          'mcq': 'چند گزینه‌ای',
           'true_false': 'صحیح/غلط',
           'short_answer': 'پاسخ کوتاه'
         }[type] || type
