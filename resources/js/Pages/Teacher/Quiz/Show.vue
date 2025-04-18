@@ -1,6 +1,6 @@
 <script setup>
 import TeacherLayout from '@/Layouts/TeacherLayout.vue';
-import { Head, Link } from '@inertiajs/vue3';
+import { Head, Link, router } from '@inertiajs/vue3';
 import { computed } from 'vue';
 
 const props = defineProps({
@@ -14,6 +14,19 @@ const questionsCount = computed(() => props.quiz.questions?.length || 0);
 const formatTime = (minutes) => {
     if (!minutes) return 'نامحدود';
     return `${minutes} دقیقه`;
+};
+
+const deleteQuestion = (id) => {
+  if (confirm('آیا مطمئنی می‌خوای سوال رو حذف کنی؟')) {
+    router.delete(route('teacher.questions.destroy', id), {
+      onSuccess: () => {
+        alert('سوال با موفقیت حذف شد.');
+      },
+      onError: () => {
+        alert('مشکلی در حذف سوال پیش اومد.');
+      }
+    });
+  }
 };
 </script>
 
@@ -175,15 +188,19 @@ const formatTime = (minutes) => {
                                                 نوع: {{ question.type === 'multiple_choice' ? 'چند گزینه‌ای' : 'تشریحی' }}
                                             </p>
                                             <p v-if="question.options" class="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                                                گزینه‌ها: {{ question.options.join('، ') }}
+                                              گزینه‌ها: {{ (typeof question.options === 'string' ? JSON.parse(question.options) : question.options).join('، ') }}
                                             </p>
                                         </div>
                                     </div>
-                                    <div class="flex space-x-3">
+                                    <div class="flex">
                                         <Link :href="route('teacher.questions.edit', question.id)"
-                                            class="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300">
+                                            class="mx-2 text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300">
                                             ویرایش
                                         </Link>
+                                        <button @click="deleteQuestion(question.id)"
+                                                class="text-red-600 dark:text-red-400 hover:text-red-800 dark:hover:text-red-300">
+                                          حذف
+                                        </button>
                                     </div>
                                 </div>
                             </div>
