@@ -16,7 +16,6 @@ const search = ref(props.filters.course_id);
 
 const selectedCourse = ref('');
 
-// مشاهده تغییرات در filters
 watch(() => props.filters, (newFilters) => {
     selectedCourse.value = newFilters?.course_id || '';
 }, { immediate: true });
@@ -37,7 +36,7 @@ const handleCourseChange = () => {
 
         <div class="py-6">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg">
+                <div class="bg-white dark:bg-gray-900 overflow-hidden shadow-xl sm:rounded-lg">
                     <div class="p-6">
                         <div class="flex justify-between items-center mb-6">
                             <div class="flex items-center space-x-4">
@@ -61,7 +60,7 @@ const handleCourseChange = () => {
 
                         <div class="overflow-x-auto">
                             <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                                <thead class="bg-gray-50 dark:bg-gray-700">
+                                <thead class="bg-gray-50 dark:bg-gray-900">
                                 <tr>
                                     <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                                         عنوان
@@ -77,7 +76,7 @@ const handleCourseChange = () => {
                                     </th>
                                 </tr>
                                 </thead>
-                                <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                                <tbody class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700">
                                 <tr
                                     v-for="resource in resources.data"
                                     :key="resource.id"
