@@ -7,9 +7,23 @@ use App\Models\Course;
 use App\Models\CourseLesson;
 use App\Models\Quiz;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class CourseLessonController extends Controller
 {
+  public function index(Course $course)
+  {
+      $lessons = $course->course_lessons()
+          ->orderBy('order')
+          ->get();
+
+      return Inertia::render('Teacher/CourseLessons/Index', [
+          'course' => $course,
+          'lessons' => $lessons,
+      ]);
+  }
+
     public function create(Course $course)
     {
         $quizzes = Quiz::all();
