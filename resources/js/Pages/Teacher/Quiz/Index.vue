@@ -12,7 +12,7 @@
       </Link>
     </div>
 
-    <div class="bg-white dark:bg-gray-700 rounded-lg shadow overflow-hidden">
+    <div class="bg-white dark:bg-gray-900 rounded-lg shadow overflow-hidden">
       <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
         <thead class="bg-gray-50 dark:bg-gray-900">
           <tr>
@@ -23,7 +23,7 @@
             <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">عملیات</th>
           </tr>
         </thead>
-        <tbody class="bg-white dark:bg-gray-700 divide-y divide-gray-200 dark:divide-gray-700">
+        <tbody class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700">
           <tr v-for="quiz in quizzes" :key="quiz.id">
             <td class="px-6 py-4 whitespace-nowrap text-black dark:text-white">{{ quiz.title }}</td>
             <td class="px-6 py-4 whitespace-nowrap">
