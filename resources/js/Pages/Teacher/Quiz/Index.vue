@@ -1,18 +1,22 @@
 <template>
   <TeacherLayout>
     <Head title="مدیریت آزمون‌ها" />
+    <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+      مدیریت آزمون‌ها
+    </h2>
 
-    <div class="flex justify-between items-center mb-6">
-      <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">مدیریت آزمون‌ها</h1>
-      <Link
-        :href="route('teacher.quizzes.create')"
-        class="bg-green-700 text-white px-4 py-2 rounded-lg hover:bg-indigo-700"
-      >
-        ایجاد آزمون جدید
-      </Link>
-    </div>
-
-    <div class="bg-white dark:bg-gray-900 rounded-lg shadow overflow-hidden">
+    <div class="bg-white dark:bg-gray-900 rounded-lg shadow overflow-hidden my-6">
+      <div class="p-6 flex justify-between items-center">
+          <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100">
+              لیست آزمون‌ها
+          </h3>
+          <Link
+            :href="route('teacher.quizzes.create')"
+            class="relative text-green-600 hover:text-green-800 transition duration-200 after:content-[''] after:block after:w-0 after:h-[2px] after:bg-green-600 hover:after:w-full after:transition-all after:duration-300"
+          >
+            ایجاد آزمون جدید
+          </Link>
+      </div>
       <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
         <thead class="bg-gray-50 dark:bg-gray-900">
           <tr>
@@ -24,7 +28,7 @@
           </tr>
         </thead>
         <tbody class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700">
-          <tr v-for="quiz in quizzes" :key="quiz.id">
+          <tr v-for="quiz in quizzes" :key="quiz.id" class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
             <td class="px-6 py-4 whitespace-nowrap text-black dark:text-white">{{ quiz.title }}</td>
             <td class="px-6 py-4 whitespace-nowrap">
               <span class="px-2 py-1 text-xs rounded-full font-medium whitespace-nowrap"
