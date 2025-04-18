@@ -43,11 +43,9 @@ const setDefaultImage = (event) => {
     <Head title="مدیریت دوره‌ها" />
 
     <TeacherLayout>
-        <template #header>
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                 مدیریت دوره‌ها
             </h2>
-        </template>
 
         <div class="py-6">
             <div class="max-w-7xl mx-auto">
@@ -85,7 +83,7 @@ const setDefaultImage = (event) => {
                                 </tr>
                             </thead>
                             <tbody class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700">
-                                <tr v-for="course in courses" :key="course.id">
+                                <tr v-for="course in courses" :key="course.id" class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="flex items-center">
                                             <div class="flex-shrink-0 h-10 w-10">
