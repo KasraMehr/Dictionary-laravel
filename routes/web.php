@@ -106,6 +106,9 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
         ->names('courses');
 
         Route::prefix('courses/{course}')->group(function () {
+          Route::get('/lessons', [CourseLessonController::class, 'index'])
+              ->name('courses.lessons.index');
+
             Route::get('/lessons/create', [CourseLessonController::class, 'create'])
                 ->name('courses.lessons.create');
 
@@ -131,7 +134,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
                 ->name('quizzes.questions.create');
         });
 
-        Route::resource('questions', QuestionController::class)->except(['index', 'create'])->names('questions');
+        Route::resource('questions', QuestionController::class)->names('questions');
 
         Route::get('/students', [StudentController::class, 'index'])->name('students.index');
         Route::get('/students/{student}', [StudentController::class, 'show'])->name('students.show');
