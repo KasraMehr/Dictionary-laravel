@@ -54,9 +54,11 @@ class CourseLessonController extends Controller
 
     public function edit(Course $course, CourseLesson $lesson)
     {
+        $quizzes = Quiz::all();
         return inertia('Teacher/CourseLessons/Edit', [
             'course' => $course,
             'lesson' => $lesson,
+            'quizzes' => $quizzes,
             'skills' => CourseLesson::SKILLS
         ]);
     }
