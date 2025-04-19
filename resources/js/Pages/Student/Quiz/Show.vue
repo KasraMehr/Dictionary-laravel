@@ -195,7 +195,7 @@ const mockQuizzes = [
           </div>
 
           <!-- Short Answer Questions -->
-          <div v-else-if="currentQuestion.question_type === 'short_answer'" class="mt-4">
+          <div v-else-if="currentQuestion.question_type === 'fill_blank' || currentQuestion.question_type === 'text'" class="mt-4">
             <textarea
               v-model="shortAnswer"
               class="w-full p-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white/80 dark:bg-gray-700/80 focus:ring-2 focus:ring-red-500 focus:border-transparent"
@@ -220,8 +220,7 @@ const mockQuizzes = [
           <button
             @click="nextQuestion"
             class="flex items-center px-6 py-3 bg-red-600 hover:bg-red-700 text-white rounded-xl shadow-lg transition-all transform hover:scale-105"
-            :disabled="!hasAnswer && currentQuestion.question_type !== 'short_answer'"
-            :class="{'opacity-50 cursor-not-allowed': !hasAnswer && currentQuestion.question_type !== 'short_answer'}"
+            :class="{'opacity-50 cursor-not-allowed': !hasAnswer && currentQuestion.question_type !== 'fill_blank'}"
           >
             {{ isLastQuestion ? 'پایان آزمون' : 'سوال بعدی' }}
             <ArrowLeftIcon class="w-5 h-5 mr-2" />
@@ -230,59 +229,121 @@ const mockQuizzes = [
       </div>
 
       <!-- Quiz Results Screen -->
-      <div v-if="quizCompleted" class="fixed inset-0 z-50 max-w-2xl mx-auto bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl shadow-soft border border-white/30 dark:border-gray-700/30 p-8 text-center">
-        <div class="mb-8">
-          <div class="w-24 h-24 mx-auto mb-6 rounded-full bg-green-100 dark:bg-green-900/50 flex items-center justify-center">
-            <CheckCircleIcon class="w-12 h-12 text-green-600 dark:text-green-400" v-if="passed" />
-            <XCircleIcon class="w-12 h-12 text-red-600 dark:text-red-400" v-else />
-          </div>
+        <div v-if="quizCompleted" class="fixed inset-0 z-50 max-w-2xl mx-auto bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg rounded-xl shadow-soft border border-white/30 dark:border-gray-700/30 p-8 text-center">
+            <!-- Congratulations Animation (Only shows when passed) -->
+            <transition name="celebrate">
+                <div v-if="passed" class="fixed inset-0 z-40 flex items-center justify-center pointer-events-none">
+                    <div class="absolute inset-0 bg-gradient-to-tr from-green-500/10 to-blue-500/10 opacity-70"></div>
+                    <div class="relative">
+                        <div class="absolute -inset-4 bg-green-500/20 rounded-full animate-pulse"></div>
+                        <div class="relative text-6xl animate-bounce">🎉</div>
+                    </div>
+                    <div class="absolute top-1/4 left-1/4 text-4xl animate-float">👏</div>
+                    <div class="absolute top-1/3 right-1/4 text-5xl animate-float-delay">👍</div>
+                    <div class="absolute bottom-1/4 left-1/3 text-5xl animate-float-delay-2">🏆</div>
+                </div>
+            </transition>
 
-          <h2 class="text-3xl font-bold text-gray-800 dark:text-gray-100 mb-2">
-            {{ passed ? 'آفرین! آزمون را با موفقیت گذراندید' : 'متاسفانه آزمون را قبول نشدید' }}
-          </h2>
+            <div class="relative z-50 mb-8">
+                <div class="w-24 h-24 mx-auto mb-6 rounded-full bg-green-100 dark:bg-green-900/50 flex items-center justify-center">
+                    <CheckCircleIcon class="w-12 h-12 text-green-600 dark:text-green-400" v-if="passed" />
+                    <XCircleIcon class="w-12 h-12 text-red-600 dark:text-red-400" v-else />
+                </div>
 
-          <div class="bg-white/90 dark:bg-gray-800/90 p-6 rounded-lg shadow-soft-inner mb-6">
-            <div class="grid grid-cols-3 gap-4 text-center">
-              <div>
-                <p class="text-sm text-gray-500 dark:text-gray-400">نمره کسب شده</p>
-                <p class="text-2xl font-bold text-gray-800 dark:text-gray-200">{{ score }}%</p>
-              </div>
-              <div>
-                <p class="text-sm text-gray-500 dark:text-gray-400">حداقل نمره</p>
-                <p class="text-2xl font-bold text-gray-800 dark:text-gray-200">{{ quiz.pass_score }}%</p>
-              </div>
-              <div>
-                <p class="text-sm text-gray-500 dark:text-gray-400">زمان باقیمانده</p>
-                <p class="text-2xl font-bold text-gray-800 dark:text-gray-200">{{ formatTime(timeLeft) }}</p>
-              </div>
+                <h2 class="text-3xl font-bold text-gray-800 dark:text-gray-100 mb-2">
+                    {{ passed ? 'آفرین! آزمون را با موفقیت گذراندید' : 'متاسفانه آزمون را قبول نشدید' }}
+                </h2>
+
+                <div class="bg-white/90 dark:bg-gray-800/90 p-6 rounded-lg shadow-soft-inner mb-6">
+                    <div class="grid grid-cols-3 gap-4 text-center">
+                        <div>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">نمره کسب شده</p>
+                            <p class="text-2xl font-bold text-gray-800 dark:text-gray-200">{{ score }}%</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">حداقل نمره</p>
+                            <p class="text-2xl font-bold text-gray-800 dark:text-gray-200">{{ quiz.pass_score }}%</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">زمان باقیمانده</p>
+                            <p class="text-2xl font-bold text-gray-800 dark:text-gray-200">{{ formatTime(timeLeft) }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-6 text-right">
+                    <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-3">جزئیات نتایج:</h3>
+                    <div class="space-y-2">
+                        <div v-for="(result, index) in results" :key="index" class="flex justify-between items-center">
+                            <span class="text-gray-700 dark:text-gray-300">سوال {{ index + 1 }}</span>
+                            <span :class="result.correct ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'">
+            {{ result.correct ? 'صحیح' : 'غلط' }}
+          </span>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
 
-          <div class="mb-6 text-right">
-            <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-3">جزئیات نتایج:</h3>
-            <div class="space-y-2">
-              <div v-for="(result, index) in results" :key="index" class="flex justify-between items-center">
-                <span class="text-gray-700 dark:text-gray-300">سوال {{ index + 1 }}</span>
-                <span :class="result.correct ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'">
-                  {{ result.correct ? 'صحیح' : 'غلط' }}
-                </span>
-              </div>
-            </div>
-          </div>
+            <button
+                @click="resetQuiz"
+                class="relative z-50 bg-red-600 hover:bg-red-700 text-white px-8 py-3 rounded-xl shadow-lg transition-all transform hover:scale-105"
+            >
+                آزمون جدید
+            </button>
         </div>
-
-        <button
-          @click="resetQuiz"
-          class="bg-red-600 hover:bg-red-700 text-white px-8 py-3 rounded-xl shadow-lg transition-all transform hover:scale-105"
-        >
-          آزمون جدید
-          <!-- <RefreshIcon class="w-5 h-5 inline mr-2" /> -->
-        </button>
-      </div>
     </main>
   </div>
   </StudentLayout>
 </template>
+
+<style scoped>
+/* Add these to your CSS */
+.backdrop-blur-lg {
+    backdrop-filter: blur(16px);
+}
+
+.celebrate-enter-active, .celebrate-leave-active {
+    transition: all 0.5s ease;
+}
+.celebrate-enter-from, .celebrate-leave-to {
+    opacity: 0;
+    transform: scale(0.8);
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-20px) rotate(10deg);
+    }
+}
+
+.animate-float {
+    animation: float 3s ease-in-out infinite;
+}
+
+.animate-float-delay {
+    animation: float 3s ease-in-out 0.5s infinite;
+}
+
+.animate-float-delay-2 {
+    animation: float 3s ease-in-out 1s infinite;
+}
+
+.animate-bounce {
+    animation: bounce 2s ease infinite;
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0) scale(1);
+    }
+    50% {
+        transform: translateY(-20px) scale(1.2);
+    }
+}
+</style>
 
 <script>
 import {     ArrowLeftIcon,
@@ -329,7 +390,7 @@ import {     ArrowLeftIcon,
         //     {
         //       id: 3,
         //       question_text: "معنی کلمه 'Ephemeral' را در یک کلمه بنویسید.",
-        //       question_type: "short_answer",
+        //       question_type: "fill_blank",
         //       correct_answer: "زودگذر"
         //     },
         //     {
@@ -361,7 +422,7 @@ import {     ArrowLeftIcon,
         return this.currentQuestionIndex === this.quiz.questions.length - 1
       },
       hasAnswer() {
-        if (this.currentQuestion.question_type === 'short_answer') {
+        if (this.currentQuestion.question_type === 'fill_blank' || this.currentQuestion.question_type === 'text') {
           return this.shortAnswer.trim() !== ''
         }
         return this.selectedAnswer !== null
@@ -408,7 +469,7 @@ import {     ArrowLeftIcon,
         // Load previous answer
         const prevAnswer = this.answers[this.currentQuestionIndex]
         if (prevAnswer) {
-          if (this.currentQuestion.question_type === 'short_answer') {
+          if (this.currentQuestion.question_type === 'fill_blank' || this.currentQuestion.question_type === 'text') {
             this.shortAnswer = prevAnswer.answer
           } else {
             this.selectedAnswer = prevAnswer.answer
@@ -419,7 +480,7 @@ import {     ArrowLeftIcon,
       saveAnswer() {
         const answer = {
           questionId: this.currentQuestion.id,
-          answer: this.currentQuestion.question_type === 'short_answer' ? this.shortAnswer : this.selectedAnswer
+          answer: (this.currentQuestion.question_type === 'fill_blank' || this.currentQuestion.question_type === 'text') ? this.shortAnswer : this.selectedAnswer
         }
 
         // Update or add answer
@@ -451,8 +512,7 @@ import {     ArrowLeftIcon,
           let isCorrect = false
 
           if (userAnswer) {
-            if (question.question_type === 'short_answer') {
-              // Case insensitive comparison for short answers
+            if (question.question_type === 'fill_blank' || question.question_type === 'text') {
               isCorrect = userAnswer.answer.toLowerCase().trim() === question.correct_answer.toLowerCase().trim()
             } else {
               isCorrect = userAnswer.answer === question.correct_answer
@@ -490,7 +550,8 @@ import {     ArrowLeftIcon,
         return {
           'mcq': 'چند گزینه‌ای',
           'true_false': 'صحیح/غلط',
-          'short_answer': 'پاسخ کوتاه'
+          'fill_blank': 'پاسخ کوتاه',
+          'text': 'پاسخ متنی',
         }[type] || type
       },
 
