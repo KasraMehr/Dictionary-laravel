@@ -14,16 +14,31 @@ class QuestionController extends Controller
       $validated = $request->validate([
           'question_text' => 'required|string',
           'question_type' => 'required|in:mcq,fill_blank,match,text',
-          'options' => 'required_if:question_type,mcq|array',
+          'options' => 'required_if:question_type,mcq|array|min:2',
           'correct_answer' => 'required|string',
           'points' => 'required|integer|min:1',
           'quiz_id' => 'required|exists:quizzes,id',
       ]);
 
       if ($validated['question_type'] === 'mcq') {
-          $validated['options'] = json_encode(array_values($validated['options']));
+          // حذف گزینه‌های خالی و ایندکس‌گذاری مجدد
+          $cleanedOptions = array_values(array_filter($validated['options'], function($option) {
+              return !empty(trim($option));
+          }));
+
+          // اعتبارسنجی تعداد گزینه‌ها
+          if (count($cleanedOptions) < 2) {
+              return response()->json(['message' => 'حداقل ۲ گزینه معتبر نیاز است'], 422);
+          }
+
+          // اعتبارسنجی گزینه صحیح
+          if (!isset($cleanedOptions[$validated['correct_answer']])) {
+              return response()->json(['message' => 'گزینه صحیح انتخاب شده معتبر نیست'], 422);
+          }
+
+          $validated['options'] = $cleanedOptions;
       } else {
-          unset($validated['options']); // ✅ آرایه options رو حذف می‌کنه
+          unset($validated['options']);
       }
 
       Question::create($validated);
@@ -50,9 +65,30 @@ class QuestionController extends Controller
               'points' => 'required|integer|min:1',
           ]);
 
+          if ($validated['question_type'] === 'mcq') {
+              // حذف گزینه‌های خالی و ایندکس‌گذاری مجدد
+              $cleanedOptions = array_values(array_filter($validated['options'], function($option) {
+                  return !empty(trim($option));
+              }));
+
+              // اعتبارسنجی تعداد گزینه‌ها
+              if (count($cleanedOptions) < 2) {
+                  return response()->json(['message' => 'حداقل ۲ گزینه معتبر نیاز است'], 422);
+              }
+
+              // اعتبارسنجی گزینه صحیح
+              if (!isset($cleanedOptions[$validated['correct_answer']])) {
+                  return response()->json(['message' => 'گزینه صحیح انتخاب شده معتبر نیست'], 422);
+              }
+
+              $validated['options'] = $cleanedOptions;
+          } else {
+              unset($validated['options']);
+          }
+
           $question->update($validated);
 
-          return redirect()->route('teacher.quizzes.questions.index', $question->quiz_id)
+          return redirect()->route('teacher.quizzes.show', $question->quiz_id)
               ->with('success', 'سوال با موفقیت به‌روزرسانی شد.');
       }
 
