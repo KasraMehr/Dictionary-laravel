@@ -316,7 +316,7 @@ const toPersianNumbers = (num) => {
                         <h3 class="font-semibold text-lg text-gray-800 dark:text-gray-100">فعالیت دانشجویان (۳ ماه اخیر)</h3>
                         <select
                             @change="updateTimeRange($event.target.value)"
-                            class="text-sm bg-gray-50 dark:bg-gray-600 border border-gray-200 dark:border-gray-500 text-gray-700 dark:text-gray-200 rounded-lg px-3 py-1 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                            class="text-sm bg-gray-50 dark:bg-gray-600 border border-gray-200 dark:border-gray-500 text-gray-700 dark:text-gray-200 rounded-lg py-1 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                         >
                             <option value="3m">۳ ماه اخیر</option>
                             <option value="6m">۶ ماه اخیر</option>
