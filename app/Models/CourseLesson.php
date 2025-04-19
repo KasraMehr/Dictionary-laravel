@@ -20,7 +20,8 @@ class CourseLesson extends Model
 
     protected $casts = [
         'skills' => 'array',
-        'content' => 'array'
+        'content' => 'array',
+        'attachments' => 'array'
     ];
 
     // لیست مهارت‌های قابل انتخاب
