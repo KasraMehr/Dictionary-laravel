@@ -26,14 +26,14 @@
             <!-- عنوان آزمون -->
             <div class="md:col-span-2">
               <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">عنوان آزمون *</label>
-              <input v-model="form.title" type="text" class="w-full rounded-md border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all">
+              <input v-model="form.title" type="text" class="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all">
               <p v-if="form.errors.title" class="mt-1 text-sm text-red-600">{{ form.errors.title }}</p>
             </div>
 
             <!-- نوع آزمون -->
             <div>
               <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">نوع آزمون *</label>
-              <select v-model="form.type" class="w-full rounded-md border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all">
+              <select v-model="form.type" class="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all">
                 <option value="lesson">آزمون درس</option>
                 <option value="final">آزمون پایانی</option>
                 <option value="placement">آزمون تعیین سطح</option>
@@ -43,7 +43,7 @@
             <!-- دوره مرتبط -->
             <div>
               <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">دوره مرتبط</label>
-              <select v-model="form.course_id" class="w-full rounded-md border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all">
+              <select v-model="form.course_id" class="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all">
                 <option value="">-- بدون دوره --</option>
                 <option v-for="course in courses" :key="course.id" :value="course.id">{{ course.title }}</option>
               </select>
@@ -52,7 +52,7 @@
             <!-- سطح -->
             <div>
               <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">سطح</label>
-              <select v-model="form.level" class="w-full rounded-md border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all">
+              <select v-model="form.level" class="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all">
                 <option value="">-- انتخاب کنید --</option>
                 <option value="A1">A1 (مبتدی)</option>
                 <option value="A2">A2 (مقدماتی)</option>
@@ -66,14 +66,14 @@
             <!-- زمان محدود -->
             <div>
               <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">زمان محدود (دقیقه)</label>
-              <input v-model.number="form.time_limit" type="number" min="0" class="w-full rounded-md border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all">
+              <input v-model.number="form.time_limit" type="number" min="0" class="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all">
               <p class="mt-1 text-xs text-gray-500">0 به معنای بدون محدودیت زمانی</p>
             </div>
 
             <!-- نمره قبولی -->
             <div>
               <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">نمره قبولی (درصد)</label>
-              <input v-model.number="form.pass_score" type="number" min="0" max="100" class="w-full rounded-md border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all">
+              <input v-model.number="form.pass_score" type="number" min="0" max="100" class="w-full border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all">
             </div>
 
             <!-- وضعیت -->
