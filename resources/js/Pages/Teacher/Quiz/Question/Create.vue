@@ -55,7 +55,7 @@
                   v-model="form.correct_answer"
                   type="radio"
                   :value="index"
-                  class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200"
+                  class="h-4 w-4 focus:ring-indigo-500 border-gray-300 bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200"
                 >
                 <input
                   v-model="form.options[index]"
@@ -121,8 +121,7 @@
 
 <script setup>
 import TeacherLayout from '@/Layouts/TeacherLayout.vue';
-import { Head, Link, useForm } from '@inertiajs/vue3';
-import { ref, watch } from 'vue';
+import { Link, useForm } from '@inertiajs/vue3';
 
 const props = defineProps({
   quiz: Object,
@@ -165,9 +164,13 @@ const removeOption = (index) => {
 
 const submit = () => {
   if (form.question_type === 'mcq') {
-    form.correct_answer = form.correct_answer.toString();
+      form.options = form.options.map(opt => opt.toString().trim());
+      form.correct_answer = form.correct_answer.toString();
+  } else {
+      delete form.options;
   }
-  props.question
+    console.log(form);
+    props.question
     ? form.put(route('teacher.questions.update', props.question.id))
     : form.post(route('teacher.questions.store'));
 };
