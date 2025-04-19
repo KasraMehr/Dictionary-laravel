@@ -2,6 +2,7 @@
 <script setup>
 import TeacherLayout from '@/Layouts/TeacherLayout.vue';
 import { useForm, Link } from '@inertiajs/vue3';
+import {ref} from "vue";
 
 const form = useForm({
     title: '',
@@ -9,6 +10,60 @@ const form = useForm({
     description: '',
     file: null
 });
+
+const isDragging = ref(false);
+
+// توابع مدیریت Drag & Drop
+const handleDragOver = () => {
+    isDragging.value = true;
+};
+
+const handleDragLeave = () => {
+    isDragging.value = false;
+};
+
+const handleDrop = (e) => {
+    isDragging.value = false;
+    const files = e.dataTransfer.files;
+    if (files.length) {
+        validateAndSetFile(files[0]);
+    }
+};
+
+// تابع مدیریت انتخاب فایل از طریق کلیک
+const handleFileSelect = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+        validateAndSetFile(file);
+    }
+};
+
+// اعتبارسنجی و تنظیم فایل در فرم
+const validateAndSetFile = (file) => {
+    // اعتبارسنجی حجم (20MB)
+    if (file.size > 20 * 1024 * 1024) {
+        form.errors.file = "حجم فایل نباید بیشتر از 20MB باشد!";
+        return;
+    }
+
+    // اعتبارسنجی فرمت‌های مجاز
+    const allowedTypes = [
+        'application/pdf',
+        'application/msword',
+        'application/vnd.ms-powerpoint',
+        'application/vnd.ms-excel',
+        'application/zip',
+        'video/mp4'
+    ];
+
+    if (!allowedTypes.includes(file.type)) {
+        form.errors.file = "فرمت فایل مجاز نیست!";
+        return;
+    }
+
+    form.file = file;
+    form.errors.file = null;
+};
 </script>
 
 <template>
@@ -100,20 +155,40 @@ const form = useForm({
                                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                                     فایل منبع *
                                 </label>
-                                <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 dark:border-gray-600 border-dashed rounded-lg">
+                                <div
+                                    class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 dark:border-gray-600 border-dashed rounded-lg"
+                                    :class="{
+                                      'border-blue-500 bg-blue-50 dark:bg-blue-900/20': isDragging,
+                                      'border-gray-300 dark:border-gray-600': !isDragging
+                                    }"
+                                    @dragover.prevent="handleDragOver"
+                                    @dragleave.prevent="handleDragLeave"
+                                    @drop.prevent="handleDrop"
+                                >
                                     <div class="space-y-1 text-center">
-                                        <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
-                                            <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                        <svg
+                                            class="mx-auto h-12 w-12 text-gray-400"
+                                            stroke="currentColor"
+                                            fill="none"
+                                            viewBox="0 0 48 48"
+                                            aria-hidden="true"
+                                        >
+                                            <path
+                                                d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                                                stroke-width="2"
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                            />
                                         </svg>
-                                        <div class="flex text-sm text-gray-600 dark:text-gray-400">
+                                        <div class="flex text-sm text-gray-600 dark:text-gray-400 justify-center">
                                             <label class="relative cursor-pointer bg-white dark:bg-gray-800 rounded-md font-medium text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300 focus-within:outline-none">
                                                 <span>آپلود فایل</span>
                                                 <input
                                                     type="file"
-                                                    @input="form.file = $event.target.files[0]"
+                                                    @change="handleFileSelect"
                                                     required
                                                     class="sr-only"
-                                                >
+                                                />
                                             </label>
                                             <p class="pr-1">یا کشیدن و رها کردن</p>
                                         </div>
