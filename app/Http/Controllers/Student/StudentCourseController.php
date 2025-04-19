@@ -57,18 +57,22 @@ class StudentCourseController extends Controller
       // بارگذاری درس‌های دوره
       $course->load('course_lessons');
 
-      // محاسبه پیشرفت کلی دوره
-      // $completedLessons = $course->course_lessons->filter(function($lesson) {
-      //     return $lesson->pivot->completed;
-      // });
+        $totalLessons = $course->course_lessons->count();
 
-      // $progress = $course->course_lessons->isEmpty() ? 0 : round(($completedLessons->count() / $course->course_lessons->count()) * 100);
+        // محاسبه پیشرفت کلی دوره
+        $user = auth()->user();;
+        $completedLessons = $course->course_lessons->filter(function ($lesson) use ($user) {
+            $userPivot = $lesson->users->first()?->pivot;
+            return $userPivot && $userPivot->completed;
+        });
 
-      // ارسال داده‌ها به نمای Inertia
+        $progress = $totalLessons === 0 ? 0 : round(($completedLessons->count() / $totalLessons) * 100);
+
+        // ارسال داده‌ها به نمای Inertia
       return inertia('Student/Courses/Show', [
           'course' => $course,
           'lessons' => $course->course_lessons,
-          // 'progress' => $progress
+          'progress' => $progress
       ]);
     }
 
