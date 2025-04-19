@@ -208,7 +208,7 @@ const logout = () => {
     </div>
 
     <!-- Main Content -->
-    <main class="flex-1 p-6 md:mr-64 lg:mr-80">
+    <main class="flex-1 p-6 mb-20 md:mr-64 lg:mr-80">
       <slot />
     </main>
   </div>
