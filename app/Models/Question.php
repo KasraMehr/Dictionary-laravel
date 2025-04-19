@@ -10,6 +10,10 @@ class Question extends Model
 {
   protected $fillable = ['question_text', 'question_type', 'options', 'correct_answer', 'points', 'quiz_id'];
 
+  protected $casts = [
+      'options' => 'array',
+      'correct_answer' => 'array'
+  ];
   public function quiz(): BelongsTo
   {
     return $this->belongsTo(Quiz::class);
