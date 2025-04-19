@@ -5,7 +5,7 @@
       <div class="absolute inset-0 bg-gradient-to-r from-red-600 to-red-800 opacity-90"></div>
       <div class="relative z-10 p-8 backdrop-blur-sm bg-white/10 text-white">
         <div class="flex flex-col md:flex-row md:items-center gap-6">
-          <img :src="course.image_url" class="w-32 h-32 rounded-xl object-cover border-2 border-white/20 shadow-lg" />
+          <img :src="`/storage/${course.thumbnail}`"  alt="${course.thumbnail}" @error="setDefaultImage" class="w-32 h-32 rounded-xl object-cover border-2 border-white/20 shadow-lg" />
           <div class="flex-1">
             <h1 class="text-3xl font-bold mb-2">{{ course.title }}</h1>
             <p class="text-red-100">{{ course.description }}</p>
@@ -78,26 +78,84 @@
             </span>
           </div>
 
-          <!-- محتوای درس -->
-          <div class="prose dark:prose-invert max-w-none">
-            <div v-for="(section, index) in activeLesson.content" :key="index" class="mb-8">
-              <h3 v-if="section.type === 'heading'" class="text-xl font-bold text-gray-800 dark:text-gray-200 mb-4">
-                {{ section.text }}
-              </h3>
-              <p v-else-if="section.type === 'paragraph'" class="text-gray-700 dark:text-gray-300 mb-4">
-                {{ section.text }}
-              </p>
-              <div v-else-if="section.type === 'image'" class="my-6">
-                <img :src="section.src" class="rounded-xl border border-gray-200 dark:border-gray-700" />
-                <p v-if="section.caption" class="text-center text-sm text-gray-500 dark:text-gray-400 mt-2">
-                  {{ section.caption }}
-                </p>
-              </div>
-              <div v-else-if="section.type === 'video'" class="my-6 aspect-video bg-black rounded-xl overflow-hidden">
-                <iframe :src="section.src" class="w-full h-full" frameborder="0" allowfullscreen></iframe>
-              </div>
+            <!-- محتوای درس -->
+            <div class="prose dark:prose-invert max-w-none">
+                <!-- نمایش توضیحات درس -->
+                <div v-if="activeLesson.description" class="text-gray-700 dark:text-gray-300 mb-8">
+                    {{ activeLesson.description }}
+                </div>
+
+                <!-- نمایش ویدیوی اصلی درس -->
+                <div v-if="activeLesson.video_url" class="my-6 aspect-video bg-black rounded-xl overflow-hidden">
+                    <iframe :src="activeLesson.video_url" class="w-full h-full" frameborder="0" allowfullscreen></iframe>
+                </div>
+
+                <!-- نمایش محتوای JSON -->
+                <div>
+                    <div class="prose dark:prose-invert max-w-none">
+
+                        <!-- نمایش محتوای بر اساس مهارت‌ها -->
+                        <div v-if="activeLesson.content">
+                            <!-- محتوای خواندن -->
+                            <div v-if="activeLesson.content.reading" class="mb-8 p-4 bg-gray-50 dark:bg-gray-900/20 rounded-lg">
+                                <h3 class="text-xl font-bold mb-4">متن خواندن</h3>
+                                <p class="whitespace-pre-line">{{ activeLesson.content.reading }}</p>
+                            </div>
+
+                            <!-- محتوای نوشتن -->
+                            <div v-if="activeLesson.content.writing" class="mb-8 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                                <h3 class="text-xl font-bold mb-4">تمرین نوشتن</h3>
+                                <p class="whitespace-pre-line">{{ activeLesson.content.writing }}</p>
+                            </div>
+
+                            <!-- سایر مهارت‌ها را به همین شکل اضافه کنید -->
+                            <div v-if="activeLesson.content.speaking" class="mb-8 p-4 bg-green-50 dark:bg-green-900/20 rounded-lg">
+                                <h3 class="text-xl font-bold mb-4">تمرین گفتگو</h3>
+                                <p class="whitespace-pre-line">{{ activeLesson.content.speaking }}</p>
+                            </div>
+
+                            <div v-if="activeLesson.content.listening" class="mb-8 p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
+                                <h3 class="text-xl font-bold mb-4">تمرین شنیداری</h3>
+                                <p class="whitespace-pre-line">{{ activeLesson.content.listening }}</p>
+                            </div>
+
+                            <div v-if="activeLesson.content.vocabulary" class="mb-8 p-4 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg">
+                                <h3 class="text-xl font-bold mb-4">واژگان جدید</h3>
+                                <p class="whitespace-pre-line">{{ activeLesson.content.vocabulary }}</p>
+                            </div>
+
+                            <div v-if="activeLesson.content.grammar" class="mb-8 p-4 bg-red-50 dark:bg-red-900/20 rounded-lg">
+                                <h3 class="text-xl font-bold mb-4">دستور زبان</h3>
+                                <p class="whitespace-pre-line">{{ activeLesson.content.grammar }}</p>
+                            </div>
+                        </div>
+
+                        <div v-else class="text-center py-8 text-gray-500">
+                            محتوایی برای نمایش وجود ندارد
+                        </div>
+                    </div>
+                </div>
+
+                <!-- نمایش ضمائم -->
+                <div v-if="activeLesson.attachments && activeLesson.attachments.length" class="mt-8 border-t pt-6">
+                    <h3 class="text-lg font-medium text-gray-800 dark:text-gray-200 mb-4">فایل‌های ضمیمه</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <a v-for="(file, index) in activeLesson.attachments"
+                           :key="index"
+                           :href="file.url"
+                           target="_blank"
+                           class="flex items-center p-3 border rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+                            <div class="mr-3 p-2 bg-gray-100 dark:bg-gray-700 rounded-lg">
+                                <DocumentIcon class="h-5 w-5 text-gray-500 dark:text-gray-400" />
+                            </div>
+                            <div>
+                                <p class="font-medium text-gray-800 dark:text-gray-200">{{ file.name }}</p>
+                                <p class="text-sm text-gray-500 dark:text-gray-400">{{ file.size }}</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
             </div>
-          </div>
 
           <!-- ناوبری بین درس‌ها -->
           <div class="flex justify-between mt-8 pt-6 border-t text-gray-700 dark:text-gray-200 border-gray-200 dark:border-gray-700">
@@ -134,10 +192,10 @@ import {
 } from '@heroicons/vue/24/outline'
 import StudentLayout from "@/Layouts/StudentLayout.vue"
 
-const { course } = defineProps({
+const { course, lessons, progress } = defineProps({
   course: Object,
-  // lessons: Array,
-  // progress: Number
+  lessons: Array,
+  progress: Number
 });
 
 // داده‌های فیک
@@ -150,57 +208,73 @@ const { course } = defineProps({
 //   progress: 65
 // })
 
-const lessons = ref([
-  {
-    id: 1,
-    title: 'مقدمات Vue.js',
-    content: [
-      { type: 'heading', text: 'معرفی Vue.js' },
-      { type: 'paragraph', text: 'Vue.js یک فریمورک پیشرفته جاوااسکریپت برای ساخت رابط کاربری است.' },
-      { type: 'image', src: 'https://images.unsplash.com/photo-1633356122544-f134324a6cee?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60', caption: 'معماری Vue.js' },
-      { type: 'paragraph', text: 'این فریمورک در سال 2014 توسط Evan You ایجاد شد.' }
-    ],
-    completed: true
-  },
-  {
-    id: 2,
-    title: 'اجزای Vue',
-    content: [
-      { type: 'heading', text: 'کامپوننت‌ها در Vue' },
-      { type: 'paragraph', text: 'کامپوننت‌ها بلوک‌های سازنده اپلیکیشن‌های Vue هستند.' },
-      { type: 'video', src: 'https://www.youtube.com/embed/YrxBCBibVo0' },
-      { type: 'paragraph', text: 'هر کامپوننت می‌تواند state و template خود را داشته باشد.' }
-    ],
-    completed: false
-  },
-  {
-    id: 3,
-    title: 'حالت واکنشی',
-    content: [
-      { type: 'heading', text: 'سیستم واکنشی Vue' },
-      { type: 'paragraph', text: 'Vue از یک سیستم واکنشی قدرتمند استفاده می‌کند.' },
-      { type: 'image', src: 'https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60' },
-      { type: 'paragraph', text: 'این سیستم به صورت خودکار تغییرات را تشخیص می‌دهد.' }
-    ],
-    completed: false
-  }
-])
+// const lessons = ref([
+//   {
+//     id: 1,
+//     title: 'مقدمات Vue.js',
+//     content: [
+//       { type: 'heading', text: 'معرفی Vue.js' },
+//       { type: 'paragraph', text: 'Vue.js یک فریمورک پیشرفته جاوااسکریپت برای ساخت رابط کاربری است.' },
+//       { type: 'image', src: 'https://images.unsplash.com/photo-1633356122544-f134324a6cee?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60', caption: 'معماری Vue.js' },
+//       { type: 'paragraph', text: 'این فریمورک در سال 2014 توسط Evan You ایجاد شد.' }
+//     ],
+//     completed: true
+//   },
+//   {
+//     id: 2,
+//     title: 'اجزای Vue',
+//     content: [
+//       { type: 'heading', text: 'کامپوننت‌ها در Vue' },
+//       { type: 'paragraph', text: 'کامپوننت‌ها بلوک‌های سازنده اپلیکیشن‌های Vue هستند.' },
+//       { type: 'video', src: 'https://www.youtube.com/embed/YrxBCBibVo0' },
+//       { type: 'paragraph', text: 'هر کامپوننت می‌تواند state و template خود را داشته باشد.' }
+//     ],
+//     completed: false
+//   },
+//   {
+//     id: 3,
+//     title: 'حالت واکنشی',
+//     content: [
+//       { type: 'heading', text: 'سیستم واکنشی Vue' },
+//       { type: 'paragraph', text: 'Vue از یک سیستم واکنشی قدرتمند استفاده می‌کند.' },
+//       { type: 'image', src: 'https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60' },
+//       { type: 'paragraph', text: 'این سیستم به صورت خودکار تغییرات را تشخیص می‌دهد.' }
+//     ],
+//     completed: false
+//   }
+// ])
 
-const activeLesson = ref(lessons.value[0])
+const activeLesson = ref(lessons?.[0] ?? null);
 
-// محاسبه درس قبلی و بعدی
+// Calculate current index and navigation
 const currentIndex = computed(() =>
-  lessons.value.findIndex(l => l.id === activeLesson.value.id)
-)
+    activeLesson.value
+        ? lessons.findIndex(l => l.id === activeLesson.value.id)
+        : -1
+);
 
 const previousLesson = computed(() =>
-  currentIndex.value > 0 ? lessons.value[currentIndex.value - 1] : null
-)
+    currentIndex.value > 0 ? lessons[currentIndex.value - 1] : null
+);
 
 const nextLesson = computed(() =>
-  currentIndex.value < lessons.value.length - 1 ? lessons.value[currentIndex.value + 1] : null
-)
+    currentIndex.value < lessons.length - 1 ? lessons[currentIndex.value + 1] : null
+);
+computed(() => {
+    if (!activeLesson.value?.content) return []
 
+    if (typeof activeLesson.value.content === 'string') {
+        try {
+            return JSON.parse(activeLesson.value.content)
+        } catch {
+            return []
+        }
+    }
+
+    return Array.isArray(activeLesson.value.content)
+        ? activeLesson.value.content
+        : []
+});
 // علامت گذاری درس به عنوان تکمیل شده
 const markAsCompleted = () => {
   activeLesson.value.completed = true
@@ -208,10 +282,14 @@ const markAsCompleted = () => {
   const completedCount = lessons.value.filter(l => l.completed).length
   course.value.progress = Math.round((completedCount / lessons.value.length) * 100)
 }
+
+const setDefaultImage = (event) => {
+    event.target.src = "/images/default-image.jpg";
+};
 </script>
 
 <style>
-/* استایل‌های سفارشی برای جلوه glassmorphism */
+/* استایل‌های سفارشی برای جلوه glass-morphism */
 .glass-card {
   backdrop-filter: blur(12px);
   background-color: rgba(255, 255, 255, 0.8);
