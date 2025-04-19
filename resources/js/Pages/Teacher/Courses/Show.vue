@@ -21,7 +21,7 @@ const quizzesCount = computed(() => props.course.quizzes?.length || 0);
     <TeacherLayout :title="course.title">
             <div class="flex justify-between items-center">
                 <div>
-                    <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-100">
+                    <h2 class="text-xl md:text-2xl font-bold text-gray-800 dark:text-gray-100">
                         {{ course.title }}
                     </h2>
                     <div class="flex items-center mt-2">
@@ -37,7 +37,7 @@ const quizzesCount = computed(() => props.course.quizzes?.length || 0);
                         </span>
                     </div>
                 </div>
-                <div class="flex">
+                <div class=" grid grid-cols-1 space-y-2 lg:flex">
                     <Link :href="route('teacher.courses.edit', course.id)"
                         class="inline-flex items-center px-4 py-2 mx-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600">
                         ویرایش دوره
@@ -56,7 +56,7 @@ const quizzesCount = computed(() => props.course.quizzes?.length || 0);
                     <div class="p-6">
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                             <!-- کارت دانشجویان -->
-                            <div class="bg-blue-50 dark:bg-blue-900 rounded-lg p-4">
+                            <div class="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4">
                                 <div class="flex items-center">
                                     <div class="flex-shrink-0 bg-blue-100 dark:bg-blue-900/30 p-3 rounded-lg">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600 dark:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
