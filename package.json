@@ -25,6 +25,7 @@
         "@vueuse/core": "^13.1.0",
         "chart.js": "^4.4.7",
         "lucide-vue-next": "^0.487.0",
+        "openai": "^4.95.1",
         "socket.io-client": "^4.8.1",
         "swiper": "^11.2.6",
         "tesseract.js": "^6.0.0",
