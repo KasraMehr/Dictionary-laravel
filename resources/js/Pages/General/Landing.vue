@@ -249,6 +249,7 @@ function handleImageError() {
 </template>
 
 <script>
+import { OpenAI } from "openai";
 export default {
     data() {
         return {
@@ -296,42 +297,39 @@ export default {
             }
         },
         async translateText() {
-            if (!this.inputText.trim()) {
-                this.translatedText = this.$t('please_enter_text'); // اطمینان از اینکه متن ورودی خالی نیست
-                return;
+          if (!this.inputText.trim()) {
+            this.translatedText = this.$t('please_enter_text');
+            return;
+          }
+
+          const response = await fetch('http://localhost:8000/api/translate', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              text: this.inputText,
+              source: this.sourceLang || 'english',
+              target: this.targetLang || 'persian',
+            })
+          });
+
+          const text = await response.text();
+          console.log('پاسخ خام از سرور:', text);
+
+          try {
+            const data = JSON.parse(text);
+            if (data.translatedText) {
+              this.translatedText = data.translatedText;
+            } else {
+              this.translatedText = this.$t('no_translation_received');
             }
-
-            try {
-                // URL برای API Apertium
-                const apiUrl = `https://apertium.org/apy/translate?langpair=${this.sourceLang}|${this.targetLang}&q=${encodeURIComponent(this.inputText)}`;
-
-                // درخواست به API
-                const response = await fetch(apiUrl, {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                });
-
-                if (!response.ok) {
-                    throw new Error(`API Error: ${response.status} ${response.statusText}`);
-                }
-
-                // دریافت داده‌ها
-                const data = await response.json();
-
-                // بررسی نتیجه ترجمه
-                if (data.responseData && data.responseData.translatedText) {
-                    this.translatedText = data.responseData.translatedText; // نمایش متن ترجمه شده
-                } else {
-                    this.translatedText = this.$t('no_translation_received'); // اگر ترجمه ای دریافت نشد
-                }
-
-            } catch (error) {
-                console.error("خطا در ترجمه:", error);
-                this.translatedText = this.$t('error_occurred'); // در صورت خطا
-            }
+          } catch (err) {
+            console.error('خطا در پارس کردن JSON:', err);
+            this.translatedText = this.$t('error_occurred');
+          }
         },
+
 
     // تابع برای تعویض زبان‌ها
         swapLanguages() {
