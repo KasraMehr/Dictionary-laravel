@@ -2,12 +2,15 @@
 
 use App\Http\Controllers\Api\WordImportController;
 use App\Http\Controllers\General\GeneralController;
+use App\Http\Controllers\General\TranslateController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
+
+Route::post('/translate', [TranslateController::class, 'translate']);
 
 Route::get('/import-word/{word}', [WordImportController::class, 'importWord']);
 Route::get('/fetch-words', [GeneralController::class, 'fetchWords']);
@@ -20,4 +23,3 @@ Route::post('/set-locale', function (Illuminate\Http\Request $request) {
     }
     return response()->json(['message' => 'Language changed to ' . app()->getLocale()]);
 });
-
