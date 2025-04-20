@@ -48,7 +48,7 @@ const logout = () => {
   <Head :title="title"><title>Teacher</title></Head>
   <div class="flex min-h-screen bg-gray-200 dark:bg-gray-800"  :dir="locale === 'en' ? 'ltr' : 'rtl'">
     <!-- Sidebar -->
-      <aside class="hidden md:flex md:flex-col md:w-64 lg:w-80 fixed h-screen right-0 top-0 bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 border-l border-gray-200 dark:border-gray-700 shadow-xl">
+      <aside class="hidden md:flex md:flex-col md:w-64 fixed h-screen right-0 top-0 bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 border-l border-gray-200 dark:border-gray-700 shadow-xl">
           <!-- Header Section -->
           <div class="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
               <!-- User Profile with Dropdown -->
@@ -208,7 +208,7 @@ const logout = () => {
     </div>
 
     <!-- Main Content -->
-    <main class="flex-1 p-6 mb-20 md:mr-64 lg:mr-80">
+    <main class="flex-1 p-6 mb-20 md:mr-64">
       <slot />
     </main>
   </div>
