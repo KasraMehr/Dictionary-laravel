@@ -21,52 +21,15 @@ const form = useForm({
     password_confirmation: '',
     role: 'student',
     terms: false,
-    'g-recaptcha-response': '',
 });
 
 const recaptchaLoaded = ref(false);
 
-onMounted(() => {
-    const script = document.createElement('script');
-    script.src = 'https://www.recaptcha.net/recaptcha/api.js?render=explicit';
-    script.async = true;
-    script.defer = true;
-    script.onload = () => {
-        recaptchaLoaded.value = true;
-        window.grecaptcha.ready(() => {
-            window.grecaptcha.render('recaptcha-container', {
-                sitekey: '6LcMdc0qAAAAAGWLWkBN1S9AV9MfIQBKRdhtK7Ss',
-                theme: 'dark',
-                callback: (response) => {
-                    form['g-recaptcha-response'] = response;
-                },
-                'expired-callback': () => {
-                    form['g-recaptcha-response'] = '';
-                    grecaptcha.reset();
-                }
-            });
-        });
-    };
-    document.head.appendChild(script);
-});
-
 const submit = () => {
-    if (!form['g-recaptcha-response']) {
-        alert('please confirm recaptcha');
-        return;
-    }
 
     form.post(route('register'), {
         onFinish: () => {
             form.reset('password', 'password_confirmation');
-            if (window.grecaptcha) {
-                window.grecaptcha.reset();
-            }
-        },
-        onError: () => {
-            if (window.grecaptcha) {
-                window.grecaptcha.reset();
-            }
         }
     });
 };
@@ -96,11 +59,11 @@ const submit = () => {
                         <div class="flex gap-6 bg-gray-500 dark:bg-gray-700 p-2 rounded-2xl shadow-inner backdrop-blur-md">
                             <button
                                 :class="[
-        form.role === 'student'
-          ? 'bg-red-700 text-white scale-105'
-          : 'bg-gray-300 text-black dark:bg-gray-800 dark:text-white',
-        'transition-all duration-300 ease-in-out px-6 py-2 rounded-xl font-bold shadow hover:shadow-lg'
-      ]"
+                                  form.role === 'student'
+                                    ? 'bg-red-700 text-white scale-105'
+                                    : 'bg-gray-300 text-black dark:bg-gray-800 dark:text-white',
+                                  'transition-all duration-300 ease-in-out px-6 py-2 rounded-xl font-bold shadow hover:shadow-lg'
+                                ]"
                                 type="button"
                                 @click="form.role = 'student'"
                             >
@@ -108,11 +71,11 @@ const submit = () => {
                             </button>
                             <button
                                 :class="[
-        form.role === 'teacher'
-          ? 'bg-red-700 text-white scale-105'
-          : 'bg-gray-300 text-black dark:bg-gray-800 dark:text-white',
-        'transition-all duration-300 ease-in-out px-6 py-2 rounded-xl font-bold shadow hover:shadow-lg'
-      ]"
+                                  form.role === 'teacher'
+                                    ? 'bg-red-700 text-white scale-105'
+                                    : 'bg-gray-300 text-black dark:bg-gray-800 dark:text-white',
+                                  'transition-all duration-300 ease-in-out px-6 py-2 rounded-xl font-bold shadow hover:shadow-lg'
+                                ]"
                                 type="button"
                                 @click="form.role = 'teacher'"
                             >
@@ -177,16 +140,20 @@ const submit = () => {
                         <InputError class="mt-2" :message="form.errors.password_confirmation" />
                     </div>
 
-                    <div>
-                        <div
-                            id="recaptcha-container"
-                            class="mt-6 flex justify-center min-h-[78px]"
-                        ></div>
-                        <p v-if="!recaptchaLoaded" class="text-sm text-gray-400 text-center">
-                            {{ $t('loading_recaptcha') }}
-                        </p>
-                        <InputError class="mt-2" :message="form.errors['g-recaptcha-response']" />
-                    </div>
+                        <div class="mt-6">
+                            <a
+                                href="/auth/google"
+                                class="inline-flex items-center px-4 py-2 bg-red-600 text-white text-sm font-medium rounded hover:bg-red-700 transition duration-150"
+                            >
+                                <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                    <path
+                                        d="M21.35 11.1H12v2.8h5.35c-.25 1.5-1.85 4.4-5.35 4.4-3.25 0-5.9-2.7-5.9-6s2.65-6 5.9-6c1.85 0 3.1.8 3.8 1.5l2.6-2.5C16.95 3.95 14.7 3 12 3 6.45 3 2 7.45 2 13s4.45 10 10 10c5.8 0 9.6-4.05 9.6-9.8 0-.65-.1-1.1-.25-1.55z"
+                                    />
+                                </svg>
+                                ورود با گوگل
+                            </a>
+                        </div>
+
 
                     <div v-if="$page.props.jetstream.hasTermsAndPrivacyPolicyFeature">
                         <InputLabel for="terms">
@@ -213,17 +180,4 @@ const submit = () => {
             </div>
         </div>
     </div>
-
-    <!-- Add reCAPTCHA privacy notice -->
-    <div class="text-sm text-gray-500 text-center mt-4">
-        This site is protected by reCAPTCHA and the Google
-        <a href="https://policies.google.com/privacy" class="text-[#FF2D20]">Privacy Policy</a> and
-        <a href="https://policies.google.com/terms" class="text-[#FF2D20]">Terms of Service</a> apply.
-    </div>
 </template>
-
-<style>
-.grecaptcha-badge {
-    visibility: hidden;
-}
-</style>
