@@ -5,6 +5,7 @@ use App\Http\Controllers\General\ContactController;
 use App\Http\Controllers\General\GeneralController;
 use App\Http\Controllers\General\LearnController;
 use App\Http\Controllers\General\ReportController;
+use App\Http\Controllers\General\SocialAuthController;
 use App\Http\Controllers\Student\StudentCourseController;
 use App\Http\Controllers\Student\StudentDashboard;
 use App\Http\Controllers\Student\StudentQuizController;
@@ -48,6 +49,8 @@ Route::get('/word/{native_lang}-{translated_lang}/{word}', [WordController::clas
 Route::get('/csrf-token', function () {
     return response()->json(['csrf_token' => csrf_token()]);
 });
+Route::get('auth/google', [SocialAuthController::class, 'redirectToGoogle'])->name('auth.google');
+Route::get('auth/google/callback', [SocialAuthController::class, 'handleGoogleCallback']);
 
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 
