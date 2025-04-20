@@ -28,7 +28,6 @@ class CreateNewUser implements CreatesNewUsers
             'password' => $this->passwordRules(),
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
             'role' => ['required', 'in:student,teacher'],
-            'g-recaptcha-response' => ['required', new Recaptcha],
         ])->validate();
 
         return DB::transaction(function () use ($input) {
