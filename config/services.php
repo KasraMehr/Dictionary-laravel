@@ -34,9 +34,10 @@ return [
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
     ],
-    'recaptcha' => [
-      'secret' => env('RECAPTCHA_SECRET_KEY'),
-      'sitekey' => env('RECAPTCHA_SECRET_KEY'),
+    'google' => [
+        'client_id' => env('GOOGLE_CLIENT_ID'),
+        'client_secret' => env('GOOGLE_CLIENT_SECRET'),
+        'redirect' => env('GOOGLE_REDIRECT_URI'),
     ],
     'elasticsearch' => [
         'host' => [
