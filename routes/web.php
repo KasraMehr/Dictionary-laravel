@@ -43,7 +43,7 @@ Route::get('/learn', [LearnController::class, 'learn'])->name('learn');
 Route::get('/topics', [LearnController::class, 'topics'])->name('topics');
 Route::get('/levels', [LearnController::class, 'levels'])->name('levels');
 Route::get('/grammars', [LearnController::class, 'grammars'])->name('grammars');
-Route::get('/word/{native_lang}-{translated_lang}/{word}', [WordController::class, 'show'])->name('word.show');
+Route::get('/word/{native_lang}-{translated_lang}/{word:slug}', [WordController::class, 'show'])->name('word.show');
 
 
 Route::get('/csrf-token', function () {
