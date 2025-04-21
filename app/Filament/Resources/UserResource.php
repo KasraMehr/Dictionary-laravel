@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\RelationManagers;
+use App\Models\Team;
 use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
@@ -41,6 +42,44 @@ class UserResource extends Resource
                 ->required(),
 
         ]);
+    }
+
+    public static function create(array $data): User
+    {
+        Validator::make($data, [
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:8'],
+            'role' => ['required', 'in:student,teacher,translator,admin'],
+        ])->validate();
+
+        return DB::transaction(function () use ($data) {
+            $user = User::create([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'role' => $data['role'],
+                'password' => Hash::make($data['password']),
+            ]);
+
+            // ایجاد تیم برای کاربر
+            $this->createTeam($user);
+
+            return $user;
+        });
+    }
+
+    protected function createTeam(User $user): void
+    {
+        $team = Team::forceCreate([
+            'user_id' => $user->id,
+            'name' => explode(' ', $user->name, 2)[0] . "'s Team",
+            'personal_team' => true,
+        ]);
+
+        $user->ownedTeams()->save($team);
+
+        $user->current_team_id = $team->id;
+        $user->save();
     }
 
     public static function table(Table $table): Table
