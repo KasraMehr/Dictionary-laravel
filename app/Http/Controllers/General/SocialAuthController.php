@@ -24,7 +24,8 @@ class SocialAuthController extends Controller
           ['email' => $googleUser->getEmail()],
           [
               'name' => $googleUser->getName(),
-              'password' => bcrypt(Str::random(16)), // رمز تصادفی برای گوگل
+              'password' => bcrypt(Str::random(16)), // رمز عبور تصادفی برای حساب گوگل
+              'role' => 'student', // می‌توانید نقش پیش‌فرض را تعیین کنید
           ]
       );
 
