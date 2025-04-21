@@ -24,7 +24,7 @@ defineProps({
                         <ul class="space-y-2">
                             <li v-for="(word, index) in wordList" :key="index"
                                 class="p-2 bg-gray-300 dark:bg-gray-700 rounded-lg text-gray-900 dark:text-white flex justify-between hover:bg-gray-500 dark:hover:bg-gray-600 transition duration-200">
-                                <a :href="`/word/${word.native_lang}-${word.translated_lang}/${word.id}`"
+                                <a :href="`/word/${word.native_lang}-${word.translated_lang}/${word.slug}`"
                                    class="flex justify-between items-center w-full h-full">
                                     <span class="font-medium">{{ word.word }}</span>
                                 </a>
