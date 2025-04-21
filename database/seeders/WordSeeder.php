@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
+use OpenAI\Factory;
 use Symfony\Component\DomCrawler\Crawler;
 use Stichoza\GoogleTranslate\GoogleTranslate;
 use GuzzleHttp\Client;
@@ -23,9 +24,15 @@ class WordSeeder extends Seeder
 
         $words = file($filePath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
         $translator = new GoogleTranslate('fa');
-        $client = new Client();
 
         $generated_words_num = 0;
+
+        // ۲) ایجاد کلاینت OpenAI با endpoint مخصوص AvalAI
+        $factory = new Factory();
+
+        $client = $factory->withBaseUri('https://api.avalai.ir/v1')
+            ->withApiKey(env('AVALAI_API_KEY'))
+            ->make();
 
         foreach ($words as $word) {
             $word = trim($word);
