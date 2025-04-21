@@ -124,7 +124,7 @@ class GeneralController extends Controller
          $totalWords = Word::count();
 
            if (!session()->has('wordList')) {
-               session(['wordList' => Word::inRandomOrder()->take(5)->get(['id', 'word', 'meaning', 'native_lang', 'translated_lang'])]);
+               session(['wordList' => Word::inRandomOrder()->take(5)->get(['id', 'word', 'meaning', 'native_lang', 'translated_lang', 'slug'])]);
            }
 
            if (!session()->has('quizQuestions')) {
@@ -198,7 +198,7 @@ class GeneralController extends Controller
        public function DailyWords(): Response
        {
          if (!session()->has('wordList')) {
-             session(['wordList' => Word::inRandomOrder()->take(5)->get(['id', 'word', 'meaning', 'native_lang', 'translated_lang'])]);
+             session(['wordList' => Word::inRandomOrder()->take(5)->get(['id', 'word', 'meaning', 'native_lang', 'translated_lang', 'slug'])]);
          }
 
          return Inertia::render('General/Dictionary/DailyWords', [
