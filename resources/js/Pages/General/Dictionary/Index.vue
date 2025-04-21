@@ -309,7 +309,7 @@ const setDefaultImage = (event) => {
 
                     <!-- View Button -->
                     <div class="flex justify-end mt-6">
-                        <a :href="`/word/${selectedWord.native_lang}-${selectedWord.translated_lang}/${selectedWord.id}`" class="px-6 py-2 bg-blue-500 dark:bg-blue-700 text-white rounded-lg hover:bg-blue-700 dark:hover:bg-blue-500 transition-all duration-200">
+                        <a :href="`/word/${selectedWord.native_lang}-${selectedWord.translated_lang}/${selectedWord.slug}`" class="px-6 py-2 bg-blue-500 dark:bg-blue-700 text-white rounded-lg hover:bg-blue-700 dark:hover:bg-blue-500 transition-all duration-200">
                             {{ $t('view') }}
                         </a>
                     </div>
