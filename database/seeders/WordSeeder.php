@@ -6,6 +6,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Str;
 use Symfony\Component\DomCrawler\Crawler;
 use Stichoza\GoogleTranslate\GoogleTranslate;
 use GuzzleHttp\Client;
@@ -50,6 +51,7 @@ class WordSeeder extends Seeder
             // Generate voice file
             $voicePath = "voices/{$word}.mp3";
             $this->generateVoice($word, $voicePath);
+            $slug = Str::slug($word);
 
             // Store in database
             DB::table('words')->insert([
@@ -59,12 +61,13 @@ class WordSeeder extends Seeder
                 'voice' => $voicePath,
                 'image' => $imagePath,
                 'description' => $description,
+                'slug' => $slug,
                 'created_at' => now(),
                 'updated_at' => now()
             ]);
             $generated_words_num++;
 
-            echo "\n$generated_words_num\n ✅ Added: $word → meaning: $meaning\n pronunciation → $pronunciation \n description → $description \n image → $imagePath\n voiceFileName → $voicePath";
+            echo "\n$generated_words_num\n ✅ Added: $word → meaning: $meaning\n pronunciation → $pronunciation \n description → $description \n image → $imagePath\n voiceFileName → $voicePath\n slug -> $slug";
         }
     }
 
