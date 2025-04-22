@@ -79,7 +79,7 @@ watch(locale, () => {
 
 <template>
     <MainLayout title="Learn">
-        <div class="min-h-screen bg-gradient-to-b from-gray-100 to-gray-50 dark:from-gray-900 dark:to-gray-800">
+        <div class="min-h-screen  bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 transition-colors duration-500">
             <!-- Hero Section -->
             <header class="relative w-full py-16 bg-gradient-to-r from-indigo-900 to-purple-800 dark:from-gray-800 dark:to-gray-900 overflow-hidden">
                 <!-- Decorative elements -->
