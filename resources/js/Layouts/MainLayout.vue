@@ -1,7 +1,6 @@
 <script setup>
 import { ref } from 'vue';
-import { Head, Link, router } from '@inertiajs/vue3';
-import ApplicationMark from '@/Components/ApplicationMark.vue';
+import { Head, Link } from '@inertiajs/vue3';
 import Banner from '@/Components/Banner.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
@@ -72,7 +71,7 @@ const setLanguage = (lang) => {
         <Banner />
 
         <div class="min-h-screen bg-gray-50-100 dark:bg-gray-900">
-            <nav class="bg-gray-200 dark:bg-gray-800 border-b border-gray-300 dark:border-gray-700">
+            <nav :class="{ 'fixed top-0 left-0 w-full bg-gray-100 dark:bg-gray-800 z-50 shadow-md': isHeaderFixed }">
                 <!-- Main Menu -->
                 <div class="w-full mx-auto px-4 sm:px-24">
                     <div class="flex justify-between h-16">
@@ -276,6 +275,19 @@ const setLanguage = (lang) => {
 
             <!-- Page Content -->
             <main class="z-0">
+                <!-- Particle Background -->
+                <div class="hidden sm:block fixed inset-0 w-full h-full opacity-20 dark:opacity-10 pointer-events-none">
+                    <div v-for="i in 30" :key="i"
+                         class="absolute rounded-full bg-red-400 dark:bg-white"
+                         :style="{
+                 top: `${Math.random() * 100}%`,
+                 left: `${Math.random() * 100}%`,
+                 width: `${Math.random() * 10 + 2}px`,
+                 height: `${Math.random() * 10 + 2}px`,
+                 animation: `float ${Math.random() * 10 + 10}s linear infinite`,
+                 animationDelay: `${Math.random() * 5}s`
+               }"></div>
+                </div>
                 <slot />
             </main>
         </div>
@@ -459,22 +471,12 @@ const setLanguage = (lang) => {
     </footer>
 </template>
 
-<style>
-  .mobile-menu-enter-active, .mobile-menu-leave-active {
-    transition: all 0.3s ease-in-out;
-}
-
-.mobile-menu-enter-from, .mobile-menu-leave-to {
-    opacity: 0;
-    transform: translateY(-10px);
-}
-
-</style>
 <script>
 export default {
     data() {
         return {
-            isDarkMode: false
+            isDarkMode: false,
+            isHeaderFixed: false
         };
     },
     mounted() {
@@ -499,6 +501,9 @@ export default {
             console.log(localStorage.getItem('theme'));
 
         },
+        handleScroll() {
+            this.isHeaderFixed = window.scrollY > 60;
+        }
     },
 };
 </script>
