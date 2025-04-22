@@ -1,5 +1,4 @@
 <script setup>
-import { Head, Link } from "@inertiajs/vue3";
 import { onMounted } from "vue";
 import MainLayout from '@/Layouts/MainLayout.vue';
 import Swiper from "swiper";
@@ -206,60 +205,121 @@ onMounted(() => {
     </style>
 <template>
   <MainLayout title="About Us">
-      <section class="py-5 relative z-0 bg-gray-200 dark:bg-gray-800">
-              <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative text-center">
-                  <h1 class="max-w-2xl mx-auto text-center font-manrope font-bold text-4xl text-black dark:text-white mb-5 md:text-5xl md:leading-normal">
-                      {{ $t('experience') }} <br><span class="text-red-600">{{ $t('modern_dictionary') }}</span>
-                  </h1>
-                  <p class="max-w-sm mx-auto text-center text-base font-normal leading-7 text-gray-500 dark:text-gray-400">
-                      {{ $t('smart_tool') }}
-                  </p>
+      <section class="relative py-20 bg-gradient-to-r from-gray-100 to-gray-200 dark:from-gray-900 dark:to-gray-800 overflow-hidden">
+          <!-- Background with grid pattern and glass-morphism effect -->
+          <div class="absolute inset-0 z-0 backdrop-blur-sm bg-gray-100 dark:bg-gray-900">
+              <div class="absolute inset-0 bg-[url('/images/patterns/grid.svg')] opacity-20 dark:opacity-10"></div>
+          </div>
+
+          <div class="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
+              <h1 class="max-w-3xl mx-auto text-center font-extrabold text-5xl text-gray-800 dark:text-white mb-6 leading-tight md:text-6xl">
+            <span class="bg-clip-text text-transparent bg-gradient-to-r from-red-500 to-red-600">
+                {{ $t('modern_dictionary') }}
+            </span>
+              </h1>
+
+              <p class="max-w-2xl mx-auto text-xl text-gray-600 dark:text-gray-300 leading-relaxed">
+                  {{ $t('smart_tool') }}
+              </p>
+
+              <div class="mt-10 flex justify-center gap-4">
+                  <button class="px-8 py-3 bg-red-600 hover:bg-red-700 text-white font-medium rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg">
+                      {{ $t('get_started') }}
+                  </button>
+                  <button class="px-8 py-3 bg-white/80 hover:bg-white dark:bg-gray-800/80 dark:hover:bg-gray-700/90 text-gray-800 dark:text-white font-medium rounded-full backdrop-blur-sm transition-all duration-300 shadow-sm border border-white/30 dark:border-gray-700">
+                      {{ $t('learn_more') }}
+                  </button>
               </div>
-          </section>
+          </div>
 
-    <section class="py-14 lg:py-10 relative">
-        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative ">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-9">
-                <div class="img-box">
-                    <img src="/images/aboutUs/aboutUs.png" alt="About Us tailwind page"
-                         class="max-lg:mx-auto object-cover rounded-lg">
-                </div>
-                <div class="lg:pl-[100px] flex items-center">
-                    <div class="data w-full">
-                        <h2 class="font-manrope font-bold text-4xl lg:text-5xl text-black dark:text-white mb-9 max-lg:text-center relative">
-                            {{ $t('about_us') }} </h2>
-                        <p class="font-normal text-xl leading-8 text-gray-500 dark:text-gray-400 max-lg:text-center max-w-2xl mx-auto">
-                            {{ $t('about_text') }}
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+          <!-- Gradient fade at bottom -->
+          <div class="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-gray-100 dark:from-gray-800 to-transparent"></div>
+      </section>
 
-    <section class="py-14 lg:py-10 relative">
-        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative ">
-            <div class="grid grid-cols-1 lg:grid-cols-2 lg:gap-9 ">
+      <section class="py-20 relative mx-4">
+          <div class="absolute inset-0 -z-10 overflow-hidden">
+              <div class="absolute top-0 left-0 w-full h-full bg-[url('/images/patterns/dots.svg')] opacity-10 dark:opacity-5"></div>
+          </div>
 
-                <div class="lg:pr-24 flex items-center">
-                    <div class="data w-full">
-                        <img src="/images/aboutUs/since2025.png" alt="About Us tailwind page"
-                             class="block lg:hidden mb-9 mx-auto object-cover rounded-lg">
-                        <h2 class="font-manrope font-bold text-4xl lg:text-5xl text-black dark:text-white mb-9 max-lg:text-center">
-                            {{ $t('since') }}
-                        </h2>
-                        <p class="font-normal text-xl leading-8 text-gray-500 dark:text-gray-400 max-lg:text-center max-w-2xl mx-auto">
-                            {{ $t('beyond_translation') }}
-                        </p>
-                    </div>
-                </div>
-                <div class="img-box ">
-                    <img src="/images/aboutUs/since2025.png" alt="About Us tailwind page"
-                         class="hidden lg:block object-cover rounded-lg">
-                </div>
-            </div>
-        </div>
-    </section>
+          <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+              <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                  <div class="relative group">
+                      <div class="absolute -inset-4 bg-gradient-to-r from-red-600 to-purple-600 rounded-xl blur opacity-75 group-hover:opacity-100 transition duration-500"></div>
+                      <img src="/images/aboutUs/aboutUs.png" alt="About Us"
+                           class="relative rounded-xl shadow-2xl transform transition duration-500 group-hover:-translate-y-2">
+                  </div>
+
+                  <div class="lg:pl-12">
+                      <span class="text-red-600 font-semibold">{{ $t('about_us') }}</span>
+                      <h2 class="text-4xl font-bold text-gray-900 dark:text-white mt-2 mb-6 md:text-5xl">
+                          {{ $t('innovative_platform') }}
+                      </h2>
+
+                      <div class="space-y-4 text-gray-600 dark:text-gray-300 my-12">
+                          <p class="text-lg leading-relaxed text-justify">
+                              {{ $t('about_text') }}
+                          </p>
+                      </div>
+
+                      <div class="mt-8 flex flex-wrap gap-4">
+                          <div class="flex items-center">
+                              <div class="flex-shrink-0 bg-red-100 dark:bg-red-900/30 rounded-full p-2">
+                                  <svg class="h-6 w-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                  </svg>
+                              </div>
+                              <span class="mx-3 text-gray-700 dark:text-gray-300">{{ $t('feature_1') }}</span>
+                          </div>
+                          <div class="flex items-center">
+                              <div class="flex-shrink-0 bg-red-100 dark:bg-red-900/30 rounded-full p-2">
+                                  <svg class="h-6 w-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                  </svg>
+                              </div>
+                              <span class="mx-3 text-gray-700 dark:text-gray-300">{{ $t('feature_2') }}</span>
+                          </div>
+                          <div class="flex items-center">
+                              <div class="flex-shrink-0 bg-red-100 dark:bg-red-900/30 rounded-full p-2">
+                                  <svg class="h-6 w-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                  </svg>
+                              </div>
+                              <span class="mx-3 text-gray-700 dark:text-gray-300">{{ $t('feature_3') }}</span>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </section>
+
+      <section class="py-20 relative mx-4">
+          <div class="absolute inset-0 -z-10 overflow-hidden">
+              <div class="absolute top-0 left-0 w-full h-full bg-[url('/images/patterns/dots.svg')] opacity-10 dark:opacity-5"></div>
+          </div>
+
+          <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+              <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                  <div class="lg:order-1 lg:pr-12 order-2">
+                      <span class="text-red-600 font-semibold my-12"> {{ $t('since') }} </span>
+                      <h2 class="text-4xl font-bold text-gray-900 dark:text-white mt-2 mb-6 md:text-5xl">
+                          2025
+                      </h2>
+
+                      <div class="space-y-4 text-gray-600 dark:text-gray-300 my-12">
+                          <p class="text-lg leading-relaxed text-justify">
+                              {{ $t('beyond_translation') }}
+                          </p>
+                      </div>
+                  </div>
+
+                  <div class="relative group lg:order-2 order-1">
+                      <div class="absolute -inset-4 bg-gradient-to-r from-red-600 to-purple-600 rounded-xl blur opacity-75 group-hover:opacity-100 transition duration-500"></div>
+                      <img src="/images/aboutUs/since2025.png" alt="About Us"
+                           class="relative rounded-xl shadow-2xl transform transition duration-500 group-hover:-translate-y-2">
+                  </div>
+              </div>
+          </div>
+      </section>
 
     <section class="py-10">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
