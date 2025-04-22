@@ -131,7 +131,7 @@ watch(locale, () => {
                 <section class="mb-20">
                     <div class="text-center mb-16">
                         <h2 class="text-4xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400 inline-block">
-                            learning methods
+                            {{ $t('learning_methods_title') }}
                         </h2>
                         <p class="max-w-2xl mx-auto text-lg text-gray-600 dark:text-gray-400">
                             {{ $t('choose_your_preferred_way_to_learn') }}
