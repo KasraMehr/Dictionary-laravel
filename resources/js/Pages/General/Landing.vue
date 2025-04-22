@@ -58,7 +58,7 @@ function handleImageError() {
                                 </h1>
 
                                 <!-- Typing animation for slogan -->
-                                <div class="text-lg sm:text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto animate-fade-in-up animate-delay-300">
+                                <div class="text-lg sm:text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-4xl mx-auto animate-fade-in-up animate-delay-300">
                                     <span class="typing-animation w-full">{{ $t('slogan') }}</span>
                                 </div>
 
