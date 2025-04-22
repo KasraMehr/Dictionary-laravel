@@ -39,8 +39,6 @@ class WordSeeder extends Seeder
             $word = trim($word);
             if (empty($word)) continue;
 
-            sleep(60);
-
             // Translate word
             try {
                 $meaning = $translator->translate($word) ?? 'not found';
