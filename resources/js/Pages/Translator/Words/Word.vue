@@ -30,9 +30,13 @@ const addToFavorites = (word) => {
     // Add API call to save favorite
 };
 
-onMounted(() => {
-    isFavorite.value = checkFavorite(word.id);
-});
+// onMounted(() => {
+//     isFavorite.value = checkFavorite(word.id);
+// });
+
+const setDefaultImage = (event) => {
+    event.target.src = "/images/default-image.jpg";
+};
 </script>
 
 <template>
@@ -106,8 +110,8 @@ onMounted(() => {
                             <div class="p-6">
                                 <div class="relative aspect-video rounded-lg overflow-hidden bg-gray-100 dark:bg-gray-700 flex items-center justify-center">
                                     <img :src="word.image ? `/storage/${word.image}` : '/images/default.png'"
-                                         alt="Word Image"
-                                         class="w-full h-full object-cover">
+                                         :alt='word.name'
+                                         class="w-full h-full object-cover" @error="setDefaultImage">
                                     <div v-if="!word.image" class="absolute inset-0 flex items-center justify-center">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -140,9 +144,9 @@ onMounted(() => {
                                         <div class="mt-1 flex items-center">
                                             <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
                                                   :class="{
-                                                    'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200': word.level === 'Beginner',
-                                                    'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200': word.level === 'Intermediate',
-                                                    'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200': word.level === 'Advanced'
+                                                    'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200': word.level === 'A1' || word.level === 'A2',
+                                                    'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200': word.level === 'B1' || word.level === 'B2',
+                                                    'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200': word.level === 'C1' || word.level === 'C2'
                                                 }">
                                                 {{ word.level }}
                                             </span>
@@ -156,7 +160,7 @@ onMounted(() => {
 
                                 <!-- Description -->
                                 <div>
-                                    <h3 class="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Description</h3>
+                                    <h3 class="text-sm text-justify font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Description</h3>
                                     <p class="mt-1 text-gray-700 dark:text-gray-300 whitespace-pre-line">{{ word.description }}</p>
                                 </div>
                             </div>
