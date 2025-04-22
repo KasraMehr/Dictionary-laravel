@@ -22,7 +22,7 @@ return new class extends Migration
                 'interjection', 'article', 'determiner', 'numeral', 'auxiliary verb',
                 'modal verb', 'participle', 'gerund', 'infinitive', 'possessive pronoun',
                 'relative pronoun','demonstrative pronoun','reflexive pronoun','reciprocal pronoun','intensive pronoun'
-            ])->default('-')->after('word');
+            ])->default('-');
             $table->string('voice')->nullable();
             $table->string('image')->nullable();
             $table->string('description')->nullable();
