@@ -33,19 +33,7 @@ function handleImageError() {
 <template>
     <MainLayout title="Home">
         <div class="min-h-screen text-gray-900 dark:text-white/90 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 transition-colors duration-500">
-            <!-- Particle Background -->
-            <div class="fixed inset-0 w-full h-full opacity-20 dark:opacity-10 pointer-events-none">
-                <div v-for="i in 30" :key="i"
-                     class="absolute rounded-full bg-[#FF2D20] dark:bg-white"
-                     :style="{
-                 top: `${Math.random() * 100}%`,
-                 left: `${Math.random() * 100}%`,
-                 width: `${Math.random() * 10 + 2}px`,
-                 height: `${Math.random() * 10 + 2}px`,
-                 animation: `float ${Math.random() * 10 + 10}s linear infinite`,
-                 animationDelay: `${Math.random() * 5}s`
-               }"></div>
-            </div>
+
 
             <div class="relative min-h-screen flex flex-col items-center justify-center selection:bg-[#FF2D20] selection:text-white overflow-hidden">
                 <!-- Floating gradient circles -->
@@ -70,9 +58,9 @@ function handleImageError() {
                                 </h1>
 
                                 <!-- Typing animation for slogan -->
-                                <p class="text-lg sm:text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto animate-fade-in-up animate-delay-300">
-                                    <span class="typing-animation">{{ $t('slogan') }}</span>
-                                </p>
+                                <div class="text-lg sm:text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto animate-fade-in-up animate-delay-300">
+                                    <span class="typing-animation w-full">{{ $t('slogan') }}</span>
+                                </div>
 
                                 <!-- Search with floating label -->
                                 <div ref="searchContainer" class="relative w-full max-w-2xl mx-auto mt-8 animate-fade-in-up animate-delay-500">
@@ -451,6 +439,20 @@ function handleImageError() {
     border-right: 2px solid;
     white-space: nowrap;
     animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+@media (max-width: 640px) {
+    .typing-animation {
+        white-space: normal;
+    }
+}
+
+.text-lg {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 @keyframes typing {
