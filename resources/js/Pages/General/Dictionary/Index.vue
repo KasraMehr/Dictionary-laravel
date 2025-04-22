@@ -478,7 +478,7 @@ onMounted(() => {
                                 </svg>
                                 {{ $t('description') }}
                             </h3>
-                            <div class="p-3 bg-white dark:bg-gray-600 rounded-lg border border-gray-200 dark:border-gray-500">
+                            <div class="p-3 text-gray-800 dark:text-gray-200 bg-white dark:bg-gray-600 rounded-lg border border-gray-200 dark:border-gray-500">
                                 {{ selectedWord.description || $t('no_description_available') }}
                             </div>
                         </div>
@@ -486,7 +486,7 @@ onMounted(() => {
 
                     <!-- View Full Button -->
                     <div class="pt-4 border-t border-gray-200 dark:border-gray-700">
-                        <a :href="`/word/${selectedWord.native_lang}-${selectedWord.translated_lang}/${selectedWord.id}`"
+                        <a :href="`/word/${selectedWord.native_lang}-${selectedWord.translated_lang}/${selectedWord.slug}`"
                            class="inline-flex items-center px-6 py-3 bg-[#FF2D20] text-white rounded-lg hover:bg-orange-500 transition-colors duration-300">
                             {{ $t('view_full_details') }}
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 ml-2">
