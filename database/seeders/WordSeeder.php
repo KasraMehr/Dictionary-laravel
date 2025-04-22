@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Word;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -38,6 +39,8 @@ class WordSeeder extends Seeder
             $word = trim($word);
             if (empty($word)) continue;
 
+            sleep(60);
+
             // Translate word
             try {
                 $meaning = $translator->translate($word) ?? 'not found';
@@ -45,8 +48,151 @@ class WordSeeder extends Seeder
                 $meaning = 'not found';
             }
 
-            // Get description from Wikipedia
-            $description = $this->getWikipediaSummary($word);
+            try {
+                $prompt = "یک توضیح خودمانی و ساده به فارسی برای کلمه '$word' بنویس.
+                - اول معنی واضح بده
+                - بعد با مثالهای روزمره توضیح بده
+                - مثل یه دوست که داره توضیح میده بنویس
+                - حداکثر 5 خط باشه
+                - از اصطلاحات عامیانه استفاده کن";
+
+                $response = $client->chat()->create([
+                    'model' => 'gpt-3.5-turbo',
+                    'messages' => [
+                        ['role' => 'system', 'content' => 'تو یک مترجم فارسی‌زبان با زبان عامیانه هستی'],
+                        ['role' => 'user', 'content' => $prompt],
+                    ],
+                    'temperature' => 0.7
+                ]);
+
+                $description = $response->choices[0]->message->content;
+            } catch (\Exception $e) {
+                $description = 'توضیح یافت نشد';
+                file_put_contents('descriptions_errors.log', "Error for $word: ".$e->getMessage()."\n", FILE_APPEND);
+            }
+
+            try {
+                $prompt = "Strictly respond with ONLY ONE value from this exact list that represents the difficulty level of the word '$word':
+                A1, A2, B1, B2, C1, C2, -
+
+                Important rules:
+                1. Respond ONLY with the single value from the list
+                2. Do not add any explanations, punctuation or other text
+                3. If uncertain, respond with '-'";
+
+                $response = $client->chat()->create([
+                    'model' => 'gpt-3.5-turbo',
+                    'messages' => [
+                        ['role' => 'system', 'content' => 'You are a strict language level classification system.'],
+                        ['role' => 'user', 'content' => $prompt],
+                    ],
+                ]);
+
+                $rawLevel = strtoupper(trim($response->choices[0]->message->content));
+
+                // لیست مقادیر مجاز
+                $allowedLevels = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', '-'];
+
+                // اعتبارسنجی پاسخ
+                $level = in_array($rawLevel, $allowedLevels) ? $rawLevel : '-';
+
+            } catch (\Exception $e) {
+                $level = '-';
+            }
+
+            try {
+                $prompt = "Strictly respond with ONLY ONE word from this exact list that best describes the grammar type of the word '$word':
+                -, noun, pronoun, verb, adjective, adverb, preposition, conjunction, interjection, article, determiner, numeral, auxiliary verb, modal verb, participle, gerund, infinitive
+
+                Important rules:
+                1. Respond ONLY with the single word from the list
+                2. Do not add any explanations, punctuation or other text
+                3. If uncertain, respond with '-'";
+
+                $response = $client->chat()->create([
+                    'model' => 'gpt-3.5-turbo',
+                    'messages' => [
+                        ['role' => 'system', 'content' => 'You are a strict grammar classification system.'],
+                        ['role' => 'user', 'content' => $prompt],
+                    ],
+                ]);
+
+                $rawGrammar = strtolower(trim($response->choices[0]->message->content));
+
+                // لیست مقادیر مجاز
+                $allowedGrammar = [
+                    '-', 'noun', 'pronoun', 'verb', 'adjective', 'adverb',
+                    'preposition', 'conjunction', 'interjection', 'article',
+                    'determiner', 'numeral', 'auxiliary verb', 'modal verb',
+                    'participle', 'gerund', 'infinitive'
+                ];
+
+                // اعتبارسنجی پاسخ
+                $grammar = in_array($rawGrammar, $allowedGrammar) ? $rawGrammar : '-';
+
+            } catch (\Exception $e) {
+                $grammar = '-';
+            }
+
+//            try {
+//                $prompt = "Strictly respond with ONLY the ID number (0-32) from this list that best matches the word '$word':
+//                 0: زبان‌ها
+//                 1: اسم (Noun)
+//                 2: فعل (Verb)
+//                 3: صفت (Adjective)
+//                 4: 'قید (Adverb)'
+//                 5: 'مقدماتی (A1-A2)',
+//                 6: 'متوسط (B1-B2)',
+//                 7: 'پیشرفته (C1-C2)',
+//                 8: 'بریتیش (British)',
+//                 9: 'امریکن (American)',
+//                 10: 'علوم و فناوری',
+//                 11: 'کامپیوتر و IT',
+//                 12: 'پزشکی',
+//                 13: 'اقتصاد و کسب‌وکار',
+//                 14: 'هنر و فرهنگ',
+//                 15: 'ورزش‌ها',
+//                 16: 'طبیعت و محیط زیست',
+//                 17: 'سیاست و حقوق',
+//                 18: 'تاریخ',
+//                 19: 'مذهب و فلسفه',
+//                 20: 'روانشناسی',
+//                 21: 'غذا و آشپزی',
+//                 22: 'سفر و گردشگری',
+//                 23: 'مد و پوشاک',
+//                 24: 'خودرو و حمل‌ونقل',
+//                 25: 'نظامی و امنیتی',
+//                 26: 'کودک و نوجوان',
+//                 27: 'عامیانه و اصطلاحات',
+//                 28: 'هم‌معنی و متضاد',
+//                 29: 'کلمات هم‌آوا',
+//                 30: 'اختصارات',
+//                 31: 'ریشه‌شناسی',
+//                 32: 'تلفظ'
+//
+//                 Rules:
+//                 1. Return ONLY the number (e.g. '5')
+//                 2. No explanations or other text
+//                 3. If uncertain, return '0'";
+//
+//                $response = $client->chat()->create([
+//                    'model' => 'gpt-3.5-turbo',
+//                    'messages' => [
+//                        ['role' => 'system', 'content' => 'You are a category classification system.'],
+//                        ['role' => 'user', 'content' => $prompt],
+//                    ],
+//                ]);
+//
+//                // استخراج عدد از پاسخ
+//                $rawCategory = trim($response->choices[0]->message->content);
+//                $categoryId = is_numeric($rawCategory) ? (int)$rawCategory : 0;
+//
+//                // محدود کردن به بازه معتبر
+//                $categoryId = max(0, min(32, $categoryId));
+//
+//            } catch (\Exception $e) {
+//                $categoryId = 0; // مقدار پیش‌فرض در صورت خطا
+//            }
 
             // Get pronunciation from Langeek
             $pronunciation = $this->getPronunciationFromWiktionary($word);
@@ -61,10 +207,12 @@ class WordSeeder extends Seeder
             $slug = Str::slug($word);
 
             // Store in database
-            DB::table('words')->insert([
+            $newWord = Word::create([
                 'word' => $word,
                 'meaning' => $meaning,
                 'pronunciation' => $pronunciation,
+                'level' => $level,
+                'grammar' => $grammar,
                 'voice' => $voicePath,
                 'image' => $imagePath,
                 'description' => $description,
@@ -74,23 +222,15 @@ class WordSeeder extends Seeder
             ]);
             $generated_words_num++;
 
-            echo "\n$generated_words_num\n ✅ Added: $word → meaning: $meaning\n pronunciation → $pronunciation \n description → $description \n image → $imagePath\n voiceFileName → $voicePath\n slug -> $slug";
+//            $newWord->categories()->attach($categoryId);
+
+            echo "\n$generated_words_num\n ✅ Added: $word → meaning: $meaning\n pronunciation → $pronunciation \n
+             description → $description \n level -> $level \n grammar -> $grammar \n image → $imagePath\n
+              voiceFileName → $voicePath\n slug -> $slug";
         }
     }
 
-    private function getWikipediaSummary($word)
-    {
-        $url = "https://en.wikipedia.org/api/rest_v1/page/summary/" . urlencode($word);
-        $response = Http::get($url);
-
-        if ($response->successful()) {
-            $data = $response->json();
-            return $data['extract'] ?? 'No description available';
-        }
-        return 'No description available';
-    }
-
-    private function getPronunciationFromWiktionary($word)
+    private function getPronunciationFromWiktionary($word): ?string
     {
         $url = "https://en.wiktionary.org/wiki/" . urlencode($word);
 
@@ -125,11 +265,10 @@ class WordSeeder extends Seeder
       } catch (\Exception $e) {
           echo "⚠️ Wikipedia fetch failed for $word\n";
       }
-
     }
 
     private function saveImageFromUrl($imageUrl, $path)
-{
+    {
     if ($imageUrl) {
         try {
             $imageData = Http::get($imageUrl)->body();
@@ -142,7 +281,7 @@ class WordSeeder extends Seeder
     return null;
 }
 
-    private function generateVoice($word, $path)
+    private function generateVoice($word, $path): void
     {
       try {
           $voiceUrl = "https://translate.google.com/translate_tts?ie=UTF-8&tl=en&client=tw-ob&q=" . urlencode($word);
