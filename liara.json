@@ -10,11 +10,5 @@
             "name": "docs",
             "to": "/var/www/html/storage/app/docs"
         }
-    ],
-    "deploy": {
-        "before": [
-            "php artisan storage:link",
-            "chmod -R 775 storage/app/docs"
-        ]
-    }
+    ]
 }
