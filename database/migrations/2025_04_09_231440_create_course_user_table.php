@@ -16,15 +16,15 @@ return new class extends Migration
           $table->foreignId('course_id')->constrained()->onDelete('cascade');
           $table->foreignId('user_id')->constrained()->onDelete('cascade');
           $table->timestamp('enrolled_at')->nullable();
-          $table->unsignedTinyInteger('progress')->default(0)->after('user_id');
-          $table->timestamp('completed_at')->nullable()->after('progress');
-          $table->unsignedTinyInteger('rating')->nullable()->after('completed_at');
-          $table->text('review')->nullable()->after('rating');
-          $table->boolean('is_favorite')->default(false)->after('review');
-          $table->timestamp('last_accessed_at')->nullable()->after('is_favorite');
-          $table->enum('payment_status', ['pending', 'paid', 'failed', 'refunded'])->default('pending')->after('is_favorite');
-          $table->string('transaction_id')->nullable()->after('payment_status'); // شناسه تراکنش
-          $table->timestamp('expires_at')->nullable()->after('last_accessed_at');
+          $table->unsignedTinyInteger('progress')->default(0);
+          $table->timestamp('completed_at')->nullable();
+          $table->unsignedTinyInteger('rating')->nullable();
+          $table->text('review')->nullable();
+          $table->boolean('is_favorite')->default(false);
+          $table->timestamp('last_accessed_at')->nullable();
+          $table->enum('payment_status', ['pending', 'paid', 'failed', 'refunded'])->default('pending');
+          $table->string('transaction_id')->nullable(); // شناسه تراکنش
+          $table->timestamp('expires_at')->nullable();
           $table->timestamps();
         });
     }

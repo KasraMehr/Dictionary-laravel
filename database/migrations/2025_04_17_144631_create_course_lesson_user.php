@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('course_lesson_user', function (Blueprint $table) {
           $table->id();
           $table->foreignId('user_id')->constrained()->onDelete('cascade');
-          $table->foreignId('course_lesson_id')->constrained()->onDelete('cascade'); // foreign key به درس‌ها
-          $table->boolean('completed')->default(false); // وضعیت تکمیل
-          $table->unsignedTinyInteger('progress')->default(0); // پیشرفت درس (برای مثال درصد)
-          $table->timestamp('started_at')->nullable(); // زمان شروع
-          $table->timestamp('completed_at')->nullable(); // زمان تکمیل
+          $table->foreignId('course_lesson_id')->constrained()->onDelete('cascade');
+          $table->boolean('completed')->default(false);
+          $table->unsignedTinyInteger('progress')->default(0);
+          $table->timestamp('started_at')->nullable();
+          $table->timestamp('completed_at')->nullable();
           $table->timestamps();
         });
     }

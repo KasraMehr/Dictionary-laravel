@@ -17,10 +17,10 @@ return new class extends Migration
             $table->foreignId('student_id')->constrained('users')->onDelete('cascade');
             $table->enum('level', ['beginner', 'intermediate', 'advanced'])->default('beginner');
             $table->text('notes')->nullable();
-            $table->enum('status', ['active', 'paused', 'completed'])->default('active')->after('notes');
-            $table->date('start_date')->nullable()->after('status');
-            $table->date('end_date')->nullable()->after('start_date');
-            $table->unsignedInteger('total_sessions')->default(0)->after('end_date');
+            $table->enum('status', ['active', 'paused', 'completed'])->default('active');
+            $table->date('start_date')->nullable();
+            $table->date('end_date')->nullable();
+            $table->unsignedInteger('total_sessions')->default(0);
             $table->timestamps();
 
             $table->unique(['teacher_id', 'student_id']);
