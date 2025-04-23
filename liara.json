@@ -1,25 +1,20 @@
 {
     "app": "modern-dictionary",
-    "port": 3000,
+    "platform": "laravel",
+    "php": "8.3",
     "build": {
         "location": "iran"
     },
-    "laravel": {
-        "phpVersion": "8.3",
-        "storage": {
-            "disks": {
-                "docs": {
-                    "driver": "local",
-                    "root": "/var/www/html/docs",
-                    "visibility": "public"
-                }
-            }
-        }
-    },
-    "disks": [
+    "mounts": [
         {
             "name": "docs",
-            "mountTo": "/var/www/html/docs"
+            "to": "/var/www/html/storage/app/docs"
         }
-    ]
+    ],
+    "deploy": {
+        "before": [
+            "php artisan storage:link",
+            "chmod -R 775 storage/app/docs"
+        ]
+    }
 }

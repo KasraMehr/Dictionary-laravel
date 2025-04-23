@@ -45,6 +45,14 @@ return [
             'throw' => false,
         ],
 
+        'docs' => [ // دیسک جدید برای فایل‌های دیکشنری
+            'driver' => 'local',
+            'root' => storage_path('app/docs'), // مسیر ذخیره‌سازی
+            'url' => env('APP_URL').'/docs', // آدرس دسترسی عمومی (اختیاری)
+            'visibility' => 'public', // یا 'private' اگر می‌خواهید خصوصی باشد
+            'throw' => false,
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),
