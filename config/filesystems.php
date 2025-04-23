@@ -45,11 +45,9 @@ return [
             'throw' => false,
         ],
 
-        'docs' => [
+        'storage' => [
             'driver' => 'local',
-            'root' => storage_path('app/docs'),
-            'url' => env('APP_URL').'/docs',
-            'visibility' => 'public',
+            'root' => storage_path(''),
             'throw' => false,
         ],
 

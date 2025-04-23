@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Word;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
@@ -17,7 +16,7 @@ class WordSeeder extends Seeder
 {
     public function run(): void
     {
-        $filePath = storage_path('app/docs/words20k.txt');
+        $filePath = storage_path('app/words20k.txt');
         if (!file_exists($filePath)) {
             echo "❌ words.txt not found!\n";
             return;
