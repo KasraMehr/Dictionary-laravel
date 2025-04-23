@@ -11,6 +11,10 @@
         {
             "name": "public",
             "mountTo": "public"
+        },
+        {
+            "name": "docs",
+            "mountTo": "docs"
         }
     ]
 }
