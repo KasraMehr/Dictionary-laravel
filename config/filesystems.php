@@ -45,11 +45,11 @@ return [
             'throw' => false,
         ],
 
-        'docs' => [ // دیسک جدید برای فایل‌های دیکشنری
+        'docs' => [
             'driver' => 'local',
-            'root' => storage_path('app/docs'), // مسیر ذخیره‌سازی
-            'url' => env('APP_URL').'/docs', // آدرس دسترسی عمومی (اختیاری)
-            'visibility' => 'public', // یا 'private' اگر می‌خواهید خصوصی باشد
+            'root' => storage_path('app/docs'),
+            'url' => env('APP_URL').'/docs',
+            'visibility' => 'public',
             'throw' => false,
         ],
 
