@@ -15,5 +15,11 @@
                 }
             }
         }
-    }
+    },
+    "disks": [
+        {
+            "name": "docs",
+            "mountTo": "/var/www/html/docs"
+        }
+    ]
 }
