@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('word');
             $table->string('meaning');
             $table->string('pronunciation')->nullable();
-            $table->enum('level', ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', '-'])->default('-')->after('word');
+            $table->enum('level', ['A1', 'A2', 'B1', 'B2', 'C1', 'C2', '-'])->default('-');
             $table->enum('grammar', [
                 '-', 'noun', 'pronoun', 'verb', 'adjective', 'adverb', 'preposition', 'conjunction',
                 'interjection', 'article', 'determiner', 'numeral', 'auxiliary verb',
