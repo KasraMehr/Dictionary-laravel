@@ -25,7 +25,7 @@ return new class extends Migration
             ])->default('-');
             $table->string('voice')->nullable();
             $table->string('image')->nullable();
-            $table->string('description')->nullable();
+            $table->text('description')->nullable();
             $table->string('slug')->unique();
             $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');
             $table->timestamps();
