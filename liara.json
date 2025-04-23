@@ -1,14 +1,13 @@
 {
     "app": "modern-dictionary",
-    "platform": "laravel",
-    "php": "8.3",
+    "port": 3000,
     "build": {
         "location": "iran"
     },
-    "mounts": [
+    "disks": [
         {
             "name": "docs",
-            "to": "/var/www/html/storage/app/docs"
+            "mountTo": "/var/www/html/docs"
         }
     ]
 }
