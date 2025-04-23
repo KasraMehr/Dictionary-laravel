@@ -1,13 +1,14 @@
 {
     "app": "modern-dictionary",
-    "port": 3000,
+    "platform": "laravel",
+    "php": "8.3",
     "build": {
         "location": "iran"
     },
-    "disks": [
-        {
-            "name": "docs",
-            "mountTo": "/var/www/html/docs"
-        }
-    ]
+    "deploy": {
+        "before": [
+            "composer install --no-dev --optimize-autoloader",
+            "php artisan storage:link"
+        ]
+    }
 }
