@@ -318,6 +318,14 @@
     "faq_subtitle": "الأسئلة الشائعة",
     "all_questions": "جميع الأسئلة",
     "features_questions": "أسئلة حول الميزات",
-    "learners_questions": "أسئلة المتعلمين"
-
+    "learners_questions": "أسئلة المتعلمين",
+    "join_our_community": "انضم إلى مجتمعنا",
+    "join_as_teacher_or_student": "انضم كمعلم أو كطالب",
+    "i_am_a_teacher": "أنا معلم",
+    "teacher_cta_description": "سجّل كمعلم لإنشاء الدورات والاختبارات وتحقيق الدخل",
+    "register_as_teacher": "سجل كمعلم",
+    "i_am_a_student": "أنا طالب",
+    "student_cta_description": "سجّل كطالب وابدأ بالتعلم",
+    "register_as_student": "سجل كطالب",
+    "already_have_account": "لديك حساب بالفعل"
 }

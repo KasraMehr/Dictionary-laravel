@@ -318,8 +318,15 @@
     "faq_subtitle": "Frequently Asked Questions",
     "all_questions": "All questions",
     "features_questions": "Features questions",
-    "learners_questions": "Learners' questions"
-
-
-
+    "learners_questions": "Learners' questions",
+    "join_our_community": "Join our community",
+    "join_our_community": "Join our community",
+    "join_as_teacher_or_student": "Join as a teacher or student",
+    "i_am_a_teacher": "I am a teacher",
+    "teacher_cta_description": "Register as a teacher to create courses and tests, and earn income",
+    "register_as_teacher": "Register as a teacher",
+    "i_am_a_student": "I am a student",
+    "student_cta_description": "Register as a student and start learning",
+    "register_as_student": "Register as a student",
+    "already_have_account": "Already have an account"
 }
