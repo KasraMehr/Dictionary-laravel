@@ -410,6 +410,86 @@ function handleImageError() {
                                 </div>
                             </div>
                         </div>
+                        <div>
+                          <section class="relative py-20 px-4 sm:px-6 lg:px-8 overflow-hidden my-12">
+                            <!-- Background gradient -->
+                            <div class="absolute inset-0 rounded-2xl bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl p-8 shadow-xl border-t border-white/20 transition-all duration-500 hover:shadow-2xl"></div>
+
+                            <div class="relative max-w-7xl mx-auto">
+                              <div class="text-center">
+                                <h2 class="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400">
+                                  {{ $t('join_our_community') }}
+                                </h2>
+                                <p class="mt-4 text-lg text-gray-700 dark:text-gray-300 max-w-2xl mx-auto">
+                                  {{ $t('join_as_teacher_or_student') }}
+                                </p>
+                              </div>
+
+                              <div class="mt-16 grid gap-8 md:grid-cols-2 lg:gap-12">
+                                <!-- Teacher Card -->
+                                <div class="relative group">
+                                  <div class="absolute -inset-0.5 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-2xl blur opacity-75 group-hover:opacity-100 transition-all duration-300"></div>
+                                  <div class="relative bg-white/20 dark:bg-gray-800/50 backdrop-blur-lg rounded-2xl p-8 border border-white/20 dark:border-gray-700/50 shadow-lg hover:shadow-xl transition-all duration-300">
+                                    <div class="flex items-center justify-center w-16 h-16 bg-indigo-100/30 dark:bg-indigo-900/30 rounded-full mx-auto backdrop-blur-sm">
+                                      <svg class="w-8 h-8 text-indigo-600 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                                      </svg>
+                                    </div>
+                                    <h3 class="mt-6 text-center text-2xl font-semibold text-gray-900 dark:text-white">
+                                      {{ $t('i_am_a_teacher') }}
+                                    </h3>
+                                    <p class="mt-3 text-center text-gray-700 dark:text-gray-400">
+                                      {{ $t('teacher_cta_description') }}
+                                    </p>
+                                    <div class="mt-8">
+                                      <NavLink
+                                        :href="route('register', { role: 'teacher' })"
+                                        class="w-full flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-xl text-white bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 shadow-md transition-all duration-300"
+                                      >
+                                        {{ $t('register_as_teacher') }}
+                                      </NavLink>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <!-- Student Card -->
+                                <div class="relative group">
+                                  <div class="absolute -inset-0.5 bg-gradient-to-r from-[#FF2D20] to-orange-500 rounded-2xl blur opacity-75 group-hover:opacity-100 transition-all duration-300"></div>
+                                  <div class="relative bg-white/20 dark:bg-gray-800/50 backdrop-blur-lg rounded-2xl p-8 border border-white/20 dark:border-gray-700/50 shadow-lg hover:shadow-xl transition-all duration-300">
+                                    <div class="flex items-center justify-center w-16 h-16 bg-red-100/30 dark:bg-red-900/30 rounded-full mx-auto backdrop-blur-sm">
+                                      <svg class="w-8 h-8 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                                      </svg>
+                                    </div>
+                                    <h3 class="mt-6 text-center text-2xl font-semibold text-gray-900 dark:text-white">
+                                      {{ $t('i_am_a_student') }}
+                                    </h3>
+                                    <p class="mt-3 text-center text-gray-700 dark:text-gray-400">
+                                      {{ $t('student_cta_description') }}
+                                    </p>
+                                    <div class="mt-8">
+                                      <NavLink
+                                        :href="route('register', { role: 'student' })"
+                                        class="w-full flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-xl text-white bg-gradient-to-r from-[#FF2D20] to-orange-500 hover:from-red-600 hover:to-orange-700 shadow-md transition-all duration-300"
+                                      >
+                                        {{ $t('register_as_student') }}
+                                      </NavLink>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="mt-12 text-center">
+                                <p class="text-base text-gray-700 dark:text-gray-400">
+                                  {{ $t('already_have_account') }}
+                                  <NavLink :href="route('login')" class="font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300 transition-colors duration-300">
+                                    {{ $t('sign_in') }}
+                                  </NavLink>
+                                </p>
+                              </div>
+                            </div>
+                          </section>
+                        </div>
                     </main>
                 </div>
             </div>
