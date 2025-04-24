@@ -276,9 +276,6 @@ function handleImageError() {
                                         <div class="flex items-center justify-between">
                                             <button @click="prevQuestion" :disabled="currentQuestionIndex === 0"
                                                     class="px-5 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-all duration-300 disabled:opacity-50 flex items-center gap-2">
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
-                                                </svg>
                                                 {{ $t('previous') }}
                                             </button>
 
@@ -293,9 +290,6 @@ function handleImageError() {
                                             <button @click="nextQuestion" :disabled="currentQuestionIndex === quizQuestions.length - 1"
                                                     class="px-5 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-all duration-300 disabled:opacity-50 flex items-center gap-2">
                                                 {{ $t('next') }}
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-                                                </svg>
                                             </button>
                                         </div>
                                     </div>
@@ -570,8 +564,6 @@ export default {
           }
         },
 
-
-    // تابع برای تعویض زبان‌ها
         swapLanguages() {
             [this.sourceLang, this.targetLang] = [this.targetLang, this.sourceLang];
         },
