@@ -44,6 +44,7 @@ class TranslateController extends Controller
                 'translatedText' => $response->choices[0]->message->content,
             ], 200);
         } catch (\Exception $e) {
+          \Log::error('Translation API Error', ['exception' => $e]);
             return response()->json([
                 'error' => 'خطایی در ترجمه رخ داده است.',
                 'message' => $e->getMessage(),
