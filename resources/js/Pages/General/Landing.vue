@@ -536,7 +536,7 @@ export default {
             return;
           }
 
-          const response = await fetch('http://localhost:8000/api/translate', {
+          const response = await fetch('http://modern-dictionary.com/api/translate', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
