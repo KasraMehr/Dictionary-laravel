@@ -224,7 +224,7 @@ onMounted(() => {
                     <div v-if="filteredWords.length > 0" class="divide-y divide-gray-200 dark:divide-gray-700">
                         <!-- Desktop Table Header -->
                         <div class="hidden lg:grid grid-cols-12 gap-6 p-4 bg-gray-100 dark:bg-gray-700/50 text-gray-700 dark:text-gray-300 text-sm font-medium uppercase tracking-wider">
-                            <div class="col-span-1">#</div>
+                            <div class="col-span-1 mx-2">#</div>
                             <div class="col-span-2">{{ $t('word') }}</div>
                             <div class="col-span-2">{{ $t('meaning') }}</div>
                             <div class="col-span-1">{{ $t('level') }}</div>
@@ -240,7 +240,7 @@ onMounted(() => {
                             <!-- Mobile View -->
                             <div class="lg:hidden grid grid-cols-2 gap-4 mb-4">
                                 <div class="flex items-center">
-                                    <span class="text-gray-500 dark:text-gray-400 mr-2">{{ index + 1 }}</span>
+                                    <span class="text-gray-500 dark:text-gray-400 mx-2">{{ index + 1 }}</span>
                                     <img :src="`/storage/${word.image}`" alt="Word Image"
                                          class="w-12 h-12 object-cover rounded-lg shadow-sm border border-gray-200 dark:border-gray-600"
                                          @error="setDefaultImage">
@@ -294,7 +294,7 @@ onMounted(() => {
                             <!-- Desktop View -->
                             <div class="hidden lg:grid grid-cols-12 gap-6 items-center">
                                 <div class="col-span-1 flex items-center">
-                                    <span class="text-gray-500 dark:text-gray-400">{{ index + 1 }}</span>
+                                    <span class="text-gray-500 dark:text-gray-400 mx-2">{{ index + 1 }}</span>
                                     <img :src="`/storage/${word.image}`" alt="Word Image"
                                          class="w-10 h-10 ml-4 object-cover rounded-lg shadow-sm border border-gray-200 dark:border-gray-600"
                                          @error="setDefaultImage">
