@@ -3,6 +3,7 @@ import { Head, Link } from "@inertiajs/vue3";
 import MainLayout from '@/Layouts/MainLayout.vue';
 import { useI18n } from "vue-i18n";
 import { ref } from 'vue';
+import NavLink from '@/Components/NavLink.vue';
 
 const { locale, t } = useI18n();
 
@@ -295,7 +296,72 @@ function handleImageError() {
                                     </div>
                                 </div>
                             </div>
+                            <!-- بعد از div اصلی کوییز -->
+                            <div v-if="showResult" class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
+                                <div :class="[
+                                    'relative overflow-hidden rounded-2xl p-8 shadow-xl border-t transition-all duration-500 max-w-md w-full',
+                                    quizResult === 'excellent' ? 'bg-green-100/90 dark:bg-green-900/90 border-green-300' :
+                                    quizResult === 'good' ? 'bg-blue-100/90 dark:bg-blue-900/90 border-blue-300' :
+                                    'bg-red-100/90 dark:bg-red-900/90 border-red-300'
+                                ]">
+                                    <!-- انیمیشن‌ها -->
+                                    <div v-if="resultAnimation === 'celebrate'" class="absolute inset-0 flex items-center justify-center">
+                                        <div class="absolute w-32 h-32 bg-yellow-400 rounded-full opacity-20 animate-ping"></div>
+                                        <div class="absolute w-24 h-24 bg-yellow-500 rounded-full opacity-20 animate-ping animation-delay-200"></div>
+                                    </div>
 
+                                    <div v-if="resultAnimation === 'confetti'" class="absolute inset-0 overflow-hidden">
+                                        <div v-for="i in 20" :key="i"
+                                             class="absolute w-2 h-2 rounded-full"
+                                             :class="[
+                                                 Math.random() > 0.5 ? 'bg-blue-500' : 'bg-yellow-500',
+                                                 Math.random() > 0.5 ? 'bg-green-500' : 'bg-pink-500'
+                                             ]"
+                                             :style="{
+                                                 top: Math.random() * 100 + '%',
+                                                 left: Math.random() * 100 + '%',
+                                                 animation: `fall-${Math.floor(Math.random() * 3) + 1} ${Math.random() * 3 + 2}s linear infinite`
+                                             }"></div>
+                                    </div>
+
+                                    <div v-if="resultAnimation === 'sad'" class="absolute inset-0 flex items-center justify-center opacity-10">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-32 h-32">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.182 16.318A4.486 4.486 0 0012.016 15a4.486 4.486 0 00-3.198 1.318M21 12a9 9 0 11-18 0 9 9 0 0118 0zM9.75 9.75c0 .414-.168.75-.375.75S9 10.164 9 9.75 9.168 9 9.375 9s.375.336.375.75zm-.375 0h.008v.015h-.008V9.75zm5.625 0c0 .414-.168.75-.375.75s-.375-.336-.375-.75.168-.75.375-.75.375.336.375.75zm-.375 0h.008v.015h-.008V9.75z" />
+                                        </svg>
+                                    </div>
+
+                                    <div class="relative z-10 text-center">
+                                        <h3 class="text-2xl font-bold mb-4">
+                                            {{ $t('quiz_result') }}
+                                        </h3>
+
+                                        <div class="text-5xl font-bold mb-4">
+                                            {{ correctAnswers }}/10
+                                        </div>
+
+                                        <p class="text-lg mb-6">
+                                            {{ resultMessage }}
+                                        </p>
+
+                                        <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-4 mb-6">
+                                            <div :class="[
+                                                'h-4 rounded-full',
+                                                quizResult === 'excellent' ? 'bg-green-500' :
+                                                quizResult === 'good' ? 'bg-blue-500' : 'bg-red-500'
+                                            ]" :style="{ width: `${correctAnswers * 10}%` }"></div>
+                                        </div>
+
+                                        <div class="flex justify-center gap-4 mt-6">
+                                          <button @click="resetQuiz" class="px-6 py-2 rounded-lg bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-300">
+                                              {{ $t('start_again') }}
+                                          </button>
+                                          <button @click="location.reload()" class="px-6 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-all duration-300">
+                                              {{ $t('close') }}
+                                          </button>
+                                      </div>
+                                    </div>
+                                </div>
+                            </div>
                             <!-- Learning Section -->
                             <div class="relative overflow-hidden rounded-2xl bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl p-8 shadow-xl border-t border-white/20 transition-all duration-500 hover:shadow-2xl">
                                 <div class="absolute -bottom-16 -left-16 w-32 h-32 bg-indigo-500/10 rounded-full"></div>
@@ -481,6 +547,25 @@ textarea::-webkit-scrollbar-thumb {
 .dark textarea::-webkit-scrollbar-thumb {
     background-color: #FF2D20;
 }
+
+@keyframes fall-1 {
+    0% { transform: translateY(-100vh) rotate(0deg); }
+    100% { transform: translateY(100vh) rotate(360deg); }
+}
+
+@keyframes fall-2 {
+    0% { transform: translateY(-100vh) rotate(45deg); }
+    100% { transform: translateY(100vh) rotate(405deg); }
+}
+
+@keyframes fall-3 {
+    0% { transform: translateY(-100vh) rotate(90deg); }
+    100% { transform: translateY(100vh) rotate(450deg); }
+}
+
+.animation-delay-200 {
+    animation-delay: 0.2s;
+}
 </style>
 
 <script>
@@ -633,20 +718,51 @@ export default {
             }
         },
         nextQuestion() {
-            if (this.currentQuestionIndex < this.quizQuestions.length - 1) {
-                this.currentQuestionIndex++;
-                this.selectedAnswer = null;
-                localStorage.setItem("currentQuestionIndex", this.currentQuestionIndex);
-            }
+                if (this.currentQuestionIndex < this.quizQuestions.length - 1) {
+                    this.currentQuestionIndex++;
+                    this.selectedAnswer = null;
+                    localStorage.setItem("currentQuestionIndex", this.currentQuestionIndex);
+                }
 
-            if (this.currentQuestionIndex === this.quizQuestions.length - 1 && this.correctAnswers === 10) {
-                this.showCongratulation = true;
+                if (this.currentQuestionIndex === this.quizQuestions.length - 1) {
+                    this.showQuizResult();
+                }
+            },
+            showQuizResult() {
+                this.showResult = true;
+
+                // تعیین نتیجه بر اساس تعداد پاسخ‌های صحیح
+                if (this.correctAnswers >= 8) {
+                    this.quizResult = 'excellent';
+                    this.resultMessage = this.$t('excellent_result');
+                    this.resultAnimation = 'celebrate';
+                } else if (this.correctAnswers >= 5) {
+                    this.quizResult = 'good';
+                    this.resultMessage = this.$t('good_result');
+                    this.resultAnimation = 'confetti';
+                } else {
+                    this.quizResult = 'poor';
+                    this.resultMessage = this.$t('poor_result');
+                    this.resultAnimation = 'sad';
+                }
+
+                // ریست کردن مقادیر بعد از 5 ثانیه
                 setTimeout(() => {
-                    location.reload();
+                    this.resetQuiz();
                 }, 5000);
-                this.showCongratulation = false;
+            },
+
+            resetQuiz() {
+                // ریست کردن تمام مقادیر
+                this.currentQuestionIndex = 0;
+                this.selectedAnswer = null;
+                this.correctAnswers = 0;
+                this.showResult = false;
+
+                // پاک کردن از localStorage
+                localStorage.removeItem("currentQuestionIndex");
+                localStorage.removeItem("correctAnswers");
             }
-        }
     },
     mounted() {
         document.addEventListener("click", this.closeResults);
