@@ -574,169 +574,175 @@ onMounted(() => {
 </style>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
 
 export default {
-  props: {
-    categories: {
-      type: Array,
-      default: () => []
-    }
-  },
-  data() {
-    return {
-      words: [],             // آرایه اصلی کلمات
-      page: 1,               // شماره صفحه برای API
-      perPage: 10,           // تعداد آیتم در هر صفحه
-      hasMore: true,         // آیا صفحه بعدی وجود دارد؟
-      isLoading: false,      // آیا در حال لود هستیم؟
-
-      // سرچ
-      searchTerm: "",
-      searchResults: [],
-      isSearching: false,
-
-      // مودال‌ها
-      showSearchModal: false,
-      showViewModal: false,
-      selectedWord: null,
-
-      // فیلترها
-      selectedCategory: "",
-      selectedLevel: "",
-      selectedGrammar: "",
-      isFilterOpen: false
-    };
-  },
-  computed: {
-    uniqueCategories() {
-      // دسته‌بندی‌های یکتا از کلمات
-      return [
-        ...new Set(
-          this.words.flatMap(w => (w.categories || []).map(c => c.name))
-        )
-      ];
+    props: {
+        words: {
+            type: Array,
+            required: true,
+        },
+        pagination: {
+            type: Object,
+            required: true
+        },
+        categories: {
+            type: Array,
+            default: () => [],
+            required: false,
+        },
     },
-    uniqueLevels() {
-      return ['A1','A2','B1','B2','C1','C2'];
+    data() {
+        return {
+            allCategories: [],
+            showSearchModal: false,
+            showViewModal: false,
+            searchTerm: "",
+            searchResults: [],
+            loading: false,
+            //filteredWords: [],
+            selectedWord: {},
+            //words: [],  // لیست کلمات
+            page: 1,     // شماره صفحه
+            perPage: 10, // تعداد آیتم‌ها در هر درخواست
+            isLoading: false, // برای جلوگیری از درخواست‌های زیاد
+            hasMore: true,
+            selectedCategory: "",
+            selectedLevel: "",
+            selectedGrammar: "",
+            isFilterOpen: false,
+        };
     },
-    uniqueGrammarTypes() {
-      return [
-        'noun','pronoun','verb','adjective','adverb','preposition',
-        'conjunction','interjection','article','determiner',
-        'numeral','auxiliary verb','modal verb','participle',
-        'gerund','infinitive','possessive pronoun',
-        'relative pronoun','demonstrative pronoun',
-        'reflexive pronoun','reciprocal pronoun','intensive pronoun'
-      ];
-    },
-    filteredWords() {
-      // اگر سرچ فعال است اول سرچ، وگرنه کل کلمات
-      let list = this.searchResults.length ? this.searchResults : this.words;
+    methods: {
+        async loadWords() {
+            if (this.isLoading || !this.hasMore) return;
 
-      if (this.selectedCategory) {
-        list = list.filter(w =>
-          (w.categories || []).some(c => c.name === this.selectedCategory)
-        );
-      }
-      if (this.selectedLevel) {
-        list = list.filter(w => w.level === this.selectedLevel);
-      }
-      if (this.selectedGrammar) {
-        list = list.filter(w => w.grammar === this.selectedGrammar);
-      }
+            this.isLoading = true;
+            try {
+                const response = await fetch(`/api/fetch-words?page=${this.page}&per_page=${this.perPage}`);
 
-      return list;
-    }
-  },
-  methods: {
-    async loadWords() {
-      if (this.isLoading || !this.hasMore) return;
-      this.isLoading = true;
-      try {
-        const { data } = await axios.get('/api/fetch-words', {
-          params: { page: this.page, per_page: this.perPage }
-        });
-        // append داده‌ها
-        this.words.push(...data.words);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
 
-        // بررسی وجود صفحه بعد
-        if (
-          !data.words.length ||
-          data.pagination.current_page >= data.pagination.last_page
-        ) {
-          this.hasMore = false;
-        } else {
-          this.page++;
+                const data = await response.json();
+                console.log("API Response:", data); // بررسی مقدار دریافتی
+
+                if (!data || typeof data !== "object" || !data.words || !Array.isArray(data.words)) {
+                    throw new Error("Invalid response format");
+                }
+
+                if (data.words.length < this.perPage || data.pagination.current_page >= data.pagination.last_page) {
+                    this.hasMore = false;
+                }
+
+                this.words.push(...data.words);
+                this.page++;
+            } catch (error) {
+                console.error("Error loading words:", error);
+            }
+            this.isLoading = false;
+        },
+        setupObserver() {
+            this.$nextTick(() => {
+                if (!this.$refs.loadMoreTrigger) return;
+
+                const observer = new IntersectionObserver((entries) => {
+                    if (entries[0].isIntersecting) {
+                        this.loadWords();
+                    }
+                }, { threshold: 1.0 });
+
+                observer.observe(this.$refs.loadMoreTrigger);
+            });
+        },
+        openSearchModal() {
+            this.showSearchModal = true;
+        },
+        closeSearchModal() {
+            this.showSearchModal = false;
+            this.searchTerm = "";
+            this.searchResults = [];
+        },
+        async searchWords() {
+            if (!this.searchTerm.trim()) {
+                this.searchResults = [];
+                return;
+            }
+            this.loading = true;
+            try {
+                const response = await axios.get(`/search`, {
+                    params: { query: this.searchTerm }
+                });
+
+                if (Array.isArray(response.data)) {
+                    this.searchResults = response.data;
+                } else {
+                    this.searchResults = [];
+                }
+            } catch (error) {
+                console.error("Error fetching search results:", error);
+            } finally {
+                this.loading = false;
+            }
+        },
+        viewWord(word) {
+            this.selectedWord = {
+                ...word,
+                categories: word.categories || []
+            };
+            this.showViewModal = true;
+        },
+        closeModal(){
+            this.showViewModal = false;
+        },
+        toggleFilter() {
+            this.isFilterOpen = !this.isFilterOpen;
+        },
+        closeFilterOnClickOutside(event) {
+            if (this.isFilterOpen && this.$refs.filterBox && !this.$refs.filterBox.contains(event.target)) {
+                this.isFilterOpen = false;
+            }
         }
-      } catch (err) {
-        console.error("Error loading words:", err);
-      } finally {
-        this.isLoading = false;
-      }
     },
-    setupObserver() {
-      this.$nextTick(() => {
-        const el = this.$refs.loadMoreTrigger;
-        if (!el) return;
-        const obs = new IntersectionObserver(entries => {
-          if (entries[0].isIntersecting) {
-            this.loadWords();
-          }
-        }, { threshold: 1 });
-        obs.observe(el);
-      });
+    computed: {
+        uniqueCategories() {
+            return [...new Set(this.words.flatMap(word => word.categories.map(c => c.name)))];
+        },
+        uniqueLevels() {
+            return ['-', 'A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
+        },
+        uniqueGrammarTypes() {
+            return [
+                '-', 'noun', 'pronoun', 'verb', 'adjective', 'adverb', 'preposition', 'conjunction',
+                'interjection', 'article', 'determiner', 'numeral', 'auxiliary verb',
+                'modal verb', 'participle', 'gerund', 'infinitive', 'possessive pronoun',
+                'relative pronoun','demonstrative pronoun','reflexive pronoun','reciprocal pronoun','intensive pronoun'
+            ];
+        },
+        filteredWords() {
+            let words = this.searchResults.length > 0 ? this.searchResults : this.words;
+
+            if (this.selectedCategory) {
+                words = words.filter(word => word.categories.some(c => c.name === this.selectedCategory));
+            }
+            if (this.selectedLevel) {
+                words = words.filter(word => word.level === this.selectedLevel);
+            }
+            if (this.selectedGrammar) {
+                words = words.filter(word => word.grammar === this.selectedGrammar);
+            }
+
+            return words;
+        }
     },
-    openSearchModal() {
-      this.showSearchModal = true;
+    mounted() {
+        this.loadWords();
+        this.setupObserver();
+        document.addEventListener("click", this.closeFilterOnClickOutside);
     },
-    closeSearchModal() {
-      this.showSearchModal = false;
-      this.searchTerm = "";
-      this.searchResults = [];
+    beforeDestroy() {
+        document.removeEventListener("click", this.closeFilterOnClickOutside);
     },
-    async searchWords(term) {
-      if (!term.trim()) return;
-      this.isSearching = true;
-      try {
-        const { data } = await axios.get('/search', {
-          params: { query: term }
-        });
-        this.searchResults = Array.isArray(data) ? data : [];
-      } catch (err) {
-        console.error("Error searching words:", err);
-      } finally {
-        this.isSearching = false;
-      }
-    },
-    viewWord(word) {
-      this.selectedWord = { ...word, categories: word.categories || [] };
-      this.showViewModal = true;
-    },
-    closeViewModal() {
-      this.showViewModal = false;
-      this.selectedWord = null;
-    },
-    toggleFilter() {
-      this.isFilterOpen = !this.isFilterOpen;
-    },
-    closeFilterOnClickOutside(e) {
-      if (
-        this.isFilterOpen &&
-        this.$refs.filterBox &&
-        !this.$refs.filterBox.contains(e.target)
-      ) {
-        this.isFilterOpen = false;
-      }
-    }
-  },
-  mounted() {
-    this.loadWords();
-    this.setupObserver();
-    document.addEventListener('click', this.closeFilterOnClickOutside);
-  },
-  beforeDestroy() {
-    document.removeEventListener('click', this.closeFilterOnClickOutside);
-  }
 };
 </script>
