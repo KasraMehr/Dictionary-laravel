@@ -328,5 +328,10 @@
     "i_am_a_student": "I am a student",
     "student_cta_description": "Register as a student and start learning",
     "register_as_student": "Register as a student",
-    "already_have_account": "Already have an account"
+    "already_have_account": "Already have an account",
+    "quiz_result": "Quiz Result",
+    "start_again": "Start Again",
+    "excellent_result": "Awesome job! You nailed it 👏",
+    "good_result": "Nice work! A little more practice and you’re there",
+    "poor_result": "No worries! Practice makes perfect 😊"
 }
