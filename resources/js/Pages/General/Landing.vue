@@ -93,35 +93,64 @@ function handleImageError() {
                                     </div>
 
                                     <div v-if="showResults && searchResults.length"
-                                        class="absolute w-full mt-2 bg-white dark:bg-gray-700 rounded-xl shadow-2xl overflow-hidden z-40 animate-fade-in">
-                                        <div v-for="result in searchResults" :key="result.id">
-                                            <a :href="`/word/${result.native_lang}-${result.translated_lang}/${result.slug}`"
-                                               class="p-4 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors duration-200 flex justify-between items-center">
-                                                <div>
-                                                    <span class="font-semibold">{{ result.word }}</span>
-                                                    <span class="text-gray-500 dark:text-gray-400 mx-2">-</span>
-                                                    <span>{{ result.meaning }}</span>
+                                         class="absolute w-full mt-2 bg-white dark:bg-gray-800 rounded-xl shadow-2xl overflow-hidden z-40 animate-fade-in max-h-[70vh] overflow-y-auto border border-gray-200 dark:border-gray-700">
+                                        <!-- Header with results count -->
+                                        <div class="sticky top-0 bg-white dark:bg-gray-800 p-3 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+                                            <span class="text-sm font-medium text-gray-600 dark:text-gray-300">
+                                                {{ searchResults.length }} نتیجه یافت شد
+                                            </span>
+                                            <button @click="showResults = false" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                                    <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                                </svg>
+                                            </button>
+                                        </div>
+
+                                        <!-- Results list -->
+                                        <div class="divide-y divide-gray-200 dark:divide-gray-700">
+                                            <a v-for="result in searchResults" :key="result.id"
+                                               :href="`/word/${result.native_lang}-${result.translated_lang}/${result.slug}`"
+                                               class="block p-4 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors duration-200">
+                                                <div class="flex justify-between items-start" dir="ltr">
+                                                    <div class="flex-1 min-w-0 text-left">
+                                                        <p class="text-lg font-semibold text-gray-900 dark:text-white truncate">
+                                                            {{ result.word }}
+                                                        </p>
+                                                    </div>
+                                                    <div class="flex-1 min-w-0 text-center">
+                                                        <p class="text-gray-600 dark:text-gray-300">
+                                                            {{ result.meaning }}
+                                                        </p>
+                                                    </div>
+                                                    <span class="justify-end inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gradient-to-r from-[#FF2D20]/10 to-orange-500/10 text-[#FF2D20] dark:text-orange-300">
+                                                        {{ result.native_lang }} → {{ result.translated_lang }}
+                                                    </span>
                                                 </div>
-                                                <span class="text-xs px-2 py-1 rounded-full bg-gray-200 dark:bg-gray-600">{{ result.native_lang }}→{{ result.translated_lang }}</span>
+                                            </a>
+                                        </div>
+
+                                        <!-- Footer with more results link if needed -->
+                                        <div v-if="searchResults.length >= 5" class="sticky bottom-0 bg-white dark:bg-gray-800 p-3 border-t border-gray-200 dark:border-gray-700 text-center">
+                                            <a href="#" class="text-sm font-medium text-[#FF2D20] hover:text-orange-500 dark:hover:text-orange-400">
+                                                نمایش همه نتایج →
                                             </a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
-                        <!-- Stats Cards -->
-                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 animate-fade-in-up animate-delay-700">
-                            <div v-for="(stat, index) in [
-                    { title: $t('total_users'), value: totalUsers, icon: '👥' },
-                    { title: $t('total_teams'), value: totalTeams, icon: '👨‍👩‍👧‍👦' },
-                    { title: $t('total_words'), value: totalWords, icon: '📖' }
-                ]" :key="index"
-                                 class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-white/20">
-                                <div class="text-4xl mb-3">{{ stat.icon }}</div>
-                                <div class="text-lg font-medium text-gray-600 dark:text-gray-300">{{ stat.title }}</div>
-                                <div class="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#FF2D20] to-orange-500 mt-2">
-                                    {{ stat.value.toLocaleString() }}
+                            <!-- Stats Cards -->
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 animate-fade-in-up animate-delay-700 my-12">
+                                <div v-for="(stat, index) in [
+                        { title: $t('total_users'), value: totalUsers, icon: '👥' },
+                        { title: $t('total_teams'), value: totalTeams, icon: '👨‍👩‍👧‍👦' },
+                        { title: $t('total_words'), value: totalWords, icon: '📖' }
+                    ]" :key="index"
+                                     class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-white/20">
+                                    <div class="text-4xl mb-3">{{ stat.icon }}</div>
+                                    <div class="text-lg font-medium text-gray-600 dark:text-gray-300">{{ stat.title }}</div>
+                                    <div class="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#FF2D20] to-orange-500 mt-2">
+                                        {{ stat.value.toLocaleString() }}
+                                    </div>
                                 </div>
                             </div>
                         </div>
