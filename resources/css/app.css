@@ -10,8 +10,20 @@ html {
     font-family: 'Inter', sans-serif; /* پیش‌فرض انگلیسی */
 }
 
-html[lang="fa"] {
-    font-family: 'Vazirmatn', sans-serif; /* برای زبان فارسی */
+@font-face {
+    font-family: 'Vazirmatn';
+    src: url('/public/fonts/Vazirmatn/Vazirmatn-Regular.woff2') format('woff2'),
+    url('/public/fonts/Vazirmatn/Vazirmatn-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Vazirmatn';
+    src: url('/public/fonts/Vazirmatn/Vazirmatn-Bold.woff2') format('woff2'),
+    url('/public/fonts/Vazirmatn/Vazirmatn-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
 }
 
 html[lang="ar"] {
