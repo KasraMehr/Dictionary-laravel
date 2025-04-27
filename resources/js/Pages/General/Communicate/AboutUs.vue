@@ -268,7 +268,7 @@ onMounted(() => {
                                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                                   </svg>
                               </div>
-                              <span class="mx-3 text-gray-700 dark:text-gray-300">{{ $t('feature_1') }}</span>
+                              <span class="mx-3 text-gray-700 dark:text-gray-300">{{ $t('modern_UI') }}</span>
                           </div>
                           <div class="flex items-center">
                               <div class="flex-shrink-0 bg-red-100 dark:bg-red-900/30 rounded-full p-2">
@@ -276,7 +276,7 @@ onMounted(() => {
                                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                                   </svg>
                               </div>
-                              <span class="mx-3 text-gray-700 dark:text-gray-300">{{ $t('feature_2') }}</span>
+                              <span class="mx-3 text-gray-700 dark:text-gray-300">{{ $t('integrated_lms') }}</span>
                           </div>
                           <div class="flex items-center">
                               <div class="flex-shrink-0 bg-red-100 dark:bg-red-900/30 rounded-full p-2">
@@ -284,7 +284,7 @@ onMounted(() => {
                                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                                   </svg>
                               </div>
-                              <span class="mx-3 text-gray-700 dark:text-gray-300">{{ $t('feature_3') }}</span>
+                              <span class="mx-3 text-gray-700 dark:text-gray-300">{{ $t('growing_community') }}</span>
                           </div>
                       </div>
                   </div>
