@@ -16,7 +16,14 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                sans: [
+                    '"Vazirmatn"', // فارسی
+                    '"Noto Sans Arabic"', // عربی
+                    '"Inter"', // انگلیسی
+                    'system-ui',
+                    '-apple-system',
+                    'sans-serif'
+                ],
             },
             animation: {
                 'fade-in': 'fadeIn 0.3s ease-out',
