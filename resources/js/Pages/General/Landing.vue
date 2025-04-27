@@ -67,7 +67,7 @@ function handleImageError() {
                                 <div ref="searchContainer" class="relative w-full max-w-2xl mx-auto mt-8 animate-fade-in-up animate-delay-500">
                                     <div class="relative">
                                         <input type="text" v-model="searchQuery"
-                                               class="w-full p-5 pl-12 pr-16 text-lg border-0 rounded-xl focus:ring-4 focus:ring-[#FF2D20]/30 outline-none bg-white/90 dark:bg-gray-700/90 shadow-lg transition-all duration-300 hover:shadow-md focus:shadow-lg"
+                                               class="w-full p-5 pl-12 pr-16 text-xs md:text-sm lg:text-lg border-0 rounded-xl focus:ring-4 focus:ring-[#FF2D20]/30 outline-none bg-white/90 dark:bg-gray-700/90 shadow-lg transition-all duration-300 hover:shadow-md focus:shadow-lg"
                                                :placeholder="$t('search_words_meanings')">
 
                                         <div class="absolute inset-y-0 flex items-center gap-2"
@@ -156,39 +156,51 @@ function handleImageError() {
                         </div>
 
                         <!-- Translation Section -->
-                        <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-white/80 to-gray-100/80 dark:from-gray-800/80 dark:to-gray-700/80 backdrop-blur-xl p-8 shadow-2xl ring-1 ring-white/10 transition-all duration-500 border-t border-white/20 animate-fade-in-up animate-delay-900">
-                            <div class="flex flex-col lg:flex-row items-center justify-between gap-4 mb-6">
-                                <h2 class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#FF2D20] to-orange-500">
+                        <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-white/80 to-gray-100/80 dark:from-gray-800/80 dark:to-gray-700/80 backdrop-blur-xl p-4 sm:p-8 shadow-2xl ring-1 ring-white/10 transition-all duration-500 border-t border-white/20 animate-fade-in-up animate-delay-900">
+                            <div class="flex flex-col gap-4 mb-6">
+                                <h2 class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#FF2D20] to-orange-500 text-center sm:text-left">
                                     {{ $t('instant_translation') }}
                                 </h2>
 
-                                <div class="flex items-center gap-4">
-                                    <select v-model="sourceLang"
-                                            class="bg-white/90 dark:bg-gray-700/90 border-0 rounded-xl py-2 shadow-sm focus:ring-2 focus:ring-[#FF2D20]/30 outline-none transition-all duration-300">
-                                        <option value="en">🇬🇧 English</option>
-                                        <option value="fa">🇮🇷 فارسی</option>
-                                        <option value="ar">🇸🇦 العربية</option>
-                                    </select>
+                                <!-- زبان‌ها - نسخه موبایل -->
+                                <div class="flex flex-col sm:flex-row items-stretch gap-3 w-full">
+                                    <div class="flex items-center gap-2 w-full bg-white/90 dark:bg-gray-700/90 rounded-xl p-2 shadow-sm">
+                                      <select v-model="sourceLang"
+                                              class="w-full bg-white/90 dark:bg-gray-700/90 border-0 rounded-xl py-2 shadow-sm focus:ring-2 focus:ring-[#FF2D20]/30 outline-none transition-all duration-300">
+                                          <option value="en">🇬🇧 English</option>
+                                          <option value="fa">🇮🇷 فارسی</option>
+                                          <option value="ar">🇸🇦 العربية</option>
+                                      </select>
+                                    </div>
 
                                     <button @click="swapLanguages"
-                                            class="p-2 rounded-xl bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-all duration-300 hover:rotate-180">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                            class="sm:hidden p-3 bg-gray-200 dark:bg-gray-700 rounded-xl hover:bg-gray-300 dark:hover:bg-gray-600 transition-all duration-300 flex items-center justify-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" />
                                         </svg>
                                     </button>
 
-                                    <select v-model="targetLang"
-                                            class="bg-white/90 dark:bg-gray-700/90 border-0 rounded-xl py-2 shadow-sm focus:ring-2 focus:ring-[#FF2D20]/30 outline-none transition-all duration-300">
-                                        <option value="en">🇬🇧 English</option>
-                                        <option value="fa">🇮🇷 فارسی</option>
-                                        <option value="ar">🇸🇦 العربية</option>
-                                    </select>
+                                    <button @click="swapLanguages"
+                                            class="hidden sm:flex p-3 bg-gray-200 dark:bg-gray-700 rounded-xl hover:bg-gray-300 dark:hover:bg-gray-600 transition-all duration-300 items-center justify-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" />
+                                        </svg>
+                                    </button>
+
+                                    <div class="flex items-center gap-2 w-full bg-white/90 dark:bg-gray-700/90 rounded-xl p-2 shadow-sm">
+                                      <select v-model="targetLang"
+                                              class="w-full bg-white/90 dark:bg-gray-700/90 border-0 rounded-xl py-2 shadow-sm focus:ring-2 focus:ring-[#FF2D20]/30 outline-none transition-all duration-300">
+                                          <option value="en">🇬🇧 English</option>
+                                          <option value="fa">🇮🇷 فارسی</option>
+                                          <option value="ar">🇸🇦 العربية</option>
+                                      </select>
+                                    </div>
                                 </div>
                             </div>
 
                             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                                 <div class="relative">
-                    <textarea v-model="inputText"
+                        <textarea v-model="inputText"
                               class="w-full h-48 p-4 bg-white/90 dark:bg-gray-700/90 border-0 rounded-xl shadow-lg focus:ring-2 focus:ring-[#FF2D20]/30 outline-none resize-none transition-all duration-300"
                               :placeholder="$t('enter_text_to_translate')"></textarea>
                                     <div class="absolute bottom-4 right-4 text-xs text-gray-400">
@@ -197,7 +209,7 @@ function handleImageError() {
                                 </div>
 
                                 <div class="relative">
-                    <textarea v-model="translatedText"
+                        <textarea v-model="translatedText"
                               class="w-full h-48 p-4 bg-gray-100/90 dark:bg-gray-600/90 border-0 rounded-xl shadow-lg outline-none resize-none transition-all duration-300"
                               readonly></textarea>
                                     <button v-if="translatedText"
@@ -211,7 +223,7 @@ function handleImageError() {
                             </div>
 
                             <button @click="translateText"
-                                    class="mt-6 w-full lg:w-auto px-8 py-3 bg-gradient-to-r from-[#FF2D20] to-orange-500 text-white rounded-xl shadow-lg hover:shadow-xl hover:brightness-110 transition-all duration-300 active:scale-95 flex items-center justify-center gap-2 mx-auto">
+                                    class="mt-6 w-full px-8 py-3 bg-gradient-to-r from-[#FF2D20] to-orange-500 text-white rounded-xl shadow-lg hover:shadow-xl hover:brightness-110 transition-all duration-300 active:scale-95 flex items-center justify-center gap-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 21l5.25-11.25L21 21m-9-3h7.5M3 5.621a48.474 48.474 0 016-.371m0 0c1.12 0 2.233.038 3.334.114M9 5a48.474 48.474 0 00-6 .371m0 0a48.408 48.408 0 016-.371m0 0c1.12 0 2.233.038 3.334.114M9 5.75V3.511A17.922 17.922 0 0112 3c2.485 0 4.75.5 6.999 1.369M9 5.75c0 .17.01.34.028.506M9 5.75V3.511A17.922 17.922 0 0112 3c2.485 0 4.75.5 6.999 1.369" />
                                 </svg>
@@ -310,7 +322,7 @@ function handleImageError() {
                                             </button>
 
                                             <div class="flex items-center gap-2">
-                                                <div class="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden w-32">
+                                                <div class="hidden md:block h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden w-32">
                                                     <div class="h-full bg-[#FF2D20] rounded-full"
                                                          :style="{ width: `${(currentQuestionIndex + 1) * 10}%` }"></div>
                                                 </div>
