@@ -14,16 +14,6 @@ class CategorySeeder extends Seeder
     public function run(): void
     {
         $categories = [
-            ['name' => 'زبان‌ها', 'slug' => 'languages', 'description' => 'کلمات مرتبط با زبان‌های مختلف'],
-            ['name' => 'اسم (Noun)', 'slug' => 'nouns', 'description' => 'کلمات اسمی'],
-            ['name' => 'فعل (Verb)', 'slug' => 'verbs', 'description' => 'کلمات فعلی'],
-            ['name' => 'صفت (Adjective)', 'slug' => 'adjectives', 'description' => 'کلمات توصیفی'],
-            ['name' => 'قید (Adverb)', 'slug' => 'adverbs', 'description' => 'کلمات قیدی'],
-            ['name' => 'مقدماتی (A1-A2)', 'slug' => 'beginner', 'description' => 'سطح مبتدی'],
-            ['name' => 'متوسط (B1-B2)', 'slug' => 'intermediate', 'description' => 'سطح متوسط'],
-            ['name' => 'پیشرفته (C1-C2)', 'slug' => 'advanced', 'description' => 'سطح پیشرفته'],
-            ['name' => 'بریتیش (British)', 'slug' => 'british-english', 'description' => 'لهجه بریتانیایی'],
-            ['name' => 'امریکن (American)', 'slug' => 'american-english', 'description' => 'لهجه آمریکایی'],
             ['name' => 'علوم و فناوری', 'slug' => 'science-technology', 'description' => 'کلمات علمی و تکنولوژی'],
             ['name' => 'کامپیوتر و IT', 'slug' => 'computer-it', 'description' => 'واژگان کامپیوتری'],
             ['name' => 'پزشکی', 'slug' => 'medical', 'description' => 'اصطلاحات پزشکی'],
