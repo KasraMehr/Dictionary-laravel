@@ -278,7 +278,7 @@ const setLanguage = (lang) => {
                 <!-- Particle Background -->
                 <div class="hidden sm:block fixed inset-0 w-full h-full opacity-20 dark:opacity-10 pointer-events-none">
                     <div v-for="i in 30" :key="i"
-                         class="absolute rounded-full bg-red-400 dark:bg-white"
+                         class="absolute rounded-full bg-red-600 dark:bg-white"
                          :style="{
                  top: `${Math.random() * 100}%`,
                  left: `${Math.random() * 100}%`,
