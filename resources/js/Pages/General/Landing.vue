@@ -158,9 +158,6 @@ function handleImageError() {
                         <!-- Translation Section -->
                         <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-white/80 to-gray-100/80 dark:from-gray-800/80 dark:to-gray-700/80 backdrop-blur-xl p-4 sm:p-8 shadow-2xl ring-1 ring-white/10 transition-all duration-500 border-t border-white/20 animate-fade-in-up animate-delay-900">
                             <div class="flex flex-col gap-4 mb-6">
-                                <h2 class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#FF2D20] to-orange-500 text-center sm:text-left">
-                                    {{ $t('instant_translation') }}
-                                </h2>
 
                                 <!-- زبان‌ها - نسخه موبایل -->
                                 <div class="flex flex-col sm:flex-row items-stretch gap-3 w-full">
