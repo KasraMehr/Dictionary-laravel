@@ -22,13 +22,6 @@ const screenshotHidden = ref(false);
 const docsCardRowSpan = ref(false);
 const docsCardFlexRow = ref(false);
 const backgroundHidden = ref(false);
-
-function handleImageError() {
-    screenshotHidden.value = true;
-    docsCardRowSpan.value = true;
-    docsCardFlexRow.value = true;
-    backgroundHidden.value = true;
-}
 </script>
 
 <template>
