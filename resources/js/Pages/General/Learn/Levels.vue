@@ -9,7 +9,7 @@ const levels = ref([
         name: "A1",
         description: "مبتدی (Beginner)",
         image: "/images/levels.png",
-        link: "/levels/a1"
+        link: "/levels/A1"
     },
     {
         id: "A2",
