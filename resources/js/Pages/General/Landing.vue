@@ -319,9 +319,20 @@ const backgroundHidden = ref(false);
                                                 <span class="text-sm font-medium">{{ currentQuestionIndex + 1 }}/10</span>
                                             </div>
 
-                                            <button @click="nextQuestion" :disabled="currentQuestionIndex === quizQuestions.length - 1"
-                                                    class="px-5 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-all duration-300 disabled:opacity-50 flex items-center gap-2">
+                                            <button
+                                                v-if="currentQuestionIndex < quizQuestions.length - 1"
+                                                @click="nextQuestion"
+                                                :disabled="selectedAnswer === null"
+                                                class="px-5 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-all duration-300 disabled:opacity-50 flex items-center gap-2">
                                                 {{ $t('next') }}
+                                            </button>
+
+                                            <button
+                                                v-else
+                                                @click="finishQuiz"
+                                                :disabled="selectedAnswer === null"
+                                                class="px-5 py-2 rounded-lg bg-[#FF2D20] text-white hover:bg-[#FF2D20]/90 transition-all duration-300 flex items-center gap-2">
+                                                {{ $t('finish') }}
                                             </button>
                                         </div>
                                     </div>
@@ -698,6 +709,10 @@ export default {
             selectedAnswer: null,
             correctAnswers: parseInt(localStorage.getItem("correctAnswers")) || 0,
             showCongratulation: false,
+            showResult: false,
+            quizResult: '',
+            resultMessage: '',
+            resultAnimation: ''
         };
     },
     watch: {
@@ -829,51 +844,49 @@ export default {
             }
         },
         nextQuestion() {
-                if (this.currentQuestionIndex < this.quizQuestions.length - 1) {
-                    this.currentQuestionIndex++;
-                    this.selectedAnswer = null;
-                    localStorage.setItem("currentQuestionIndex", this.currentQuestionIndex);
-                }
-
-                if (this.currentQuestionIndex === this.quizQuestions.length - 1) {
-                    this.showQuizResult();
-                }
-            },
-            showQuizResult() {
-                this.showResult = true;
-
-                // تعیین نتیجه بر اساس تعداد پاسخ‌های صحیح
-                if (this.correctAnswers >= 8) {
-                    this.quizResult = 'excellent';
-                    this.resultMessage = this.$t('excellent_result');
-                    this.resultAnimation = 'celebrate';
-                } else if (this.correctAnswers >= 5) {
-                    this.quizResult = 'good';
-                    this.resultMessage = this.$t('good_result');
-                    this.resultAnimation = 'confetti';
-                } else {
-                    this.quizResult = 'poor';
-                    this.resultMessage = this.$t('poor_result');
-                    this.resultAnimation = 'sad';
-                }
-
-                // ریست کردن مقادیر بعد از 5 ثانیه
-                setTimeout(() => {
-                    this.resetQuiz();
-                }, 5000);
-            },
-
-            resetQuiz() {
-                // ریست کردن تمام مقادیر
-                this.currentQuestionIndex = 0;
+            if (this.currentQuestionIndex < this.quizQuestions.length - 1) {
+                this.currentQuestionIndex++;
                 this.selectedAnswer = null;
-                this.correctAnswers = 0;
-                this.showResult = false;
-
-                // پاک کردن از localStorage
-                localStorage.removeItem("currentQuestionIndex");
-                localStorage.removeItem("correctAnswers");
+                localStorage.setItem("currentQuestionIndex", this.currentQuestionIndex);
             }
+        },
+        finishQuiz() {
+            this.showQuizResult();
+        },
+        showQuizResult() {
+            this.showResult = true;
+
+            if (this.correctAnswers >= 8) {
+                this.quizResult = 'excellent';
+                this.resultMessage = this.$t('excellent_result');
+                this.resultAnimation = 'celebrate';
+            } else if (this.correctAnswers >= 5) {
+                this.quizResult = 'good';
+                this.resultMessage = this.$t('good_result');
+                this.resultAnimation = 'confetti';
+            } else {
+                this.quizResult = 'poor';
+                this.resultMessage = this.$t('poor_result');
+                this.resultAnimation = 'sad';
+            }
+
+            // ریست کردن مقادیر بعد از 5 ثانیه
+            setTimeout(() => {
+                this.resetQuiz();
+            }, 5000);
+        },
+
+        resetQuiz() {
+            // ریست کردن تمام مقادیر
+            this.currentQuestionIndex = 0;
+            this.selectedAnswer = null;
+            this.correctAnswers = 0;
+            this.showResult = false;
+
+            // پاک کردن از localStorage
+            localStorage.removeItem("currentQuestionIndex");
+            localStorage.removeItem("correctAnswers");
+        }
     },
     mounted() {
         document.addEventListener("click", this.closeResults);
