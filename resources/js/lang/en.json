@@ -332,5 +332,6 @@
     "start_again": "Start Again",
     "excellent_result": "Awesome job! You nailed it 👏",
     "good_result": "Nice work! A little more practice and you’re there",
-    "poor_result": "No worries! Practice makes perfect 😊"
+    "poor_result": "No worries! Practice makes perfect 😊",
+    "finish": "Finish"
 }
