@@ -475,7 +475,7 @@ const filteredGrammar = computed(() => {
             <!-- هدر صفحه -->
             <div class="text-center mb-12">
                 <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
-          <span class="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+          <span class="bg-gradient-to-r from-[#FF2D20] to-orange-500 bg-clip-text text-transparent">
             دانشنامه گرامر انگلیسی
           </span>
                 </h1>
@@ -668,10 +668,6 @@ const filteredGrammar = computed(() => {
 .hover-scale:hover {
     transform: translateY(-3px);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-}
-
-body {
-    font-family: 'Vazirmatn', sans-serif;
 }
 
 /* گرادیانت متن */
