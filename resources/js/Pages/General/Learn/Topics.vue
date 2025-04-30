@@ -77,7 +77,7 @@ const getCategoryIcon = (slug) => {
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
             <!-- هدر صفحه -->
             <div class="text-center mb-12">
-                <h1 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+                <h1 class="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#FF2D20] to-orange-500 mb-4">
                     آموزش زبان در حوزه‌های کاربردی و مفید
                 </h1>
                 <p class="max-w-2xl mx-auto text-lg text-gray-600 dark:text-gray-300">
