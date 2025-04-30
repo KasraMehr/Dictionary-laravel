@@ -300,7 +300,7 @@ const setLanguage = (lang) => {
                 <div class="col-span-full mb-8 lg:col-span-2">
                     <a :href="route('landing')" class="cursor-pointer flex items-center justify-center lg:justify-start space-x-3 transition-transform hover:scale-[1.02]">
                         <img src="/logo.svg" alt="logo" class="w-16 h-16 drop-shadow-lg">
-                        <div class="text-xl text-black dark:text-white font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                        <div class="text-xl text-black dark:text-white font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#FF2D20] to-orange-500">
                             {{ $t('modern_dictionary') }}
                         </div>
                     </a>
@@ -324,7 +324,7 @@ const setLanguage = (lang) => {
 
                 <!-- Navigation Column -->
                 <div class="lg:mx-auto">
-                    <h4 class="text-lg text-black dark:text-white font-bold mb-6 relative inline-block after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-8 after:h-0.5 after:bg-gradient-to-r after:from-blue-500 after:to-purple-500">
+                    <h4 class="text-lg text-black dark:text-white font-bold mb-6 relative inline-block after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-8 after:h-0.5 after:bg-gradient-to-r after:from-[#FF2D20] after:to-orange-500">
                         {{ $t('navigation') }}
                     </h4>
                     <div class="space-y-4">
@@ -352,7 +352,7 @@ const setLanguage = (lang) => {
                 <!-- Learn Column -->
                 <div class="lg:mx-auto">
                     <a :href="route('learn')">
-                        <h4 class="text-lg text-black dark:text-white font-bold mb-6 relative inline-block after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-8 after:h-0.5 after:bg-gradient-to-r after:from-blue-500 after:to-purple-500">
+                        <h4 class="text-lg text-black dark:text-white font-bold mb-6 relative inline-block after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-8 after:h-0.5 after:bg-gradient-to-r after:from-[#FF2D20] after:to-orange-500">
                             {{ $t('learn') }}
                         </h4>
                     </a>
@@ -380,7 +380,7 @@ const setLanguage = (lang) => {
 
                 <!-- Quiz Column -->
                 <div class="lg:mx-auto">
-                    <h4 class="text-lg text-black dark:text-white font-bold mb-6 relative inline-block after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-8 after:h-0.5 after:bg-gradient-to-r after:from-blue-500 after:to-purple-500">
+                    <h4 class="text-lg text-black dark:text-white font-bold mb-6 relative inline-block after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-8 after:h-0.5 after:bg-gradient-to-r after:from-[#FF2D20] after:to-orange-500">
                         {{ $t('quiz') }}
                     </h4>
                     <div class="space-y-4">
@@ -407,7 +407,7 @@ const setLanguage = (lang) => {
 
                 <!-- Support Column -->
                 <div class="lg:mx-auto">
-                    <h4 class="text-lg text-black dark:text-white font-bold mb-6 relative inline-block after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-8 after:h-0.5 after:bg-gradient-to-r after:from-blue-500 after:to-purple-500">
+                    <h4 class="text-lg text-black dark:text-white font-bold mb-6 relative inline-block after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-8 after:h-0.5 after:bg-gradient-to-r after:from-[#FF2D20] after:to-orange-500">
                         {{ $t('support') }}
                     </h4>
                     <div class="space-y-4">
