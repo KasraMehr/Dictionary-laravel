@@ -551,7 +551,7 @@ const filteredGrammar = computed(() => {
                     <div
                         v-for="grammar in category.items"
                         :key="grammar.id"
-                        class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-gray-100 dark:border-gray-700"
+                        class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-md hover:shadow-lg duration-300 -translate-y-1 border border-gray-100 dark:border-gray-700"
                     >
                         <div class="p-6">
                             <div class="flex items-start">
