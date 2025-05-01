@@ -40,9 +40,20 @@ class WordSeeder extends Seeder
 
             // Translate word
             try {
-                $meaning = $translator->translate($word) ?? 'not found';
+                $prompt = "just translate the word to persian and do not say any other words '$word'";
+
+                $response = $client->chat()->create([
+                    'model' => 'gpt-3.5-turbo',
+                    'messages' => [
+                        ['role' => 'system', 'content' => 'you are a translator'],
+                        ['role' => 'user', 'content' => $prompt],
+                    ],
+                ]);
+
+                $meaning = $response->choices[0]->message->content;
             } catch (\Exception $e) {
-                $meaning = 'not found';
+                $meaning = 'توضیح یافت نشد';
+                file_put_contents('descriptions_errors.log', "Error for $word: ".$e->getMessage()."\n", FILE_APPEND);
             }
 
             try {
@@ -131,65 +142,55 @@ class WordSeeder extends Seeder
                 $grammar = '-';
             }
 
-//            try {
-//                $prompt = "Strictly respond with ONLY the ID number (0-32) from this list that best matches the word '$word':
-//                 0: زبان‌ها
-//                 1: اسم (Noun)
-//                 2: فعل (Verb)
-//                 3: صفت (Adjective)
-//                 4: 'قید (Adverb)'
-//                 5: 'مقدماتی (A1-A2)',
-//                 6: 'متوسط (B1-B2)',
-//                 7: 'پیشرفته (C1-C2)',
-//                 8: 'بریتیش (British)',
-//                 9: 'امریکن (American)',
-//                 10: 'علوم و فناوری',
-//                 11: 'کامپیوتر و IT',
-//                 12: 'پزشکی',
-//                 13: 'اقتصاد و کسب‌وکار',
-//                 14: 'هنر و فرهنگ',
-//                 15: 'ورزش‌ها',
-//                 16: 'طبیعت و محیط زیست',
-//                 17: 'سیاست و حقوق',
-//                 18: 'تاریخ',
-//                 19: 'مذهب و فلسفه',
-//                 20: 'روانشناسی',
-//                 21: 'غذا و آشپزی',
-//                 22: 'سفر و گردشگری',
-//                 23: 'مد و پوشاک',
-//                 24: 'خودرو و حمل‌ونقل',
-//                 25: 'نظامی و امنیتی',
-//                 26: 'کودک و نوجوان',
-//                 27: 'عامیانه و اصطلاحات',
-//                 28: 'هم‌معنی و متضاد',
-//                 29: 'کلمات هم‌آوا',
-//                 30: 'اختصارات',
-//                 31: 'ریشه‌شناسی',
-//                 32: 'تلفظ'
-//
-//                 Rules:
-//                 1. Return ONLY the number (e.g. '5')
-//                 2. No explanations or other text
-//                 3. If uncertain, return '0'";
-//
-//                $response = $client->chat()->create([
-//                    'model' => 'gpt-3.5-turbo',
-//                    'messages' => [
-//                        ['role' => 'system', 'content' => 'You are a category classification system.'],
-//                        ['role' => 'user', 'content' => $prompt],
-//                    ],
-//                ]);
-//
-//                // استخراج عدد از پاسخ
-//                $rawCategory = trim($response->choices[0]->message->content);
-//                $categoryId = is_numeric($rawCategory) ? (int)$rawCategory : 0;
-//
-//                // محدود کردن به بازه معتبر
-//                $categoryId = max(0, min(32, $categoryId));
-//
-//            } catch (\Exception $e) {
-//                $categoryId = 0; // مقدار پیش‌فرض در صورت خطا
-//            }
+           // try {
+           //     $prompt = "Strictly respond with ONLY the ID number (0-22) from this list that best matches the word '$word':
+           //      0: 'علوم و فناوری',
+           //      1: 'کامپیوتر و IT',
+           //      2: 'پزشکی',
+           //      3: 'اقتصاد و کسب‌وکار',
+           //      4: 'هنر و فرهنگ',
+           //      5: 'ورزش‌ها',
+           //      6: 'طبیعت و محیط زیست',
+           //      7: 'سیاست و حقوق',
+           //      8: 'تاریخ',
+           //      9: 'مذهب و فلسفه',
+           //      10: 'روانشناسی',
+           //      11: 'غذا و آشپزی',
+           //      12: 'سفر و گردشگری',
+           //      13: 'مد و پوشاک',
+           //      14: 'خودرو و حمل‌ونقل',
+           //      15: 'نظامی و امنیتی',
+           //      16: 'کودک و نوجوان',
+           //      17: 'عامیانه و اصطلاحات',
+           //      18: 'هم‌معنی و متضاد',
+           //      19: 'کلمات هم‌آوا',
+           //      20: 'اختصارات',
+           //      21: 'ریشه‌شناسی',
+           //      22: 'تلفظ'
+           //
+           //      Rules:
+           //      1. Return ONLY the number (e.g. '5')
+           //      2. No explanations or other text
+           //      3. If uncertain, return '0'";
+           //
+           //     $response = $client->chat()->create([
+           //         'model' => 'gpt-3.5-turbo',
+           //         'messages' => [
+           //             ['role' => 'system', 'content' => 'You are a category classification system.'],
+           //             ['role' => 'user', 'content' => $prompt],
+           //         ],
+           //     ]);
+           //
+           //     // استخراج عدد از پاسخ
+           //     $rawCategory = trim($response->choices[0]->message->content);
+           //     $categoryId = is_numeric($rawCategory) ? (int)$rawCategory : 0;
+           //
+           //     // محدود کردن به بازه معتبر
+           //     $categoryId = max(0, min(32, $categoryId));
+           //
+           // } catch (\Exception $e) {
+           //     $categoryId = 0; // مقدار پیش‌فرض در صورت خطا
+           // }
 
             // Get pronunciation from Langeek
             $pronunciation = $this->getPronunciationFromWiktionary($word);
@@ -219,7 +220,7 @@ class WordSeeder extends Seeder
             ]);
             $generated_words_num++;
 
-//            $newWord->categories()->attach($categoryId);
+           // $newWord->categories()->attach($categoryId);
 
             echo "\n$generated_words_num\n ✅ Added: $word → meaning: $meaning\n pronunciation → $pronunciation \n
              description → $description \n level -> $level \n grammar -> $grammar \n image → $imagePath\n
