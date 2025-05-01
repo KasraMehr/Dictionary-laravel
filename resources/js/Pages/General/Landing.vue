@@ -2,12 +2,12 @@
 import { Head, Link } from "@inertiajs/vue3";
 import MainLayout from '@/Layouts/MainLayout.vue';
 import { useI18n } from "vue-i18n";
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import NavLink from '@/Components/NavLink.vue';
 
 const { locale, t } = useI18n();
 
-defineProps({
+const props = defineProps({
   canLogin: Boolean,
   canRegister: Boolean,
   totalUsers: Number,
@@ -22,6 +22,81 @@ const screenshotHidden = ref(false);
 const docsCardRowSpan = ref(false);
 const docsCardFlexRow = ref(false);
 const backgroundHidden = ref(false);
+
+// حالت‌ها (States)
+const currentQuestionIndex = ref(0);
+const selectedAnswer = ref(null);
+const correctAnswers = ref(0);
+const showResult = ref(false);
+const quizResult = ref(null);
+const resultMessage = ref('');
+const resultAnimation = ref('');
+
+// متدها
+const selectAnswer = (index) => {
+  if (selectedAnswer.value === null) {
+    selectedAnswer.value = index;
+    if (index === props.quizQuestions[currentQuestionIndex.value].correctIndex) {
+      correctAnswers.value++;
+      localStorage.setItem("correctAnswers", correctAnswers.value);
+    }
+  }
+};
+
+const prevQuestion = () => {
+  if (currentQuestionIndex.value > 0) {
+    currentQuestionIndex.value--;
+    selectedAnswer.value = null;
+    localStorage.setItem("currentQuestionIndex", currentQuestionIndex.value);
+  }
+};
+
+const nextQuestion = () => {
+  if (currentQuestionIndex.value < props.quizQuestions.length - 1) {
+    currentQuestionIndex.value++;
+    selectedAnswer.value = null;
+    localStorage.setItem("currentQuestionIndex", currentQuestionIndex.value);
+  }
+};
+
+const finishQuiz = () => {
+  showQuizResult();
+};
+
+const showQuizResult = () => {
+  showResult.value = true;
+
+  if (correctAnswers.value >= 8) {
+    quizResult.value = 'excellent';
+    resultMessage.value = 'عالی! شما نتیجه بسیار خوبی کسب کردید!';
+    resultAnimation.value = 'celebrate';
+  } else if (correctAnswers.value >= 5) {
+    quizResult.value = 'good';
+    resultMessage.value = 'خوب! شما نتیجه قابل قبولی کسب کردید!';
+    resultAnimation.value = 'confetti';
+  } else {
+    quizResult.value = 'poor';
+    resultMessage.value = 'نیاز به تلاش بیشتر دارید!';
+    resultAnimation.value = 'sad';
+  }
+
+  setTimeout(() => {
+    resetQuiz();
+  }, 5000);
+};
+
+const resetQuiz = () => {
+  currentQuestionIndex.value = 0;
+  selectedAnswer.value = null;
+  correctAnswers.value = 0;
+  showResult.value = false;
+  localStorage.removeItem("currentQuestionIndex");
+  localStorage.removeItem("correctAnswers");
+};
+
+onMounted(() => {
+  resetQuiz();
+});
 </script>
 
 <template>
@@ -705,14 +780,6 @@ export default {
             sourceLang: 'en',
             targetLang: 'fa',
             textAreaHeight: 100,
-            currentQuestionIndex: parseInt(localStorage.getItem("currentQuestionIndex")) || 0,
-            selectedAnswer: null,
-            correctAnswers: parseInt(localStorage.getItem("correctAnswers")) || 0,
-            showCongratulation: false,
-            showResult: false,
-            quizResult: '',
-            resultMessage: '',
-            resultAnimation: ''
         };
     },
     watch: {
@@ -826,66 +893,6 @@ export default {
             this.debounceTimer = setTimeout(() => {
                 this.fetchSearchResults(query);
             }, 300);
-        },
-        selectAnswer(index) {
-            if (this.selectedAnswer === null) {
-                this.selectedAnswer = index;
-                if (index === this.quizQuestions[this.currentQuestionIndex].correctIndex) {
-                    this.correctAnswers++;
-                    localStorage.setItem("correctAnswers", this.correctAnswers);
-                }
-            }
-        },
-        prevQuestion() {
-            if (this.currentQuestionIndex > 0) {
-                this.currentQuestionIndex--;
-                this.selectedAnswer = null;
-                localStorage.setItem("currentQuestionIndex", this.currentQuestionIndex);
-            }
-        },
-        nextQuestion() {
-            if (this.currentQuestionIndex < this.quizQuestions.length - 1) {
-                this.currentQuestionIndex++;
-                this.selectedAnswer = null;
-                localStorage.setItem("currentQuestionIndex", this.currentQuestionIndex);
-            }
-        },
-        finishQuiz() {
-            this.showQuizResult();
-        },
-        showQuizResult() {
-            this.showResult = true;
-
-            if (this.correctAnswers >= 8) {
-                this.quizResult = 'excellent';
-                this.resultMessage = this.$t('excellent_result');
-                this.resultAnimation = 'celebrate';
-            } else if (this.correctAnswers >= 5) {
-                this.quizResult = 'good';
-                this.resultMessage = this.$t('good_result');
-                this.resultAnimation = 'confetti';
-            } else {
-                this.quizResult = 'poor';
-                this.resultMessage = this.$t('poor_result');
-                this.resultAnimation = 'sad';
-            }
-
-            // ریست کردن مقادیر بعد از 5 ثانیه
-            setTimeout(() => {
-                this.resetQuiz();
-            }, 5000);
-        },
-
-        resetQuiz() {
-            // ریست کردن تمام مقادیر
-            this.currentQuestionIndex = 0;
-            this.selectedAnswer = null;
-            this.correctAnswers = 0;
-            this.showResult = false;
-
-            // پاک کردن از localStorage
-            localStorage.removeItem("currentQuestionIndex");
-            localStorage.removeItem("correctAnswers");
         }
     },
     mounted() {
