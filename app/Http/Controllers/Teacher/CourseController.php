@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Teacher;
 
 use App\Http\Controllers\Controller;
 use App\Models\Course;
+use App\Models\Teacher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -18,6 +19,78 @@ class CourseController extends Controller
   {
     return Inertia::render('Teacher/Dashboard');
   }
+
+    public function profile()
+    {
+        $teacher = Teacher::with('user')
+        ->where('user_id', Auth::id())
+            ->firstOrFail();
+        return Inertia::render('Teacher/Profile', [
+            'teacher' => $teacher,
+        ]);
+    }
+
+    public function profile_update(Request $request): \Illuminate\Http\RedirectResponse
+    {
+        $teacher = Teacher::where('user_id', Auth::id())->firstOrFail();
+
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'title' => 'required|string|max:255',
+            'bio' => 'nullable|string',
+            'profile_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'languages' => 'nullable|json',
+            'experiences' => 'nullable|json',
+            'social_links' => 'nullable|json',
+            'teaching_methods' => 'nullable|json',
+            'phone' => 'nullable|string|max:20',
+            'location' => 'nullable|string|max:255',
+            'remove_profile_photo' => 'nullable|boolean',
+        ]);
+
+        // آپدیت اطلاعات کاربر
+        $teacher->user->update([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+        ]);
+
+        // آپدیت اطلاعات مدرس
+        $teacherData = [
+            'title' => $validated['title'],
+            'bio' => $validated['bio'],
+            'languages' => json_decode($validated['languages'], true),
+            'experiences' => json_decode($validated['experiences'], true),
+            'social_links' => json_decode($validated['social_links'], true),
+            'teaching_methods' => json_decode($validated['teaching_methods'], true),
+            'phone' => $validated['phone'],
+            'location' => $validated['location'],
+        ];
+
+        if ($validated['remove_profile_photo'] ?? false) {
+            if ($teacher->profile_photo_path) {
+                Storage::delete($teacher->profile_photo_path);
+                $teacher->profile_photo_path = null;
+            }
+        }
+
+        // آپلود عکس جدید
+        if ($request->hasFile('profile_photo')) {
+            // حذف عکس قبلی اگر وجود دارد
+            if ($teacher->profile_photo_path) {
+                Storage::delete($teacher->profile_photo_path);
+            }
+
+            $path = $request->file('profile_photo')->store('profile-photos', 'public');
+            $teacher->profile_photo_path = $path;
+        }
+
+        $teacher->save();
+
+        $teacher->update($teacherData);
+
+        return redirect()->back()->with('success', 'پروفایل با موفقیت به‌روزرسانی شد.');
+    }
 
   public function index()
     {
