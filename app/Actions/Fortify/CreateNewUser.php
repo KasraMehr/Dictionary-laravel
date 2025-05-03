@@ -2,6 +2,7 @@
 
 namespace App\Actions\Fortify;
 
+use App\Models\Teacher;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
@@ -31,14 +32,20 @@ class CreateNewUser implements CreatesNewUsers
         ])->validate();
 
         return DB::transaction(function () use ($input) {
-            return tap(User::create([
+            $user = User::create([
                 'name' => $input['name'],
                 'email' => $input['email'],
                 'role' => $input['role'],
                 'password' => Hash::make($input['password']),
-            ]), function (User $user) {
-                $this->createTeam($user);
-            });
+            ]);
+
+            $this->createTeam($user);
+
+            if ($user->role === 'teacher') {
+                $this->createTeacher($user);
+            }
+
+            return $user;
         });
     }
 
@@ -59,6 +66,16 @@ class CreateNewUser implements CreatesNewUsers
         // به‌روزرسانی current_team_id برای کاربر
         $user->current_team_id = $team->id;
         $user->save();
+    }
+
+    protected function createTeacher(User $user): void
+    {
+        $teacher = Teacher::forceCreate([
+            'user_id' => $user->id,
+            'title' => "teacher",
+        ]);
+
+        $user->teacher()->save($teacher);
     }
 
 }
