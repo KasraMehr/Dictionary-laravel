@@ -105,7 +105,9 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     Route::middleware([IsTeacher::class])->prefix('teacher')->name('teacher.')->group(function () {
 
         Route::get('/dashboard', [CourseController::class, 'dashboard'])->name('dashboard');
-
+        Route::get('/profile', [CourseController::class, 'profile'])->name('profile');
+        Route::put('/profile/update', [CourseController::class, 'profile_update'])
+            ->name('profile.update');
         Route::resource('courses', CourseController::class)
         ->names('courses');
 
