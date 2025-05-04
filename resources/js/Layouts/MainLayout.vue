@@ -335,9 +335,9 @@ const setLanguage = (lang) => {
                             </a>
                         </div>
                         <div>
-                            <a :href="route('reports')" class="cursor-pointer text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors duration-300 flex items-center group">
+                            <a :href="route('teachers.index')" class="cursor-pointer text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors duration-300 flex items-center group">
                                 <span class="w-1.5 h-1.5 bg-gray-400 rounded-full mx-2 group-hover:bg-blue-500 transition-all duration-300"></span>
-                                {{ $t('reports') }}
+                                {{ $t('teachers') }}
                             </a>
                         </div>
                         <div>
