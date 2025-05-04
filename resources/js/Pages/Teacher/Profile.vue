@@ -72,24 +72,64 @@
                             </div>
 
                             <!-- زبان‌ها -->
-                            <div>
-                                <label v-if="editMode" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">زبان‌های تدریس (با کاما جدا کنید)</label>
-                                <input v-if="editMode" v-model="languageInput" @keydown.enter="addLanguage" type="text" class="w-full px-4 py-2 text-gray-900 dark:text-white bg-white/50 dark:bg-gray-700/50 rounded-lg border border-gray-300 dark:border-gray-600 mb-2" placeholder="مثال: انگلیسی, فرانسوی">
-                                <div v-if="editMode" class="flex flex-wrap gap-2 mb-2">
-                                    <span v-for="(lang, index) in form.languages" :key="index"
-                                          class="px-3 py-1 text-sm rounded-full bg-red-100 dark:bg-red-900/50 text-red-800 dark:text-red-200 flex items-center">
+                            <div class="mb-6">
+                                <label v-if="editMode" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                    زبان‌های تدریس
+                                    <span class="text-xs text-gray-500">(با Enter یا کاما جدا کنید)</span>
+                                </label>
+
+                                <!-- فیلد ورودی زبان‌ها -->
+                                <div v-if="editMode" class="relative">
+                                    <input
+                                        v-model="languageInput"
+                                        @keydown.enter.prevent="addLanguage"
+                                        @keydown.188="addLanguage"
+                                    type="text"
+                                    class="w-full px-4 py-2 text-gray-900 dark:text-white bg-white/50 dark:bg-gray-700/50 rounded-lg border border-gray-300 dark:border-gray-600 mb-2"
+                                    placeholder="زبان جدید را وارد و Enter بزنید"
+                                    >
+                                    <button
+                                        @click="addLanguage"
+                                        class="absolute left-3 top-2 text-red-600 hover:text-red-800"
+                                        title="افزودن زبان"
+                                    >
+                                        <PlusCircleIcon class="w-5 h-5" />
+                                    </button>
+                                </div>
+
+                                <!-- نمایش زبان‌ها -->
+                                <div class="flex flex-wrap gap-2 mt-2">
+                                    <span
+                                        v-for="(lang, index) in form.languages"
+                                        :key="index"
+                                        class="px-3 py-1 text-sm rounded-full flex items-center"
+                                        :class="editMode
+                                        ? 'bg-orange-100 dark:bg-orange-900/50 text-orange-800 dark:text-orange-200'
+                                        : 'bg-red-100 dark:bg-red-900/50 text-red-800 dark:text-red-200'"
+                                    >
                                       {{ lang }}
-                                      <button @click="removeLanguage(index)" class="mx-1 text-red-600 hover:text-red-800">
+                                      <button
+                                          v-if="editMode"
+                                          @click="removeLanguage(index)"
+                                          class="mr-1 text-orange-600 hover:text-orange-800 dark:text-orange-300 dark:hover:text-orange-500"
+                                          title="حذف زبان"
+                                      >
                                         <XMarkIcon class="w-4 h-4" />
                                       </button>
                                     </span>
-                                </div>
-                                <div v-else class="flex flex-wrap justify-center md:justify-end gap-3">
-                                    <span v-for="(language, index) in form.languages" :key="index"
-                                          class="px-3 py-1 text-sm rounded-full bg-red-100 dark:bg-red-900/50 text-red-800 dark:text-red-200">
-                                      {{ language }}
+
+                                    <span
+                                        v-if="form.languages.length === 0 && !editMode"
+                                        class="text-gray-500 text-sm"
+                                    >
+                                      زبانی انتخاب نشده است
                                     </span>
                                 </div>
+
+                                <!-- نمایش خطاها -->
+                                <p v-if="form.errors.languages" class="mt-1 text-sm text-red-600 dark:text-red-500">
+                                    {{ form.errors.languages }}
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -276,6 +316,7 @@ import {
     XMarkIcon,
     PlusIcon,
     StarIcon,
+    PlusCircleIcon,
     InformationCircleIcon,
     AcademicCapIcon,
     EnvelopeIcon,
@@ -407,19 +448,33 @@ const removeProfilePhoto = () => {
 
 // مدیریت زبان‌ها
 const languageInput = ref('');
-const addLanguage = () => {
-    if (languageInput.value.trim()) {
-        const newLanguages = languageInput.value.split(',')
-            .map(lang => lang.trim())
-            .filter(lang => lang);
 
-        form.languages = [...new Set([...form.languages, ...newLanguages])];
+const addLanguage = () => {
+    if (!languageInput.value.trim()) return;
+
+    // تقسیم رشته با کاما یا فضای خالی
+    const newLanguages = languageInput.value.split(/[,،\s]+/)
+        .map(lang => lang.trim())
+        .filter(lang => lang && !form.languages.includes(lang));
+
+    if (newLanguages.length > 0) {
+        form.languages = [...form.languages, ...newLanguages];
         languageInput.value = '';
+        form.clearErrors('languages');
     }
 };
 
 const removeLanguage = (index) => {
-    form.languages = form.languages.filter((_, i) => i !== index);
+    form.languages.splice(index, 1);
+};
+
+// اعتبارسنجی قبل از ارسال
+const validateLanguages = () => {
+    if (form.languages.length === 0) {
+        form.setError('languages', 'حداقل یک زبان باید انتخاب شود');
+        return false;
+    }
+    return true;
 };
 
 // مدیریت تجربیات
