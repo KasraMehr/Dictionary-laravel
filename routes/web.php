@@ -44,6 +44,8 @@ Route::get('/topics', [LearnController::class, 'topics'])->name('topics');
 Route::get('/levels', [LearnController::class, 'levels'])->name('levels');
 Route::get('/levels/{level}', [LearnController::class, 'levelLesson'])->name('level_lesson');
 Route::get('/grammars', [LearnController::class, 'grammars'])->name('grammars');
+Route::get('/teachers', [LearnController::class, 'teachers'])->name('teachers.index');
+Route::get('/teachers/{teacher}', [LearnController::class, 'show_teacher'])->name('teachers.show');
 Route::get('/word/{native_lang}-{translated_lang}/{word:slug}', [WordController::class, 'show'])->name('word.show');
 
 
