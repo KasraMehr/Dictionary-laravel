@@ -4,6 +4,7 @@ namespace App\Http\Controllers\General;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Teacher;
 use App\Models\Word;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -73,6 +74,39 @@ class LearnController extends Controller
     public function grammars()
     {
         return Inertia::render('General/Learn/Grammars');
+    }
+
+    public function teachers(Request $request)
+    {
+        $teachers = Teacher::with('user')
+            ->when($request->search, function ($query, $search) {
+                $query->whereHas('user', function ($q) use ($search) {
+                    $q->where('name', 'like', "%{$search}%");
+                })
+                    ->orWhere('bio', 'like', "%{$search}%");
+            })
+            ->when($request->language, function ($query, $language) {
+                $query->whereJsonContains('languages', $language);
+            })
+            ->when($request->teaching_methods, function ($query, $method) {
+                $query->whereJsonContains('teaching_methods', $method);
+            })
+            ->orderBy('created_at', 'desc')
+            ->paginate(12)
+            ->withQueryString();
+
+        return Inertia::render('General/Learn/Teachers', [
+            'teachers' => $teachers,
+            'filters' => $request->only(['search', 'language', 'method'])
+        ]);
+    }
+
+    public function show_teacher(Teacher $teacher)
+    {
+        $teacher->load('user');
+        return Inertia::render('Teacher/Show', [
+            'teacher' => $teacher,
+        ]);
     }
 
 }
