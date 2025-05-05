@@ -12,4 +12,9 @@ class StudentDashboard extends Controller
     {
         return Inertia::render('Student/Dashboard');
     }
+
+    public function profile(): Response
+    {
+        return Inertia::render('Student/Profile');
+    }
 }
