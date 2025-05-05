@@ -108,8 +108,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
 
         Route::get('/dashboard', [CourseController::class, 'dashboard'])->name('dashboard');
         Route::get('/profile', [CourseController::class, 'profile'])->name('profile');
-        Route::put('/profile/update', [CourseController::class, 'profile_update'])
-            ->name('profile.update');
+        Route::put('/profile/update', [CourseController::class, 'profile_update'])->name('profile.update');
         Route::resource('courses', CourseController::class)
         ->names('courses');
 
@@ -156,6 +155,8 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     Route::middleware([IsStudent::class])->prefix('student')->name('student.')->group(function () {
 
         Route::get('/dashboard', [StudentDashboard::class, 'index'])->name('dashboard');
+        Route::get('/profile', [StudentDashboard::class, 'profile'])->name('profile');
+        Route::put('/profile/update', [StudentDashboard::class, 'profile_update'])->name('profile.update');
 
         Route::get('/courses', [StudentCourseController::class, 'index'])
             ->name('courses.index');
