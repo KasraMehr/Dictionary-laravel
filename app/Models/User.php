@@ -125,6 +125,11 @@ class User extends Authenticatable
         return $this->hasOne(Teacher::class);
     }
 
+    public function studentProfile()
+    {
+        return $this->hasOne(StudentProfile::class);
+    }
+
     public function achievements(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'user_achievements', 'user_id', 'achievement_id');
