@@ -26,7 +26,6 @@ const form = useForm({
 const recaptchaLoaded = ref(false);
 
 const submit = () => {
-
     form.post(route('register'), {
         onFinish: () => {
             form.reset('password', 'password_confirmation');
@@ -36,147 +35,203 @@ const submit = () => {
 </script>
 
 <template>
-    <Head title="Sign up" />
-    <div class="bg-gray-200 dark:bg-gray-800 min-h-screen">
-        <img class="fixed inset-0 w-full h-full object-cover opacity-10" src="/logo.svg" alt="logo"/>
+    <Head title="ثبت‌نام" />
+    <div class="min-h-screen bg-gradient-to-br from-gray-100 to-gray-300 dark:from-gray-900 dark:to-gray-800">
+        <div class="absolute inset-0 bg-[url('/logo.svg')] bg-center bg-no-repeat bg-fixed opacity-5 dark:opacity-[0.02]"></div>
 
-        <div class="relative min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0">
-            <!-- Logo Container -->
-            <Link :href="route('landing')">
-              <div class="mt-4 w-full max-w-[300px] mx-auto flex flex-col items-center gap-4 overflow-hidden rounded-lg bg-gradient-to-br from-gray-400 to-gray-300 dark:from-gray-800/50 dark:to-gray-700/50 shadow-lg ring-1 ring-white/10 transition duration-300 hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 backdrop-blur-sm p-4">
-                <img
-                src="/logo.svg"
-                alt="logo"
-                class="h-24 w-auto lg:h-32 transition-all duration-300 hover:scale-110"
-                />
-              </div>
+        <div class="relative min-h-screen flex flex-col items-center justify-center p-4">
+            <!-- Logo Section -->
+            <Link :href="route('landing')" class="group">
+                <div class="w-48 h-48 md:w-56 md:h-56 bg-white/80 dark:bg-gray-800/80 rounded-2xl shadow-xl flex items-center justify-center transition-all duration-500 group-hover:scale-105 group-hover:shadow-2xl group-hover:ring-2 group-hover:ring-red-500/30 backdrop-blur-sm">
+                    <img src="/logo.svg" alt="logo" class="w-32 h-32 md:w-40 md:h-40 transition-transform duration-300 group-hover:scale-110" />
+                </div>
+                <h1 class="text-center mt-4 text-2xl font-bold text-gray-800 dark:text-white/90">آکادمی زبان</h1>
             </Link>
 
-            <!-- Form Container -->
-            <div class="flex flex-col gap-6 lg:w-1/3 overflow-hidden rounded-lg bg-gradient-to-br from-gray-400/50 to-gray-200/50 dark:from-gray-800/50 dark:to-gray-700/50 p-6 shadow-lg ring-1 ring-white/10 transition duration-300 hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 backdrop-blur-sm mt-6">
-                <form @submit.prevent="submit" dir="rtl" class="space-y-1">
-                    <div class="w-full flex justify-center my-6">
-                        <div class="flex gap-6 bg-gray-500 dark:bg-gray-700 p-2 rounded-2xl shadow-inner backdrop-blur-md">
+            <!-- Form Section -->
+            <div class="w-full max-w-md mt-8">
+                <div class="bg-white/80 dark:bg-gray-800/80 rounded-2xl shadow-xl overflow-hidden backdrop-blur-sm border border-white/20 dark:border-gray-700/50">
+                    <!-- Role Selector -->
+                    <div class="p-6 pb-0">
+                        <div class="flex rounded-xl bg-gray-200 dark:bg-gray-700 p-1">
                             <button
-                                :class="[
-                                  form.role === 'student'
-                                    ? 'bg-red-700 text-white scale-105'
-                                    : 'bg-gray-300 text-black dark:bg-gray-800 dark:text-white',
-                                  'transition-all duration-300 ease-in-out px-6 py-2 rounded-xl font-bold shadow hover:shadow-lg'
-                                ]"
-                                type="button"
                                 @click="form.role = 'student'"
+                                :class="[
+                                    form.role === 'student'
+                                        ? 'bg-red-600 text-white shadow-md'
+                                        : 'bg-transparent text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600',
+                                    'flex-1 py-3 px-4 rounded-lg font-bold text-sm md:text-base transition-all duration-300'
+                                ]"
                             >
-                                زبان‌آموز
+                                <span class="flex items-center justify-center gap-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                                    </svg>
+                                    زبان‌آموز
+                                </span>
                             </button>
                             <button
-                                :class="[
-                                  form.role === 'teacher'
-                                    ? 'bg-red-700 text-white scale-105'
-                                    : 'bg-gray-300 text-black dark:bg-gray-800 dark:text-white',
-                                  'transition-all duration-300 ease-in-out px-6 py-2 rounded-xl font-bold shadow hover:shadow-lg'
-                                ]"
-                                type="button"
                                 @click="form.role = 'teacher'"
+                                :class="[
+                                    form.role === 'teacher'
+                                        ? 'bg-red-600 text-white shadow-md'
+                                        : 'bg-transparent text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600',
+                                    'flex-1 py-3 px-4 rounded-lg font-bold text-sm md:text-base transition-all duration-300'
+                                ]"
                             >
-                                استاد
+                                <span class="flex items-center justify-center gap-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                                    </svg>
+                                    استاد
+                                </span>
                             </button>
                         </div>
                     </div>
-                    <div>
-                        <InputLabel for="name" :value="$t('name')" class="text-black dark:text-white/90 text-lg" />
-                        <TextInput
-                            id="name"
-                            v-model="form.name"
-                            type="text"
-                            class="mt-2 block w-full bg-gray-700/50 border-gray-700 text-black dark:text-white/90 focus:border-[#FF2D20] focus:ring-[#FF2D20] focus:ring-offset-0 transition-all duration-300 hover:shadow-xl hover:shadow-[#FF2D20]/10 mb-4"
-                            required
-                            autofocus
-                            dir="ltr"
-                            autocomplete="name"
-                        />
-                        <InputError class="mt-2" :message="form.errors.name" />
-                    </div>
 
-                    <div>
-                        <InputLabel for="email" :value="$t('email')" class="text-black dark:text-white/90 text-lg" />
-                        <TextInput
-                            id="email"
-                            v-model="form.email"
-                            type="email"
-                            class="mt-2 block w-full bg-gray-700/50 border-gray-700 text-black dark:text-white/90 focus:border-[#FF2D20] focus:ring-[#FF2D20] focus:ring-offset-0 transition-all duration-300 hover:shadow-xl hover:shadow-[#FF2D20]/10 mb-4"
-                            required
-                            dir="ltr"
-                            autocomplete="username"
-                        />
-                        <InputError class="mt-2" :message="form.errors.email" />
-                    </div>
-
-                    <div>
-                        <InputLabel for="password" :value="$t('password')" class="text-black dark:text-white/90 text-lg" />
-                        <TextInput
-                            id="password"
-                            v-model="form.password"
-                            type="password"
-                            class="mt-2 block w-full bg-gray-700/50 border-gray-700 text-black dark:text-white/90 focus:border-[#FF2D20] focus:ring-[#FF2D20] focus:ring-offset-0 transition-all duration-300 hover:shadow-xl hover:shadow-[#FF2D20]/10 mb-4"
-                            required
-                            dir="ltr"
-                            autocomplete="new-password"
-                        />
-                        <InputError class="mt-2" :message="form.errors.password" />
-                    </div>
-
-                    <div>
-                        <InputLabel for="password_confirmation" :value="$t('confirm_password')" class="text-black dark:text-white/90 text-lg" />
-                        <TextInput
-                            id="password_confirmation"
-                            v-model="form.password_confirmation"
-                            type="password"
-                            class="mt-2 block w-full bg-gray-700/50 border-gray-700 text-black dark:text-white/90 focus:border-[#FF2D20] focus:ring-[#FF2D20] focus:ring-offset-0 transition-all duration-300 hover:shadow-xl hover:shadow-[#FF2D20]/10 mb-4"
-                            required
-                            dir="ltr"
-                            autocomplete="new-password"
-                        />
-                        <InputError class="mt-2" :message="form.errors.password_confirmation" />
-                    </div>
-
-                        <div class="mt-6">
-                            <a
-                                href="/auth/google"
-                                class="inline-flex items-center px-4 py-2 bg-red-600 text-white text-sm font-medium rounded hover:bg-red-700 transition duration-150"
-                            >
-                                <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                                    <path
-                                        d="M21.35 11.1H12v2.8h5.35c-.25 1.5-1.85 4.4-5.35 4.4-3.25 0-5.9-2.7-5.9-6s2.65-6 5.9-6c1.85 0 3.1.8 3.8 1.5l2.6-2.5C16.95 3.95 14.7 3 12 3 6.45 3 2 7.45 2 13s4.45 10 10 10c5.8 0 9.6-4.05 9.6-9.8 0-.65-.1-1.1-.25-1.55z"
-                                    />
-                                </svg>
-                                ورود با گوگل
-                            </a>
+                    <!-- Form -->
+                    <form @submit.prevent="submit" class="p-6 space-y-4" dir="rtl">
+                        <!-- Name Field -->
+                        <div>
+                            <InputLabel for="name" value="نام کامل" class="text-gray-700 dark:text-gray-300" />
+                            <div class="relative mt-1">
+                                <TextInput
+                                    id="name"
+                                    v-model="form.name"
+                                    type="text"
+                                    class="block w-full bg-white/50 dark:bg-gray-700/50 border-gray-300 dark:border-gray-600 focus:border-red-500 focus:ring-red-500 rounded-lg shadow-sm py-3 px-4 text-gray-700 dark:text-gray-300 placeholder-gray-400 dark:placeholder-gray-500 transition duration-300"
+                                    required
+                                    autofocus
+                                    autocomplete="name"
+                                    placeholder="نام و نام خانوادگی"
+                                />
+                                <InputError class="mt-1" :message="form.errors.name" />
+                            </div>
                         </div>
 
+                        <!-- Email Field -->
+                        <div>
+                            <InputLabel for="email" value="ایمیل" class="text-gray-700 dark:text-gray-300" />
+                            <div class="relative mt-1">
+                                <TextInput
+                                    id="email"
+                                    v-model="form.email"
+                                    type="email"
+                                    class="block w-full bg-white/50 dark:bg-gray-700/50 border-gray-300 dark:border-gray-600 focus:border-red-500 focus:ring-red-500 rounded-lg shadow-sm py-3 px-4 text-gray-700 dark:text-gray-300 placeholder-gray-400 dark:placeholder-gray-500 transition duration-300"
+                                    required
+                                    autocomplete="username"
+                                    placeholder="example@example.com"
+                                />
+                                <InputError class="mt-1" :message="form.errors.email" />
+                            </div>
+                        </div>
 
-                    <div v-if="$page.props.jetstream.hasTermsAndPrivacyPolicyFeature">
-                        <InputLabel for="terms">
-                            <div class="flex items-center">
-                                <Checkbox id="terms" v-model:checked="form.terms" name="terms" required class="bg-gray-700/50 border-gray-700" />
-                                <div class="me-2 text-black dark:text-white/70">
-                                    من با <a target="_blank" :href="route('terms.show')" class="underline text-black dark:text-white/70 hover:text-black dark:text-white/90">شرایط خدمات</a> و <a target="_blank" :href="route('policy.show')" class="underline text-black dark:text-white/70 hover:text-black dark:text-white/90">سیاست حفظ حریم خصوصی</a> موافقم
+                        <!-- Password Field -->
+                        <div>
+                            <InputLabel for="password" value="رمز عبور" class="text-gray-700 dark:text-gray-300" />
+                            <div class="relative mt-1">
+                                <TextInput
+                                    id="password"
+                                    v-model="form.password"
+                                    type="password"
+                                    class="block w-full bg-white/50 dark:bg-gray-700/50 border-gray-300 dark:border-gray-600 focus:border-red-500 focus:ring-red-500 rounded-lg shadow-sm py-3 px-4 text-gray-700 dark:text-gray-300 placeholder-gray-400 dark:placeholder-gray-500 transition duration-300"
+                                    required
+                                    autocomplete="new-password"
+                                    placeholder="حداقل 8 کاراکتر"
+                                />
+                                <InputError class="mt-1" :message="form.errors.password" />
+                            </div>
+                        </div>
+
+                        <!-- Confirm Password Field -->
+                        <div>
+                            <InputLabel for="password_confirmation" value="تکرار رمز عبور" class="text-gray-700 dark:text-gray-300" />
+                            <div class="relative mt-1">
+                                <TextInput
+                                    id="password_confirmation"
+                                    v-model="form.password_confirmation"
+                                    type="password"
+                                    class="block w-full bg-white/50 dark:bg-gray-700/50 border-gray-300 dark:border-gray-600 focus:border-red-500 focus:ring-red-500 rounded-lg shadow-sm py-3 px-4 text-gray-700 dark:text-gray-300 placeholder-gray-400 dark:placeholder-gray-500 transition duration-300"
+                                    required
+                                    autocomplete="new-password"
+                                    placeholder="تکرار رمز عبور"
+                                />
+                                <InputError class="mt-1" :message="form.errors.password_confirmation" />
+                            </div>
+                        </div>
+
+                        <!-- Terms Checkbox -->
+                        <div v-if="$page.props.jetstream.hasTermsAndPrivacyPolicyFeature" class="pt-2">
+                            <label class="flex items-start">
+                                <Checkbox
+                                    v-model:checked="form.terms"
+                                    name="terms"
+                                    class="h-5 w-5 text-red-600 rounded border-gray-300 dark:border-gray-600 focus:ring-red-500 transition"
+                                />
+                                <span class="mr-2 text-sm text-gray-600 dark:text-gray-400">
+                                    با <Link :href="route('terms.show')" class="text-red-600 hover:text-red-700 dark:hover:text-red-500 underline">شرایط استفاده</Link> و <Link :href="route('policy.show')" class="text-red-600 hover:text-red-700 dark:hover:text-red-500 underline">سیاست‌های حریم خصوصی</Link> موافقم
+                                </span>
+                            </label>
+                            <InputError class="mt-1" :message="form.errors.terms" />
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="pt-4">
+                            <PrimaryButton
+                                class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition duration-300"
+                                :class="{ 'opacity-50 cursor-not-allowed': form.processing }"
+                                :disabled="form.processing"
+                            >
+                                <span v-if="!form.processing" class="flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+                                    </svg>
+                                    ثبت‌نام
+                                </span>
+                                <span v-else class="flex items-center">
+                                    <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                    </svg>
+                                    در حال ثبت‌نام...
+                                </span>
+                            </PrimaryButton>
+                        </div>
+
+                        <!-- Social Login -->
+                        <div class="pt-4">
+                            <div class="relative">
+                                <div class="absolute inset-0 flex items-center">
+                                    <div class="w-full border-t border-gray-300 dark:border-gray-600"></div>
+                                </div>
+                                <div class="relative flex justify-center text-sm">
+                                    <span class="px-2 bg-white/80 dark:bg-gray-800/80 text-gray-500 dark:text-gray-400">
+                                        یا ثبت‌نام با
+                                    </span>
                                 </div>
                             </div>
-                            <InputError class="mt-2" :message="form.errors.terms" />
-                        </InputLabel>
-                    </div>
 
-                    <div class="flex items-center justify-between">
-                        <Link :href="route('login')" class="p-4 text-sm text-black dark:text-white/70 hover:text-black dark:text-white/90 rounded-md transition-all duration-300 hover:scale-105">
-                            {{ $t('already_registered') }}
-                        </Link>
+                            <div class="mt-6 grid grid-cols-1 gap-3">
+                                <a href="/auth/google" class="w-full inline-flex justify-center items-center py-2 px-4 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm bg-white dark:bg-gray-700 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 transition duration-300">
+                                    <svg class="w-5 h-5 ml-2" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12.545 10.239v3.821h5.445c-0.712 2.315-2.647 3.972-5.445 3.972-3.332 0-6.033-2.701-6.033-6.032s2.701-6.032 6.033-6.032c1.498 0 2.866 0.549 3.921 1.453l2.814-2.814c-1.784-1.667-4.146-2.634-6.735-2.634-5.523 0-10 4.477-10 10s4.477 10 10 10c8.396 0 10-7.524 10-10 0-0.67-0.069-1.325-0.189-1.955h-9.811z" />
+                                    </svg>
+                                    حساب گوگل
+                                </a>
+                            </div>
+                        </div>
 
-                        <PrimaryButton class=" bg-[#FF2D20] hover:bg-[#FF2D20]/90 hover:scale-105 hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                            {{ $t('register_now') }}
-                        </PrimaryButton>
-                    </div>
-                </form>
+                        <!-- Login Link -->
+                        <div class="text-center pt-4">
+                            <p class="text-sm text-gray-600 dark:text-gray-400">
+                                قبلاً حساب دارید؟
+                                <Link :href="route('login')" class="font-medium text-red-600 hover:text-red-500 dark:hover:text-red-400 transition duration-300">
+                                    وارد شوید
+                                </Link>
+                            </p>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
