@@ -12,8 +12,6 @@ import {
 // Components
 import NavItem from '@/Components/NavItem.vue'
 import MobileNavItem from '@/Components/MobileNavItem.vue'
-import DropdownLink from "@/Components/DropdownLink.vue";
-import Dropdown from "@/Components/Dropdown.vue";
 import { useI18n } from 'vue-i18n';
 
 // State
@@ -58,7 +56,7 @@ const logout = () => {
 <template>
     <Head :title="title"><title>Student Panel</title></Head>
     <div class="flex min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-950" :dir="locale === 'en' ? 'ltr' : 'rtl'">
-        <!-- Sidebar - Enhanced Glassmorphism -->
+        <!-- Sidebar - Enhanced Glass morphism -->
         <aside :class="[
       'transition-all duration-500 hidden md:flex fixed md:flex-col h-screen bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg border-l border-white/30 dark:border-gray-700/30 shadow-lg',
       miniMode ? 'md:w-20 lg:w-24' : 'md:w-64 lg:w-80'
@@ -85,12 +83,14 @@ const logout = () => {
             <div class="px-4 py-3 border-b border-white/30 dark:border-gray-700/30">
                 <div class="flex items-center gap-3 mb-3">
                     <div class="relative">
-                        <div class="p-0.5 rounded-full bg-white/80 dark:bg-gray-800/50 shadow-soft">
-                            <img class="w-12 h-12 rounded-full object-cover border border-white/50 dark:border-gray-700/30"
-                                 :src="$page.props.auth.user.profile_photo_url"
-                                 :alt="$page.props.auth.user.name">
-                        </div>
-                        <span class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white dark:border-gray-800 shadow-sm"></span>
+                        <Link :href="route('student.profile')">
+                            <div class="p-0.5 rounded-full bg-white/80 dark:bg-gray-800/50 shadow-soft">
+                                <img class="w-12 h-12 rounded-full object-cover border border-white/50 dark:border-gray-700/30"
+                                     :src="$page.props.auth.user.profile_photo_url"
+                                     :alt="$page.props.auth.user.name">
+                            </div>
+                            <span class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white dark:border-gray-800 shadow-sm"></span>
+                        </Link>
                     </div>
                     <div v-if="!miniMode" class="flex-1">
                         <p class="font-medium text-gray-800 dark:text-gray-100">{{ $page.props.auth.user.name }}</p>
