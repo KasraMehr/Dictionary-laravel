@@ -19,7 +19,7 @@ const form = useForm({
     password: '',
     remember: false,
 });
-ref(false);
+
 const submit = () => {
     form.post(route('login'), {
         onFinish: () => {
@@ -30,89 +30,142 @@ const submit = () => {
 </script>
 
 <template>
-    <Head title="login" />
-    <div class="bg-gray-200 dark:bg-gray-800 min-h-screen">
-        <img class="fixed inset-0 w-full h-full object-cover opacity-10" src="logo.svg"/>
-        <div class="relative min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0">
+    <Head title="ورود به حساب کاربری" />
+    <div class="min-h-screen bg-gradient-to-br from-gray-100 to-gray-300 dark:from-gray-900 dark:to-gray-800">
+        <div class="absolute inset-0 bg-[url('/logo.svg')] bg-center bg-no-repeat bg-fixed opacity-5 dark:opacity-[0.02]"></div>
 
-        <Link :href="route('landing')">
-          <div class="mt-4 w-full max-w-[300px] mx-auto flex flex-col items-center gap-4 overflow-hidden rounded-lg bg-gradient-to-br from-gray-400 to-gray-300 dark:from-gray-800/50 dark:to-gray-700/50 shadow-lg ring-1 ring-white/10 transition duration-300 hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 backdrop-blur-sm p-4">
-            <img src="/logo.svg" alt="logo" class="h-24 w-auto lg:h-32 transition-all duration-300 hover:scale-110"/>
-          </div>
-        </Link>
+        <div class="relative min-h-screen flex flex-col items-center justify-center p-4">
+            <!-- Logo Section -->
+            <Link :href="route('landing')" class="group">
+                <div class="w-48 h-48 md:w-56 md:h-56 bg-white/80 dark:bg-gray-800/80 rounded-2xl shadow-xl flex items-center justify-center transition-all duration-500 group-hover:scale-105 group-hover:shadow-2xl group-hover:ring-2 group-hover:ring-red-500/30 backdrop-blur-sm">
+                    <img src="/logo.svg" alt="logo" class="w-32 h-32 md:w-40 md:h-40 transition-transform duration-300 group-hover:scale-110" />
+                </div>
+                <h1 class="text-center mt-4 text-2xl font-bold text-gray-800 dark:text-white/90">آکادمی زبان</h1>
+            </Link>
 
-            <div class="w-full sm:max-w-md mt-2 px-6 py-4">
-                <div class="flex flex-col gap-6 overflow-hidden rounded-lg bg-gradient-to-br from-gray-400/50 to-gray-200/50 dark:from-gray-800/50 dark:to-gray-700/50 p-6 shadow-lg ring-1 ring-white/10 transition duration-300 hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 backdrop-blur-sm">
-                    <div v-if="status" class="mb-4 font-medium text-sm text-green-400">
+            <!-- Form Section -->
+            <div class="w-full max-w-md mt-8">
+                <div class="bg-white/80 dark:bg-gray-800/80 rounded-2xl shadow-xl overflow-hidden backdrop-blur-sm border border-white/20 dark:border-gray-700/50">
+                    <!-- Status Message -->
+                    <div v-if="status" class="p-4 bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-300 text-sm text-center">
                         {{ status }}
                     </div>
 
-                    <form @submit.prevent="submit" class="space-y-4">
-                        <div dir="rtl">
-                            <InputLabel for="email" :value="$t('email')" class="text-black dark:text-white/90 text-lg" />
-                            <TextInput
-                                id="email"
-                                v-model="form.email"
-                                type="email"
-                                class="mt-2 block w-full bg-gray-700/50 border-gray-700 text-black dark:text-white/90 focus:border-[#FF2D20] focus:ring-[#FF2D20] focus:ring-offset-0 transition-all duration-300 hover:shadow-xl hover:shadow-[#FF2D20]/10"
-                                required
-                                autofocus
-                                dir="ltr"
-                                autocomplete="username"
-                            />
-                            <InputError class="mt-2" :message="form.errors.email" />
+                    <!-- Form -->
+                    <form @submit.prevent="submit" class="p-6 space-y-4" dir="rtl">
+                        <!-- Email Field -->
+                        <div>
+                            <InputLabel for="email" value="ایمیل" class="text-gray-700 dark:text-gray-300" />
+                            <div class="relative mt-1">
+                                <TextInput
+                                    id="email"
+                                    v-model="form.email"
+                                    type="email"
+                                    class="block w-full bg-white/50 dark:bg-gray-700/50 border-gray-300 dark:border-gray-600 focus:border-red-500 focus:ring-red-500 rounded-lg shadow-sm py-3 px-4 text-gray-700 dark:text-gray-300 placeholder-gray-400 dark:placeholder-gray-500 transition duration-300"
+                                    required
+                                    autofocus
+                                    autocomplete="username"
+                                    placeholder="example@example.com"
+                                />
+                                <InputError class="mt-1" :message="form.errors.email" />
+                            </div>
                         </div>
 
-                        <div dir="rtl">
-                            <InputLabel for="password" :value="$t('password')" class="text-black dark:text-white/90 text-lg" />
-                            <TextInput
-                                id="password"
-                                v-model="form.password"
-                                type="password"
-                                class="mt-2 block w-full bg-gray-700/50 border-gray-700 text-black dark:text-white/90 focus:border-[#FF2D20] focus:ring-[#FF2D20] focus:ring-offset-0 transition-all duration-300 hover:shadow-xl hover:shadow-[#FF2D20]/10"
-                                required
-                                dir="ltr"
-                                autocomplete="current-password"
-                            />
-                            <InputError class="mt-2" :message="form.errors.password" />
+                        <!-- Password Field -->
+                        <div>
+                            <InputLabel for="password" value="رمز عبور" class="text-gray-700 dark:text-gray-300" />
+                            <div class="relative mt-1">
+                                <TextInput
+                                    id="password"
+                                    v-model="form.password"
+                                    type="password"
+                                    class="block w-full bg-white/50 dark:bg-gray-700/50 border-gray-300 dark:border-gray-600 focus:border-red-500 focus:ring-red-500 rounded-lg shadow-sm py-3 px-4 text-gray-700 dark:text-gray-300 placeholder-gray-400 dark:placeholder-gray-500 transition duration-300"
+                                    required
+                                    autocomplete="current-password"
+                                    placeholder="رمز عبور خود را وارد کنید"
+                                />
+                                <InputError class="mt-1" :message="form.errors.password" />
+                            </div>
                         </div>
 
-                        <div class="flex items-center">
+                        <!-- Remember Me & Forgot Password -->
+                        <div class="flex items-center justify-between">
                             <label class="flex items-center">
-                                <Checkbox v-model:checked="form.remember" name="remember" class="bg-gray-700/50 border-gray-700" />
-                                <span class="ml-4 me-2 text-sm text-black dark:text-white/70 hover:text-black dark:text-white/90">{{ $t('remember_me') }}</span>
+                                <Checkbox
+                                    v-model:checked="form.remember"
+                                    name="remember"
+                                    class="h-5 w-5 text-red-600 rounded border-gray-300 dark:border-gray-600 focus:ring-red-500 transition"
+                                />
+                                <span class="mr-2 text-sm text-gray-600 dark:text-gray-400">
+                                    مرا به خاطر بسپار
+                                </span>
                             </label>
-                        </div>
 
-                        <div class="flex items-center justify-end">
                             <Link
                                 v-if="canResetPassword"
                                 :href="route('password.request')"
-                                class="p-4 text-sm text-black dark:text-white/70 hover:text-black dark:text-white/90 rounded-md transition-all duration-300 hover:scale-105"
+                                class="text-sm text-red-600 hover:text-red-700 dark:hover:text-red-500 transition duration-300"
                             >
-                                {{ $t('forgot_password') }}
+                                رمز عبور را فراموش کرده‌اید؟
                             </Link>
+                        </div>
 
+                        <!-- Submit Button -->
+                        <div class="pt-4">
                             <PrimaryButton
-                                class="me-4 bg-[#FF2D20] hover:bg-[#FF2D20]/90 hover:scale-105 hover:ring-white/20 hover:shadow-xl hover:shadow-[#FF2D20]/10 transition duration-300"
-                                :class="{ 'opacity-25': form.processing }"
+                                class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition duration-300"
+                                :class="{ 'opacity-50 cursor-not-allowed': form.processing }"
                                 :disabled="form.processing"
                             >
-                                {{ $t('sign_in') }}
+                                <span v-if="!form.processing" class="flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+                                    </svg>
+                                    ورود به حساب
+                                </span>
+                                <span v-else class="flex items-center">
+                                    <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                    </svg>
+                                    در حال ورود...
+                                </span>
                             </PrimaryButton>
                         </div>
+
+                        <!-- Social Login -->
+                        <div class="pt-4">
+                            <div class="relative">
+                                <div class="absolute inset-0 flex items-center">
+                                    <div class="w-full border-t border-gray-300 dark:border-gray-600"></div>
+                                </div>
+                                <div class="relative flex justify-center text-sm">
+                                    <span class="px-2 bg-white/80 dark:bg-gray-800/80 text-gray-500 dark:text-gray-400">
+                                        یا ورود با
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="mt-6 grid grid-cols-1 gap-3">
+                                <a href="/auth/google" class="w-full inline-flex justify-center items-center py-2 px-4 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm bg-white dark:bg-gray-700 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 transition duration-300">
+                                    <svg class="w-5 h-5 ml-2" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12.545 10.239v3.821h5.445c-0.712 2.315-2.647 3.972-5.445 3.972-3.332 0-6.033-2.701-6.033-6.032s2.701-6.032 6.033-6.032c1.498 0 2.866 0.549 3.921 1.453l2.814-2.814c-1.784-1.667-4.146-2.634-6.735-2.634-5.523 0-10 4.477-10 10s4.477 10 10 10c8.396 0 10-7.524 10-10 0-0.67-0.069-1.325-0.189-1.955h-9.811z" />
+                                    </svg>
+                                    حساب گوگل
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Register Link -->
+                        <div class="text-center pt-4">
+                            <p class="text-sm text-gray-600 dark:text-gray-400">
+                                حساب کاربری ندارید؟
+                                <Link :href="route('register')" class="font-medium text-red-600 hover:text-red-500 dark:hover:text-red-400 transition duration-300">
+                                    ثبت‌نام کنید
+                                </Link>
+                            </p>
+                        </div>
                     </form>
-                    <div class=" text-center border-t border-gray-700 pt-6">
-                        <Link
-                            :href="route('register')"
-                            class="inline-flex items-center justify-center px-6 py-3 bg-gray-700/50 text-black dark:text-white/90 rounded-lg hover:bg-gray-600/50 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-[#FF2D20]/10"
-                        >
-                            <span>{{ $t('no_account') }} {{ $t('register_now') }}</span>
-                            <svg xmlns="http://www.w3.org/2000/svg" class="ml-2  h-5 w-5 mr-2 rtl:rotate-180" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
-                            </svg>
-                        </Link>
-                    </div>
                 </div>
             </div>
         </div>
