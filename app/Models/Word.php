@@ -107,4 +107,9 @@ class Word extends Model
         return $this->belongsToMany(Team::class, 'team_word', 'word_id', 'team_id');
     }
 
+    public function savedByUsers()
+    {
+        return $this->belongsToMany(User::class, 'saved_words');
+    }
+
 }
