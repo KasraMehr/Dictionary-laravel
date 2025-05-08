@@ -175,4 +175,30 @@ class User extends Authenticatable
             ->withPivot('level', 'notes')
             ->withTimestamps();
     }
+
+    public function savedWords()
+    {
+      return $this->belongsToMany(Word::class, 'saved_words')
+          ->withPivot([
+              'review_count',
+              'last_reviewed_at',
+              'next_review_at',
+              'ease_factor',
+              'interval'
+            ])
+            ->withTimestamps();
+      }
+
+    public function learningStats()
+    {
+        return $this->hasOne(LearningStat::class);
+    }
+
+    // ایجاد رکورد آمار یادگیری هنگام ایجاد کاربر
+    protected static function booted()
+    {
+      static::created(function ($user) {
+          $user->learningStats()->create();
+      });
+    }
 }
