@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Validator;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
 use Laravel\Jetstream\Jetstream;
 use App\Rules\Recaptcha;
+use App\Models\StudentProfile;
 
 class CreateNewUser implements CreatesNewUsers
 {
@@ -44,6 +45,9 @@ class CreateNewUser implements CreatesNewUsers
             if ($user->role === 'teacher') {
                 $this->createTeacher($user);
             }
+            else if ($user->role === 'student'){
+                $this->createStudent($user);
+            }
 
             return $user;
         });
@@ -60,10 +64,8 @@ class CreateNewUser implements CreatesNewUsers
             'personal_team' => true,
         ]);
 
-        // ذخیره تیم در رابطه ownedTeams
         $user->ownedTeams()->save($team);
 
-        // به‌روزرسانی current_team_id برای کاربر
         $user->current_team_id = $team->id;
         $user->save();
     }
@@ -76,6 +78,15 @@ class CreateNewUser implements CreatesNewUsers
         ]);
 
         $user->teacher()->save($teacher);
+    }
+
+    protected function createStudent(User $user): void
+    {
+        $student = StudentProfile::forceCreate([
+            'user_id' => $user->id,
+        ]);
+
+        $user->studentProfile()->save($student);
     }
 
 }
