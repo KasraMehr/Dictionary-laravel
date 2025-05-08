@@ -156,7 +156,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
 
         Route::get('/dashboard', [StudentDashboard::class, 'index'])->name('dashboard');
         Route::get('/profile', [StudentDashboard::class, 'profile'])->name('profile');
-        Route::put('/profile/update', [StudentDashboard::class, 'profile_update'])->name('profile.update');
+        Route::patch('/profile/update', [StudentDashboard::class, 'update'])->name('profile.update');
 
         Route::get('/courses', [StudentCourseController::class, 'index'])
             ->name('courses.index');
