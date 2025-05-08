@@ -1,291 +1,403 @@
 <template>
-    <StudentLayout title="Dashboard">
-            <div class="max-w-6xl mx-auto">
-                <!-- Header با افکت Glass Morphism -->
-                <div class="backdrop-blur-lg bg-white/30 dark:bg-gray-800/50 rounded-2xl shadow-xl p-6 mb-8 border border-white/20">
-                    <div class="flex flex-col md:flex-row items-center gap-6">
-                        <!-- آواتار -->
-                        <div class="relative">
-                            <img src="/images/Kasra_Mehralizadeh.jpg"
-                                 class="w-32 h-32 rounded-full border-4 border-white/50 shadow-lg">
-                            <button @click="editAvatar" class="absolute bottom-2 right-2 bg-blue-500 text-white p-2 rounded-full shadow-md hover:bg-blue-600 transition">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                    <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
-                                </svg>
-                            </button>
-                        </div>
-
-                        <!-- اطلاعات کاربر -->
-                        <div class="flex-1">
-                            <h1 class="text-3xl font-bold text-gray-800 dark:text-white">
-                                Kasra Mehralizadeh
-                            </h1>
-                            <p class="text-gray-600 dark:text-gray-300 mt-2">
-                                دانشجوی مهندسی کامپیوتر و علاقه‌مند به یادگیری زبان‌های خارجی
-                            </p>
-
-                            <div class="flex flex-wrap gap-4 mt-4">
-                                <div class="flex items-center text-gray-700 dark:text-gray-300">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                                    </svg>
-                                    +98 903 271 7738
-                                </div>
-
-                                <div class="flex items-center text-gray-700 dark:text-gray-300">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                                    </svg>
-                                    تهران، ایران
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <!-- ستون سمت چپ -->
-                    <div class="lg:col-span-2 space-y-6">
-                        <!-- کارت پیشرفت -->
-                        <div class="backdrop-blur-lg bg-white/30 dark:bg-gray-800/50 rounded-2xl shadow-xl p-6 border border-white/20">
-                            <h2 class="text-xl font-semibold text-gray-800 dark:text-white mb-4">پیشرفت یادگیری</h2>
-
-                            <div class="mb-6">
-                                <div class="flex justify-between items-center mb-2">
-                                    <h3 class="font-medium text-gray-700 dark:text-gray-300">انگلیسی</h3>
-                                    <span class="text-sm font-medium text-blue-500">سطح B2</span>
-                                </div>
-
-                                <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-4">
-                                    <div class="bg-blue-500 h-4 rounded-full" style="width: 65%"></div>
-                                </div>
-
-                                <div class="grid grid-cols-3 gap-4 mt-4 text-center">
-                                    <div class="bg-white/50 dark:bg-gray-700/50 p-3 rounded-lg shadow">
-                                        <p class="text-gray-500 dark:text-gray-400 text-sm">درس‌ها</p>
-                                        <p class="font-bold text-gray-800 dark:text-white">24</p>
-                                    </div>
-                                    <div class="bg-white/50 dark:bg-gray-700/50 p-3 rounded-lg shadow">
-                                        <p class="text-gray-500 dark:text-gray-400 text-sm">کلمات</p>
-                                        <p class="font-bold text-gray-800 dark:text-white">420</p>
-                                    </div>
-                                    <div class="bg-white/50 dark:bg-gray-700/50 p-3 rounded-lg shadow">
-                                        <p class="text-gray-500 dark:text-gray-400 text-sm">امتیاز</p>
-                                        <p class="font-bold text-gray-800 dark:text-white">1,250</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="mb-6">
-                                <div class="flex justify-between items-center mb-2">
-                                    <h3 class="font-medium text-gray-700 dark:text-gray-300">آلمانی</h3>
-                                    <span class="text-sm font-medium text-blue-500">سطح A1</span>
-                                </div>
-
-                                <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-4">
-                                    <div class="bg-blue-500 h-4 rounded-full" style="width: 30%"></div>
-                                </div>
-
-                                <div class="grid grid-cols-3 gap-4 mt-4 text-center">
-                                    <div class="bg-white/50 dark:bg-gray-700/50 p-3 rounded-lg shadow">
-                                        <p class="text-gray-500 dark:text-gray-400 text-sm">درس‌ها</p>
-                                        <p class="font-bold text-gray-800 dark:text-white">8</p>
-                                    </div>
-                                    <div class="bg-white/50 dark:bg-gray-700/50 p-3 rounded-lg shadow">
-                                        <p class="text-gray-500 dark:text-gray-400 text-sm">کلمات</p>
-                                        <p class="font-bold text-gray-800 dark:text-white">120</p>
-                                    </div>
-                                    <div class="bg-white/50 dark:bg-gray-700/50 p-3 rounded-lg shadow">
-                                        <p class="text-gray-500 dark:text-gray-400 text-sm">امتیاز</p>
-                                        <p class="font-bold text-gray-800 dark:text-white">350</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- کارت اهداف یادگیری -->
-                        <div class="backdrop-blur-lg bg-white/30 dark:bg-gray-800/50 rounded-2xl shadow-xl p-6 border border-white/20">
-                            <div class="flex justify-between items-center mb-4">
-                                <h2 class="text-xl font-semibold text-gray-800 dark:text-white">اهداف یادگیری</h2>
-                                <button @click="editGoals" class="text-blue-500 hover:text-blue-700 dark:hover:text-blue-400">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                        <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
-                                    </svg>
-                                </button>
-                            </div>
-
-                            <p class="text-gray-700 dark:text-gray-300 whitespace-pre-line">
-                                - تقویت مهارت مکالمه انگلیسی برای مصاحبه شغلی
-                                - یادگیری آلمانی تا سطح B1 در ۶ ماه آینده
-                                - افزایش دایره لغات تخصصی در حوزه فناوری اطلاعات
-                                - آمادگی برای آزمون IELTS تا پایان سال
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- ستون سمت راست -->
-                    <div class="space-y-6">
-                        <!-- کارت اطلاعات شخصی -->
-                        <div class="backdrop-blur-lg bg-white/30 dark:bg-gray-800/50 rounded-2xl shadow-xl p-6 border border-white/20">
-                            <div class="flex justify-between items-center mb-4">
-                                <h2 class="text-xl font-semibold text-gray-800 dark:text-white">اطلاعات شخصی</h2>
-                                <button @click="editProfile" class="text-blue-500 hover:text-blue-700 dark:hover:text-blue-400">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                        <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
-                                    </svg>
-                                </button>
-                            </div>
-
-                            <div class="space-y-3">
-                                <div>
-                                    <p class="text-sm text-gray-500 dark:text-gray-400">زبان‌های در حال یادگیری</p>
-                                    <p class="text-gray-700 dark:text-gray-300">
-                    <span class="inline-block bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-2 py-1 rounded-full text-sm mr-1 mb-1">
-                      انگلیسی
-                    </span>
-                                        <span class="inline-block bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-2 py-1 rounded-full text-sm mr-1 mb-1">
-                      آلمانی
-                    </span>
-                                    </p>
-                                </div>
-
-                                <div>
-                                    <p class="text-sm text-gray-500 dark:text-gray-400">زبان‌های مسلط</p>
-                                    <p class="text-gray-700 dark:text-gray-300">
-                    <span class="inline-block bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2 py-1 rounded-full text-sm mr-1 mb-1">
-                      فارسی
-                    </span>
-                                    </p>
-                                </div>
-
-                                <div>
-                                    <p class="text-sm text-gray-500 dark:text-gray-400">سبک یادگیری ترجیحی</p>
-                                    <p class="text-gray-700 dark:text-gray-300">
-                                        بصری + شنیداری
-                                    </p>
-                                </div>
-
-                                <div>
-                                    <p class="text-sm text-gray-500 dark:text-gray-400">زمان مطالعه روزانه</p>
-                                    <p class="text-gray-700 dark:text-gray-300">
-                                        120 دقیقه
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- کارت اطلاعات تحصیلی/شغلی -->
-                        <div class="backdrop-blur-lg bg-white/30 dark:bg-gray-800/50 rounded-2xl shadow-xl p-6 border border-white/20">
-                            <h2 class="text-xl font-semibold text-gray-800 dark:text-white mb-4">اطلاعات تحصیلی و شغلی</h2>
-
-                            <div class="space-y-3">
-                                <div>
-                                    <p class="text-sm text-gray-500 dark:text-gray-400">سطح تحصیلات</p>
-                                    <p class="text-gray-700 dark:text-gray-300">
-                                        کارشناسی مهندسی کامپیوتر
-                                    </p>
-                                </div>
-
-                                <div>
-                                    <p class="text-sm text-gray-500 dark:text-gray-400">شغل</p>
-                                    <p class="text-gray-700 dark:text-gray-300">
-                                        توسعه‌دهنده وب (Full Stack)
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+  <StudentLayout title="Dashboard">
+    <div class="bg-gray-50 dark:bg-gray-800 min-h-screen p-6">
+      <div class="max-w-6xl mx-auto">
+        <!-- Header با افکت Glass Morphism -->
+        <div class="backdrop-blur-lg bg-white/30 dark:bg-gray-800/50 rounded-2xl shadow-xl p-6 mb-8 border border-white/20">
+          <div class="flex flex-col md:flex-row items-center gap-6">
+            <!-- آواتار -->
+            <div class="relative">
+              <img :src="user.profile_photo_path ? `/storage/${user.profile_photo_path}` : '/images/default-avatar.jpg'"
+                   class="w-32 h-32 rounded-full border-4 border-white/50 shadow-lg">
+              <button v-if="isEditing" @click="editAvatar" class="absolute bottom-2 right-2 bg-red-500 text-white p-2 rounded-full shadow-md hover:bg-red-600 transition">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+                </svg>
+              </button>
             </div>
 
-            <!-- مودال ویرایش پروفایل -->
-            <ProfileEditModal
-                v-if="showEditModal"
-                :user="fakeUser"
-                :profile="fakeProfile"
-                @close="showEditModal = false"
-                @save="handleProfileUpdate"
-            />
-    </StudentLayout>
+            <!-- اطلاعات کاربر -->
+            <div class="flex-1">
+              <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">نام کامل</label>
+                <input v-if="isEditing" v-model="form.name" type="text"
+                       class="text-3xl font-bold bg-white/50 dark:bg-gray-700/50 rounded px-3 py-2 w-full border border-gray-300 dark:border-gray-600">
+                <h1 v-else class="text-3xl font-bold text-gray-800 dark:text-white">
+                  {{ user.name }}
+                </h1>
+              </div>
+
+              <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">بیوگرافی</label>
+                <textarea v-if="isEditing" v-model="form.bio" rows="2"
+                          class="text-gray-600 dark:text-gray-300 bg-white/50 dark:bg-gray-700/50 rounded px-3 py-2 w-full border border-gray-300 dark:border-gray-600"></textarea>
+                <p v-else class="text-gray-600 dark:text-gray-300">
+                  {{ studentProfile.bio || 'بیوگرافی اضافه نشده' }}
+                </p>
+              </div>
+
+              <div class="flex flex-wrap gap-4 mt-4">
+                <div>
+                  <label class="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">تلفن همراه</label>
+                  <input v-if="isEditing" v-model="form.phone" type="tel"
+                         class="bg-white/50 dark:bg-gray-700/50 rounded px-3 py-2 w-full border border-gray-300 dark:border-gray-600">
+                  <p v-else class="text-gray-700 dark:text-gray-300">
+                    {{ studentProfile.phone || 'ثبت نشده' }}
+                  </p>
+                </div>
+
+                <div>
+                  <label class="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">کشور/شهر</label>
+                  <input v-if="isEditing" v-model="form.country" type="text"
+                         class="bg-white/50 dark:bg-gray-700/50 rounded px-3 py-2 w-full border border-gray-300 dark:border-gray-600">
+                  <p v-else class="text-gray-700 dark:text-gray-300">
+                    {{ studentProfile.country || 'ثبت نشده' }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <!-- ستون سمت چپ -->
+          <div class="lg:col-span-2 space-y-6">
+            <!-- کارت پیشرفت -->
+            <div class="backdrop-blur-lg bg-white/30 dark:bg-gray-800/50 rounded-2xl shadow-xl p-6 border border-white/20">
+              <h2 class="text-xl font-semibold text-gray-800 dark:text-white mb-4">پیشرفت یادگیری</h2>
+
+              <div v-for="progress in progressData" :key="progress.language_id" class="mb-6">
+                <div class="flex justify-between items-center mb-2">
+                  <h3 class="font-medium text-gray-700 dark:text-gray-300">{{ progress.language.name }}</h3>
+                  <span class="text-sm font-medium text-red-500">سطح {{ progress.level }}</span>
+                </div>
+
+                <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-4">
+                  <div class="bg-red-500 h-4 rounded-full" :style="`width: ${(progress.xp % 1000) / 10}%`"></div>
+                </div>
+
+                <div class="grid grid-cols-3 gap-4 mt-4 text-center">
+                  <div class="bg-white/50 dark:bg-gray-700/50 p-3 rounded-lg shadow">
+                    <p class="text-gray-500 dark:text-gray-400 text-sm">درس‌ها</p>
+                    <p class="font-bold text-gray-800 dark:text-white">{{ progress.lessons_completed }}</p>
+                  </div>
+                  <div class="bg-white/50 dark:bg-gray-700/50 p-3 rounded-lg shadow">
+                    <p class="text-gray-500 dark:text-gray-400 text-sm">کلمات</p>
+                    <p class="font-bold text-gray-800 dark:text-white">{{ progress.words_learned }}</p>
+                  </div>
+                  <div class="bg-white/50 dark:bg-gray-700/50 p-3 rounded-lg shadow">
+                    <p class="text-gray-500 dark:text-gray-400 text-sm">امتیاز</p>
+                    <p class="font-bold text-gray-800 dark:text-white">{{ progress.xp }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- کارت اهداف یادگیری -->
+            <div class="backdrop-blur-lg bg-white/30 dark:bg-gray-800/50 rounded-2xl shadow-xl p-6 border border-white/20">
+              <h2 class="text-xl font-semibold text-gray-800 dark:text-white mb-4">اهداف یادگیری</h2>
+
+              <label v-if="isEditing" class="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">اهداف خود را وارد کنید</label>
+              <textarea v-if="isEditing" v-model="form.learning_goals" rows="4"
+                        class="text-gray-700 dark:text-gray-300 bg-white/50 dark:bg-gray-700/50 rounded px-3 py-2 w-full border border-gray-300 dark:border-gray-600"></textarea>
+              <p v-else class="text-gray-700 dark:text-gray-300 whitespace-pre-line">
+                {{ studentProfile.learning_goals || 'هیچ هدف یادگیری تعریف نشده است.' }}
+              </p>
+            </div>
+          </div>
+
+          <!-- ستون سمت راست -->
+          <div class="space-y-6">
+            <!-- کارت اطلاعات شخصی -->
+            <div class="backdrop-blur-lg bg-white/30 dark:bg-gray-800/50 rounded-2xl shadow-xl p-6 border border-white/20">
+              <h2 class="text-xl font-semibold text-gray-800 dark:text-white mb-4">اطلاعات شخصی</h2>
+
+              <div class="space-y-4">
+                <div>
+                  <label class="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">زبان‌های در حال یادگیری</label>
+                  <Multiselect
+                    v-if="isEditing"
+                    v-model="form.learning_languages"
+                    mode="tags"
+                    :options="languageOptions"
+                    placeholder="انتخاب کنید"
+                    :close-on-select="false"
+                    class="dark:bg-gray-700/50 dark:text-white"
+                  />
+                  <div v-else>
+                    <p v-if="studentProfile.learning_languages && studentProfile.learning_languages.length" class="text-gray-700 dark:text-gray-300">
+                      <span v-for="(lang, index) in studentProfile.learning_languages" :key="index"
+                            class="inline-block bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 px-2 py-1 rounded-full text-sm mr-1 mb-1">
+                        {{ lang }}
+                      </span>
+                    </p>
+                    <p v-else class="text-gray-500 italic">ثبت نشده</p>
+                  </div>
+                </div>
+
+                <div>
+                  <label class="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">زبان‌های مسلط</label>
+                  <Multiselect
+                    v-if="isEditing"
+                    v-model="form.known_languages"
+                    mode="tags"
+                    :options="languageOptions"
+                    placeholder="انتخاب کنید"
+                    :close-on-select="false"
+                    class="dark:bg-gray-700/50 dark:text-white"
+                  />
+                  <div v-else>
+                    <p v-if="studentProfile.known_languages && studentProfile.known_languages.length" class="text-gray-700 dark:text-gray-300">
+                      <span v-for="(lang, index) in studentProfile.known_languages" :key="index"
+                            class="inline-block bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2 py-1 rounded-full text-sm mr-1 mb-1">
+                        {{ lang }}
+                      </span>
+                    </p>
+                    <p v-else class="text-gray-500 italic">ثبت نشده</p>
+                  </div>
+                </div>
+
+                <div>
+                  <label class="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">سبک یادگیری ترجیحی</label>
+                  <select v-if="isEditing" v-model="form.preferred_learning_style"
+                          class="text-gray-700 dark:text-gray-300 bg-white/50 dark:bg-gray-700/50 rounded px-3 py-2 w-full border border-gray-300 dark:border-gray-600">
+                    <option value="">انتخاب کنید</option>
+                    <option value="بصری">بصری</option>
+                    <option value="شنیداری">شنیداری</option>
+                    <option value="خواندن/نوشتن">خواندن/نوشتن</option>
+                    <option value="عملی">عملی</option>
+                    <option value="بصری + شنیداری">بصری + شنیداری</option>
+                  </select>
+                  <p v-else class="text-gray-700 dark:text-gray-300">
+                    {{ studentProfile.preferred_learning_style || 'ثبت نشده' }}
+                  </p>
+                </div>
+
+                <div>
+                  <label class="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">زمان مطالعه روزانه (دقیقه)</label>
+                  <input v-if="isEditing" v-model="form.daily_study_time" type="number" min="0"
+                         class="text-gray-700 dark:text-gray-300 bg-white/50 dark:bg-gray-700/50 rounded px-3 py-2 w-full border border-gray-300 dark:border-gray-600">
+                  <p v-else class="text-gray-700 dark:text-gray-300">
+                    {{ studentProfile.daily_study_time ? studentProfile.daily_study_time + ' دقیقه' : 'ثبت نشده' }}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- کارت اطلاعات تحصیلی/شغلی -->
+            <div class="backdrop-blur-lg bg-white/30 dark:bg-gray-800/50 rounded-2xl shadow-xl p-6 border border-white/20">
+              <h2 class="text-xl font-semibold text-gray-800 dark:text-white mb-4">اطلاعات تحصیلی و شغلی</h2>
+
+              <div class="space-y-4">
+                <div>
+                  <label class="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">سطح تحصیلات</label>
+                  <select v-if="isEditing" v-model="form.education_level"
+                          class="text-gray-700 dark:text-gray-300 bg-white/50 dark:bg-gray-700/50 rounded px-3 py-2 w-full border border-gray-300 dark:border-gray-600">
+                    <option value="">انتخاب کنید</option>
+                    <option value="دیپلم">دیپلم</option>
+                    <option value="کاردانی">کاردانی</option>
+                    <option value="کارشناسی">کارشناسی</option>
+                    <option value="کارشناسی ارشد">کارشناسی ارشد</option>
+                    <option value="دکتری">دکتری</option>
+                  </select>
+                  <p v-else class="text-gray-700 dark:text-gray-300">
+                    {{ studentProfile.education_level || 'ثبت نشده' }}
+                  </p>
+                </div>
+
+                <div>
+                  <label class="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">شغل</label>
+                  <input v-if="isEditing" v-model="form.occupation" type="text"
+                         class="text-gray-700 dark:text-gray-300 bg-white/50 dark:bg-gray-700/50 rounded px-3 py-2 w-full border border-gray-300 dark:border-gray-600">
+                  <p v-else class="text-gray-700 dark:text-gray-300">
+                    {{ studentProfile.occupation || 'ثبت نشده' }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- دکمه ویرایش -->
+      <div class="flex justify-start mt-8">
+        <button v-if="!isEditing" @click="startEditing" class="flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+          </svg>
+          ویرایش پروفایل
+        </button>
+        <div v-else class="flex gap-2">
+          <button @click="saveChanges" class="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg transition">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+            </svg>
+            ذخیره تغییرات
+          </button>
+          <button @click="cancelEditing" class="flex items-center gap-2 bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg transition">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+            </svg>
+            انصراف
+          </button>
+        </div>
+      </div>
+    </div>
+  </StudentLayout>
 </template>
 
 <script>
 import StudentLayout from "@/Layouts/StudentLayout.vue";
-import ProfileEditModal from "./ProfileEditModal.vue";
+import Multiselect from '@vueform/multiselect';
 
 export default {
-    components: {
-        StudentLayout,
-        ProfileEditModal
+  components: {
+    StudentLayout,
+    Multiselect
+  },
+
+  props: {
+    user: {
+      type: Object,
+      required: true
     },
-
-    data() {
-        return {
-            theme: 'light',
-            showEditModal: false,
-            fakeUser: {
-                name: 'Kasra Mehralizadeh',
-                email: 'kasra@example.com',
-                avatar: '/images/Kasra_Mehralizadeh.jpg'
-            },
-            fakeProfile: {
-                bio: 'دانشجوی مهندسی کامپیوتر و علاقه‌مند به یادگیری زبان‌های خارجی',
-                phone: '+98 903 271 7738',
-                country: 'تهران، ایران',
-                learning_languages: ['انگلیسی', 'آلمانی'],
-                known_languages: ['فارسی'],
-                education_level: 'کارشناسی مهندسی کامپیوتر',
-                occupation: 'توسعه‌دهنده وب (Full Stack)',
-                learning_goals: '- تقویت مهارت مکالمه انگلیسی برای مصاحبه شغلی\n- یادگیری آلمانی تا سطح B1 در ۶ ماه آینده\n- افزایش دایره لغات تخصصی در حوزه فناوری اطلاعات\n- آمادگی برای آزمون IELTS تا پایان سال',
-                preferred_learning_style: 'بصری + شنیداری',
-                daily_study_time: 120
-            }
-        };
+    studentProfile: {
+      type: Object,
+      required: true
     },
-
-    methods: {
-        toggleTheme() {
-            this.theme = this.theme === 'light' ? 'dark' : 'light';
-        },
-
-        editProfile() {
-            this.showEditModal = true;
-        },
-
-        editGoals() {
-            this.showEditModal = true;
-        },
-
-        editAvatar() {
-            // پیاده‌سازی آپلود آواتار
-            alert('آپلود آواتار در این نسخه دمو فعال نیست');
-        },
-
-        handleProfileUpdate(updatedProfile) {
-            // در حالت واقعی اینجا اطلاعات به سرور ارسال می‌شود
-            this.fakeProfile = {...this.fakeProfile, ...updatedProfile};
-            this.showEditModal = false;
-        }
+    progress: {
+      type: Array,
+      default: () => []
     }
+  },
+
+  data() {
+    return {
+      isEditing: false,
+      form: {
+        name: this.user.name,
+        bio: this.studentProfile.bio,
+        phone: this.studentProfile.phone,
+        country: this.studentProfile.country,
+        learning_languages: this.studentProfile.learning_languages || [],
+        known_languages: this.studentProfile.known_languages || [],
+        preferred_learning_style: this.studentProfile.preferred_learning_style,
+        daily_study_time: this.studentProfile.daily_study_time,
+        learning_goals: this.studentProfile.learning_goals,
+        education_level: this.studentProfile.education_level,
+        occupation: this.studentProfile.occupation
+      },
+      progressData: this.progress,
+      languageOptions: [
+        'انگلیسی',
+        'فرانسوی',
+        'آلمانی',
+        'اسپانیایی',
+        'چینی',
+        'ژاپنی',
+        'عربی',
+        'ترکی',
+        'روسی',
+        'ایتالیایی',
+        'فارسی'
+      ]
+    };
+  },
+
+  methods: {
+    startEditing() {
+      this.isEditing = true;
+    },
+
+    cancelEditing() {
+      this.resetForm();
+      this.isEditing = false;
+    },
+
+    saveChanges() {
+      this.$inertia.patch(route('student.profile.update'), this.form, {
+        preserveScroll: true,
+        onSuccess: () => {
+          this.isEditing = false;
+        },
+        onError: () => {
+          this.resetForm();
+        }
+      });
+    },
+
+    resetForm() {
+      this.form = {
+        name: this.user.name,
+        bio: this.studentProfile.bio,
+        phone: this.studentProfile.phone,
+        country: this.studentProfile.country,
+        learning_languages: this.studentProfile.learning_languages || [],
+        known_languages: this.studentProfile.known_languages || [],
+        preferred_learning_style: this.studentProfile.preferred_learning_style,
+        daily_study_time: this.studentProfile.daily_study_time,
+        learning_goals: this.studentProfile.learning_goals,
+        education_level: this.studentProfile.education_level,
+        occupation: this.studentProfile.occupation
+      };
+    },
+
+    editAvatar() {
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = 'image/*';
+
+      input.onchange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+          const formData = new FormData();
+          formData.append('avatar', file);
+
+          this.$inertia.post(route('student.profile.avatar'), formData, {
+            preserveScroll: true,
+            onSuccess: () => {
+              this.$inertia.reload();
+            }
+          });
+        }
+      };
+
+      input.click();
+    }
+  }
 };
 </script>
 
 <style>
+@import '@vueform/multiselect/themes/default.css';
+
 /* استایل‌های سفارشی برای افکت Glass Morphism */
 .backdrop-blur-lg {
-    backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
 }
 
 .bg-white\/30 {
-    background-color: rgba(255, 255, 255, 0.3);
+  background-color: rgba(255, 255, 255, 0.3);
 }
 
 .dark .bg-gray-800\/50 {
-    background-color: rgba(31, 41, 55, 0.5);
+  background-color: rgba(31, 41, 55, 0.5);
 }
 
 .border-white\/20 {
-    border-color: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* استایل‌های سفارشی برای Multiselect */
+.multiselect-tag {
+  @apply bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200;
+}
+
+.multiselect-tag-remove {
+  @apply text-red-800 dark:text-red-200 hover:bg-red-200 dark:hover:bg-red-800;
+}
+
+/* استایل‌های فرم */
+input, textarea, select {
+  @apply focus:ring-2 focus:ring-red-500 focus:border-red-500 dark:focus:ring-red-600 dark:focus:border-red-600;
 }
 </style>
