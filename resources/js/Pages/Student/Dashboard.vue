@@ -12,12 +12,15 @@
                         <div class="flex items-center gap-3">
                             <div class="text-center">
                                 <p class="text-sm opacity-80">سطح فعلی</p>
-                                <p class="text-xl font-bold">B1</p>
+                                <p class="text-xl font-bold">{{ userLevel }}</p>
                             </div>
                             <div class="h-10 w-px bg-white/30"></div>
                             <div class="text-center">
                                 <p class="text-sm opacity-80">امتیاز</p>
-                                <p class="text-xl font-bold">1,245</p>
+                                <p class="text-xl font-bold">
+                                  <!-- {{ progress.xp.toLocaleString() }} -->
+                                  0
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -26,10 +29,10 @@
                 <div class="mt-6">
                     <div class="flex items-center justify-between mb-2">
                         <span class="text-sm font-medium">پیشرفت هفتگی</span>
-                        <span class="text-sm">75% تکمیل شده</span>
+                        <span class="text-sm">{{ weeklyProgress }}% تکمیل شده</span>
                     </div>
                     <div class="w-full bg-white/20 rounded-full h-2.5">
-                        <div class="bg-white h-2.5 rounded-full" style="width: 75%"></div>
+                        <div class="bg-white h-2.5 rounded-full" :style="`width: ${weeklyProgress}%`"></div>
                     </div>
                 </div>
             </div>
@@ -39,7 +42,7 @@
                 <button
                     v-for="action in quickActions"
                     :key="action.title"
-                    @click="action.action"
+                    @click="handleAction(action)"
                     class="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow flex flex-col items-center text-center"
                 >
                     <div class="p-3 rounded-lg mb-2" :class="action.bgColor">
@@ -54,9 +57,9 @@
             <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm overflow-hidden">
                 <div class="border-b border-gray-100 dark:border-gray-700 px-6 py-4 flex items-center justify-between">
                     <h2 class="font-semibold text-lg text-gray-800 dark:text-gray-100">دوره‌های فعال</h2>
-                    <router-link to="/student/courses" class="text-sm text-indigo-600 dark:text-indigo-400 hover:underline">
+                    <Link href="/student/courses" class="text-sm text-indigo-600 dark:text-indigo-400 hover:underline">
                         مشاهده همه
-                    </router-link>
+                    </Link>
                 </div>
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
                     <div
@@ -83,12 +86,12 @@
                                         :class="{'text-gray-300 dark:text-gray-600': i > course.rating}"
                                     />
                                 </div>
-                                <router-link
-                                    :to="`/student/courses/${course.id}`"
+                                <Link
+                                    :href="`/student/courses/${course.id}`"
                                     class="text-indigo-600 dark:text-indigo-400 text-sm hover:underline"
                                 >
                                     ادامه یادگیری
-                                </router-link>
+                                </Link>
                             </div>
                         </div>
                     </div>
@@ -103,21 +106,24 @@
                         <h2 class="font-semibold text-lg text-gray-800 dark:text-gray-100">چالش روزانه</h2>
                         <div class="flex items-center text-sm text-indigo-600 dark:text-indigo-400">
                             <ClockIcon class="w-4 h-4 ml-1" />
-                            <span>15 دقیقه باقی مانده</span>
+                            <span>{{ dailyChallenge.timeLeft }}</span>
                         </div>
                     </div>
 
                     <div class="bg-gradient-to-r from-amber-50 to-amber-100 dark:from-amber-900/30 dark:to-amber-800/30 rounded-xl p-4 border border-amber-200 dark:border-amber-700/50">
                         <div class="flex items-start gap-3">
                             <div class="bg-amber-500/10 p-2 rounded-lg">
-                                <!-- <LightningBoltIcon class="w-6 h-6 text-amber-600 dark:text-amber-400" /> -->
+                                <Icon name="lightning-bolt" class="w-6 h-6 text-amber-600 dark:text-amber-400" />
                             </div>
                             <div>
-                                <h3 class="font-medium text-gray-800 dark:text-gray-100">10 کلمه جدید امروز</h3>
+                                <h3 class="font-medium text-gray-800 dark:text-gray-100">{{ dailyChallenge.title }}</h3>
                                 <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                                    این 10 کلمه را یاد بگیرید و 50 امتیاز کسب کنید!
+                                    {{ dailyChallenge.description }}
                                 </p>
-                                <button class="mt-3 bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                                <button
+                                    @click="startDailyChallenge"
+                                    class="mt-3 bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+                                >
                                     شروع چالش
                                 </button>
                             </div>
@@ -137,7 +143,7 @@
                                 </div>
                                 <span class="text-gray-700 dark:text-gray-300">کلمات یادگرفته شده</span>
                             </div>
-                            <span class="font-medium text-gray-700 dark:text-gray-100">428</span>
+                            <span class="font-medium text-gray-700 dark:text-gray-100">{{ learningStats.learnedWords.toLocaleString() }}</span>
                         </div>
 
                         <div class="flex items-center justify-between">
@@ -147,7 +153,7 @@
                                 </div>
                                 <span class="text-gray-700 dark:text-gray-300">روزهای فعال</span>
                             </div>
-                            <span class="font-medium text-gray-700 dark:text-gray-100">24</span>
+                            <span class="font-medium text-gray-700 dark:text-gray-100">{{ learningStats.activeDays }}</span>
                         </div>
 
                         <div class="flex items-center justify-between">
@@ -157,13 +163,13 @@
                                 </div>
                                 <span class="text-gray-700 dark:text-gray-300">زمان مطالعه</span>
                             </div>
-                            <span class="font-medium text-gray-700 dark:text-gray-100">18h 45m</span>
+                            <span class="font-medium text-gray-700 dark:text-gray-100">{{ learningStats.studyTime }}</span>
                         </div>
 
                         <div class="pt-4 border-t border-gray-100 dark:border-gray-700">
                             <div class="flex items-center justify-between">
                                 <span class="text-gray-700 dark:text-gray-300">رتبه شما</span>
-                                <span class="font-medium text-indigo-600 dark:text-indigo-400">#124 از 5,000</span>
+                                <span class="font-medium text-indigo-600 dark:text-indigo-400">#{{ learningStats.rank }} از {{ learningStats.totalUsers.toLocaleString() }}</span>
                             </div>
                         </div>
                     </div>
@@ -174,9 +180,9 @@
             <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm overflow-hidden">
                 <div class="border-b border-gray-100 dark:border-gray-700 px-6 py-4 flex items-center justify-between">
                     <h2 class="font-semibold text-lg text-gray-800 dark:text-gray-100">کلمات ذخیره شده اخیر</h2>
-                    <router-link to="/student/saved" class="text-sm text-indigo-600 dark:text-indigo-400 hover:underline">
+                    <Link href="/student/saved" class="text-sm text-indigo-600 dark:text-indigo-400 hover:underline">
                         مشاهده همه
-                    </router-link>
+                    </Link>
                 </div>
                 <div class="p-6">
                     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
@@ -187,14 +193,22 @@
                         >
                             <div class="flex items-center justify-between mb-2">
                                 <span class="font-medium text-gray-800 dark:text-gray-100">{{ word.word }}</span>
-                                <button class="text-gray-400 hover:text-red-500">
+                                <button
+                                    @click="unsaveWord(word.id)"
+                                    class="text-gray-400 hover:text-red-500"
+                                >
                                     <BookmarkIcon class="w-5 h-5 fill-current" />
                                 </button>
                             </div>
                             <p class="text-sm text-gray-500 dark:text-gray-400">{{ word.meaning }}</p>
                             <div class="mt-3 flex items-center justify-between">
                                 <span class="text-xs px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded">{{ word.level }}</span>
-                                <button class="text-xs text-indigo-600 dark:text-indigo-400 hover:underline">مثال‌ها</button>
+                                <button
+                                    @click="showWordExamples(word.id)"
+                                    class="text-xs text-indigo-600 dark:text-indigo-400 hover:underline"
+                                >
+                                    مثال‌ها
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -203,124 +217,68 @@
         </div>
     </StudentLayout>
 </template>
+
 <script setup>
+import { ref, computed } from 'vue';
+import { Link, usePage } from '@inertiajs/vue3';
 import {
     StarIcon,
     ClockIcon,
     CheckCircleIcon,
     CalendarIcon,
     BookmarkIcon
-} from '@heroicons/vue/24/outline'
+} from '@heroicons/vue/24/outline';
 import StudentLayout from "@/Layouts/StudentLayout.vue";
 
-// Quick Actions
-const quickActions = [
-    {
-        icon: 'play',
-        title: 'ادامه یادگیری',
-        subtitle: 'دوره فعلی خود را ادامه دهید',
-        bgColor: 'bg-indigo-500',
-        action: () => navigateTo('/student/continue-learning')
-    },
-    {
-        icon: 'plus-circle',
-        title: 'کلمه جدید',
-        subtitle: 'کلمه ای به دیکشنری اضافه کنید',
-        bgColor: 'bg-green-500',
-        action: () => openAddWordModal()
-    },
-    {
-        icon: 'microphone',
-        title: 'تمرین تلفظ',
-        subtitle: 'مهارت speaking خود را تقویت کنید',
-        bgColor: 'bg-amber-500',
-        action: () => startPronunciationPractice()
-    },
-    {
-        icon: 'book-open',
-        title: 'فلش کارت',
-        subtitle: 'کلمات را مرور کنید',
-        bgColor: 'bg-purple-500',
-        action: () => openFlashcards()
+const props = defineProps({
+    student: Object,
+    progress: Object,
+    quickActions: Array,
+    activeCourses: Array,
+    savedWords: Array,
+    dailyChallenge: Object,
+    learningStats: Object,
+    userLevel: String,
+});
+
+const weeklyProgress = computed(() => {
+    // این مقدار می‌تواند از سرور محاسبه شود
+    return Math.min(100, Math.floor((usePage().props.auth.user.weekly_study_minutes || 0) / 300 * 100));
+});
+
+const handleAction = (action) => {
+    switch(action.title) {
+        case 'ادامه یادگیری':
+            if (props.activeCourses.length > 0) {
+                window.location.href = `/student/courses/${props.activeCourses[0].id}`;
+            }
+            break;
+        case 'کلمه جدید':
+            // باز کردن مودال اضافه کردن کلمه جدید
+            break;
+        case 'تمرین تلفظ':
+            window.location.href = '/student/practice/pronunciation';
+            break;
+        case 'فلش کارت':
+            window.location.href = '/student/flashcards';
+            break;
     }
-]
+};
 
-// Active Courses
-const activeCourses = [
-    {
-        id: 1,
-        title: 'آموزش گرامر پیشرفته',
-        teacher: 'استاد محمدی',
-        image: 'https://images.unsplash.com/photo-1546410531-bb4caa6b424d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-        progress: 65,
-        rating: 4
-    },
-    {
-        id: 2,
-        title: 'مکالمه روزمره',
-        teacher: 'استاد رضایی',
-        image: 'https://images.unsplash.com/photo-1541178735493-479c1a27ed24?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-        progress: 30,
-        rating: 5
-    },
-    {
-        id: 3,
-        title: 'آموزش لغات تجاری',
-        teacher: 'استاد کریمی',
-        image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-        progress: 85,
-        rating: 4
-    }
-]
+const startDailyChallenge = () => {
+    window.location.href = '/student/daily-challenge';
+};
 
-// Saved Words
-const savedWords = [
-    {
-        id: 1,
-        word: 'Perseverance',
-        meaning: 'پشتکار، استقامت',
-        level: 'Advanced'
-    },
-    {
-        id: 2,
-        word: 'Eloquent',
-        meaning: 'فصیح، بلیغ',
-        level: 'Intermediate'
-    },
-    {
-        id: 3,
-        word: 'Ubiquitous',
-        meaning: 'همه جا حاضر',
-        level: 'Advanced'
-    },
-    {
-        id: 4,
-        word: 'Pragmatic',
-        meaning: 'عملگرا',
-        level: 'Intermediate'
-    },
-    {
-        id: 5,
-        word: 'Ephemeral',
-        meaning: 'زودگذر',
-        level: 'Advanced'
-    }
-]
+const unsaveWord = (wordId) => {
+    // ارسال درخواست به سرور برای حذف کلمه از ذخیره شده‌ها
+    axios.delete(`/student/saved-words/${wordId}`)
+        .then(() => {
+            // به روزرسانی لیست کلمات
+            window.location.reload();
+        });
+};
 
-// Methods
-const navigateTo = (path) => {
-    // Navigation logic
-}
-
-const openAddWordModal = () => {
-    // Open modal logic
-}
-
-const startPronunciationPractice = () => {
-    // Start practice logic
-}
-
-const openFlashcards = () => {
-    // Open flashcards logic
-}
+const showWordExamples = (wordId) => {
+    // باز کردن مودال مثال‌های کلمه
+};
 </script>
