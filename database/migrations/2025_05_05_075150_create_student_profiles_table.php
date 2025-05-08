@@ -19,13 +19,13 @@ return new class extends Migration
             $table->date('birth_date')->nullable();
             $table->string('country')->nullable();
             $table->string('timezone')->nullable();
-            $table->json('learning_languages')->nullable(); // زبان‌هایی که می‌خواهد یاد بگیرد
-            $table->json('known_languages')->nullable(); // زبان‌هایی که بلد است
+            $table->json('learning_languages')->nullable();
+            $table->json('known_languages')->nullable();
             $table->string('education_level')->nullable();
             $table->string('occupation')->nullable();
             $table->text('learning_goals')->nullable();
             $table->string('preferred_learning_style')->nullable();
-            $table->integer('daily_study_time')->nullable(); // دقیقه
+            $table->integer('daily_study_time')->nullable();
             $table->timestamps();
         });
     }
