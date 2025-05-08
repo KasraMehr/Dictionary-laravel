@@ -34,27 +34,19 @@ const navItems = [
     { icon: HomeIcon, label: 'داشبورد', to: '/student/dashboard' },
     { icon: AcademicCapIcon, label: 'دوره‌های من', to: '/student/courses', badge: 3 },
     { icon: BookOpenIcon, label: 'آزمون ها', to: '/student/quizzes' },
-    { icon: ChartBarIcon, label: 'پیشرفت', to: '/student/progress' },
     { icon: UserIcon, label: 'پروفایل', to: '/student/profile' }
 ]
 
 const mobileNavItems = [
     { icon: HomeIcon, label: 'خانه', to: '/student/dashboard' },
     { icon: AcademicCapIcon, label: 'دوره‌ها', to: '/student/courses' },
-    { icon: BookOpenIcon, label: 'مطالعه', to: '/student/study' },
-    { icon: ChartBarIcon, label: 'پیشرفت', to: '/student/progress' }
+    { icon: BookOpenIcon, label: 'آزمون ها', to: '/student/quizzes' },
 ]
 
 // Sample data
 const userLevel = ref('متوسط')
 const dailyProgress = ref(65)
 const streakDays = ref(7)
-const activeCourse = ref({
-    title: 'آموزش زبان انگلیسی پیشرفته',
-    image: 'https://source.unsplash.com/random/200x200/?english',
-    progress: 45,
-    timeLeft: 14
-})
 
 const { locale } = useI18n()
 const languages = [
@@ -100,7 +92,7 @@ const openFlashcards = () => {
 <template>
     <Head title="پنل زبان آموز" />
 
-    <div class="flex min-h-screen bg-gray-50 dark:bg-gray-900" :dir="locale === 'en' ? 'ltr' : 'rtl'">
+    <div class="flex min-h-screen bg-gray-200 dark:bg-gray-900" :dir="locale === 'en' ? 'ltr' : 'rtl'">
         <!-- Desktop Sidebar -->
         <aside :class="[
             'hidden fixed md:flex flex-col h-screen bg-white dark:bg-gray-800 border-l border-gray-200 dark:border-gray-700 transition-all duration-300 ease-in-out',
@@ -196,30 +188,6 @@ const openFlashcards = () => {
                     </template>
                 </NavItem>
             </nav>
-
-            <!-- Current Course -->
-            <div v-if="!miniMode" class="p-4 border-t border-gray-200 dark:border-gray-700">
-                <h3 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 flex items-center">
-                    <BookmarkIcon class="w-4 h-4 ml-1 text-red-500" />
-                    دوره جاری:
-                </h3>
-                <div class="flex items-center gap-3 p-3 bg-white dark:bg-gray-700 rounded-lg shadow-sm hover:shadow-md transition-shadow">
-                    <div class="flex-shrink-0">
-                        <img :src="activeCourse.image" class="w-10 h-10 rounded-lg object-cover" />
-                    </div>
-                    <div class="flex-1 min-w-0">
-                        <p class="text-sm font-medium text-gray-800 dark:text-gray-100 truncate">{{ activeCourse.title }}</p>
-                        <div class="flex items-center justify-between mt-1">
-                            <span class="text-xs text-gray-500 dark:text-gray-400">{{ activeCourse.progress }}% تکمیل</span>
-                            <span class="text-xs font-medium text-red-500">{{ activeCourse.timeLeft }} روز</span>
-                        </div>
-                        <div class="w-full bg-gray-200 dark:bg-gray-600 rounded-full h-1.5 mt-2">
-                            <div class="bg-gradient-to-r from-red-500 to-amber-500 h-1.5 rounded-full"
-                                 :style="`width: ${activeCourse.progress}%`"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
             <!-- Footer -->
             <div class="p-4 border-t border-gray-200 dark:border-gray-700">
