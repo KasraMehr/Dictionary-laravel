@@ -9,10 +9,6 @@
     },
     "disks": [
         {
-            "name": "public",
-            "mountTo": "public"
-        },
-        {
             "name": "storage",
             "mountTo": "storage"
         }
