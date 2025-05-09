@@ -28,7 +28,6 @@ import MobileNavItem from '@/Components/MobileNavItem.vue'
 // State
 const miniMode = ref(false)
 const isMobileMenuOpen = ref(false)
-const isDarkMode = ref(localStorage.getItem('theme') === 'dark')
 
 // Navigation Items
 const navItems = [
@@ -63,12 +62,6 @@ const currentLanguage = computed(() => {
 // Methods
 const toggleMiniMode = () => {
     miniMode.value = !miniMode.value
-}
-
-const toggleTheme = () => {
-    isDarkMode.value = !isDarkMode.value
-    localStorage.setItem('theme', isDarkMode.value ? 'dark' : 'light')
-    document.documentElement.classList.toggle('dark', isDarkMode.value)
 }
 
 const setLanguage = (lang) => {
@@ -241,37 +234,20 @@ const openFlashcards = () => {
                     </div>
 
                     <!-- Theme Toggle -->
-                    <button
-                        @click="toggleTheme"
-                        class="p-2 mx-4 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300"
-                        :title="isDarkMode ? 'تم روشن' : 'تم تاریک'"
-                    >
-                        <MoonIcon v-if="isDarkMode" class="w-5 h-5" />
-                        <SunIcon v-else class="w-5 h-5 text-amber-500" />
+                    <button @click="toggleTheme" class="p-2 rounded-full bg-white dark:bg-gray-700">
+                        <svg v-if="isDarkMode" class="w-6 h-6 text-gray-800 dark:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <circle cx="12" cy="12" r="4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></circle>
+                            <path stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                  d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+                        </svg>
+                        <svg v-else class="w-6 h-6 text-gray-800 dark:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
+                        </svg>
                     </button>
                 </div>
             </div>
         </aside>
-
-        <!-- Mobile Bottom Navigation -->
-        <div class="md:hidden fixed bottom-0 inset-x-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 z-50 shadow-lg">
-            <div class="flex justify-around py-2">
-                <MobileNavItem
-                    v-for="item in mobileNavItems"
-                    :key="item.to"
-                    :icon="item.icon"
-                    :label="item.label"
-                    :to="item.to"
-                    :active="$page.url.startsWith(item.to)"
-                    :class="[
-                        'flex-1 flex-col items-center p-2',
-                        $page.url.startsWith(item.to) ?
-                            'text-red-500' :
-                            'text-gray-500 dark:text-gray-400'
-                    ]"
-                />
-            </div>
-        </div>
 
         <!-- Main Content -->
         <main :class="[
@@ -336,17 +312,16 @@ const openFlashcards = () => {
                     <div class="p-4 border-t border-gray-200 dark:border-gray-700">
                         <div class="flex items-center justify-between mb-4">
                             <span class="text-sm text-gray-600 dark:text-gray-300">تم</span>
-                            <button
-                                @click="toggleTheme"
-                                class="relative w-12 h-6 rounded-full bg-gray-200 dark:bg-gray-700 transition-colors"
-                            >
-                                <span
-                                    class="absolute top-1 left-1 w-4 h-4 bg-white rounded-full shadow transform transition-transform"
-                                    :class="isDarkMode ? 'translate-x-6' : 'translate-x-0'"
-                                >
-                                    <MoonIcon v-if="isDarkMode" class="w-3 h-3 text-gray-800 absolute inset-0 m-auto" />
-                                    <SunIcon v-else class="w-3 h-3 text-amber-500 absolute inset-0 m-auto" />
-                                </span>
+                            <button @click="toggleTheme" class="p-2 rounded-full bg-white dark:bg-gray-700">
+                                <svg v-if="isDarkMode" class="w-6 h-6 text-gray-800 dark:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <circle cx="12" cy="12" r="4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></circle>
+                                    <path stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                          d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+                                </svg>
+                                <svg v-else class="w-6 h-6 text-gray-800 dark:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
+                                </svg>
                             </button>
                         </div>
 
@@ -355,7 +330,7 @@ const openFlashcards = () => {
                             <select
                                 v-model="locale"
                                 @change="setLanguage($event.target.value)"
-                                class="w-full text-sm bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-red-500"
+                                class="w-full text-sm bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-1 focus:ring-red-500"
                             >
                                 <option v-for="lang in languages" :key="lang.code" :value="lang.code">
                                     {{ lang.label }}
@@ -382,6 +357,39 @@ const openFlashcards = () => {
         </main>
     </div>
 </template>
+
+<script>
+export default {
+    data() {
+        return {
+            isDarkMode: false,
+        };
+    },
+    mounted() {
+        this.isDarkMode = localStorage.getItem('theme') === 'dark';
+        this.applyTheme();
+        document.documentElement.lang = this.$i18n.locale;
+    },
+    methods: {
+        applyTheme() {
+            if (this.isDarkMode) {
+                document.documentElement.classList.add('dark');
+                document.documentElement.classList.remove('light');
+            } else {
+                document.documentElement.classList.add('light');
+                document.documentElement.classList.remove('dark');
+            }
+        },
+        toggleTheme() {
+            this.isDarkMode = !this.isDarkMode;
+            localStorage.setItem('theme', this.isDarkMode ? 'dark' : 'light');
+            this.applyTheme();
+            console.log(localStorage.getItem('theme'));
+
+        }
+    },
+};
+</script>
 
 <style>
 /* Smooth transitions */
