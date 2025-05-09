@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('student_progress', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('language_id')->constrained(); // جدول languages باید ایجاد شود
             $table->integer('level')->default(1); // سطح فعلی
             $table->integer('xp')->default(0); // امتیاز تجربه
             $table->integer('lessons_completed')->default(0);
