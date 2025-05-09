@@ -22,6 +22,7 @@ import { useI18n } from 'vue-i18n'
 
 // Components
 import NavItem from '@/Components/NavItem.vue'
+import DropdownLink from '@/Components/DropdownLink.vue';
 import MobileNavItem from '@/Components/MobileNavItem.vue'
 
 // State
@@ -34,7 +35,6 @@ const navItems = [
     { icon: HomeIcon, label: 'داشبورد', to: '/student/dashboard' },
     { icon: AcademicCapIcon, label: 'دوره‌های من', to: '/student/courses', badge: 3 },
     { icon: BookOpenIcon, label: 'آزمون ها', to: '/student/quizzes' },
-    { icon: UserIcon, label: 'پروفایل', to: '/student/profile' }
 ]
 
 const mobileNavItems = [
@@ -114,18 +114,53 @@ const openFlashcards = () => {
 
             <!-- User Profile -->
             <div class="p-4 border-b border-gray-200 dark:border-gray-700">
-                <div class="flex items-center gap-3">
-                    <Link :href="route('student.profile')" class="relative">
-                        <img class="w-12 h-12 rounded-full object-cover border-2 border-white dark:border-gray-700 shadow"
-                             :src="$page.props.auth.user.profile_photo_url"
-                             :alt="$page.props.auth.user.name">
-                        <span class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white dark:border-gray-800"></span>
-                    </Link>
-                    <div v-if="!miniMode" class="flex-1 overflow-hidden">
-                        <p class="font-medium text-gray-800 dark:text-gray-100 truncate">{{ $page.props.auth.user.name }}</p>
-                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">سطح: {{ userLevel }}</p>
-                    </div>
-                </div>
+              <button class="flex items-center gap-3 group relative">
+                  <Link :href="route('student.profile')" class="relative">
+                      <img class="w-12 h-12 rounded-full object-cover border-2 border-white dark:border-gray-700 shadow"
+                           :src="$page.props.auth.user.profile_photo_url"
+                           :alt="$page.props.auth.user.name">
+                      <span class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white dark:border-gray-800"></span>
+                  </Link>
+                  <div v-if="!miniMode" class="flex-1 overflow-hidden">
+                      <p class="font-medium text-gray-800 dark:text-gray-100 truncate">{{ $page.props.auth.user.name }}</p>
+                      <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">سطح: {{ userLevel }}</p>
+                  </div>
+                  <svg v-if="!miniMode" class="size-4 text-gray-500 dark:text-gray-400 transform group-hover:rotate-180 transition-transform"
+                       xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                  </svg>
+
+                  <!-- Dropdown Content -->
+                  <div v-if="!miniMode" class="absolute z-10 top-full right-0 w-72 origin-top-right rounded-md bg-white dark:bg-gray-800 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform group-hover:translate-y-0 translate-y-1">
+                      <div class="py-1">
+                          <!-- Profile Section -->
+                          <div class="px-4 py-3 border-b border-gray-100 dark:border-gray-700 flex justify-between">
+                              <p class="text-sm text-gray-900 dark:text-white font-medium">{{ $page.props.auth.user.name }}</p>
+                              <p class="text-xs text-gray-500 dark:text-gray-400 truncate">{{ $page.props.auth.user.email }}</p>
+                          </div>
+
+                          <!-- Navigation Links -->
+                          <DropdownLink :href="route('student.profile')" class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
+                              <span class="flex items-center gap-1">
+                                  <svg class="size-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                  </svg>
+                                  {{ $t('profile') }}
+                              </span>
+                          </DropdownLink>
+
+                          <!-- Logout Button -->
+                          <form @submit.prevent="logout" class="border-t border-gray-100 dark:border-gray-700">
+                              <button type="submit" class="flex items-center w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-gray-700">
+                                  <svg class="mx-3 size-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                                  </svg>
+                                  {{ $t('logout') }}
+                              </button>
+                          </form>
+                      </div>
+                  </div>
+              </button>
 
                 <!-- Progress -->
                 <div v-if="!miniMode" class="mt-4 space-y-3">
@@ -213,16 +248,6 @@ const openFlashcards = () => {
                     >
                         <MoonIcon v-if="isDarkMode" class="w-5 h-5" />
                         <SunIcon v-else class="w-5 h-5 text-amber-500" />
-                    </button>
-
-                    <!-- Logout -->
-                    <button
-                        @click="logout"
-                        class="p-2 rounded-lg flex hover:bg-gray-100 dark:hover:bg-gray-700 text-red-600"
-                        :title="miniMode ? 'خروج' : ''"
-                    >
-                        <ArrowLeftOnRectangleIcon class="w-5 h-5" />
-                        <span v-if="!miniMode" class="text-sm mx-2">خروج</span>
                     </button>
                 </div>
             </div>
