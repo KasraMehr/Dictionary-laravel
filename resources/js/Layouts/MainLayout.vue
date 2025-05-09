@@ -108,9 +108,6 @@ const setLanguage = (lang) => {
                                     <NavLink :href="route('learn')" :active="route().current('learn')" class="text-black dark:text-white">
                                         {{ $t('learn') }}
                                     </NavLink>
-                                    <NavLink :href="route('DailyTest')" :active="route().current('DailyTest')" class="text-black dark:text-white">
-                                        {{ $t('quiz') }}
-                                    </NavLink>
                                 </div>
                             </div>
                         </div>
