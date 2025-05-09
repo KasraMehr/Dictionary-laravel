@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Teacher;
 
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use App\Models\Course;
+use App\Models\Quiz;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,9 +18,193 @@ class CourseController extends Controller
 {
 
   public function dashboard()
-  {
-    return Inertia::render('Teacher/Dashboard');
-  }
+    {
+        /** @var User $teacher */
+        $teacher = auth()->user();
+
+        // اگر کاربر پروفایل معلم ندارد، یک پروفایل خالی ایجاد می‌کنیم
+        if (!$teacher->teacher) {
+            $teacher->teacher()->create([]);
+            $teacher->refresh();
+        }
+
+        // آمار کلی
+        $stats = [
+            'courses' => $teacher->courses()->count(),
+            'activeStudents' => $teacher->students()->count(),
+        ];
+
+        // آخرین دوره‌ها
+        $latestCourses = $teacher->courses()
+            ->select('courses.*')
+            ->withCount(['users as student_count'])
+            ->with(['users' => function($query) {
+                $query->select('course_user.progress')
+                    ->where('user_id', auth()->id());
+            }])
+            ->latest()
+            ->take(3)
+            ->get()
+            ->map(function($course) {
+                return [
+                    'id' => $course->id,
+                    'name' => $course->title,
+                    'students' => $course->student_count,
+                    'progress' => $course->users->first()->pivot->progress ?? 0,
+                ];
+            });
+
+        // دانشجویان آنلاین
+        $onlineStudents = $teacher->students()
+            ->where('last_activity_at', '>=', Carbon::now()->subMinutes(15))
+            ->with(['courses' => function($query) use ($teacher) {
+                $query->whereIn('courses.id', $teacher->courses()->pluck('id'))
+                    ->orderBy('course_user.last_accessed_at', 'desc')
+                    ->limit(1);
+            }])
+            ->select('users.*')
+            ->take(4)
+            ->get()
+            ->map(function($student) {
+                return [
+                    'id' => $student->id,
+                    'name' => $student->name,
+                    'avatar' => $student->profile_photo_url,
+                    'course' => $student->courses->first()->title ?? 'بدون دوره',
+                    'lastActivity' => $student->last_activity_at
+                        ? Carbon::parse($student->last_activity_at)->diffForHumans()
+                        : 'عدم فعالیت',
+                ];
+            });
+
+        // داده‌های نمودارها
+        // $activityData = $this->getActivityData($teacher);
+        // $performanceData = $this->getPerformanceData($teacher);
+
+        return Inertia::render('Teacher/Dashboard', [
+            'stats' => $stats,
+            'latestCourses' => $latestCourses,
+            'onlineStudents' => $onlineStudents,
+            // 'activityData' => $activityData,
+            // 'performanceData' => $performanceData,
+            'teacherProfile' => $teacher->teacher,
+        ]);
+    }
+
+    // protected function getActivityData(User $teacher)
+    // {
+    //     // داده‌های واقعی فعالیت دانشجویان در 6 ماه اخیر
+    //     $activity = $teacher->students()
+    //         ->selectRaw('strftime("%m", last_activity_at) as month, count(*) as count')
+    //         ->where('last_activity_at', '>=', Carbon::now()->subMonths(6))
+    //         ->groupBy('month')
+    //         ->orderBy('month')
+    //         ->pluck('count')
+    //         ->toArray();
+    //
+    //     return [
+    //         'labels' => $this->getPersianMonthNames(6),
+    //         'datasets' => [
+    //             [
+    //                 'label' => 'فعالیت دانشجویان',
+    //                 'data' => $activity,
+    //                 'backgroundColor' => 'rgba(99, 102, 241, 0.2)',
+    //                 'borderColor' => 'rgba(99, 102, 241, 1)',
+    //                 'borderWidth' => 2,
+    //                 'tension' => 0.3,
+    //                 'fill' => true
+    //             ]
+    //         ]
+    //     ];
+    // }
+
+    // protected function getPerformanceData(User $teacher)
+    // {
+    //     $courses = $teacher->courses()
+    //         ->with(['quizzes' => function($query) {
+    //             $query->select('course_id')
+    //                 ->selectRaw('AVG(user_quiz_attempts.score) as avg_score')
+    //                 ->join('user_quiz_attempts', 'quizzes.id', '=', 'user_quiz_attempts.quiz_id')
+    //                 ->groupBy('course_id');
+    //         }])
+    //         ->select('courses.id', 'courses.title')
+    //         ->get();
+    //
+    //     return [
+    //         'labels' => $courses->pluck('title')->toArray(),
+    //         'datasets' => [
+    //             [
+    //                 'label' => 'میانگین نمرات',
+    //                 'data' => $courses->map(function($course) {
+    //                     return $course->quizzes->isNotEmpty()
+    //                         ? round($course->quizzes->first()->avg_score, 2)
+    //                         : 0;
+    //                 }),
+    //                 'backgroundColor' => [
+    //                     'rgba(99, 102, 241, 0.7)',
+    //                     'rgba(59, 130, 246, 0.7)',
+    //                     'rgba(168, 85, 247, 0.7)',
+    //                     'rgba(16, 185, 129, 0.7)',
+    //                     'rgba(245, 158, 11, 0.7)'
+    //                 ],
+    //                 'borderWidth' => 1
+    //             ]
+    //         ]
+    //     ];
+    // }
+
+    protected function getPersianMonthNames($count)
+    {
+        $months = [
+            'فروردین', 'اردیبهشت', 'خرداد',
+            'تیر', 'مرداد', 'شهریور',
+            'مهر', 'آبان', 'آذر',
+            'دی', 'بهمن', 'اسفند'
+        ];
+
+        $currentMonth = (int)date('m') - 1;
+        $result = [];
+
+        for ($i = 0; $i < $count; $i++) {
+            $index = ($currentMonth - $i + 12) % 12;
+            $result[] = $months[$index];
+        }
+
+        return array_reverse($result);
+    }
+
+    public function getActivityDataByRange(Request $request)
+    {
+        $range = $request->input('range', '3m');
+        $teacher = auth()->user();
+
+        $query = $teacher->students()
+            ->selectRaw('strftime("%m", last_activity_at) as month, count(*) as count');
+
+        switch ($range) {
+            case '6m':
+                $query->where('last_activity_at', '>=', Carbon::now()->subMonths(6));
+                $labels = $this->getPersianMonthNames(6);
+                break;
+            case '1y':
+                $query->where('last_activity_at', '>=', Carbon::now()->subYear());
+                $labels = $this->getPersianMonthNames(12);
+                break;
+            default: // 3m
+                $query->where('last_activity_at', '>=', Carbon::now()->subMonths(3));
+                $labels = $this->getPersianMonthNames(3);
+        }
+
+        $data = $query->groupBy('month')
+            ->orderBy('month')
+            ->pluck('count')
+            ->toArray();
+
+        return response()->json([
+            'data' => $data,
+            'labels' => $labels
+        ]);
+    }
 
     public function profile()
     {
