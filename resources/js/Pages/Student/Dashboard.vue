@@ -2,7 +2,7 @@
     <StudentLayout title="Dashboard">
         <div class="space-y-6">
             <!-- Welcome Header with Progress -->
-            <div class="bg-gradient-to-r from-indigo-500 to-purple-600 rounded-2xl p-6 shadow-lg text-white">
+            <div class="bg-gradient-to-r from-red-500 to-orange-600 rounded-2xl p-6 shadow-lg text-white">
                 <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                     <div>
                         <h1 class="text-2xl font-bold">سلام، {{ $page.props.auth.user.name }}! 👋</h1>
@@ -57,7 +57,7 @@
             <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm overflow-hidden">
                 <div class="border-b border-gray-100 dark:border-gray-700 px-6 py-4 flex items-center justify-between">
                     <h2 class="font-semibold text-lg text-gray-800 dark:text-gray-100">دوره‌های فعال</h2>
-                    <Link href="/student/courses" class="text-sm text-indigo-600 dark:text-indigo-400 hover:underline">
+                    <Link href="/student/courses" class="text-sm text-red-600 dark:text-red-400 hover:underline">
                         مشاهده همه
                     </Link>
                 </div>
@@ -69,7 +69,7 @@
                     >
                         <div class="relative">
                             <img :src="course.image" class="w-full h-40 object-cover" />
-                            <div class="absolute bottom-3 left-3 bg-indigo-600 text-white text-xs px-2 py-1 rounded">
+                            <div class="absolute bottom-3 left-3 bg-red-600 text-white text-xs px-2 py-1 rounded">
                                 {{ course.progress }}% تکمیل شده
                             </div>
                         </div>
@@ -88,7 +88,7 @@
                                 </div>
                                 <Link
                                     :href="`/student/courses/${course.id}`"
-                                    class="text-indigo-600 dark:text-indigo-400 text-sm hover:underline"
+                                    class="text-red-600 dark:text-red-400 text-sm hover:underline"
                                 >
                                     ادامه یادگیری
                                 </Link>
@@ -104,7 +104,7 @@
                 <div class="md:col-span-2 bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-6">
                     <div class="flex items-center justify-between mb-4">
                         <h2 class="font-semibold text-lg text-gray-800 dark:text-gray-100">چالش روزانه</h2>
-                        <div class="flex items-center text-sm text-indigo-600 dark:text-indigo-400">
+                        <div class="flex items-center text-sm text-red-600 dark:text-red-400">
                             <ClockIcon class="w-4 h-4 ml-1" />
                             <span>{{ dailyChallenge.timeLeft }}</span>
                         </div>
@@ -169,7 +169,7 @@
                         <div class="pt-4 border-t border-gray-100 dark:border-gray-700">
                             <div class="flex items-center justify-between">
                                 <span class="text-gray-700 dark:text-gray-300">رتبه شما</span>
-                                <span class="font-medium text-indigo-600 dark:text-indigo-400">#{{ learningStats.rank }} از {{ learningStats.totalUsers.toLocaleString() }}</span>
+                                <span class="font-medium text-red-600 dark:text-red-400">#{{ learningStats.rank }} از {{ learningStats.totalUsers.toLocaleString() }}</span>
                             </div>
                         </div>
                     </div>
@@ -180,7 +180,7 @@
             <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm overflow-hidden">
                 <div class="border-b border-gray-100 dark:border-gray-700 px-6 py-4 flex items-center justify-between">
                     <h2 class="font-semibold text-lg text-gray-800 dark:text-gray-100">کلمات ذخیره شده اخیر</h2>
-                    <Link href="/student/saved" class="text-sm text-indigo-600 dark:text-indigo-400 hover:underline">
+                    <Link href="/student/saved" class="text-sm text-red-600 dark:text-red-400 hover:underline">
                         مشاهده همه
                     </Link>
                 </div>
@@ -205,7 +205,7 @@
                                 <span class="text-xs px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded">{{ word.level }}</span>
                                 <button
                                     @click="showWordExamples(word.id)"
-                                    class="text-xs text-indigo-600 dark:text-indigo-400 hover:underline"
+                                    class="text-xs text-red-600 dark:text-red-400 hover:underline"
                                 >
                                     مثال‌ها
                                 </button>
