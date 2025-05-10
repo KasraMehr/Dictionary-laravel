@@ -144,7 +144,7 @@ const mockQuizzes = [
             <div
               v-for="(option, index) in currentQuestion.options"
               :key="index"
-              @click="selectAnswer(option)"
+              @click="selectAnswer(index)"
               class="p-4 rounded-lg cursor-pointer transition-all border border-white/50 dark:border-gray-700/50 hover:border-red-600/30 hover:bg-red-600/5"
               :class="{
                 'bg-red-600/10 border-red-600/30': selectedAnswer === option,
@@ -447,7 +447,7 @@ import {     ArrowLeftIcon,
       },
 
       selectAnswer(answer) {
-        this.selectedAnswer = answer
+        this.selectedAnswer = answer.toString();
       },
 
       nextQuestion() {
