@@ -22,9 +22,7 @@ const form = useForm({
     role: 'student',
     terms: false,
 });
-
-const recaptchaLoaded = ref(false);
-
+ref(false);
 const submit = () => {
     form.post(route('register'), {
         onFinish: () => {
@@ -212,7 +210,7 @@ const submit = () => {
                             </div>
 
                             <div class="mt-6 grid grid-cols-1 gap-3">
-                                <a href="/auth/google" class="w-full inline-flex justify-center items-center py-2 px-4 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm bg-white dark:bg-gray-700 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 transition duration-300">
+                                <a :href="'/auth/google?role=' + form.role" class="w-full inline-flex justify-center items-center py-2 px-4 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm bg-white dark:bg-gray-700 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 transition duration-300">
                                     <svg class="w-5 h-5 ml-2" fill="currentColor" viewBox="0 0 24 24">
                                         <path d="M12.545 10.239v3.821h5.445c-0.712 2.315-2.647 3.972-5.445 3.972-3.332 0-6.033-2.701-6.033-6.032s2.701-6.032 6.033-6.032c1.498 0 2.866 0.549 3.921 1.453l2.814-2.814c-1.784-1.667-4.146-2.634-6.735-2.634-5.523 0-10 4.477-10 10s4.477 10 10 10c8.396 0 10-7.524 10-10 0-0.67-0.069-1.325-0.189-1.955h-9.811z" />
                                     </svg>
