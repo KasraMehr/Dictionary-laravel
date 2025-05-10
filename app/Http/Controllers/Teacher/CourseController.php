@@ -56,10 +56,10 @@ class CourseController extends Controller
 
         // دانشجویان آنلاین
         $onlineStudents = $teacher->students()
-            ->where('last_activity_at', '>=', Carbon::now()->subMinutes(15))
+            // ->where('last_activity_at', '>=', Carbon::now()->subMinutes(15))
             ->with(['courses' => function($query) use ($teacher) {
                 $query->whereIn('courses.id', $teacher->courses()->pluck('id'))
-                    ->orderBy('course_user.last_accessed_at', 'desc')
+                    // ->orderBy('course_user.last_accessed_at', 'desc')
                     ->limit(1);
             }])
             ->select('users.*')
@@ -71,9 +71,9 @@ class CourseController extends Controller
                     'name' => $student->name,
                     'avatar' => $student->profile_photo_url,
                     'course' => $student->courses->first()->title ?? 'بدون دوره',
-                    'lastActivity' => $student->last_activity_at
-                        ? Carbon::parse($student->last_activity_at)->diffForHumans()
-                        : 'عدم فعالیت',
+                    // 'lastActivity' => $student->last_activity_at
+                        // ? Carbon::parse($student->last_activity_at)->diffForHumans()
+                        // : 'عدم فعالیت',
                 ];
             });
 
