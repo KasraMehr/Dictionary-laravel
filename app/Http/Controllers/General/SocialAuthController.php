@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\General;
 
 use App\Http\Controllers\Controller;
+use App\Models\StudentProfile;
+use App\Models\Teacher;
 use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
@@ -11,31 +13,59 @@ use Illuminate\Support\Str;
 
 class SocialAuthController extends Controller
 {
-  public function redirectToGoogle()
-  {
-      return Socialite::driver('google')->redirect();
-  }
+    public function redirectToGoogle()
+    {
+        return Socialite::driver('google')->redirect();
+    }
 
-  public function handleGoogleCallback()
-  {
-      $googleUser = Socialite::driver('google')->stateless()->user();
+    public function handleGoogleCallback(Request $request)
+    {
+        $googleUser = Socialite::driver('google')->stateless()->user();
 
-      $user = User::firstOrCreate(
-          ['email' => $googleUser->getEmail()],
-          [
-              'name' => $googleUser->getName(),
-              'password' => bcrypt(Str::random(16)), // رمز عبور تصادفی برای حساب گوگل
-              'role' => 'student', // می‌توانید نقش پیش‌فرض را تعیین کنید
-          ]
-      );
+        $role = $request->input('role', 'student');
 
-      Auth::login($user);
+        // ایجاد یا به‌روزرسانی کاربر
+        $user = User::updateOrCreate(
+            ['email' => $googleUser->getEmail()],
+            [
+                'name' => $googleUser->getName(),
+                'password' => bcrypt(Str::random(16)),
+                'role' => $role,
+                'profile_photo_path' => $googleUser->getAvatar(),
+                'email_verified_at' => now(),
+            ]
+        );
 
-      return redirect()->intended(match(auth()->user()->role) {
-          'translator' => route('translator.dashboard'),
-          'teacher' => route('teacher.dashboard'),
-          'student' => route('student.dashboard'),
-          default => '/landing'
-      });
-  }
+        // ایجاد پروفایل بر اساس نقش
+        if ($role === 'teacher') {
+            $this->createTeacherProfile($user);
+        } else {
+            $this->createStudentProfile($user);
+        }
+
+        Auth::login($user);
+
+        return redirect()->intended(
+            $role === 'teacher' ? route('teacher.dashboard') : route('student.dashboard')
+        );
+    }
+
+    private function createTeacherProfile(User $user)
+    {
+        Teacher::updateOrCreate(
+            ['user_id' => $user->id],
+            [
+                'title' => 'استاد جدید',
+                'bio' => null,
+                'profile_photo_path' => $user->profile_photo_path,
+            ]
+        );
+    }
+
+    private function createStudentProfile(User $user)
+    {
+        StudentProfile::updateOrCreate(
+            ['user_id' => $user->id],
+        );
+    }
 }
