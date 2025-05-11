@@ -185,7 +185,7 @@ const setDefaultImage = (event) => {
                                 <ul class="space-y-2">
                                     <li v-for="(synonym, index) in synonyms" :key="index"
                                         class="group">
-                                        <Link :href="`/word/${synonym.native_lang}-${synonym.translated_lang}/${synonym.id}`"
+                                        <Link :href="`/word/${synonym.native_lang}-${synonym.translated_lang}/${synonym.word}`"
                                               class="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
                                             <div>
                                                 <span class="font-medium text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400">{{ synonym.word }}</span>
@@ -219,7 +219,7 @@ const setDefaultImage = (event) => {
                                 <ul class="space-y-2">
                                     <li v-for="(dailyWord, index) in dailyWords" :key="index"
                                         class="group">
-                                        <Link :href="`/word/${dailyWord.native_lang}-${dailyWord.translated_lang}/${dailyWord.slug}`"
+                                        <Link :href="`/word/${dailyWord.native_lang}-${dailyWord.translated_lang}/${dailyWord.word}`"
                                               class="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
                                             <span class="font-medium text-gray-900 dark:text-white group-hover:text-green-600 dark:group-hover:text-green-400">{{ dailyWord.word }}</span>
                                             <button @click.stop="addToFavorites(dailyWord)"
