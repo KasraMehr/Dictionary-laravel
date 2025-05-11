@@ -327,19 +327,19 @@ const setLanguage = (lang) => {
                     <div class="space-y-4">
                         <div>
                             <a :href="route('library')" class="cursor-pointer text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors duration-300 flex items-center group">
-                                <span class="w-1.5 h-1.5 bg-gray-400 rounded-full mx-2 group-hover:bg-blue-500 transition-all duration-300"></span>
+                                <span class="w-1.5 h-1.5 bg-gray-400 rounded-full mx-2 group-hover:bg-red-500 transition-all duration-300"></span>
                                 {{ $t('library') }}
                             </a>
                         </div>
                         <div>
                             <a :href="route('teachers.index')" class="cursor-pointer text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors duration-300 flex items-center group">
-                                <span class="w-1.5 h-1.5 bg-gray-400 rounded-full mx-2 group-hover:bg-blue-500 transition-all duration-300"></span>
+                                <span class="w-1.5 h-1.5 bg-gray-400 rounded-full mx-2 group-hover:bg-red-500 transition-all duration-300"></span>
                                 {{ $t('teachers') }}
                             </a>
                         </div>
                         <div>
                             <a href="https://docs.modern-dictionary.com/" class="cursor-pointer text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors duration-300 flex items-center group">
-                                <span class="w-1.5 h-1.5 bg-gray-400 rounded-full mx-2 group-hover:bg-blue-500 transition-all duration-300"></span>
+                                <span class="w-1.5 h-1.5 bg-gray-400 rounded-full mx-2 group-hover:bg-red-500 transition-all duration-300"></span>
                                 {{ $t('documentation') }}
                             </a>
                         </div>
@@ -356,19 +356,19 @@ const setLanguage = (lang) => {
                     <div class="space-y-4">
                         <div>
                             <a :href="route('topics')" class="cursor-pointer text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors duration-300 flex items-center group">
-                                <span class="w-1.5 h-1.5 bg-gray-400 rounded-full mx-2 group-hover:bg-blue-500 transition-all duration-300"></span>
+                                <span class="w-1.5 h-1.5 bg-gray-400 rounded-full mx-2 group-hover:bg-red-500 transition-all duration-300"></span>
                                 {{ $t('topics_category') }}
                             </a>
                         </div>
                         <div>
                             <a :href="route('levels')" class="cursor-pointer text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors duration-300 flex items-center group">
-                                <span class="w-1.5 h-1.5 bg-gray-400 rounded-full mx-2 group-hover:bg-blue-500 transition-all duration-300"></span>
+                                <span class="w-1.5 h-1.5 bg-gray-400 rounded-full mx-2 group-hover:bg-red-500 transition-all duration-300"></span>
                                 {{ $t('levels_category') }}
                             </a>
                         </div>
                         <div>
                             <a :href="route('grammars')" class="cursor-pointer text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors duration-300 flex items-center group">
-                                <span class="w-1.5 h-1.5 bg-gray-400 rounded-full mx-2 group-hover:bg-blue-500 transition-all duration-300"></span>
+                                <span class="w-1.5 h-1.5 bg-gray-400 rounded-full mx-2 group-hover:bg-red-500 transition-all duration-300"></span>
                                 {{ $t('grammars_category') }}
                             </a>
                         </div>
@@ -383,19 +383,19 @@ const setLanguage = (lang) => {
                     <div class="space-y-4">
                         <div>
                             <a :href="route('DailyWords')" class="cursor-pointer text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors duration-300 flex items-center group">
-                                <span class="w-1.5 h-1.5 bg-gray-400 rounded-full mx-2 group-hover:bg-blue-500 transition-all duration-300"></span>
+                                <span class="w-1.5 h-1.5 bg-gray-400 rounded-full mx-2 group-hover:bg-red-500 transition-all duration-300"></span>
                                 {{ $t('daily_words') }}
                             </a>
                         </div>
                         <div>
                             <a :href="route('DailyTest')" class="cursor-pointer text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors duration-300 flex items-center group">
-                                <span class="w-1.5 h-1.5 bg-gray-400 rounded-full mx-2 group-hover:bg-blue-500 transition-all duration-300"></span>
+                                <span class="w-1.5 h-1.5 bg-gray-400 rounded-full mx-2 group-hover:bg-red-500 transition-all duration-300"></span>
                                 {{ $t('daily_test') }}
                             </a>
                         </div>
                         <div>
                             <a href="javascript:;" class="cursor-pointer text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors duration-300 flex items-center group">
-                                <span class="w-1.5 h-1.5 bg-gray-400 rounded-full mx-2 group-hover:bg-blue-500 transition-all duration-300"></span>
+                                <span class="w-1.5 h-1.5 bg-gray-400 rounded-full mx-2 group-hover:bg-red-500 transition-all duration-300"></span>
                                 {{ $t('placement_test') }}
                             </a>
                         </div>
@@ -410,19 +410,19 @@ const setLanguage = (lang) => {
                     <div class="space-y-4">
                         <div>
                             <a :href="route('aboutUs')" class="cursor-pointer text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors duration-300 flex items-center group">
-                                <span class="w-1.5 h-1.5 bg-gray-400 rounded-full mx-2 group-hover:bg-blue-500 transition-all duration-300"></span>
+                                <span class="w-1.5 h-1.5 bg-gray-400 rounded-full mx-2 group-hover:bg-red-500 transition-all duration-300"></span>
                                 {{ $t('about_us') }}
                             </a>
                         </div>
                         <div>
                             <a :href="route('contactUs')" class="cursor-pointer text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors duration-300 flex items-center group">
-                                <span class="w-1.5 h-1.5 bg-gray-400 rounded-full mx-2 group-hover:bg-blue-500 transition-all duration-300"></span>
+                                <span class="w-1.5 h-1.5 bg-gray-400 rounded-full mx-2 group-hover:bg-red-500 transition-all duration-300"></span>
                                 {{ $t('contact_us') }}
                             </a>
                         </div>
                         <div>
                             <a :href="route('faq')" class="cursor-pointer text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors duration-300 flex items-center group">
-                                <span class="w-1.5 h-1.5 bg-gray-400 rounded-full mx-2 group-hover:bg-blue-500 transition-all duration-300"></span>
+                                <span class="w-1.5 h-1.5 bg-gray-400 rounded-full mx-2 group-hover:bg-red-500 transition-all duration-300"></span>
                                 {{ $t('faq') }}
                             </a>
                         </div>
@@ -440,7 +440,7 @@ const setLanguage = (lang) => {
                     <!-- Social Icons -->
                     <div class="flex items-center">
                         <!-- Twitter -->
-                        <a href="javascript:;" class="mx-4 relative group w-10 h-10 rounded-full bg-gray-200/70 dark:bg-gray-800/70 backdrop-blur-md flex items-center justify-center transition-all duration-300 hover:bg-blue-500 hover:shadow-lg hover:shadow-blue-500/20">
+                        <a href="javascript:;" class="mx-4 relative group w-10 h-10 rounded-full bg-gray-200/70 dark:bg-gray-800/70 backdrop-blur-md flex items-center justify-center transition-all duration-300 hover:bg-red-500 hover:shadow-lg hover:shadow-red-500/20">
                             <svg class="absolute top-1/2 left-1/2 w-5 h-5 text-gray-700 dark:text-gray-300 group-hover:text-white transition-colors duration-300 transform -translate-x-1/2 -translate-y-1/2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M22.46 6.003c-.77.34-1.6.57-2.47.67a4.29 4.29 0 0 0 1.88-2.36 8.635 8.635 0 0 1-2.73 1.04A4.24 4.24 0 0 0 16.62 5c-2.35 0-4.25 1.92-4.25 4.29 0 .34.04.67.1 1A12.07 12.07 0 0 1 3.11 4.4a4.28 4.28 0 0 0-.57 2.16c0 1.49.76 2.81 1.92 3.58a4.25 4.25 0 0 1-1.93-.53v.05c0 2.08 1.48 3.82 3.44 4.23-.36.1-.74.15-1.12.15-.27 0-.54-.02-.8-.07a4.25 4.25 0 0 0 3.95 2.93A8.5 8.5 0 0 1 2 18.54a12.07 12.07 0 0 0 6.29 1.85c7.56 0 11.7-6.27 11.7-11.7 0-.18 0-.35-.01-.53A8.31 8.31 0 0 0 22.46 6.003z" fill="currentColor"/>
                             </svg>
