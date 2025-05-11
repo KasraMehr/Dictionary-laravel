@@ -1,6 +1,15 @@
 <template>
   <TeacherLayout>
     <div class="flex items-center justify-between">
+        <Transition name="fade">
+            <div
+                v-if="showError"
+                class="fixed top-4 left-24 transform -translate-x-1/2 z-50 px-8 py-4 rounded shadow-lg text-sm
+           bg-red-200 text-red-800 dark:bg-red-800 dark:text-red-100"
+            >
+                پاسخ را وارد کنید!
+            </div>
+        </Transition>
         <div>
             <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-100 flex items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-blue-500" viewBox="0 0 20 20" fill="currentColor">
@@ -119,9 +128,19 @@
   </TeacherLayout>
 </template>
 
+<style scoped>
+.fade-enter-active, .fade-leave-active {
+    transition: opacity 0.5s ease;
+}
+.fade-enter-from, .fade-leave-to {
+    opacity: 0;
+}
+</style>
+
 <script setup>
 import TeacherLayout from '@/Layouts/TeacherLayout.vue';
 import { Link, useForm } from '@inertiajs/vue3';
+import {ref} from "vue";
 
 const props = defineProps({
   quiz: Object,
@@ -136,6 +155,15 @@ const form = useForm({
   points: props.question?.points || 1,
   quiz_id: props.quiz.id
 });
+
+const showError = ref(false);
+
+const triggerError = () => {
+    showError.value = true;
+    setTimeout(() => {
+        showError.value = false;
+    }, 3000);
+};
 
 const handleTypeChange = () => {
   if (form.question_type !== 'mcq') {
@@ -164,12 +192,16 @@ const removeOption = (index) => {
 
 const submit = () => {
   if (form.question_type === 'mcq') {
+      if (form.correct_answer === '') {
+          console.log("please consider an answer");
+          triggerError();
+          return;
+      }
       form.options = form.options.map(opt => opt.toString().trim());
       form.correct_answer = form.correct_answer.toString();
   } else {
       delete form.options;
   }
-    console.log(form);
     props.question
     ? form.put(route('teacher.questions.update', props.question.id))
     : form.post(route('teacher.questions.store'));
