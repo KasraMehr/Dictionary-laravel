@@ -17,7 +17,7 @@
                     <div class="relative group mb-8 md:mb-0 md:order-2">
                         <div class="absolute -inset-2 bg-gradient-to-r from-purple-400 to-red-500 rounded-3xl opacity-70 group-hover:opacity-90 blur-lg transition-all duration-500 animate-pulse-slow"></div>
                         <div class="relative h-44 w-44 rounded-3xl overflow-hidden border-4 border-white/80 dark:border-gray-700/80 shadow-2xl transform group-hover:-translate-y-2 transition-all duration-300">
-                            <img class="h-full w-full object-cover"
+                            <img class="h-full w-full object-cover"  @error="setDefaultImage"
                                  :src="`/storage/${teacher.profile_photo_path}`"
                                  :alt="teacher.user.name">
                             <!-- Verified Badge -->
@@ -264,6 +264,10 @@ const formatDate = (dateString) => {
     const options = { year: 'numeric', month: 'long', day: 'numeric' }
     return new Date(dateString).toLocaleDateString('fa-IR', options)
 }
+
+const setDefaultImage = (event) => {
+    event.target.src = "/images/default-image.jpg";
+};
 </script>
 
 <style scoped>

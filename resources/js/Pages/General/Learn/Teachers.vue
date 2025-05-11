@@ -95,11 +95,14 @@
             <!-- Teachers Grid -->
             <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 <!-- Teacher Cards -->
+
                 <div
                     v-for="teacher in teachers.data"
                     :key="teacher.id"
                     class="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-xl transition-all duration-500 hover:-translate-y-1"
                 >
+                    <Link
+                        :href="`/teachers/${teacher.id}`">
                     <!-- Glass Morphic Card -->
                     <div class="backdrop-blur-md bg-white/70 dark:bg-gray-800/70 border border-white/20 dark:border-gray-700/50 rounded-2xl overflow-hidden h-full flex flex-col">
                         <!-- Image with Gradient Overlay -->
@@ -107,7 +110,7 @@
                             <img
                                 :src="`/storage/${teacher.profile_photo_path}`"
                                 :alt="teacher.user.name"
-                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" @error="setDefaultImage"
                             >
                             <div class="absolute inset-0 bg-gradient-to-t from-gray-900/70 to-transparent"></div>
                             <div class="absolute bottom-4 right-4">
@@ -161,7 +164,9 @@
                             </div>
                         </div>
                     </div>
+                </Link>
                 </div>
+
 
                 <!-- Empty State -->
                 <div
@@ -205,6 +210,10 @@ const props = defineProps({
     teachers: Object,
     filters: Object
 })
+
+const setDefaultImage = (event) => {
+    event.target.src = "/images/default-image.jpg";
+};
 
 const loading = ref(false)
 const filters = ref({
