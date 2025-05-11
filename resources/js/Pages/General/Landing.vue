@@ -127,8 +127,8 @@ onMounted(() => {
                                 </h1>
 
                                 <!-- Typing animation for slogan -->
-                                <div class="text-lg sm:text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-4xl mx-auto animate-fade-in-up animate-delay-300">
-                                    <span class="typing-animation w-full">{{ $t('slogan') }}</span>
+                                <div class="text-lg sm:text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-xs mx-auto">
+                                    <span class="typing-animation hidden sm:inline-block w-full">{{ $t('slogan') }}</span>
                                 </div>
 
                                 <!-- Search with floating label -->
@@ -695,23 +695,21 @@ onMounted(() => {
     overflow: hidden;
     border-right: 2px solid;
     white-space: nowrap;
-    animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+    animation: typing 1.5s steps(30, end), blink-caret 0.75s step-end infinite;
     max-width: 100%;
     box-sizing: border-box;
 }
 
+/* Remove typing effect on small screens */
 @media (max-width: 640px) {
     .typing-animation {
+        animation: none;
+        border-right: none;
         white-space: normal;
     }
 }
 
-.text-lg {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
+/* Optional: Adjust caret animation timing */
 @keyframes typing {
     from { width: 0 }
     to { width: 100% }
