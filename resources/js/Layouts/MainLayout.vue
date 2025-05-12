@@ -25,6 +25,8 @@ defineProps({
     }
 });
 
+const currentUrl = window.location.href;
+
 const showingNavigationDropdown = ref(false);
 
 const languages = [
