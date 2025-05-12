@@ -141,6 +141,115 @@ class LearnController extends Controller
         ]);
     }
 
+    public function show_course($slug)
+    {
+        // یافتن دوره با اسلاگ داده شده
+        $course = Course::with([
+            'instructor',
+//            'reviews.user',
+//            'chapters.lessons'
+        ])
+//            ->withCount(['students', 'reviews'])
+            ->where('slug', $slug)
+            ->where('status', 'published')
+            ->firstOrFail();
+
+//        $course->average_rating = $course->reviews->avg('rating') ?? 0;
+
+        // توزیع امتیازها
+//        $ratingsDistribution = [5 => 0, 4 => 0, 3 => 0, 2 => 0, 1 => 0];
+//        foreach ($course->reviews as $review) {
+//            $ratingsDistribution[$review->rating]++;
+//        }
+//        $course->ratings_distribution = $ratingsDistribution;
+
+        // یافتن دوره‌های مرتبط با الگوریتم پیشرفته
+        $relatedCourses = $this->getRelatedCourses($course);
+
+        return Inertia::render('General/Learn/CourseShow', [
+            'course' => $course,
+            'relatedCourses' => $relatedCourses,
+        ]);
+    }
+
+    // الگوریتم یافتن دوره‌های مرتبط
+    protected function getRelatedCourses(Course $currentCourse)
+    {
+        // 1. اولویت اول: دوره‌های هم‌موضوع از همان مدرس
+        $sameInstructorSameTopic = Course::query()
+            ->where('topic', $currentCourse->topic)
+            ->where('created_by', $currentCourse->created_by)
+            ->where('id', '!=', $currentCourse->id)
+            ->where('status', 'published')
+            ->withCount('students')
+            ->orderBy('students_count', 'desc')
+            ->limit(2)
+            ->get();
+
+        // اگر کافی نبود، ادامه می‌دهیم
+        if ($sameInstructorSameTopic->count() < 3) {
+            // 2. اولویت دوم: دوره‌های هم‌موضوع از مدرسین دیگر
+            $sameTopic = Course::query()
+                ->where('topic', $currentCourse->topic)
+                ->where('id', '!=', $currentCourse->id)
+                ->where('status', 'published')
+                ->withCount('students')
+                ->orderBy('students_count', 'desc')
+                ->limit(3 - $sameInstructorSameTopic->count())
+                ->get();
+
+            $relatedCourses = $sameInstructorSameTopic->merge($sameTopic);
+        } else {
+            $relatedCourses = $sameInstructorSameTopic;
+        }
+
+        // اگر هنوز کافی نبود
+        if ($relatedCourses->count() < 3) {
+            // 3. اولویت سوم: دوره‌های هم‌سطح از همان مدرس
+            $sameInstructorSameLevel = Course::query()
+                ->where('level', $currentCourse->level)
+                ->where('created_by', $currentCourse->created_by)
+                ->where('id', '!=', $currentCourse->id)
+                ->where('status', 'published')
+                ->withCount('students')
+                ->orderBy('students_count', 'desc')
+                ->limit(3 - $relatedCourses->count())
+                ->get();
+
+            $relatedCourses = $relatedCourses->merge($sameInstructorSameLevel);
+        }
+
+        // اگر هنوز کافی نبود
+        if ($relatedCourses->count() < 3) {
+            // 4. اولویت چهارم: دوره‌های پرطرفدار در همان زبان
+            $sameLanguagePopular = Course::query()
+                ->where('language', $currentCourse->language)
+                ->where('id', '!=', $currentCourse->id)
+                ->where('status', 'published')
+                ->withCount('students')
+                ->orderBy('students_count', 'desc')
+                ->limit(3 - $relatedCourses->count())
+                ->get();
+
+            $relatedCourses = $relatedCourses->merge($sameLanguagePopular);
+        }
+
+        // اگر باز هم کافی نبود، دوره‌های پرطرفدار عمومی
+        if ($relatedCourses->count() < 3) {
+            $popularCourses = Course::query()
+                ->where('id', '!=', $currentCourse->id)
+                ->where('status', 'published')
+                ->withCount('students')
+                ->orderBy('students_count', 'desc')
+                ->limit(3 - $relatedCourses->count())
+                ->get();
+
+            $relatedCourses = $relatedCourses->merge($popularCourses);
+        }
+
+        return $relatedCourses->take(3);
+    }
+
     public function show_teacher(Teacher $teacher)
     {
         $teacher->load('user');
