@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Teacher;
 use App\Models\Word;
+use App\Models\Course;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -98,6 +99,45 @@ class LearnController extends Controller
         return Inertia::render('General/Learn/Teachers', [
             'teachers' => $teachers,
             'filters' => $request->only(['search', 'language', 'method'])
+        ]);
+    }
+
+    public function courses(Request $request)
+    {
+        $query = Course::query();
+
+        // فیلتر بر اساس جستجو
+        if ($request->has('search')) {
+            $query->where(function($q) use ($request) {
+                $q->where('title', 'like', '%'.$request->search.'%')
+                  ->orWhere('description', 'like', '%'.$request->search.'%');
+            });
+        }
+
+        // فیلتر بر اساس سطح
+        if ($request->has('level') && $request->level !== 'all') {
+            $query->where('level', $request->level);
+        }
+
+        // فیلتر بر اساس موضوع
+        if ($request->has('topic') && $request->topic !== 'all') {
+            $query->where('topic', $request->topic);
+        }
+
+        // فقط دوره‌های منتشر شده
+        $query->where('status', 'published');
+
+        $courses = $query->get();
+
+        // سطوح و موضوعات منحصر به فرد برای فیلترها
+        $levels = Course::select('level')->distinct()->pluck('level');
+        $topics = Course::select('topic')->distinct()->pluck('topic');
+
+        return Inertia::render('General/Learn/Courses', [
+            'courses' => $courses,
+            'filters' => $request->only(['search', 'level', 'topic']),
+            'levels' => $levels,
+            'topics' => $topics,
         ]);
     }
 
