@@ -13,15 +13,15 @@ defineProps({
     title: String,
     metaDescription: {
         type: String,
-        default: 'Default page description for better SEO.'
+        default: 'مدرندیکشنری، بستری مدرن برای یادگیری، آموزش و جستجوی معانی واژه‌ها با امکانات پیشرفته.'
     },
     metaKeywords: {
         type: String,
-        default: 'keyword1, keyword2, keyword3'
+        default: 'دیکشنری آنلاین, یادگیری زبان, آموزش مدرن, ال ام اس, ترجمه, آموزش آنلاین, مدرندیکشنری'
     },
     metaImage: {
         type: String,
-        default: 'https://example.com/default-image.jpg'
+        default: 'https://modern-dictionary.com/logo.svg'
     }
 });
 
