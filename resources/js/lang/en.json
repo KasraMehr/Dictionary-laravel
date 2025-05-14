@@ -344,6 +344,11 @@
     "sign_up": "Sign Up",
     "signing_up": "Signing up...",
     "or_sign_up_with": "Or sign up with",
+    "already_have_account": "Already have an account?",
+    "enter_your_password": "Enter your password",
+    "login_to_account": "Login to account",
+    "logging_in": "Logging in...",
+    "or_login_with": "Or login with",
     "google_account": "Google Account",
-    "already_have_account": "Already have an account?"
+    "sign_up_here": "Sign up here"
 }

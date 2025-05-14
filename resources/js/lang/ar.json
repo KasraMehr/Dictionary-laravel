@@ -344,6 +344,11 @@
     "sign_up": "إنشاء حساب",
     "signing_up": "جاري التسجيل...",
     "or_sign_up_with": "أو سجل عبر",
+    "already_have_account": "هل لديك حساب بالفعل؟",
+    "enter_your_password": "أدخل كلمة المرور الخاصة بك",
+    "login_to_account": "تسجيل الدخول إلى الحساب",
+    "logging_in": "جاري تسجيل الدخول...",
+    "or_login_with": "أو تسجيل الدخول باستخدام",
     "google_account": "حساب جوجل",
-    "already_have_account": "هل لديك حساب بالفعل؟"
+    "sign_up_here": "سجّل هنا"
 }

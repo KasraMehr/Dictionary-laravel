@@ -64,8 +64,6 @@
     "login": "ورود",
     "password": "رمز عبور",
     "confirm_password": "تأیید رمز عبور",
-    "forgot_password": "رمز عبور را فراموش کرده‌اید؟",
-    "remember_me": "مرا به خاطر بسپار",
     "library": "کتابخانه",
     "total_words": "تعداد کل کلمات",
     "total_teams": "تعداد کل تیم‌ها",
@@ -96,7 +94,6 @@
     "back_to_login": "بازگشت به صفحه ورود",
     "send_reset_link": "ارسال لینک بازنشانی رمز عبور",
     "sign_in": "ورود",
-    "no_account": "حساب کاربری ندارید؟",
     "register_now": "ثبت نام کنید",
     "loading_recaptcha": "در حال بارگذاری reCAPTCHA...",
     "already_registered": "قبلاً ثبت نام کرده‌اید؟",
@@ -344,7 +341,15 @@
     "sign_up": "ثبت‌نام",
     "signing_up": "در حال ثبت‌نام...",
     "or_sign_up_with": "یا ثبت‌نام با",
+    "already_have_account": "قبلاً حساب دارید؟",
+    "enter_your_password": "رمز عبور خود را وارد کنید",
+    "remember_me": "مرا به خاطر بسپار",
+    "forgot_password": "رمز عبور را فراموش کرده‌اید؟",
+    "login_to_account": "ورود به حساب",
+    "logging_in": "در حال ورود...",
+    "or_login_with": "یا ورود با",
     "google_account": "حساب گوگل",
-    "already_have_account": "قبلاً حساب دارید؟"
+    "no_account": "حساب کاربری ندارید؟",
+    "sign_up_here": "ثبت‌نام کنید"
 
 }
