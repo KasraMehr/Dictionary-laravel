@@ -44,26 +44,18 @@ const resetFilters = () => {
 
 <template>
   <MainLayout title="courses">
-    <div :class="{'dark': darkMode}">
+    <div>
       <div class="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
-        <!-- هدر صفحه -->
-        <header class="bg-white dark:bg-gray-800 shadow-sm">
-          <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex justify-between items-center">
-            <h1 class="text-3xl font-bold text-gray-900 dark:text-white">
-              دوره‌های آموزشی
-            </h1>
-          </div>
-        </header>
 
         <!-- بخش اصلی -->
         <main class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
           <!-- هدر بخش -->
           <div class="text-center mb-12">
             <h1 class="text-4xl font-extrabold text-gray-900 dark:text-white sm:text-5xl sm:tracking-tight lg:text-6xl">
-              دوره‌های تخصصی
+                {{ $t('specialized_courses') }}
             </h1>
             <p class="mt-5 max-w-xl mx-auto text-xl text-gray-500 dark:text-gray-400">
-              با بهترین دوره‌ها برای یادگیری مؤثر آشنا شوید
+                {{ $t('specialized_courses_description') }}
             </p>
           </div>
 
@@ -75,7 +67,7 @@ const resetFilters = () => {
                 <div class="relative">
                   <input
                     type="text"
-                    placeholder="جستجو در دوره‌ها..."
+                    :placeholder="$t('search_courses')"
                     class="w-full px-4 py-3 pl-10 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white/50 dark:bg-gray-700/50 backdrop-blur-sm text-gray-900 dark:text-white transition-all duration-300"
                     v-model="searchQuery"
                     @input="applyFilters"
@@ -170,7 +162,7 @@ const resetFilters = () => {
                         v-if="course.is_free"
                         class="inline-block px-2 py-1 mt-1 text-xs font-semibold text-green-100 bg-green-600/80 rounded-full"
                       >
-                        رایگان
+                        {{ $t('free') }}
                       </span>
                       <span
                         v-else
@@ -191,13 +183,13 @@ const resetFilters = () => {
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
-                        {{ Math.floor(course.duration_minutes / 60) }} ساعت
+                        {{ Math.floor(course.duration_minutes / 60) }} {{ $t('hour') }}
                       </span>
                       <span class="flex items-center text-sm text-gray-600 dark:text-gray-400">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                         </svg>
-                        {{ course.students_count.toLocaleString() }} دانشجو
+                        {{ course.students_count.toLocaleString() }} {{ $t('student') }}
                       </span>
                     </div>
 
@@ -226,25 +218,25 @@ const resetFilters = () => {
                 <svg class="mx-auto h-16 w-16 text-gray-400 dark:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                <h3 class="mt-4 text-lg font-medium text-gray-900 dark:text-white">دوره‌ای یافت نشد</h3>
-                <p class="mt-2 text-gray-600 dark:text-gray-400">هیچ دوره‌ای با معیارهای جستجوی شما مطابقت ندارد.</p>
+                <h3 class="mt-4 text-lg font-medium text-gray-900 dark:text-white">{{ $t('no_course_found') }}</h3>
+                <p class="mt-2 text-gray-600 dark:text-gray-400">{{ $t('no_course_matches') }}</p>
                 <button
                   @click="resetFilters"
                   class="mt-4 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors duration-300"
                 >
-                  بازنشانی فیلترها
+                    {{ $t('reset_filters') }}
                 </button>
               </div>
             </div>
           </div>
 
           <!-- Pagination -->
-          <div class="mt-12" v-if="courses.length > 0">
-            <Pagination
-              :links="courses.links"
-              class="backdrop-blur-md bg-white/70 dark:bg-gray-800/70 p-4 rounded-xl border border-white/20 dark:border-gray-700/50"
-            />
-          </div>
+<!--          <div class="mt-12" v-if="courses.length > 0">-->
+<!--            <Pagination-->
+<!--              :links="courses.links"-->
+<!--              class="backdrop-blur-md bg-white/70 dark:bg-gray-800/70 p-4 rounded-xl border border-white/20 dark:border-gray-700/50"-->
+<!--            />-->
+<!--          </div>-->
         </main>
       </div>
     </div>

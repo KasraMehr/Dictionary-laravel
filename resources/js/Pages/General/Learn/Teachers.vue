@@ -4,10 +4,10 @@
             <!-- Header Section -->
             <div class="text-center mb-12">
                 <h1 class="text-4xl font-extrabold text-gray-900 dark:text-white sm:text-5xl sm:tracking-tight lg:text-6xl">
-                    اساتید ما
+                    {{ $t('our_teachers') }}
                 </h1>
                 <p class="mt-5 max-w-xl mx-auto text-xl text-gray-500 dark:text-gray-400">
-                    با بهترین اساتید زبان برای یادگیری مؤثر آشنا شوید
+                    {{ $t('our_teachers_description') }}
                 </p>
             </div>
 
@@ -18,7 +18,7 @@
                         <div class="relative">
                             <input
                                 type="text"
-                                placeholder="جستجو در اساتید..."
+                                :placeholder="$t('search_teachers')"
                                 class="w-full px-4 py-3 pl-10 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 bg-white/50 dark:bg-gray-700/50 backdrop-blur-sm text-gray-900 dark:text-white transition-all duration-300"
                                 v-model="filters.search"
                                 @input="handleSearch"
@@ -37,10 +37,10 @@
                                 v-model="filters.language"
                                 @change="filterTeachers"
                             >
-                                <option value="">همه زبان‌ها</option>
-                                <option value="english">انگلیسی</option>
-                                <option value="french">فرانسوی</option>
-                                <option value="german">آلمانی</option>
+                                <option value="">{{ $t('all_languages') }}</option>
+                                <option value="english">{{ $t('english') }}</option>
+                                <option value="french">{{ $t('french') }}</option>
+                                <option value="german">{{ $t('german') }}</option>
                             </select>
 
                             <!-- آیکون زبان (سمت راست) -->
@@ -63,10 +63,10 @@
                                 v-model="filters.language"
                                 @change="filterTeachers"
                             >
-                                <option value="">همه روش‌ها</option>
-                                <option value="conversation">مکالمه محور</option>
-                                <option value="grammar">گرامر محور</option>
-                                <option value="business">تجاری</option>
+                                <option value="">{{ $t('all_methods') }}</option>
+                                <option value="conversation">{{ $t('conversation_based') }}</option>
+                                <option value="grammar">{{ $t('grammar_based') }}</option>
+                                <option value="business">{{ $t('business') }}</option>
                             </select>
 
                             <!-- آیکون زبان (سمت راست) -->
@@ -116,8 +116,8 @@
                             <div class="absolute bottom-4 right-4">
                                 <h3 class="text-xl font-bold text-white">{{ teacher.user.name }}</h3>
                                 <span class="inline-block px-2 py-1 mt-1 text-xs font-semibold text-red-100 bg-red-600/80 rounded-full">
-                  {{ teacher.title }}
-                </span>
+                                  {{ teacher.title }}
+                                </span>
                             </div>
                         </div>
 
@@ -127,13 +127,13 @@
 
                             <!-- Languages Chips -->
                             <div class="flex flex-wrap gap-2 mb-4">
-                <span
-                    v-for="language in teacher.languages"
-                    :key="language"
-                    class="px-3 py-1 bg-red-100/70 dark:bg-red-900/30 text-red-800 dark:text-red-200 text-xs font-medium rounded-full backdrop-blur-sm"
-                >
-                  {{ language }}
-                </span>
+                                <span
+                                    v-for="language in teacher.languages"
+                                    :key="language"
+                                    class="px-3 py-1 bg-red-100/70 dark:bg-red-900/30 text-red-800 dark:text-red-200 text-xs font-medium rounded-full backdrop-blur-sm"
+                                >
+                                  {{ language }}
+                                </span>
                             </div>
 
                             <!-- Social Links -->
@@ -155,7 +155,7 @@
                                         :href="`/teachers/${teacher.id}`"
                                         class="text-sm font-medium text-red-600 dark:text-red-400 hover:text-red-800 dark:hover:text-red-300 flex items-center transition-colors duration-300"
                                     >
-                                        مشاهده پروفایل
+                                        {{ $t('view_profile') }}
                                         <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                                         </svg>
@@ -177,13 +177,13 @@
                         <svg class="mx-auto h-16 w-16 text-gray-400 dark:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
-                        <h3 class="mt-4 text-lg font-medium text-gray-900 dark:text-white">استادی یافت نشد</h3>
-                        <p class="mt-2 text-gray-600 dark:text-gray-400">هیچ استادی با معیارهای جستجوی شما مطابقت ندارد.</p>
+                        <h3 class="mt-4 text-lg font-medium text-gray-900 dark:text-white">{{ $t('no_teacher_found') }}</h3>
+                        <p class="mt-2 text-gray-600 dark:text-gray-400">{{ $t('no_teacher_matches') }}</p>
                         <button
                             @click="resetFilters"
                             class="mt-4 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors duration-300"
                         >
-                            بازنشانی فیلترها
+                            {{ $t('reset_filters') }}
                         </button>
                     </div>
                 </div>
