@@ -260,10 +260,15 @@ const setLanguage = (lang) => {
                                                class="block px-3 py-2 rounded-lg hover:bg-white/30 dark:hover:bg-gray-800/50">
                                 {{ $t('learn') }}
                             </ResponsiveNavLink>
-                            <ResponsiveNavLink :href="route('DailyTest')"
-                                               :active="route().current('DailyTest')"
+                            <ResponsiveNavLink :href="route('courses.index')"
+                                               :active="route().current('courses.index')"
                                                class="block px-3 py-2 rounded-lg hover:bg-white/30 dark:hover:bg-gray-800/50">
-                                {{ $t('quiz') }}
+                                {{ $t('courses') }}
+                            </ResponsiveNavLink>
+                            <ResponsiveNavLink :href="route('teachers.index')"
+                                               :active="route().current('teachers.index')"
+                                               class="block px-3 py-2 rounded-lg hover:bg-white/30 dark:hover:bg-gray-800/50">
+                                {{ $t('teachers') }}
                             </ResponsiveNavLink>
                         </div>
                         <div class="border-t border-white/20 dark:border-gray-700/30 px-4 py-3">
@@ -358,7 +363,7 @@ const setLanguage = (lang) => {
                         <div>
                             <a :href="route('library')" class="cursor-pointer text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors duration-300 flex items-center group">
                                 <span class="w-1.5 h-1.5 bg-gray-400 rounded-full mx-2 group-hover:bg-red-500 transition-all duration-300"></span>
-                                {{ $t('library') }}
+                                {{ $t('words_bank') }}
                             </a>
                         </div>
                         <div>
@@ -368,9 +373,9 @@ const setLanguage = (lang) => {
                             </a>
                         </div>
                         <div>
-                            <a href="https://docs.modern-dictionary.com/" class="cursor-pointer text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors duration-300 flex items-center group">
+                            <a :href="route('courses.index')" class="cursor-pointer text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors duration-300 flex items-center group">
                                 <span class="w-1.5 h-1.5 bg-gray-400 rounded-full mx-2 group-hover:bg-red-500 transition-all duration-300"></span>
-                                {{ $t('documentation') }}
+                                {{ $t('courses') }}
                             </a>
                         </div>
                     </div>
