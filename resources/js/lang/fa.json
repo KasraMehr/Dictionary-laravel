@@ -379,6 +379,30 @@
     "hour": "ساعت",
     "student": "دانشجو",
     "no_course_found": "دوره‌ای یافت نشد",
-    "no_course_matches": "هیچ دوره‌ای با معیارهای جستجوی شما مطابقت ندارد."
+    "no_course_matches": "هیچ دوره‌ای با معیارهای جستجوی شما مطابقت ندارد.",
+    "all_levels": "همه سطوح",
+    "all_topics": "همه موضوعات",
+    "minute": "دقیقه",
+    "toman": "تومان",
+    "enroll_in_course": "ثبت‌نام در دوره",
+    "course_intro": "معرفی دوره",
+    "course_outline": "سرفصل‌ها",
+    "about_instructor": "درباره مدرس",
+    "student_reviews": "نظرات دانشجویان",
+    "about_course": "درباره این دوره",
+    "what_you_will_learn": "آنچه یاد خواهید گرفت",
+    "prerequisites": "پیش‌نیازها",
+    "other_courses_by_instructor": "سایر دوره‌های این مدرس",
+    "based_on": "بر اساس",
+    "stars": "ستاره",
+    "related_courses": "دوره‌های مرتبط",
+    "view_course": "مشاهده دوره",
+    "about_teacher": "درباره استاد",
+    "teaching_methods": "روش‌های تدریس",
+    "contact_information": "اطلاعات تماس",
+    "experience_and_background": "سوابق و تجربیات",
+    "submit_new_review": "ثبت نظر جدید",
+    "telephone": "تلفن"
+
 
 }
