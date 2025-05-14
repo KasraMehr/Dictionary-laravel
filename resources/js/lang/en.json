@@ -350,5 +350,10 @@
     "logging_in": "Logging in...",
     "or_login_with": "Or login with",
     "google_account": "Google Account",
-    "sign_up_here": "Sign up here"
+    "sign_up_here": "Sign up here",
+    "search_words": "Search words",
+    "view_full_details": "View full details",
+    "question": "Question",
+    "of": "of",
+    "correct": "Correct"
 }

@@ -350,5 +350,10 @@
     "logging_in": "جاري تسجيل الدخول...",
     "or_login_with": "أو تسجيل الدخول باستخدام",
     "google_account": "حساب جوجل",
-    "sign_up_here": "سجّل هنا"
+    "sign_up_here": "سجّل هنا",
+    "search_words": "البحث عن الكلمات",
+    "view_full_details": "عرض التفاصيل الكاملة",
+    "question": "سؤال",
+    "of": "من",
+    "correct": "صحيح"
 }

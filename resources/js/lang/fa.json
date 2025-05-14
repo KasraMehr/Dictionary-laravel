@@ -271,6 +271,7 @@
     "related_words_and_phrases": "کلمات و عبارات مرتبط با موضوعات مختلف",
     "learning_grammar": "یادگیری گرامر",
     "grammar_principles": "یادگیری اصول و قواعد گرامری به صورت ساده و کاربردی",
+    "topic_related_words": "کلمات و عبارات مربوط به موضوعات مختلف",
     "grammar_lesson": "درس گرامری",
     "learning_with_ai": "یادگیری با هوش مصنوعی",
     "interactive_ai_learning": "یادگیری تعاملی با AI (در دست توسعه)",
@@ -350,6 +351,11 @@
     "or_login_with": "یا ورود با",
     "google_account": "حساب گوگل",
     "no_account": "حساب کاربری ندارید؟",
-    "sign_up_here": "ثبت‌نام کنید"
+    "sign_up_here": "ثبت‌نام کنید",
+    "search_words": "جستجوی کلمات",
+    "view_full_details": "مشاهده جزئیات کامل",
+    "question": "سؤال",
+    "of": "از",
+    "correct": "درست"
 
 }
