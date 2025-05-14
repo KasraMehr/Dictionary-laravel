@@ -30,7 +30,7 @@
                     </div>
 
                     <!-- Teacher Info -->
-                    <div class="text-center md:text-right md:order-1 md:mr-12 max-w-2xl">
+                    <div class="text-center md:text-right md:order-1 md:mx-12 max-w-2xl">
                         <!-- Name with Text Shadow -->
                         <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight drop-shadow-lg">
                             {{ teacher.user.name }}
@@ -80,7 +80,7 @@
                                 <svg class="h-5 w-5 text-red-500 mx-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
-                                درباره استاد
+                                {{ $t('about_teacher') }}
                             </h3>
                             <p class="mt-4 text-gray-600 dark:text-gray-300 leading-relaxed">{{ teacher.bio }}</p>
                         </div>
@@ -93,7 +93,7 @@
                                 <svg class="h-5 w-5 text-red-500 mx-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
                                 </svg>
-                                روش‌های تدریس
+                                {{ $t('teaching_methods') }}
                             </h3>
                             <div class="mt-4 space-y-3">
                                 <div v-for="(method, index) in teacher.teaching_methods" :key="index"
@@ -114,7 +114,7 @@
                                 <svg class="h-5 w-5 text-red-500 mx-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                                 </svg>
-                                اطلاعات تماس
+                                {{ $t('contact_information') }}
                             </h3>
                             <div class="mt-4 space-y-4">
                                 <div class="flex items-center">
@@ -124,7 +124,7 @@
                                         </svg>
                                     </div>
                                     <div class="mx-3">
-                                        <p class="text-sm font-medium text-gray-500 dark:text-gray-400">تلفن</p>
+                                        <p class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ $t('telephone') }}</p>
                                         <p class="text-gray-900 dark:text-white">{{ teacher.phone }}</p>
                                     </div>
                                 </div>
@@ -136,7 +136,7 @@
                                         </svg>
                                     </div>
                                     <div class="mx-3">
-                                        <p class="text-sm font-medium text-gray-500 dark:text-gray-400">ایمیل</p>
+                                        <p class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ $t('email') }}</p>
                                         <p class="text-gray-900 dark:text-white">{{ teacher.user.email }}</p>
                                     </div>
                                 </div>
@@ -162,7 +162,7 @@
                                 <svg class="h-6 w-6 text-red-500 mx-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                                 </svg>
-                                سوابق و تجربیات
+                                {{ $t('experience_and_background') }}
                             </h2>
 
                             <div class="mt-6 space-y-8">
@@ -175,8 +175,8 @@
                                         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
                                             <h3 class="text-lg font-semibold text-gray-900 dark:text-white">{{ exp.title }}</h3>
                                             <span class="inline-flex items-center px-3 py-1 mt-2 sm:mt-0 rounded-full text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-200">
-                        {{ exp.duration }}
-                      </span>
+                                              {{ exp.duration }}
+                                            </span>
                                         </div>
                                         <p class="mt-2 text-gray-600 dark:text-gray-300">{{ exp.description }}</p>
                                     </div>
@@ -193,13 +193,13 @@
                                     <svg class="h-6 w-6 text-red-500 mx-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
                                     </svg>
-                                    نظرات دانشجویان
+                                    {{ $t('student_reviews') }}
                                 </h2>
                                 <button class="mt-4 sm:mt-0 inline-flex items-center px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors duration-300 shadow-sm">
                                     <svg class="h-5 w-5 mx-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                                     </svg>
-                                    ثبت نظر جدید
+                                    {{ $t('submit_new_review') }}
                                 </button>
                             </div>
 

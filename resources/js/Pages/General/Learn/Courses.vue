@@ -89,7 +89,7 @@ const resetFilters = () => {
                     v-model="selectedLevel"
                     @change="applyFilters"
                   >
-                    <option value="all">همه سطوح</option>
+                    <option value="all">{{ $t('all_levels') }}</option>
                     <option v-for="level in levels" :value="level">{{ level }}</option>
                   </select>
 
@@ -115,7 +115,7 @@ const resetFilters = () => {
                     v-model="selectedTopic"
                     @change="applyFilters"
                   >
-                    <option value="all">همه موضوعات</option>
+                    <option value="all">{{ $t('all_topics') }}</option>
                     <option v-for="topic in topics" :value="topic">{{ topic }}</option>
                   </select>
 
