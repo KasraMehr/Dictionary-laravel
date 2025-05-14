@@ -87,7 +87,7 @@ const submit = () => {
                     </div>
 
                     <!-- Form -->
-                    <form @submit.prevent="submit" class="p-6 space-y-4" dir="rtl">
+                    <form @submit.prevent="submit" class="p-6 space-y-4">
                         <!-- Name Field -->
                         <div>
                             <InputLabel for="name" :value="$t('full_name')" class="text-gray-700 dark:text-gray-300" />
