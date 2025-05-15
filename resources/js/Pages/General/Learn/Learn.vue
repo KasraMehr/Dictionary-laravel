@@ -61,7 +61,7 @@ const extraFeatures = ref([
     {
         title: t('placement_test'),
         description: t('determine_your_level'),
-        link: "/daily-test",
+        link: "/placement-test",
         icon: "🧠"
     },
     {
