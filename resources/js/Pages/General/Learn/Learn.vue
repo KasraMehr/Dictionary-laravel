@@ -65,6 +65,12 @@ const extraFeatures = ref([
         icon: "🧠"
     },
     {
+        title: t('daily_test'),
+        description: t('daily_test'),
+        link: "/daily-test",
+        icon: "🧠"
+    },
+    {
         title: t('daily_words'),
         description: t('learn_new_words_daily_des'),
         link: "/daily-words",
@@ -200,9 +206,9 @@ watch(locale, () => {
                             :href="feature.link"
                             class="relative group overflow-hidden rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-500 min-h-[200px]"
                             :class="[
-                index === 0 ? 'bg-gradient-to-br from-indigo-600 to-purple-600' : 'bg-gradient-to-br from-red-600 to-orange-600',
-                'hover:from-indigo-700 hover:to-purple-700 hover:shadow-indigo-500/20'
-              ]"
+                            index % 2 === 0 ? 'bg-gradient-to-br from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700' : 'bg-gradient-to-br from-red-600 to-orange-600 from-red-700 hover:to-orange-700',
+                            'hover:shadow-indigo-500/20'
+                            ]"
                         >
                             <!-- Decorative elements -->
                             <div class="absolute top-0 right-0 w-32 h-32 -mr-10 -mt-10 bg-white/10 rounded-full"></div>
