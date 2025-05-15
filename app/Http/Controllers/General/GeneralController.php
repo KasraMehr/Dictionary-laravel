@@ -195,6 +195,11 @@ class GeneralController extends Controller
          ]);
        }
 
+       public function PlacementTest(): Response
+       {
+          return Inertia::render('General/Learn/PlacementTest');
+       }
+
        public function DailyWords(): Response
        {
          if (!session()->has('wordList')) {
