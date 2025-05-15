@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref,onMounted, computed, toRefs } from 'vue';
 import { Head, Link, router } from '@inertiajs/vue3';
 import TeacherLayout from '@/Layouts/TeacherLayout.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
@@ -49,6 +49,23 @@ const confirmDelete = () => {
 const setDefaultImage = (event) => {
   event.target.src = "/images/default-image.jpg";
 };
+
+const aparatEmbedUrl = computed(() => {
+  const url = selectedCourse.value?.trailer_url
+  if (!url) return null
+
+  const aparatRegex = /aparat\.com\/v\/([a-zA-Z0-9]+)/;
+  const match = url.match(aparatRegex);
+
+  if (match && match[1]) {
+    const hash = match[1];
+    return `https://www.aparat.com/video/video/embed/videohash/${hash}/vt/frame?titleShow=true&autoplay=true`;
+  }
+
+  if (url.includes('embed')) return url;
+
+  return null;
+})
 </script>
 
 <template>
@@ -352,89 +369,97 @@ const setDefaultImage = (event) => {
                         </div>
                     </div>
 
-                    <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
-                            <h3 class="font-medium text-gray-900 dark:text-gray-100 flex items-center gap-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                                اطلاعات کلی
-                            </h3>
-                            <div class="mt-3 space-y-2">
-                                <div class="flex justify-between text-sm">
-                                    <span class="text-gray-500 dark:text-gray-400">زبان دوره:</span>
-                                    <span class="text-gray-900 dark:text-gray-100">
-                                    {{ selectedCourse.language === 'fa' ? 'فارسی' :
+                    <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+                      <!-- کارت اطلاعات کلی -->
+                      <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 border border-gray-100 dark:border-gray-700">
+                          <h3 class="font-semibold text-lg text-gray-800 dark:text-gray-200 flex items-center gap-3 mb-4">
+                              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                              </svg>
+                              اطلاعات کلی
+                          </h3>
+                          <div class="space-y-3">
+                              <div class="flex justify-between items-center py-2 border-b border-gray-100 dark:border-gray-700">
+                                  <span class="text-sm text-gray-500 dark:text-gray-400">زبان دوره:</span>
+                                  <span class="text-sm font-medium text-gray-700 dark:text-gray-300">
+                                      {{ selectedCourse.language === 'fa' ? 'فارسی' :
                                         selectedCourse.language === 'en' ? 'انگلیسی' :
-                                            selectedCourse.language === 'ar' ? 'عربی' : selectedCourse.language }}
-                                </span>
-                                </div>
-                                <div class="flex justify-between text-sm">
-                                    <span class="text-gray-500 dark:text-gray-400">تاریخ ایجاد:</span>
-                                    <span class="text-gray-900 dark:text-gray-100">
-                                    {{ new Date(selectedCourse.created_at).toLocaleDateString('fa-IR') }}
-                                </span>
-                                </div>
-                                <div class="flex justify-between text-sm">
-                                    <span class="text-gray-500 dark:text-gray-400">آخرین بروزرسانی:</span>
-                                    <span class="text-gray-900 dark:text-gray-100">
-                                    {{ new Date(selectedCourse.updated_at).toLocaleDateString('fa-IR') }}
-                                </span>
-                                </div>
-                            </div>
-                        </div>
+                                        selectedCourse.language === 'ar' ? 'عربی' : selectedCourse.language }}
+                                  </span>
+                              </div>
+                              <div class="flex justify-between items-center py-2 border-b border-gray-100 dark:border-gray-700">
+                                  <span class="text-sm text-gray-500 dark:text-gray-400">تاریخ ایجاد:</span>
+                                  <span class="text-sm font-medium text-gray-700 dark:text-gray-300">
+                                      {{ new Date(selectedCourse.created_at).toLocaleDateString('fa-IR') }}
+                                  </span>
+                              </div>
+                              <div class="flex justify-between items-center py-2">
+                                  <span class="text-sm text-gray-500 dark:text-gray-400">آخرین بروزرسانی:</span>
+                                  <span class="text-sm font-medium text-gray-700 dark:text-gray-300">
+                                      {{ new Date(selectedCourse.updated_at).toLocaleDateString('fa-IR') }}
+                                  </span>
+                              </div>
+                          </div>
+                      </div>
 
-                        <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
-                            <h3 class="font-medium text-gray-900 dark:text-gray-100 flex items-center gap-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                                </svg>
-                                آمار دوره
-                            </h3>
-                            <div class="mt-3 space-y-2">
-                                <div class="flex justify-between text-sm">
-                                    <span class="text-gray-500 dark:text-gray-400">تعداد زبان‌آموزان:</span>
-                                    <span class="text-gray-900 dark:text-gray-100">
-                                    {{ selectedCourse.users_count }} نفر
-                                </span>
-                                </div>
-                                <div class="flex justify-between text-sm">
-                                    <span class="text-gray-500 dark:text-gray-400">تعداد درس‌ها:</span>
-                                    <span class="text-gray-900 dark:text-gray-100">
-                                    {{ selectedCourse.course_lessons_count }} درس
-                                </span>
-                                </div>
-                                <div class="flex justify-between text-sm">
-                                    <span class="text-gray-500 dark:text-gray-400">تعداد آزمون‌ها:</span>
-                                    <span class="text-gray-900 dark:text-gray-100">
-                                    {{ selectedCourse.quizzes_count }} آزمون
-                                </span>
-                                </div>
-                            </div>
-                        </div>
+                      <!-- کارت آمار دوره -->
+                      <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 border border-gray-100 dark:border-gray-700">
+                          <h3 class="font-semibold text-lg text-gray-800 dark:text-gray-200 flex items-center gap-3 mb-4">
+                              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                              </svg>
+                              آمار دوره
+                          </h3>
+                          <div class="space-y-3">
+                              <div class="flex justify-between items-center py-2 border-b border-gray-100 dark:border-gray-700">
+                                  <span class="text-sm text-gray-500 dark:text-gray-400">تعداد زبان‌آموزان:</span>
+                                  <span class="text-sm font-medium text-gray-700 dark:text-gray-300">
+                                      {{ selectedCourse.users_count }} نفر
+                                  </span>
+                              </div>
+                              <div class="flex justify-between items-center py-2 border-b border-gray-100 dark:border-gray-700">
+                                  <span class="text-sm text-gray-500 dark:text-gray-400">تعداد درس‌ها:</span>
+                                  <span class="text-sm font-medium text-gray-700 dark:text-gray-300">
+                                      {{ selectedCourse.course_lessons_count }} درس
+                                  </span>
+                              </div>
+                              <div class="flex justify-between items-center py-2">
+                                  <span class="text-sm text-gray-500 dark:text-gray-400">تعداد آزمون‌ها:</span>
+                                  <span class="text-sm font-medium text-gray-700 dark:text-gray-300">
+                                      {{ selectedCourse.quizzes_count }} آزمون
+                                  </span>
+                              </div>
+                          </div>
+                      </div>
 
-                        <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
-                            <h3 class="font-medium text-gray-900 dark:text-gray-100 flex items-center gap-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                                </svg>
-                                پیش‌نمایش دوره
-                            </h3>
-                            <div class="mt-3">
-                                <div v-if="selectedCourse.trailer_url" class="aspect-w-16 aspect-h-9">
-                                    <iframe
-                                        class="w-full h-40 rounded-lg"
-                                        :src="selectedCourse.trailer_url.replace('watch?v=', 'embed/')"
-                                        frameborder="0"
-                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                        allowfullscreen
-                                    ></iframe>
-                                </div>
-                                <div v-else class="flex items-center justify-center h-40 bg-gray-100 dark:bg-gray-600 rounded-lg text-gray-400">
-                                    <span>پیش‌نمایشی برای این دوره وجود ندارد</span>
-                                </div>
-                            </div>
-                        </div>
+                      <!-- کارت پیش‌نمایش دوره -->
+                      <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 border border-gray-100 dark:border-gray-700">
+                          <h3 class="font-semibold text-lg text-gray-800 dark:text-gray-200 flex items-center gap-3 mb-4">
+                              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-purple-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                              </svg>
+                              پیش‌نمایش دوره
+                          </h3>
+                          <div class="mt-3 rounded-lg overflow-hidden">
+                              <div v-if="aparatEmbedUrl" class="relative pb-[56.25%] h-0 rounded-lg overflow-hidden bg-gray-100 dark:bg-gray-700">
+                                  <iframe
+                                      class="absolute top-0 left-0 w-full h-full"
+                                      :src="aparatEmbedUrl"
+                                      allow="autoplay"
+                                      allowfullscreen
+                                      webkitallowfullscreen
+                                      mozallowfullscreen
+                                      loading="lazy"
+                                  ></iframe>
+                              </div>
+                              <div v-else class="flex flex-col items-center justify-center h-48 bg-gray-100 dark:bg-gray-700 rounded-lg text-gray-400 p-4 text-center">
+                                  <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z" />
+                                  </svg>
+                                  <span class="text-sm">پیش‌نمایشی برای این دوره وجود ندارد</span>
+                              </div>
+                          </div>
+                      </div>
                     </div>
 
                     <div class="mt-6">
