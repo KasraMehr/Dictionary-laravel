@@ -343,11 +343,11 @@ const setLanguage = (lang) => {
                     </p>
 
                     <div class="flex flex-row justify-center gap-4 lg:justify-start">
-                        <a href="javascript:;" class="relative overflow-hidden group py-2.5 cursor-pointer px-5 h-9 block w-fit bg-gradient-to-r from-red-600 to-red-500 rounded-full shadow-lg text-xs font-medium text-white transition-all duration-300 hover:shadow-red-500/30 hover:to-red-600">
+                        <a :href="route('contactUs')" class="relative overflow-hidden group py-2.5 cursor-pointer px-5 h-9 block w-fit bg-gradient-to-r from-red-600 to-red-500 rounded-full shadow-lg text-xs font-medium text-white transition-all duration-300 hover:shadow-red-500/30 hover:to-red-600">
                             <span class="relative z-10">{{ $t('contact_us') }}</span>
                             <span class="absolute inset-0 bg-gradient-to-r from-red-700 to-red-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
                         </a>
-                        <a href="javascript:;" class="relative overflow-hidden group flex items-center justify-center gap-2 border border-red-600 rounded-full py-2 px-4 w-fit text-sm font-semibold text-red-600 transition-all duration-300 hover:text-white hover:border-transparent">
+                        <a :href="route('register')" class="relative overflow-hidden group flex items-center justify-center gap-2 border border-red-600 rounded-full py-2 px-4 w-fit text-sm font-semibold text-red-600 transition-all duration-300 hover:text-white hover:border-transparent">
                             <span class="relative z-10">{{ $t('subscribe') }}</span>
                             <span class="absolute inset-0 bg-red-600 rounded-full transform scale-0 group-hover:scale-100 transition-transform duration-300 origin-center z-0"></span>
                         </a>
@@ -429,7 +429,7 @@ const setLanguage = (lang) => {
                             </a>
                         </div>
                         <div>
-                            <a href="javascript:;" class="cursor-pointer text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors duration-300 flex items-center group">
+                            <a :href="route('PlacementTest')" class="cursor-pointer text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors duration-300 flex items-center group">
                                 <span class="w-1.5 h-1.5 bg-gray-400 rounded-full mx-2 group-hover:bg-red-500 transition-all duration-300"></span>
                                 {{ $t('placement_test') }}
                             </a>
