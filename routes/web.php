@@ -31,6 +31,7 @@ Route::get('/reports', [ReportController::class, 'statisticReport'])->name('repo
 Route::get('/library', [GeneralController::class, 'index'])->name('library');
 Route::get('/search', [GeneralController::class, 'search'])->name('search');
 Route::get('/daily-test', [GeneralController::class, 'DailyTest'])->name('DailyTest');
+Route::get('/placement-test', [GeneralController::class, 'PlacementTest'])->name('PlacementTest');
 Route::get('/daily-words', [GeneralController::class, 'DailyWords'])->name('DailyWords');
 
 // Communicate routes
