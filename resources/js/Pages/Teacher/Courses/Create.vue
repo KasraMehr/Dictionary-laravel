@@ -90,6 +90,7 @@
                                     <input
                                         id="topic"
                                         v-model="form.topic"
+                                        required
                                         class="mt-2 w-full rounded-md border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
                                         :error="form.errors.topic"
                                     />
@@ -121,7 +122,7 @@
                                 </div>
 
                                 <!-- نوع دوره و تصویر -->
-                                <div>
+                                <!-- <div>
                                   <label class="flex items-center space-x-2 space-x-reverse">
                                     <input
                                       type="checkbox"
@@ -129,10 +130,10 @@
                                       class="h-4 w-4 rounded text-indigo-600 focus:ring-indigo-500 border-gray-300 dark:border-gray-600 dark:bg-gray-700"
                                     />
                                     <span class="text-sm text-gray-700 dark:text-gray-300">دوره رایگان است</span>
-                                  </label>
+                                  </label> -->
 
                                   <!-- فیلد قیمت وقتی is_free false باشه -->
-                                  <Transition
+                                  <!-- <Transition
                                     enter-active-class="transition duration-300 ease-out"
                                     enter-from-class="opacity-0 max-h-0"
                                     enter-to-class="opacity-100 max-h-40"
@@ -150,7 +151,7 @@
                                       />
                                     </div>
                                   </Transition>
-                                </div>
+                                </div> -->
 
                                 <div class="md:col-span-2">
                                     <InputLabel for="thumbnail" value="تصویر دوره" />
