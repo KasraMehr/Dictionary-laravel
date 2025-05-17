@@ -6,7 +6,7 @@ import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 
 defineProps({
     terms: Boolean,
@@ -20,9 +20,27 @@ const form = useForm({
     password_confirmation: '',
     role: 'student',
     terms: false,
+    language_level: null
 });
 ref(false);
+
+onMounted(() => {
+    const testResults = JSON.parse(localStorage.getItem('placementTestResults'));
+    console.log('Test results from localStorage:', testResults);
+
+    if (testResults) {
+        form.language_level = testResults.level;
+        console.log('Form language_level updated:', form.language_level);
+    }
+});
+
 const submit = () => {
+  let languageLevel = form.language_level;
+
+  if (languageLevel) {
+      languageLevel = languageLevel * 100;
+      console.log('Adjusted language level:', languageLevel);
+  }
     form.post(route('register'), {
         onFinish: () => {
             form.reset('password', 'password_confirmation');
