@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use App\Models\StudentProfile;
+use App\Models\StudentProgress;
 
 class StudentDashboard extends Controller
 {
@@ -17,11 +18,11 @@ class StudentDashboard extends Controller
       {
           $user = Auth::user();
           $student = $user->studentProfile;
-          $progress = $user->progress;
+          $studentProgress = $user->studentProgress;
 
           return Inertia::render('Student/Dashboard', [
               'student' => $student,
-              'progress' => $progress,
+              'studentProgress' => $studentProgress,
               'quickActions' => $this->getQuickActions(),
               'activeCourses' => $this->getActiveCourses($user),
               'savedWords' => $this->getSavedWords($user),
@@ -118,19 +119,23 @@ class StudentDashboard extends Controller
               'activeDays' => $stats->active_days_streak ?? 0,
               'studyTime' => $this->formatStudyTime($stats->total_study_minutes ?? 0),
               'rank' => $stats->rank ?? 0,
-              'totalUsers' => 5000, // این مقدار می‌تواند از دیتابیس محاسبه شود
+              'totalUsers' => 5000,
           ];
       }
 
       protected function calculateUserLevel($user)
       {
-          $points = $user->points;
+          $progress = $user->studentProgress->first();
 
-          if ($points >= 2000) return 'C2';
-          if ($points >= 1500) return 'C1';
-          if ($points >= 1000) return 'B2';
-          if ($points >= 500) return 'B1';
-          if ($points >= 200) return 'A2';
+          if (!$progress) return 'A1';
+
+          $points = $progress->level;
+
+          if ($points >= 5) return 'C2';
+          if ($points >= 4) return 'C1';
+          if ($points >= 3) return 'B2';
+          if ($points >= 2) return 'B1';
+          if ($points >= 1) return 'A2';
           return 'A1';
       }
 
@@ -145,12 +150,12 @@ class StudentDashboard extends Controller
     {
       $user = Auth::user();
       $profile = $user->studentProfile;
-      $progress = $user->progress;
+      $studentProgress = $user->studentProgress;
 
       return inertia('Student/Profile', [
           'user' => $user,
           'studentProfile' => $profile,
-          'progress' => $progress
+          'studentProgress' => $studentProgress
       ]);
     }
 
