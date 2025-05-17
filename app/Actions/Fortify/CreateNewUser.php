@@ -12,6 +12,7 @@ use Laravel\Fortify\Contracts\CreatesNewUsers;
 use Laravel\Jetstream\Jetstream;
 use App\Rules\Recaptcha;
 use App\Models\StudentProfile;
+use App\Models\StudentProgress;
 
 class CreateNewUser implements CreatesNewUsers
 {
@@ -30,6 +31,7 @@ class CreateNewUser implements CreatesNewUsers
             'password' => $this->passwordRules(),
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
             'role' => ['required', 'in:student,teacher'],
+            'language_level' => ['nullable', 'integer'],
         ])->validate();
 
         return DB::transaction(function () use ($input) {
@@ -46,7 +48,7 @@ class CreateNewUser implements CreatesNewUsers
                 $this->createTeacher($user);
             }
             else if ($user->role === 'student'){
-                $this->createStudent($user);
+                $this->createStudent($user, $input['language_level'] ?? 1);
             }
 
             return $user;
@@ -80,13 +82,21 @@ class CreateNewUser implements CreatesNewUsers
         $user->teacher()->save($teacher);
     }
 
-    protected function createStudent(User $user): void
+    protected function createStudent(User $user, int $languageLevel = 0): void
     {
         $student = StudentProfile::forceCreate([
             'user_id' => $user->id,
         ]);
 
         $user->studentProfile()->save($student);
+
+        StudentProgress::create([
+          'user_id' => $user->id,
+          'level' => $languageLevel,
+          'xp' => $languageLevel * 100,
+          'lessons_completed' => 0,
+          'words_learned' => 0
+        ]);
     }
 
 }
