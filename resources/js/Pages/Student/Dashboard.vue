@@ -241,6 +241,8 @@ const props = defineProps({
     userLevel: String,
 });
 
+console.log(props.userLevel);
+
 const weeklyProgress = computed(() => {
     // این مقدار می‌تواند از سرور محاسبه شود
     return Math.min(100, Math.floor((usePage().props.auth.user.weekly_study_minutes || 0) / 300 * 100));
