@@ -130,6 +130,11 @@ class User extends Authenticatable
         return $this->hasOne(StudentProfile::class);
     }
 
+    public function studentProgress()
+    {
+        return $this->hasMany(StudentProgress::class);
+    }
+
     public function achievements(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'user_achievements', 'user_id', 'achievement_id');
