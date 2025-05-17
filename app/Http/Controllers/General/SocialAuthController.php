@@ -4,6 +4,7 @@ namespace App\Http\Controllers\General;
 
 use App\Http\Controllers\Controller;
 use App\Models\StudentProfile;
+use App\Models\StudentProgress;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
