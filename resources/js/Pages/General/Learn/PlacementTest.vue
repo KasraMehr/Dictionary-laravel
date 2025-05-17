@@ -241,9 +241,9 @@ export default {
       // منطق تعیین سطح بر اساس امتیاز
       if (this.score <= 7) return 0; // A1
       if (this.score <= 12) return 1; // A2
-      if (this.score <= 12) return 2; // B1
-      if (this.score <= 12) return 3; // B2
-      if (this.score <= 12) return 4; // C1
+      if (this.score <= 17) return 2; // B1
+      if (this.score <= 26) return 3; // B2
+      if (this.score <= 29) return 4; // C1
       return 5; // C2
     },
 
