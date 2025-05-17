@@ -55,9 +55,9 @@
           <!-- Questions -->
           <div v-else>
             <div class="mb-8" dir="ltr">
-              <div v-if="currentQuestionIndex > 9 && currentQuestionIndex < 15" class="text-sm font-medium text-gray-700 dark:text-gray-200 border p-2 rounded m-4">
+              <!-- <div v-if="currentQuestionIndex > 9 && currentQuestionIndex < 15" class="text-sm font-medium text-gray-700 dark:text-gray-200 border p-2 rounded m-4">
                 {{ readingPassage }}
-              </div>
+              </div> -->
               <h3 class="text-lg font-medium text-gray-800 dark:text-gray-100">{{ currentQuestion.text }}</h3>
             </div>
 
@@ -116,151 +116,55 @@ export default {
       selectedOption: null,
       score: 0,
       quizCompleted: false,
-      readingPassage: "My name is Anna. I live in London with my parents and my younger brother. I study biology at university. Every morning, I wake up at 7 and take the bus to my university. I enjoy reading books and cooking in my free time.",
+      // readingPassage: "My name is Anna. I live in London with my parents and my younger brother. I study biology at university. Every morning, I wake up at 7 and take the bus to my university. I enjoy reading books and cooking in my free time.",
       questions: [
-        {
-          text: "She _____ a doctor.",
-          options: ["is", "are", "am", "be"],
-          correctAnswer: 0,
-          answered: false
-        },
-        {
-          text: "I _____ to school every day.",
-          options: ["goes", "go", "going", "gone"],
-          correctAnswer: 1,
-          answered: false
-        },
-        {
-          text: "What time _____ you get up?",
-          options: ["do", "does", "are", "is"],
-          correctAnswer: 0,
-          answered: false
-        },
-        {
-          text: "They _____ from Spain.",
-          options: ["is", "are", "am", "be"],
-          correctAnswer: 1,
-          answered: false
-        },
-        {
-          text: "I have two _____ — a brother and a sister.",
-          options: ["child", "childrens", "children", "childs"],
-          correctAnswer: 2,
-          answered: false
-        },
-        {
-          text: "What is the opposite of 'hot'?",
-          options: ["warm", "cold", "dry", "cool"],
-          correctAnswer: 1,
-          answered: false
-        },
-        {
-          text: "We usually _____ dinner at 7 p.m.",
-          options: ["have", "has", "are having", "eating"],
-          correctAnswer: 0,
-          answered: false
-        },
-        {
-          text: "This is _____ book. It's not yours.",
-          options: ["my", "mine", "me", "I"],
-          correctAnswer: 0,
-          answered: false
-        },
-        {
-          text: "How _____ apples do you want?",
-          options: ["many", "much", "few", "any"],
-          correctAnswer: 0,
-          answered: false
-        },
-        {
-          text: "He _____ TV right now.",
-          options: ["watch", "watches", "is watching", "watching"],
-          correctAnswer: 2,
-          answered: false
-        },
-        {
-          text: "Where does Anna live?",
-          options: ["Paris", "London", "Rome", "Berlin"],
-          correctAnswer: 1,
-          answered: false
-        },
-        {
-          text: "What does Anna study?",
-          options: ["Chemistry", "Physics", "Biology", "Medicine"],
-          correctAnswer: 2,
-          answered: false
-        },
-        {
-          text: "How does she go to university?",
-          options: ["On foot", "By train", "By car", "By bus"],
-          correctAnswer: 3,
-          answered: false
-        },
-        {
-          text: "What does Anna enjoy?",
-          options: ["Swimming and running", "Cooking and reading", "Reading and driving", "Shopping and dancing"],
-          correctAnswer: 1,
-          answered: false
-        },
-        {
-          text: "What time does she wake up?",
-          options: ["8", "6", "7", "9"],
-          correctAnswer: 2,
-          answered: false
-        },
-        {
-          text: "I’ve never _____ to Japan.",
-          options: ["go", "went", "been", "gone"],
-          correctAnswer: 2,
-          answered: false
-        },
-        {
-          text: "If I _____ more money, I would travel the world.",
-          options: ["have", "had", "will have", "has"],
-          correctAnswer: 1,
-          answered: false
-        },
-        {
-          text: "The book _____ I read last week was amazing.",
-          options: ["which", "who", "where", "what"],
-          correctAnswer: 0,
-          answered: false
-        },
-        {
-          text: "She's interested _____ learning Spanish.",
-          options: ["for", "at", "in", "on"],
-          correctAnswer: 2,
-          answered: false
-        },
-        {
-          text: "I was tired, _____ I didn’t go out.",
-          options: ["or", "so", "because", "but"],
-          correctAnswer: 1,
-          answered: false
-        }
+        /* A1 - 3 سوال */
+        { text: "She _____ a doctor.", options: ["is", "are", "am", "be"], correctAnswer: 0, answered: false },
+        { text: "I _____ to school every day.", options: ["goes", "go", "going", "gone"], correctAnswer: 1, answered: false },
+        { text: "What time _____ you get up?", options: ["do", "does", "are", "is"], correctAnswer: 0, answered: false },
+
+        /* A2 - 4 سوال */
+        { text: "I have two _____ — a brother and a sister.", options: ["child", "childrens", "children", "childs"], correctAnswer: 2, answered: false },
+        { text: "What is the opposite of 'hot'?", options: ["warm", "cold", "dry", "cool"], correctAnswer: 1, answered: false },
+        { text: "They’ve lived here _____ 2015.", options: ["for", "since", "from", "ago"], correctAnswer: 1, answered: false },
+        { text: "Choose the correct question tag: “You’re coming, _____?”", options: ["aren’t you", "dont you", "aren’t they", "do you"], correctAnswer: 0, answered: false },
+
+        /* B1 - 5 سوال */
+        { text: "I’ve never _____ to Japan.", options: ["go", "went", "been", "gone"], correctAnswer: 2, answered: false },
+        { text: "If I _____ more money, I would travel the world.", options: ["have", "had", "will have", "has"], correctAnswer: 1, answered: false },
+        { text: "The book _____ I read last week was amazing.", options: ["which", "who", "where", "what"], correctAnswer: 0, answered: false },
+        { text: "She enjoys _____ science fiction novels.", options: ["read", "reading", "to read", "reads"], correctAnswer: 1, answered: false },
+        { text: "We usually _____ dinner at 7 p.m.", options: ["have", "has", "are having", "eating"], correctAnswer: 0, answered: false },
+
+        /* B2 - 6 سوال */
+        { text: "If I _____ known about the traffic, I _____ earlier.", options: ["had / would leave", "have / would have left", "had / would have left", "have / would leave"], correctAnswer: 2, answered: false },
+        { text: "Hardly _____ when the phone rang.", options: ["I sat down", "I had sat down", "did I sit down", "had I sat down"], correctAnswer: 3, answered: false },
+        { text: "She admitted _____ the vase.", options: ["to break", "breaking", "have broken", "to have broken"], correctAnswer: 3, answered: false },
+        { text: "It’s high time you _____ to bed.", options: ["go", "went", "had gone", "to go"], correctAnswer: 1, answered: false },
+        { text: "They insisted _____ early.", options: ["to arrive", "arriving", "on arriving", "have arrived"], correctAnswer: 2, answered: false },
+        { text: "Despite _____ so hard, he failed the exam.", options: ["study", "to study", "studying", "having studied"], correctAnswer: 2, answered: false },
+
+        /* C1 - 6 سوال */
+        { text: "Choose the best synonym for (ubiquitous):", options: ["rare", "everywhere", "small", "hidden"], correctAnswer: 1, answered: false },
+        { text: "What does the idiom “to kick the bucket” mean?", options: ["to start something", "to die", "to complain", "to succeed"], correctAnswer: 1, answered: false },
+        { text: "Select the correct collocation: “She has a _____ understanding of quantum physics.”", options: ["profound", "vague", "shallow", "minimal"], correctAnswer: 0, answered: false },
+        { text: "Which word best completes the sentence? “He was _____ by the beauty of the sunset.”", options: ["captured", "bemused", "captivated", "participated"], correctAnswer: 2, answered: false },
+        { text: "Identify the passive form: “They will finish the project by Monday.”", options: ["The project will be finished by Monday.", "The project will have been finished by Monday.", "The project has been finished by Monday.", "The project is being finished by Monday."], correctAnswer: 1, answered: false },
+        { text: "Choose the word that best fits: “Her speech was _____ and inspiring.”", options: ["eloquent", "inept", "coherent", "verbose"], correctAnswer: 0, answered: false },
+
+        /* C2 - 6 سوال بسیار سخت */
+        { text: "Identify the error: “Rarely he has been so surprised.”", options: ["Rarely has he been so surprised.", "He has rarely been so surprised.", "Rarely he is so surprised.", "He rarely has been so surprised."], correctAnswer: 0, answered: false },
+        { text: "Rewrite in reported speech: She said, “I might have missed the train.”", options: ["She said she might have missed the train.", "She said she might miss the train.", "She said she might have been missing the train.", "She said that she might had missed the train."], correctAnswer: 0, answered: false },
+        { text: "Choose the correct inversion: “Not only _____ the concert start on time, _____ we also enjoyed it.”", options: ["did / but", "did / and", "does / but", "do / so"], correctAnswer: 0, answered: false },
+        { text: "Select the sentence with correct use of the subjunctive:", options: ["I demand that she arrives early.", "I demand that she arrive early.", "I demand that she will arrive early.", "I demand that she is arriving early."], correctAnswer: 1, answered: false },
+        { text: "What is the most precise meaning of “antidisestablishmentarianism”?", options: ["Opposition to church-state separation", "Support for church-state separation", "A political movement in France", "A religious ceremony"], correctAnswer: 0, answered: false },
+        { text: "Find the synonym of “quixotic”:", options: ["pragmatic", "idealistic", "cynical", "realistic"], correctAnswer: 1, answered: false }
       ],
       levels: [
-        {
-          name: "تازه کار",
-          minScore: 0,
-          maxScore: 7,
-          color: "text-red-500",
-          description: "شما در سطح تازه کار هستید. نیاز به یادگیری پایه‌ای زبان دارید."
-        },
-        {
-          name: "مقدماتی",
-          minScore: 8,
-          maxScore: 14,
-          color: "text-yellow-500",
-          description: "شما در سطح مقدماتی هستید. می‌توانید جملات ساده را بفهمید و بسازید."
-        },
-        {
-          name: "متوسط",
-          minScore: 15,
-          maxScore: 20,
-          color: "text-green-500",
-          description: "شما در سطح متوسط هستید. دانش خوبی از زبان دارید."
-        }
+        { name: "تازه کار", minScore: 0, maxScore: 7, color: "text-red-500", description: "شما در سطح تازه کار هستید. نیاز به یادگیری پایه‌ای زبان دارید." },
+        { name: "مقدماتی", minScore: 8, maxScore: 14, color: "text-yellow-500", description: "شما در سطح مقدماتی هستید. می‌توانید جملات ساده را بفهمید و بسازید." },
+        { name: "متوسط", minScore: 15, maxScore: 20, color: "text-green-500", description: "شما در سطح متوسط هستید. دانش خوبی از زبان دارید." },
+        { name: "پیشرفته", minScore: 21, maxScore: 30, color: "text-blue-500", description: "شما در سطح پیشرفته هستید. می‌توانید مطالب پیچیده‌تر را درک کنید." }
       ]
     };
   },
@@ -308,6 +212,7 @@ export default {
         this.selectedOption = null;
       } else {
         this.quizCompleted = true;
+        this.saveTestResults();
       }
     },
 
@@ -318,13 +223,39 @@ export default {
       }
     },
 
+    saveTestResults() {
+      const finalLevel = this.calculateFinalLevel();
+
+      // اصلاح: ذخیره سطح به صورت عدد
+      localStorage.setItem('placementTestResults', JSON.stringify({
+        level: finalLevel, // عدد 1، 2 یا 3
+        score: this.score,
+        totalQuestions: this.questions.length,
+        testDate: new Date().toISOString()
+      }));
+
+      console.log('Saved level:', finalLevel);
+    },
+
+    calculateFinalLevel() {
+      // منطق تعیین سطح بر اساس امتیاز
+      if (this.score <= 7) return 0; // A1
+      if (this.score <= 12) return 1; // A2
+      if (this.score <= 12) return 2; // B1
+      if (this.score <= 12) return 3; // B2
+      if (this.score <= 12) return 4; // C1
+      return 5; // C2
+    },
+
     resetQuiz() {
       this.currentQuestionIndex = 0;
       this.selectedOption = null;
       this.score = 0;
       this.quizCompleted = false;
-      // reset answered status for all questions
       this.questions = this.questions.map(q => ({ ...q, answered: false }));
+
+      localStorage.removeItem('placementTestAnswers');
+      localStorage.removeItem('placementTestResults');
     }
   }
 };
