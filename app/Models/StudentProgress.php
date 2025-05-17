@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class StudentProgress extends Model
 {
     protected $fillable = [
-        'user_id', 'language_id', 'level', 'xp',
+        'user_id', 'level', 'xp',
         'lessons_completed', 'words_learned'
     ];
 
@@ -16,8 +16,13 @@ class StudentProgress extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function language()
+    public function studentProfile()
     {
-        return $this->belongsTo(Language::class);
+        return $this->belongsTo(StudentProfile::class);
     }
+
+    // public function language()
+    // {
+    //     return $this->belongsTo(Language::class);
+    // }
 }
