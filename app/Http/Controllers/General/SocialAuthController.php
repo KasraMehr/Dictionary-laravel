@@ -67,5 +67,17 @@ class SocialAuthController extends Controller
         StudentProfile::updateOrCreate(
             ['user_id' => $user->id],
         );
+
+        StudentProgress::updateOrCreate(
+        [
+          'user_id' => $user->id,
+        ],
+        [
+          'level' => 1,
+          'xp' => 0,
+          'lessons_completed' => 0,
+          'words_learned' => 0
+        ]
+      );
     }
 }
