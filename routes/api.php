@@ -6,6 +6,7 @@ use App\Http\Controllers\General\LearnController;
 use App\Http\Controllers\General\TranslateController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Models\StudentProgress;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -24,4 +25,24 @@ Route::post('/set-locale', function (Illuminate\Http\Request $request) {
         app()->setLocale($locale);
     }
     return response()->json(['message' => 'Language changed to ' . app()->getLocale()]);
+});
+
+Route::middleware('auth:sanctum')->post('/update-language-level', function (Request $request) {
+    $validated = $request->validate([
+        'level' => 'required|integer',
+    ]);
+
+    $progress = StudentProgress::updateOrCreate(
+        [
+            'user_id' => $request->user()->id,
+        ],
+        [
+            'level' => $validated['level'],
+        ]
+    );
+
+    return response()->json([
+        'success' => true,
+        'progress' => $progress
+    ]);
 });
