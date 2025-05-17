@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
+use App\Models\StudentProgress;
+
 
 class AuthenticatedSessionController extends Controller
 {
@@ -46,11 +48,22 @@ class AuthenticatedSessionController extends Controller
         $request->validate([
             'email' => 'required|string|email',
             'password' => 'required|string',
+            'language_level' => 'nullable|integer'
         ]);
 
         // Attempt to authenticate
         if (Auth::attempt($request->only('email', 'password'), $request->boolean('remember'))) {
             $request->session()->regenerate();
+
+            if ($user->role === 'student' && $request->language_level) {
+                StudentProgress::updateOrCreate(
+                    ['user_id' => $user->id],
+                    [
+                        'level' => $request->language_level * 100,
+                        'xp' => $request->language_level * 100
+                    ]
+                );
+            }
 
             return redirect()->intended(match(auth()->user()->role) {
                 'translator' => route('translator.dashboard'),
