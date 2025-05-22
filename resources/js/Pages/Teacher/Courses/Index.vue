@@ -339,7 +339,7 @@ const aparatEmbedUrl = computed(() => {
                                         </Link>
                                     </div>
                                     <p class="mt-2 text-gray-600 dark:text-gray-400">
-                                        {{ selectedCourse.description }}
+                                        {{ selectedCourse.topic }}
                                     </p>
                                 </div>
                             </div>
