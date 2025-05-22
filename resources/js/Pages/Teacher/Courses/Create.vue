@@ -301,9 +301,13 @@ const handleThumbnailChange = (event) => {
 };
 
 const submitForm = () => {
+    const options = {
+        forceFormData: true
+    };
+
     props.course
-        ? form.put(route('teacher.courses.update', props.course.id))
-        : form.post(route('teacher.courses.store'));
+        ? form.put(route('teacher.courses.update', props.course.id), options)
+        : form.post(route('teacher.courses.store'), options);
 };
 
 const cancelForm = () => {
