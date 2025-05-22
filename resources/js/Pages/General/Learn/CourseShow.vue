@@ -231,7 +231,7 @@ const showVideoModal = ref(false)
                             <div v-if="activeTab === 'instructor'" class="flex flex-col md:flex-row gap-6">
                                 <div class="md:w-1/4">
                                     <div class="backdrop-blur-md bg-white/70 dark:bg-gray-800/70 p-4 rounded-xl border border-white/20 dark:border-gray-700/50">
-                                        <img :src="`/storage/${course.instructor.profile_photo}`"
+                                        <img :src="`/storage/${course.instructor.profile_photo_path}`"
                                              :alt="course.instructor.name" class="w-full rounded-lg mb-4">
                                         <h4 class="text-lg font-bold text-gray-900 dark:text-white text-center">{{ course.instructor.name }}</h4>
                                         <p class="text-gray-600 dark:text-gray-400 text-center mb-4">{{ course.instructor.title }}</p>
