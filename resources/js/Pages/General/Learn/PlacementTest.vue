@@ -163,8 +163,8 @@ export default {
       levels: [
         { name: "تازه کار", minScore: 0, maxScore: 7, color: "text-red-500", description: "خب، معلومه که تازه راه افتادی! ولی اشکالی نداره، همه از همین‌جا شروع می‌کنن. با تمرین بیشتر خیلی زود پیشرفت می‌کنی :)" },
         { name: "A1", minScore: 8, maxScore: 14, color: "text-yellow-500", description: "تو الان در سطح A1 هستی. می‌تونی یه سری جمله ساده رو بفهمی یا بسازی. ادامه بده، راه می‌افتی!" },
-        { name: "A2", minScore: 15, maxScore: 20, color: "text-green-500", description: "دمت گرم! معلومه تلاش کردی. تو سطح A2 هستی و می‌تونی تو موقعیت‌های روزمره خودتو خوب برسونی." },
-        { name: "B1", minScore: 21, maxScore: 30, color: "text-blue-500", description: "آفرین! به سطح B1 رسیدی. دیگه کم‌کم می‌تونی مکالمه‌های طولانی‌تر و واقعی‌تر داشته باشی." },
+        { name: "A2", minScore: 15, maxScore: 18, color: "text-green-500", description: "دمت گرم! معلومه تلاش کردی. تو سطح A2 هستی و می‌تونی تو موقعیت‌های روزمره خودتو خوب برسونی." },
+        { name: "B1", minScore: 19, maxScore: 21, color: "text-blue-500", description: "آفرین! به سطح B1 رسیدی. دیگه کم‌کم می‌تونی مکالمه‌های طولانی‌تر و واقعی‌تر داشته باشی." },
         { name: "B2", minScore: 22, maxScore: 26, color: "text-blue-500", description: "خیلی خوبه! سطح B2 یعنی اینکه راحت می‌تونی درباره موضوعات مختلف حرف بزنی و مطالب نسبتا سخت رو هم بفهمی." },
         { name: "C1", minScore: 27, maxScore: 29, color: "text-blue-500", description: "تو واقعاً مسلطی! C1 یعنی می‌تونی خیلی راحت بخونی، بنویسی و حتی درباره چیزای پیچیده هم حرف بزنی." },
         { name: "C2", minScore: 30, maxScore: 30, color: "text-blue-500", description: "😮 واو! همه‌ی سوالا رو درست زدی؟! باید یه جا بهت مدرک بدن واقعاً! تو در سطح C2 هستی، یعنی مثل یه نیتیو واقعی. دمت گرم، شاهکار کردی! 👏🔥" }
