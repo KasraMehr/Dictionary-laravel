@@ -151,7 +151,7 @@ const resetFilters = () => {
                   <!-- Image with Gradient Overlay -->
                   <div class="relative h-48 overflow-hidden">
                     <img
-                      :src="course.thumbnail"
+                      :src="`/storage/${course.thumbnail}`"
                       :alt="course.title"
                       class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" @error="setDefaultImage"
                     >
