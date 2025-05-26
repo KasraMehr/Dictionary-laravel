@@ -9,6 +9,26 @@ import NavItem from '@/Components/NavItem.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import { useI18n } from 'vue-i18n';
 
+const isMobileMenuOpen = ref(false);
+const isLanguageMenuOpen = ref(false);
+
+const toggleMobileMenu = () => {
+    isMobileMenuOpen.value = !isMobileMenuOpen.value;
+    isLanguageMenuOpen.value = false;
+};
+
+const toggleLanguageMenu = () => {
+    isLanguageMenuOpen.value = !isLanguageMenuOpen.value;
+};
+
+// آیتم‌های منوی موبایل
+const mobileMenuItems = [
+    { icon: 'home', label: 'داشبورد', to: '/teacher/dashboard' },
+    { icon: 'book', label: 'دوره‌ها', to: '/teacher/courses' },
+    { icon: 'file-text', label: 'آزمون‌ها', to: '/teacher/quizzes' },
+    { icon: 'users', label: 'دانشجویان', to: '/teacher/students' },
+    { icon: 'file', label: 'منابع', to: '/teacher/resources' },
+];
 
 defineProps({
     title: String,
@@ -171,44 +191,117 @@ const logout = () => {
         </div>
     </aside>
     <!-- منوی پایینی موبایل -->
-    <div class="md:hidden fixed bottom-0 left-0 right-0 bg-white w-full dark:bg-gray-800 shadow-lg border-t border-gray-200 dark:border-gray-700 z-50">
-      <div class="flex justify-around py-2">
-        <!-- آیتم‌های منو -->
-        <NavItem
-          icon="home"
-          label="داشبورد"
-          to="/teacher/dashboard"
-          class="flex flex-col items-center text-xs p-2"
-        />
-        <NavItem
-          icon="book"
-          label="دوره‌ها"
-          to="/teacher/courses"
-          class="flex flex-col items-center text-xs p-2"
-        />
-        <NavItem
-          icon="file-text"
-          label="آزمون‌ها"
-          to="/teacher/quizzes"
-          class="flex flex-col items-center text-xs p-2"
-        />
-        <NavItem
-          icon="users"
-          label="دانشجویان"
-          to="/teacher/students"
-          class="flex flex-col items-center text-xs p-2"
-        />
-        <NavItem
-          icon="file"
-          label="منابع"
-          to="/teacher/resources"
-          class="flex flex-col items-center text-xs p-2"
-        />
+      <div class="md:hidden fixed top-0 left-0 right-0 bg-gray-100 dark:bg-gray-800 dark:text-gray-200 shadow-md border-b border-gray-200 dark:border-gray-700 z-50 mb-20">
+          <div class="flex justify-between items-center p-3">
+              <!-- لوگو یا عنوان -->
+              <div class="text-lg font-semibold text-gray-800 dark:text-white">
+                  پنل استاد
+              </div>
+
+              <!-- دکمه همبرگر -->
+              <button @click="toggleMobileMenu" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                  </svg>
+              </button>
+          </div>
+
+          <!-- منوی کشویی از بالا -->
+          <div v-show="isMobileMenuOpen" class="absolute top-16 left-0 right-0 bg-white dark:bg-gray-800 shadow-lg border-b border-gray-200 dark:border-gray-700 transition-all duration-300 ease-out"
+               :class="isMobileMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0 overflow-hidden'">
+              <div class="p-4 space-y-4">
+                  <!-- بخش پروفایل کاربر -->
+                  <div class="flex items-center space-x-3 p-2 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                      <img class="size-10 rounded-full object-cover border-2 border-red-600"
+                           :src="$page.props.auth.user.profile_photo_url"
+                           :alt="$page.props.auth.user.name">
+                      <div>
+                          <p class="font-medium text-gray-900 dark:text-white">{{ $page.props.auth.user.name }}</p>
+                          <p class="text-xs text-gray-500 dark:text-gray-400">{{ $page.props.auth.user.email }}</p>
+                      </div>
+                  </div>
+
+                  <!-- تنظیمات -->
+                  <div class="space-y-2">
+                      <!-- تغییر تم -->
+                      <button @click="toggleTheme" class="w-full flex items-center justify-between p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
+                        <span class="flex items-center">
+                          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path v-if="!isDarkMode" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                            <path v-else stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                          </svg>
+                          <span class="mx-2">{{ isDarkMode ? $t('light_mode') : $t('dark_mode') }}</span>
+                        </span>
+                                                <span class="relative inline-flex items-center h-6 rounded-full w-11 bg-gray-200 dark:bg-gray-600">
+                          <span class="inline-block w-4 h-4 transform transition duration-200 ease-in-out bg-white rounded-full shadow"
+                                :class="isDarkMode ?
+                                       (locale === 'fa' || locale === 'ar' ? '-translate-x-6' : 'translate-x-6') :
+                                       (locale === 'fa' || locale === 'ar' ? '-translate-x-1' : 'translate-x-1')"></span>
+                        </span>
+                      </button>
+
+                      <!-- تغییر زبان -->
+                      <button @click="toggleLanguageMenu" class="w-full flex items-center justify-between p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
+                         <span class="flex items-center">
+                           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+                           </svg>
+                           <span class="mx-2">{{ $t('language') }}</span>
+                         </span>
+                          <span class="text-gray-500 dark:text-gray-400 mx-2">{{ locale.toUpperCase() }}</span>
+                      </button>
+
+                      <!-- منوی زبان -->
+                      <div v-show="isLanguageMenuOpen" class="mx-8 space-y-1">
+                          <button v-for="lang in languages"
+                                  :key="lang.code"
+                                  @click="setLanguage(lang.code)"
+                                  class="w-full flex items-center p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"
+                                  :class="{ 'text-primary-600 dark:text-primary-400': lang.code === locale }">
+                              {{ lang.label.toUpperCase() }}
+                          </button>
+                      </div>
+                  </div>
+
+                  <!-- لینک‌های دیگر -->
+                  <div class="space-y-1">
+                      <Link :href="route('teacher.profile')" class="flex items-center p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
+                          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                          </svg>
+                          <span class="mx-2">{{ $t('profile') }}</span>
+                      </Link>
+
+                      <form @submit.prevent="logout" class="w-full">
+                          <button type="submit" class="w-full flex items-center p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 text-red-600">
+                              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                              </svg>
+                              <span class="mx-2">{{ $t('logout') }}</span>
+                          </button>
+                      </form>
+                  </div>
+              </div>
+          </div>
       </div>
-    </div>
+
+      <!-- منوی پایینی برای ناوبری اصلی -->
+      <div class="md:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 shadow-lg border-t border-gray-200 dark:border-gray-700 z-40">
+          <div class="flex justify-around py-2 px-1">
+              <NavItem
+                  v-for="item in mobileMenuItems"
+                  :key="item.to"
+                  :icon="item.icon"
+                  :label="item.label"
+                  :to="item.to"
+                  class="flex flex-col items-center text-xs p-2 rounded-lg transition-colors duration-200 hover:bg-gray-100 dark:hover:bg-gray-700"
+                  active-class="text-primary-600 dark:text-primary-400 bg-gray-100 dark:bg-gray-700"
+              />
+          </div>
+      </div>
 
     <!-- Main Content -->
-    <main class="flex-1 p-6 mb-20 md:mr-64">
+    <main class="flex-1 p-6 my-12 md:my-4 md:mr-64">
       <slot />
     </main>
   </div>
