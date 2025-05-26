@@ -124,7 +124,7 @@ export default {
         { text: "What time _____ you get up?", options: ["do", "does", "are", "is"], correctAnswer: 0, answered: false },
 
         /* A2 - 4 سوال */
-        { text: "I have two _____ — a brother and a sister.", options: ["child", "childrens", "children", "childs"], correctAnswer: 2, answered: false },
+        { text: "I have two _____, a son and a daughter.", options: ["child", "childrens", "children", "childs"], correctAnswer: 2, answered: false },
         { text: "What is the opposite of 'hot'?", options: ["warm", "cold", "dry", "cool"], correctAnswer: 1, answered: false },
         { text: "They’ve lived here _____ 2015.", options: ["for", "since", "from", "ago"], correctAnswer: 1, answered: false },
         { text: "Choose the correct question tag: “You’re coming, _____?”", options: ["aren’t you", "dont you", "aren’t they", "do you"], correctAnswer: 0, answered: false },
