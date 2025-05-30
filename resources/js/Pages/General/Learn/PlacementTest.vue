@@ -118,56 +118,46 @@ export default {
       quizCompleted: false,
       // readingPassage: "My name is Anna. I live in London with my parents and my younger brother. I study biology at university. Every morning, I wake up at 7 and take the bus to my university. I enjoy reading books and cooking in my free time.",
       questions: [
-        /* A1 - 3 سوال */
+        // A1 (2 questions)
         { text: "She _____ a doctor.", options: ["is", "are", "am", "be"], correctAnswer: 0, answered: false },
-        { text: "I _____ to school every day.", options: ["goes", "go", "going", "gone"], correctAnswer: 1, answered: false },
         { text: "What time _____ you get up?", options: ["do", "does", "are", "is"], correctAnswer: 0, answered: false },
 
-        /* A2 - 4 سوال */
-        { text: "I have two _____, a son and a daughter.", options: ["child", "childrens", "children", "childs"], correctAnswer: 2, answered: false },
+        // A2 (3 questions)
         { text: "What is the opposite of 'hot'?", options: ["warm", "cold", "dry", "cool"], correctAnswer: 1, answered: false },
         { text: "They’ve lived here _____ 2015.", options: ["for", "since", "from", "ago"], correctAnswer: 1, answered: false },
         { text: "Choose the correct question tag: “You’re coming, _____?”", options: ["aren’t you", "dont you", "aren’t they", "do you"], correctAnswer: 0, answered: false },
 
-        /* B1 - 5 سوال */
+        // B1 (4 questions)
         { text: "I’ve never _____ to Japan.", options: ["go", "went", "been", "gone"], correctAnswer: 2, answered: false },
         { text: "If I _____ more money, I would travel the world.", options: ["have", "had", "will have", "has"], correctAnswer: 1, answered: false },
-        { text: "The book _____ I read last week was amazing.", options: ["which", "who", "where", "what"], correctAnswer: 0, answered: false },
         { text: "She enjoys _____ science fiction novels.", options: ["read", "reading", "to read", "reads"], correctAnswer: 1, answered: false },
         { text: "We usually _____ dinner at 7 p.m.", options: ["have", "has", "are having", "eating"], correctAnswer: 0, answered: false },
 
-        /* B2 - 6 سوال */
+        // B2 (4 questions)
         { text: "If I _____ known about the traffic, I _____ earlier.", options: ["had / would leave", "have / would have left", "had / would have left", "have / would leave"], correctAnswer: 2, answered: false },
         { text: "Hardly _____ when the phone rang.", options: ["I sat down", "I had sat down", "did I sit down", "had I sat down"], correctAnswer: 3, answered: false },
-        { text: "She admitted _____ the vase.", options: ["to break", "breaking", "have broken", "to have broken"], correctAnswer: 3, answered: false },
         { text: "It’s high time you _____ to bed.", options: ["go", "went", "had gone", "to go"], correctAnswer: 1, answered: false },
         { text: "They insisted _____ early.", options: ["to arrive", "arriving", "on arriving", "have arrived"], correctAnswer: 2, answered: false },
-        { text: "Despite _____ so hard, he failed the exam.", options: ["study", "to study", "studying", "having studied"], correctAnswer: 2, answered: false },
 
-        /* C1 - 6 سوال */
+        // C1 (3 questions)
         { text: "Choose the best synonym for (ubiquitous):", options: ["rare", "everywhere", "small", "hidden"], correctAnswer: 1, answered: false },
-        { text: "What does the idiom “to kick the bucket” mean?", options: ["to start something", "to die", "to complain", "to succeed"], correctAnswer: 1, answered: false },
         { text: "Select the correct collocation: “She has a _____ understanding of quantum physics.”", options: ["profound", "vague", "shallow", "minimal"], correctAnswer: 0, answered: false },
-        { text: "Which word best completes the sentence? “He was _____ by the beauty of the sunset.”", options: ["captured", "bemused", "captivated", "participated"], correctAnswer: 2, answered: false },
         { text: "Identify the passive form: “They will finish the project by Monday.”", options: ["The project will be finished by Monday.", "The project will have been finished by Monday.", "The project has been finished by Monday.", "The project is being finished by Monday."], correctAnswer: 1, answered: false },
-        { text: "Choose the word that best fits: “Her speech was _____ and inspiring.”", options: ["eloquent", "inept", "coherent", "verbose"], correctAnswer: 0, answered: false },
 
-        /* C2 - 6 سوال بسیار سخت */
+        // C2 (4 questions)
         { text: "Identify the error: “Rarely he has been so surprised.”", options: ["Rarely has he been so surprised.", "He has rarely been so surprised.", "Rarely he is so surprised.", "He rarely has been so surprised."], correctAnswer: 0, answered: false },
-        { text: "Rewrite in reported speech: She said, “I might have missed the train.”", options: ["She said she might have missed the train.", "She said she might miss the train.", "She said she might have been missing the train.", "She said that she might had missed the train."], correctAnswer: 0, answered: false },
         { text: "Choose the correct inversion: “Not only _____ the concert start on time, _____ we also enjoyed it.”", options: ["did / but", "did / and", "does / but", "do / so"], correctAnswer: 0, answered: false },
         { text: "Select the sentence with correct use of the subjunctive:", options: ["I demand that she arrives early.", "I demand that she arrive early.", "I demand that she will arrive early.", "I demand that she is arriving early."], correctAnswer: 1, answered: false },
-        { text: "What is the most precise meaning of “antidisestablishmentarianism”?", options: ["Opposition to church-state separation", "Support for church-state separation", "A political movement in France", "A religious ceremony"], correctAnswer: 0, answered: false },
         { text: "Find the synonym of “quixotic”:", options: ["pragmatic", "idealistic", "cynical", "realistic"], correctAnswer: 1, answered: false }
       ],
       levels: [
-        { name: "تازه کار", minScore: 0, maxScore: 7, color: "text-red-500", description: "خب، معلومه که تازه راه افتادی! ولی اشکالی نداره، همه از همین‌جا شروع می‌کنن. با تمرین بیشتر خیلی زود پیشرفت می‌کنی :)" },
-        { name: "A1", minScore: 8, maxScore: 14, color: "text-yellow-500", description: "تو الان در سطح A1 هستی. می‌تونی یه سری جمله ساده رو بفهمی یا بسازی. ادامه بده، راه می‌افتی!" },
-        { name: "A2", minScore: 15, maxScore: 18, color: "text-green-500", description: "دمت گرم! معلومه تلاش کردی. تو سطح A2 هستی و می‌تونی تو موقعیت‌های روزمره خودتو خوب برسونی." },
-        { name: "B1", minScore: 19, maxScore: 21, color: "text-blue-500", description: "آفرین! به سطح B1 رسیدی. دیگه کم‌کم می‌تونی مکالمه‌های طولانی‌تر و واقعی‌تر داشته باشی." },
-        { name: "B2", minScore: 22, maxScore: 26, color: "text-blue-500", description: "خیلی خوبه! سطح B2 یعنی اینکه راحت می‌تونی درباره موضوعات مختلف حرف بزنی و مطالب نسبتا سخت رو هم بفهمی." },
-        { name: "C1", minScore: 27, maxScore: 29, color: "text-blue-500", description: "تو واقعاً مسلطی! C1 یعنی می‌تونی خیلی راحت بخونی، بنویسی و حتی درباره چیزای پیچیده هم حرف بزنی." },
-        { name: "C2", minScore: 30, maxScore: 30, color: "text-blue-500", description: "😮 واو! همه‌ی سوالا رو درست زدی؟! باید یه جا بهت مدرک بدن واقعاً! تو در سطح C2 هستی، یعنی مثل یه نیتیو واقعی. دمت گرم، شاهکار کردی! 👏🔥" }
+        { name: "تازه کار", minScore: 0, maxScore: 4, color: "text-red-500", description: "خب، معلومه که تازه راه افتادی! ولی اشکالی نداره، همه از همین‌جا شروع می‌کنن. با تمرین بیشتر خیلی زود پیشرفت می‌کنی :)" },
+        { name: "A1", minScore: 5, maxScore: 6, color: "text-yellow-500", description: "تو الان در سطح A1 هستی. می‌تونی یه سری جمله ساده رو بفهمی یا بسازی. ادامه بده، راه می‌افتی!" },
+        { name: "A2", minScore: 7, maxScore: 9, color: "text-green-500", description: "دمت گرم! معلومه تلاش کردی. تو سطح A2 هستی و می‌تونی تو موقعیت‌های روزمره خودتو خوب برسونی." },
+        { name: "B1", minScore: 10, maxScore: 12, color: "text-blue-500", description: "آفرین! به سطح B1 رسیدی. دیگه کم‌کم می‌تونی مکالمه‌های طولانی‌تر و واقعی‌تر داشته باشی." },
+        { name: "B2", minScore: 13, maxScore: 15, color: "text-blue-500", description: "خیلی خوبه! سطح B2 یعنی اینکه راحت می‌تونی درباره موضوعات مختلف حرف بزنی و مطالب نسبتا سخت رو هم بفهمی." },
+        { name: "C1", minScore: 16, maxScore: 18, color: "text-blue-500", description: "تو واقعاً مسلطی! C1 یعنی می‌تونی خیلی راحت بخونی، بنویسی و حتی درباره چیزای پیچیده هم حرف بزنی." },
+        { name: "C2", minScore: 19, maxScore: 20, color: "text-blue-500", description: "😮 واو! همه‌ی سوالا رو درست زدی؟! باید یه جا بهت مدرک بدن واقعاً! تو در سطح C2 هستی، یعنی مثل یه نیتیو واقعی. دمت گرم، شاهکار کردی! 👏🔥" }
       ]
     };
   },
@@ -242,11 +232,11 @@ export default {
 
     calculateFinalLevel() {
       // منطق تعیین سطح بر اساس امتیاز
-      if (this.score <= 7) return 0; // A1
-      if (this.score <= 12) return 1; // A2
-      if (this.score <= 17) return 2; // B1
-      if (this.score <= 26) return 3; // B2
-      if (this.score <= 29) return 4; // C1
+      if (this.score <= 6) return 0; // A1
+      if (this.score <= 9) return 1; // A2
+      if (this.score <= 12) return 2; // B1
+      if (this.score <= 15) return 3; // B2
+      if (this.score <= 18) return 4; // C1
       return 5; // C2
     },
 
