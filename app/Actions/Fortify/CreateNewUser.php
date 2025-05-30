@@ -48,7 +48,7 @@ class CreateNewUser implements CreatesNewUsers
                 $this->createTeacher($user);
             }
             else if ($user->role === 'student'){
-                $this->createStudent($user, $input['language_level'] ?? 1);
+                $this->createStudent($user, $input['language_level'] ?? 0);
             }
 
             return $user;

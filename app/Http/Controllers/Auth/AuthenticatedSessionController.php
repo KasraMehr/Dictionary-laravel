@@ -4,10 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
-use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
@@ -51,27 +49,25 @@ class AuthenticatedSessionController extends Controller
             'language_level' => 'nullable|integer'
         ]);
 
-        // Attempt to authenticate
         if (Auth::attempt($request->only('email', 'password'), $request->boolean('remember'))) {
             $request->session()->regenerate();
+            $user = auth()->user();
 
             if ($user->role === 'student' && $request->language_level) {
                 StudentProgress::updateOrCreate(
                     ['user_id' => $user->id],
                     [
-                        'level' => $request->language_level * 100,
-                        'xp' => $request->language_level * 100
+                        'level' => $request->language_level,
                     ]
                 );
             }
 
-            return redirect()->intended(match(auth()->user()->role) {
+            return redirect()->intended(match($user->role) {
                 'translator' => route('translator.dashboard'),
                 'teacher' => route('teacher.dashboard'),
                 'student' => route('student.dashboard'),
                 default => '/landing'
             });
-
         }
 
         throw ValidationException::withMessages([
