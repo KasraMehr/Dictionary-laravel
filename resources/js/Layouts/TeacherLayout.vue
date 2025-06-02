@@ -287,14 +287,14 @@ const logout = () => {
 
       <!-- منوی پایینی برای ناوبری اصلی -->
       <div class="md:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 shadow-lg border-t border-gray-200 dark:border-gray-700 z-40">
-          <div class="flex justify-around py-2 px-1">
+          <div class="flex justify-between py-2 px-1 overflow-x-auto">
               <NavItem
                   v-for="item in mobileMenuItems"
                   :key="item.to"
                   :icon="item.icon"
                   :label="item.label"
                   :to="item.to"
-                  class="flex flex-col items-center text-xs p-2 rounded-lg transition-colors duration-200 hover:bg-gray-100 dark:hover:bg-gray-700"
+                  class="flex flex-col items-center text-[10px] p-1 min-w-[60px] rounded-lg transition-colors duration-200 hover:bg-gray-100 dark:hover:bg-gray-700"
                   active-class="text-primary-600 dark:text-primary-400 bg-gray-100 dark:bg-gray-700"
               />
           </div>
