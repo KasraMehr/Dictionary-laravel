@@ -98,7 +98,7 @@ const aparatEmbedUrl = computed(() => {
           </div>
 
             <!-- لیست کارت‌ها برای موبایل -->
-            <div class="sm:hidden space-y-3">
+            <div class="xl:hidden space-y-3">
                 <div
                     v-for="course in courses"
                     :key="course.id"
@@ -197,7 +197,7 @@ const aparatEmbedUrl = computed(() => {
             </div>
 
             <!-- جدول برای دسکتاپ -->
-            <div class="w-full overflow-x-auto sm:block hidden bg-white dark:bg-gray-900 rounded-lg shadow border border-gray-200 dark:border-gray-700">
+            <div class="w-full overflow-x-auto xl:block hidden bg-white dark:bg-gray-900 rounded-lg shadow border border-gray-200 dark:border-gray-700">
                 <table class="min-w-full table-fixed divide-y divide-gray-200 dark:divide-gray-700">
                     <thead class="bg-gray-50 dark:bg-gray-900">
                     <tr>
