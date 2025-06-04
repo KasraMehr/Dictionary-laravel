@@ -19,5 +19,4 @@ class Dashboard extends Page
             GlobalStatsChart::class,
         ];
     }
-
 }

@@ -11,13 +11,10 @@ use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
 
-
 class TeamController extends Controller
 {
     /**
      * Displays a list of teams along with their owner, users, categories, and word counts.
-     *
-     * @return Response
      */
     public function index(): Response
     {
@@ -37,21 +34,16 @@ class TeamController extends Controller
 
     /**
      * Sends a join request for the authenticated user to a team.
-     *
-     * @param Team $team
-     * @return JsonResponse
      */
     public function sendJoinRequest(Team $team): JsonResponse
     {
         $team->users()->syncWithoutDetaching([auth()->id()]);
-      return response()->json(['message' => 'join request has been sent successfully']);
+
+        return response()->json(['message' => 'join request has been sent successfully']);
     }
 
     /**
      * Allows a user to leave a team (The owner of the team cannot leave).
-     *
-     * @param Team $team
-     * @return JsonResponse
      */
     public function leave(Team $team): JsonResponse
     {
@@ -68,9 +60,6 @@ class TeamController extends Controller
 
     /**
      * Retrieves all words associated with a team, including their categories and media URLs.
-     *
-     * @param Team $team
-     * @return Response
      */
     public function team_words(Team $team): Response
     {
@@ -78,80 +67,71 @@ class TeamController extends Controller
         $categories = $team->categories()->get();
 
         $words->transform(function ($word) {
-          $word->image_url = $word->image ? Storage::disk('liara')->url($word->image) : null;
-          $word->voice_url = $word->voice ? Storage::disk('liara')->url($word->voice) : null;
-          return $word;
+            $word->image_url = $word->image ? Storage::disk('liara')->url($word->image) : null;
+            $word->voice_url = $word->voice ? Storage::disk('liara')->url($word->voice) : null;
+
+            return $word;
         });
 
         return Inertia::render('Translator/Words/Index', [
-          'words' => $words,
-          'categories' => $categories,
-          'team' => [
-              'id' => $team->id,
-              'name' => $team->name,
-          ],
+            'words' => $words,
+            'categories' => $categories,
+            'team' => [
+                'id' => $team->id,
+                'name' => $team->name,
+            ],
         ]);
     }
 
     /**
      * Adds a word to a team's collection if it doesn't already exist.
-     *
-     * @param Request $request
-     * @param Team $team
-     * @return JsonResponse
      */
     public function addWordToTeam(Request $request, Team $team): JsonResponse
     {
-      $request->validate([
-        'word_id' => 'required|exists:words,id',
-      ]);
+        $request->validate([
+            'word_id' => 'required|exists:words,id',
+        ]);
 
-      if (!$team->words()->where('word_id', $request->word_id)->exists()) {
-        $team->words()->attach($request->word_id);
-      }
+        if (! $team->words()->where('word_id', $request->word_id)->exists()) {
+            $team->words()->attach($request->word_id);
+        }
 
-      //event(new WordAdded($team->id, $request->word_id));
+        // event(new WordAdded($team->id, $request->word_id));
 
-      return response()->json(['message' => 'Word added to team successfully']);
+        return response()->json(['message' => 'Word added to team successfully']);
     }
 
     /**
      * Retrieves all categories associated with a team along with their word count.
-     *
-     * @param Team $team
-     * @return Response
      */
     public function team_categories(Team $team): Response
     {
-      $categories = $team->categories()->withCount('words')->get();
-      return Inertia::render('Translator/Words/categories', [
-        'categories' => $categories,
-        'team' => [
-            'id' => $team->id,
-            'name' => $team->name,
-        ],
-      ]);
+        $categories = $team->categories()->withCount('words')->get();
+
+        return Inertia::render('Translator/Words/categories', [
+            'categories' => $categories,
+            'team' => [
+                'id' => $team->id,
+                'name' => $team->name,
+            ],
+        ]);
     }
 
     /**
      * Adds a category to a team if it doesn't already exist.
-     *
-     * @param Request $request
-     * @param Team $team
-     * @return JsonResponse
      */
     public function addCategory(Request $request, Team $team): JsonResponse
     {
         $request->validate([
-          'category_id' => 'required|exists:categories,id',
+            'category_id' => 'required|exists:categories,id',
         ]);
 
-        if (!$team->categories()->where('categories.id', $request->category_id)->exists()) {
-          $team->categories()->attach($request->category_id);
+        if (! $team->categories()->where('categories.id', $request->category_id)->exists()) {
+            $team->categories()->attach($request->category_id);
         }
 
-        //event(new CategoryAdded($team->id, $request->category_id));
+        // event(new CategoryAdded($team->id, $request->category_id));
 
         return response()->json(['message' => 'Category added to team successfully']);
-      }
+    }
 }

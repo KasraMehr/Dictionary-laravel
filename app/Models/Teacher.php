@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Teacher extends Model
 {
@@ -21,7 +21,7 @@ class Teacher extends Model
         'teaching_methods',
         'phone',
         'website',
-        'location'
+        'location',
     ];
 
     protected $casts = [
@@ -41,8 +41,9 @@ class Teacher extends Model
         return Attribute::make(
             get: function () {
                 if ($this->profile_photo_path) {
-                    return asset('storage/' . $this->profile_photo_path);
+                    return asset('storage/'.$this->profile_photo_path);
                 }
+
                 return asset('images/default-profile.jpg');
             }
         );

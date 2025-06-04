@@ -4,9 +4,6 @@ namespace App\Events;
 
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Broadcasting\PresenceChannel;
-use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
@@ -15,6 +12,7 @@ class MouseMove
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $userId;
+
     public $position;
 
     /**
@@ -22,8 +20,8 @@ class MouseMove
      */
     public function __construct()
     {
-      $this->userId = $userId;
-      $this->position = $position;
+        $this->userId = $userId;
+        $this->position = $position;
     }
 
     /**
@@ -34,7 +32,7 @@ class MouseMove
     public function broadcastOn(): array
     {
         return [
-            new Channel('team.' . $this->userId),
+            new Channel('team.'.$this->userId),
         ];
     }
 }

@@ -21,7 +21,7 @@ return new class extends Migration
                 '-', 'noun', 'pronoun', 'verb', 'adjective', 'adverb', 'preposition', 'conjunction',
                 'interjection', 'article', 'determiner', 'numeral', 'auxiliary verb',
                 'modal verb', 'participle', 'gerund', 'infinitive', 'possessive pronoun',
-                'relative pronoun','demonstrative pronoun','reflexive pronoun','reciprocal pronoun','intensive pronoun'
+                'relative pronoun', 'demonstrative pronoun', 'reflexive pronoun', 'reciprocal pronoun', 'intensive pronoun',
             ])->default('-');
             $table->string('voice')->nullable();
             $table->string('image')->nullable();

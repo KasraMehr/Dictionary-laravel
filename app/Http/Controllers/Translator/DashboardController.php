@@ -15,8 +15,6 @@ class DashboardController extends Controller
 {
     /**
      * Displays a chart with information about users, words and teams.
-     *
-     * @return Response
      */
     public function index(): Response
     {
@@ -49,6 +47,7 @@ class DashboardController extends Controller
             ->get()
             ->map(function ($user) {
                 $user->formatted_created_at = $user->created_at->format('d/m/Y');
+
                 return $user;
             })
             ->toArray();
@@ -62,8 +61,6 @@ class DashboardController extends Controller
 
     /**
      * returns the chart data over the past month.
-     *
-     * @return JsonResponse
      */
     public function getChartData(): JsonResponse
     {
@@ -105,7 +102,7 @@ class DashboardController extends Controller
             $dates[$dateStr] = [
                 'users' => $users[$dateStr] ?? 0,
                 'words' => $words[$dateStr] ?? 0,
-                'teams' => $teams[$dateStr] ?? 0
+                'teams' => $teams[$dateStr] ?? 0,
             ];
             $currentDate->addDay();
         }

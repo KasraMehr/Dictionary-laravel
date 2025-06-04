@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Teacher;
 
 use App\Http\Controllers\Controller;
-use App\Models\Resource;
 use App\Models\Course;
+use App\Models\Resource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -13,7 +13,7 @@ class ResourceController extends Controller
     public function index(Request $request)
     {
         $resources = Resource::with('course')
-            ->when($request->course_id, fn($q) => $q->where('course_id', $request->course_id))
+            ->when($request->course_id, fn ($q) => $q->where('course_id', $request->course_id))
             ->latest()
             ->paginate(12);
 
@@ -22,14 +22,14 @@ class ResourceController extends Controller
         return inertia('Teacher/Resources/Index', [
             'resources' => $resources,
             'courses' => $courses,
-            'filters' => $request->only(['course_id'])
+            'filters' => $request->only(['course_id']),
         ]);
     }
 
     public function create()
     {
         return inertia('Teacher/Resources/Create', [
-            'courses' => Course::pluck('title', 'id')
+            'courses' => Course::pluck('title', 'id'),
         ]);
     }
 
@@ -39,7 +39,7 @@ class ResourceController extends Controller
             'title' => 'required|string|max:255',
             'course_id' => 'nullable|exists:courses,id',
             'description' => 'nullable|string',
-            'file' => 'required|file|mimes:pdf,doc,docx,ppt,pptx,xls,xlsx,zip,mp4,mov,avi|max:20480' // 20MB
+            'file' => 'required|file|mimes:pdf,doc,docx,ppt,pptx,xls,xlsx,zip,mp4,mov,avi|max:20480', // 20MB
         ]);
 
         if ($request->hasFile('file')) {
@@ -58,7 +58,7 @@ class ResourceController extends Controller
     {
         return inertia('Teacher/Resources/Edit', [
             'resource' => $resource,
-            'courses' => Course::pluck('title', 'id')
+            'courses' => Course::pluck('title', 'id'),
         ]);
     }
 
@@ -68,7 +68,7 @@ class ResourceController extends Controller
             'title' => 'required|string|max:255',
             'course_id' => 'nullable|exists:courses,id',
             'description' => 'nullable|string',
-            'file' => 'nullable|file|mimes:pdf,doc,docx,ppt,pptx,xls,xlsx,zip,mp4,mov,avi|max:20480'
+            'file' => 'nullable|file|mimes:pdf,doc,docx,ppt,pptx,xls,xlsx,zip,mp4,mov,avi|max:20480',
         ]);
 
         if ($request->hasFile('file')) {

@@ -4,9 +4,6 @@ namespace App\Events;
 
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Broadcasting\PresenceChannel;
-use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
@@ -15,8 +12,11 @@ class EditText
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $userId;
+
     public $documentId;
+
     public $sectionId;
+
     public $text;
 
     /**
@@ -24,10 +24,10 @@ class EditText
      */
     public function __construct()
     {
-      $this->userId = $userId;
-      $this->documentId = $documentId;
-      $this->sectionId = $sectionId;
-      $this->text = $text;
+        $this->userId = $userId;
+        $this->documentId = $documentId;
+        $this->sectionId = $sectionId;
+        $this->text = $text;
     }
 
     /**
@@ -38,7 +38,7 @@ class EditText
     public function broadcastOn(): array
     {
         return [
-            new Channel('document.' . $this->documentId),
+            new Channel('document.'.$this->documentId),
         ];
     }
 }

@@ -6,11 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Models\StudentProfile;
 use App\Models\StudentProgress;
 use App\Models\Teacher;
-use Illuminate\Http\Request;
-use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Laravel\Socialite\Facades\Socialite;
 
 class SocialAuthController extends Controller
 {
@@ -70,15 +70,15 @@ class SocialAuthController extends Controller
         );
 
         StudentProgress::updateOrCreate(
-        [
-          'user_id' => $user->id,
-        ],
-        [
-          'level' => 1,
-          'xp' => 0,
-          'lessons_completed' => 0,
-          'words_learned' => 0
-        ]
-      );
+            [
+                'user_id' => $user->id,
+            ],
+            [
+                'level' => 1,
+                'xp' => 0,
+                'lessons_completed' => 0,
+                'words_learned' => 0,
+            ]
+        );
     }
 }

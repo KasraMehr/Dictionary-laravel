@@ -17,8 +17,6 @@ class WordController extends Controller
 {
     /**
      * Displays words along with their categories, also gets the files from liara bucket.
-     *
-     * @return Response
      */
     public function index(): Response
     {
@@ -28,6 +26,7 @@ class WordController extends Controller
         $words->transform(function ($word) {
             $word->image_url = $word->image ? Storage::disk('liara')->url($word->image) : null;
             $word->voice_url = $word->voice ? Storage::disk('liara')->url($word->voice) : null;
+
             return $word;
         });
 
@@ -39,12 +38,6 @@ class WordController extends Controller
 
     /**
      * Shows a specific word along with its categories.
-     *
-     * @param Request $request
-     * @param string $lang1
-     * @param string $lang2
-     * @param string $word
-     * @return Response
      */
     public function show(Request $request, string $lang1, string $lang2, string $word): Response
     {
@@ -60,15 +53,12 @@ class WordController extends Controller
         return Inertia::render('Translator/Words/Word', [
             'word' => $word,
             'dailyWords' => $dailyWords,
-            'synonyms' => $synonyms
+            'synonyms' => $synonyms,
         ]);
     }
 
     /**
      * validates the word.
-     *
-     * @param Request $request
-     * @return array
      */
     private function validateWord(Request $request): array
     {
@@ -84,44 +74,42 @@ class WordController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param Request $request
-     * @return JsonResponse
      */
     public function store(Request $request): JsonResponse
     {
 
         try {
             $validated = $request->validate([
-                'word'          => 'required|string|max:255',
-                'meaning'       => 'required|string|max:1000',
-                'level'         => 'required|in:A1,A2,B1,B2,C1,C2,-',
-                'grammar'       => 'required|in:-,noun,pronoun,verb,adjective,adverb,preposition,conjunction,interjection,article,determiner,numeral,auxiliary verb,modal verb,participle,gerund,infinitive,possessive pronoun,relative pronoun,demonstrative pronoun,reflexive pronoun,reciprocal pronoun,intensive pronoun',
+                'word' => 'required|string|max:255',
+                'meaning' => 'required|string|max:1000',
+                'level' => 'required|in:A1,A2,B1,B2,C1,C2,-',
+                'grammar' => 'required|in:-,noun,pronoun,verb,adjective,adverb,preposition,conjunction,interjection,article,determiner,numeral,auxiliary verb,modal verb,participle,gerund,infinitive,possessive pronoun,relative pronoun,demonstrative pronoun,reflexive pronoun,reciprocal pronoun,intensive pronoun',
                 'pronunciation' => 'nullable|string|max:255',
-                'description'   => 'nullable|string|max:2000',
-                'voice'         => 'nullable|mimetypes:audio/wav,audio/x-wav,audio/mpeg,audio/ogg,audio/webm,video/webm',
-                'image'         => 'nullable|mimes:jpg,jpeg,png',
-                'categories'    => 'nullable|string',
+                'description' => 'nullable|string|max:2000',
+                'voice' => 'nullable|mimetypes:audio/wav,audio/x-wav,audio/mpeg,audio/ogg,audio/webm,video/webm',
+                'image' => 'nullable|mimes:jpg,jpeg,png',
+                'categories' => 'nullable|string',
             ]);
 
             $voicePath = $request->hasFile('voice') ? $request->file('voice')->store('voices', 'liara') : null;
             $imagePath = $request->hasFile('image') ? $request->file('image')->store('images', 'liara') : null;
 
             $word = Word::create([
-                'word'          => $validated['word'],
-                'meaning'       => $validated['meaning'],
+                'word' => $validated['word'],
+                'meaning' => $validated['meaning'],
                 'level' => $validated['level'] ?? '-',
                 'grammar' => $validated['grammar'] ?? '-',
                 'pronunciation' => $validated['pronunciation'] ?? null,
-                'description'   => $validated['description'] ?? null,
-                'voice'         => $voicePath,
-                'image'         => $imagePath,
-                'user_id'       => auth()->id(),
+                'description' => $validated['description'] ?? null,
+                'voice' => $voicePath,
+                'image' => $imagePath,
+                'user_id' => auth()->id(),
             ]);
 
             return response()->json(['message' => 'Word created successfully', 'word' => $word], 201);
         } catch (\Exception $e) {
             Log::error('Error in WordController@store', ['error' => $e->getMessage()]);
+
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
@@ -129,21 +117,19 @@ class WordController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
      * @param  int  $id
-     * @return JsonResponse
      */
     public function update(Request $request, $id): JsonResponse
     {
         $request->validate([
-            'word'               => 'required|string|max:255',
-            'meaning'            => 'required|string|max:1000',
-            'level'         => 'required|in:A1,A2,B1,B2,C1,C2,-',
-            'grammar'       => 'required|in:-,noun,pronoun,verb,adjective,adverb,preposition,conjunction,interjection,article,determiner,numeral,auxiliary verb,modal verb,participle,gerund,infinitive,possessive pronoun,relative pronoun,demonstrative pronoun,reflexive pronoun,reciprocal pronoun,intensive pronoun',
-            'pronunciation'      => 'nullable|string|max:1000',
-            'voice'              => 'nullable|mimetypes:audio/wav,audio/x-wav,audio/mpeg,audio/ogg,audio/webm,video/webm',
-            'image'              => 'nullable|mimes:jpg,jpeg,png',
-            'description'        => 'nullable|string|max:2000',
+            'word' => 'required|string|max:255',
+            'meaning' => 'required|string|max:1000',
+            'level' => 'required|in:A1,A2,B1,B2,C1,C2,-',
+            'grammar' => 'required|in:-,noun,pronoun,verb,adjective,adverb,preposition,conjunction,interjection,article,determiner,numeral,auxiliary verb,modal verb,participle,gerund,infinitive,possessive pronoun,relative pronoun,demonstrative pronoun,reflexive pronoun,reciprocal pronoun,intensive pronoun',
+            'pronunciation' => 'nullable|string|max:1000',
+            'voice' => 'nullable|mimetypes:audio/wav,audio/x-wav,audio/mpeg,audio/ogg,audio/webm,video/webm',
+            'image' => 'nullable|mimes:jpg,jpeg,png',
+            'description' => 'nullable|string|max:2000',
             'selectedCategories' => 'nullable|string',
         ]);
 
@@ -168,7 +154,7 @@ class WordController extends Controller
 
         if ($request->selectedCategories) {
             $categories = json_decode($request->selectedCategories, true);
-            if (!is_array($categories)) {
+            if (! is_array($categories)) {
                 return response()->json(['error' => 'categories format is wrong'], 400);
             }
             $word->categories()->sync($categories);
@@ -181,7 +167,6 @@ class WordController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return JsonResponse
      */
     public function destroy($id): JsonResponse
     {
@@ -199,5 +184,4 @@ class WordController extends Controller
 
         return response()->json(['message' => 'word deleted successfully']);
     }
-
 }

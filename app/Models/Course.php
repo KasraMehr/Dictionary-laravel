@@ -4,14 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Course extends Model
 {
     protected $fillable = ['title', 'slug', 'trailer_url', 'description', 'level', 'topic',
-     'is_free', 'thumbnail', 'language', 'duration_minutes', 'status', 'lessons_count',
-        'students_count', 'price', 'certificate_template', 'created_by' ];
+        'is_free', 'thumbnail', 'language', 'duration_minutes', 'status', 'lessons_count',
+        'students_count', 'price', 'certificate_template', 'created_by'];
 
     public function users(): BelongsToMany
     {
@@ -24,7 +24,7 @@ class Course extends Model
                 'completed_at',
                 'rating',
                 'review',
-                'last_accessed_at'
+                'last_accessed_at',
             ]);
     }
 
@@ -38,6 +38,7 @@ class Course extends Model
         return $this->belongsToMany(User::class, 'course_user')
             ->withTimestamps();
     }
+
     public function reviews(): HasMany
     {
         return $this->hasMany(Review::class);

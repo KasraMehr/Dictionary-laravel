@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\Student;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Quiz;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Inertia\Response;
 
 class StudentQuizController extends Controller
 {
@@ -15,27 +14,27 @@ class StudentQuizController extends Controller
      */
     public function index()
     {
-      $quizzes = Quiz::where('status', 'active')->get()->map(function ($quiz) {
-              return [
-                  'id' => $quiz->id,
-                  'title' => $quiz->title,
-                  'description' => $quiz->description ?? '',
-                  'level' => $quiz->level ?? 'نامشخص',
-                  'time_limit' => $quiz->time_limit,
-                  'pass_score' => $quiz->pass_score,
-                  'status' => $quiz->status,
-                  'type' => match ($quiz->type) {
-                      'lesson' => 'course',
-                      'final' => 'free',
-                      'placement' => 'practice',
-                      default => 'unknown'
-                  },
-              ];
-          });
+        $quizzes = Quiz::where('status', 'active')->get()->map(function ($quiz) {
+            return [
+                'id' => $quiz->id,
+                'title' => $quiz->title,
+                'description' => $quiz->description ?? '',
+                'level' => $quiz->level ?? 'نامشخص',
+                'time_limit' => $quiz->time_limit,
+                'pass_score' => $quiz->pass_score,
+                'status' => $quiz->status,
+                'type' => match ($quiz->type) {
+                    'lesson' => 'course',
+                    'final' => 'free',
+                    'placement' => 'practice',
+                    default => 'unknown'
+                },
+            ];
+        });
 
-          return Inertia::render('Student/Quiz/Index', [
-              'quizzes' => $quizzes,
-          ]);
+        return Inertia::render('Student/Quiz/Index', [
+            'quizzes' => $quizzes,
+        ]);
     }
 
     /**
@@ -51,10 +50,11 @@ class StudentQuizController extends Controller
      */
     public function show(string $id)
     {
-      $quiz = Quiz::with('questions')->findOrFail($id);
-      return inertia('Student/Quiz/Show', [
-          'quiz' => $quiz,
-      ]);
+        $quiz = Quiz::with('questions')->findOrFail($id);
+
+        return inertia('Student/Quiz/Show', [
+            'quiz' => $quiz,
+        ]);
     }
 
     public function submit(Request $request, $quizId)

@@ -15,12 +15,12 @@ class CourseUser extends Model
         'completed_at',
         'rating',
         'review',
-        'last_accessed_at'
+        'last_accessed_at',
     ];
 
     protected $casts = [
         'completed_at' => 'datetime',
         'last_accessed_at' => 'datetime',
-        'is_favorite' => 'boolean'
+        'is_favorite' => 'boolean',
     ];
 }

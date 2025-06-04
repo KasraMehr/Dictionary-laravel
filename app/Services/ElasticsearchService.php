@@ -4,12 +4,13 @@ namespace App\Services;
 
 use App\Models\Word;
 use Elasticsearch\ClientBuilder;
-use Illuminate\Support\Facades\Log;
 use Exception;
+use Illuminate\Support\Facades\Log;
 
 class ElasticsearchService
 {
     protected $client;
+
     protected $isElasticsearchAvailable = false;
 
     public function __construct()
@@ -34,17 +35,18 @@ class ElasticsearchService
         if ($this->isElasticsearchAvailable) {
             return $this->client->index([
                 'index' => 'words',
-                'id'    => $word->id,
-                'body'  => [
-                    'word'          => $word->word,
-                    'meaning'       => $word->meaning,
-                    'user'          => $word->user->name ?? null,
-                    'teams'         => $word->user->teams->pluck('name')->toArray(),
-                    'categories'    => $word->categories->pluck('name')->toArray(),
-                ]
+                'id' => $word->id,
+                'body' => [
+                    'word' => $word->word,
+                    'meaning' => $word->meaning,
+                    'user' => $word->user->name ?? null,
+                    'teams' => $word->user->teams->pluck('name')->toArray(),
+                    'categories' => $word->categories->pluck('name')->toArray(),
+                ],
             ]);
+        } else {
+            return [];
         }
-        else return [];
     }
 
     public function searchWords($query)
@@ -52,7 +54,7 @@ class ElasticsearchService
         if ($this->isElasticsearchAvailable) {
             return $this->client->search([
                 'index' => 'words',
-                'body'  => [
+                'body' => [
                     'query' => [
                         'match' => ['word' => $query],
                     ],

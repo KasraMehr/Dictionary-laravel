@@ -12,20 +12,20 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('course_user', function (Blueprint $table) {
-          $table->id();
-          $table->foreignId('course_id')->constrained()->onDelete('cascade');
-          $table->foreignId('user_id')->constrained()->onDelete('cascade');
-          $table->timestamp('enrolled_at')->nullable();
-          $table->unsignedTinyInteger('progress')->default(0);
-          $table->timestamp('completed_at')->nullable();
-          $table->unsignedTinyInteger('rating')->nullable();
-          $table->text('review')->nullable();
-          $table->boolean('is_favorite')->default(false);
-          $table->timestamp('last_accessed_at')->nullable();
-          $table->enum('payment_status', ['pending', 'paid', 'failed', 'refunded'])->default('pending');
-          $table->string('transaction_id')->nullable(); // شناسه تراکنش
-          $table->timestamp('expires_at')->nullable();
-          $table->timestamps();
+            $table->id();
+            $table->foreignId('course_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->timestamp('enrolled_at')->nullable();
+            $table->unsignedTinyInteger('progress')->default(0);
+            $table->timestamp('completed_at')->nullable();
+            $table->unsignedTinyInteger('rating')->nullable();
+            $table->text('review')->nullable();
+            $table->boolean('is_favorite')->default(false);
+            $table->timestamp('last_accessed_at')->nullable();
+            $table->enum('payment_status', ['pending', 'paid', 'failed', 'refunded'])->default('pending');
+            $table->string('transaction_id')->nullable(); // شناسه تراکنش
+            $table->timestamp('expires_at')->nullable();
+            $table->timestamps();
         });
     }
 

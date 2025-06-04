@@ -28,14 +28,12 @@ class Category extends Model
      *
      * @var string
      */
-    protected $table = "categories";
+    protected $table = 'categories';
 
     /**
      * Get the words associated with the category.
      *
      * This defines a many-to-many relationship between categories and words.
-     *
-     * @return BelongsToMany
      */
     public function words(): BelongsToMany
     {
@@ -46,12 +44,9 @@ class Category extends Model
      * Get the teams associated with the category.
      *
      * This defines a many-to-many relationship between categories and teams.
-     *
-     * @return BelongsToMany
      */
     public function teams(): BelongsToMany
     {
         return $this->belongsToMany(Team::class, 'team_category', 'category_id', 'team_id');
     }
-
 }

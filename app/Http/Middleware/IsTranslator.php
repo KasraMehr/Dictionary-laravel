@@ -15,9 +15,10 @@ class IsTranslator
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!auth()->check() || auth()->user()->role !== 'translator') {
+        if (! auth()->check() || auth()->user()->role !== 'translator') {
             abort(403, 'not accessable');
         }
+
         return $next($request);
     }
 }

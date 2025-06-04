@@ -4,9 +4,6 @@ namespace App\Events;
 
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Broadcasting\PresenceChannel;
-use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
@@ -15,7 +12,9 @@ class AutoSave
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $userId;
+
     public $documentId;
+
     public $content;
 
     /**
@@ -23,9 +22,9 @@ class AutoSave
      */
     public function __construct()
     {
-      $this->userId = $userId;
-      $this->documentId = $documentId;
-      $this->content = $content;
+        $this->userId = $userId;
+        $this->documentId = $documentId;
+        $this->content = $content;
     }
 
     /**
@@ -36,7 +35,7 @@ class AutoSave
     public function broadcastOn(): array
     {
         return [
-            new Channel('autosave.' . $this->documentId),
+            new Channel('autosave.'.$this->documentId),
         ];
     }
 }

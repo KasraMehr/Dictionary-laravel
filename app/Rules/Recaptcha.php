@@ -12,7 +12,8 @@ class Recaptcha implements ValidationRule
     /**
      * Run the validation rule.
      *
-     * @param \Closure(string, ?string=): \Illuminate\Translation\PotentiallyTranslatedString $fail
+     * @param  \Closure(string, ?string=): \Illuminate\Translation\PotentiallyTranslatedString  $fail
+     *
      * @throws ConnectionException
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
@@ -22,7 +23,7 @@ class Recaptcha implements ValidationRule
             'response' => $value,
         ]);
 
-        if (!$response->json('success')) {
+        if (! $response->json('success')) {
             $fail('The reCAPTCHA verification failed. Please try again.');
         }
     }

@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers\General;
 
-
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use OpenAI\Factory;
-use Illuminate\Support\Facades\Http;
 
 class TranslateController extends Controller
 {
@@ -14,17 +12,17 @@ class TranslateController extends Controller
     {
         // ۱) اعتبارسنجی ورودی‌ها
         $request->validate([
-            'text'   => 'required|string',
+            'text' => 'required|string',
             'source' => 'required|string',
             'target' => 'required|string',
         ]);
 
         // ۲) ایجاد کلاینت OpenAI با endpoint مخصوص AvalAI
-        $factory = new Factory();
+        $factory = new Factory;
 
         $client = $factory->withBaseUri('https://api.avalai.ir/v1')
-                          ->withApiKey(env('AVALAI_API_KEY'))
-                          ->make();
+            ->withApiKey(env('AVALAI_API_KEY'))
+            ->make();
 
         // ۳) ساخت پرامپت ترجمه
         $prompt = "Translate the following text from {$request->source} to {$request->target}: {$request->text}";
@@ -44,7 +42,8 @@ class TranslateController extends Controller
                 'translatedText' => $response->choices[0]->message->content,
             ], 200);
         } catch (\Exception $e) {
-          \Log::error('Translation API Error', ['exception' => $e]);
+            \Log::error('Translation API Error', ['exception' => $e]);
+
             return response()->json([
                 'error' => 'خطایی در ترجمه رخ داده است.',
                 'message' => $e->getMessage(),

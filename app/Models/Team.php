@@ -4,14 +4,12 @@ namespace App\Models;
 
 use Database\Factories\TeamFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Laravel\Jetstream\Events\TeamCreated;
 use Laravel\Jetstream\Events\TeamDeleted;
 use Laravel\Jetstream\Events\TeamUpdated;
 use Laravel\Jetstream\Team as JetstreamTeam;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-
 
 class Team extends JetstreamTeam
 {
@@ -55,8 +53,6 @@ class Team extends JetstreamTeam
      * Get the words associated with the team.
      *
      * This defines a many-to-many relationship between teams and words.
-     *
-     * @return BelongsToMany
      */
     public function words(): BelongsToMany
     {
@@ -67,8 +63,6 @@ class Team extends JetstreamTeam
      * Get the users that belong to the team.
      *
      * This defines a many-to-many relationship between teams and users.
-     *
-     * @return BelongsToMany
      */
     public function users(): BelongsToMany
     {
@@ -79,8 +73,6 @@ class Team extends JetstreamTeam
      * Get the owner of the team.
      *
      * This defines a one-to-many (inverse) relationship between teams and users.
-     *
-     * @return BelongsTo
      */
     public function owner(): BelongsTo
     {
@@ -91,8 +83,6 @@ class Team extends JetstreamTeam
      * Get the categories associated with the team.
      *
      * This defines a many-to-many relationship between teams and categories.
-     *
-     * @return BelongsToMany
      */
     public function categories(): BelongsToMany
     {

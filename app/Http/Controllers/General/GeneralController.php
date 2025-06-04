@@ -14,19 +14,16 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Inertia\Response;
 
-
 class GeneralController extends Controller
 {
     /**
      * Displays a library where there is a list of words that has been made by
      * users or teams along with their categories.
-     *
-     * @return Response
      */
     public function index(): Response
     {
         $words = Word::with([
-            'categories:id,name'
+            'categories:id,name',
         ])->paginate(10);
 
         $words->each(function ($word) {
@@ -41,7 +38,7 @@ class GeneralController extends Controller
                 'per_page' => $words->perPage(),
                 'total' => $words->total(),
                 'next_page_url' => $words->nextPageUrl(),
-            ]
+            ],
         ]);
     }
 
@@ -50,8 +47,8 @@ class GeneralController extends Controller
         $page = $request->input('page', 1);
         $perPage = 10;
         $words = Word::with([
-            'categories:id,name'
-            ])->paginate($perPage, ['*'], 'page', $page);
+            'categories:id,name',
+        ])->paginate($perPage, ['*'], 'page', $page);
 
         $words->each(function ($word) {
             $word->categories = $word->categories ?? collect([]);
@@ -65,19 +62,15 @@ class GeneralController extends Controller
                 'per_page' => $words->perPage(),
                 'total' => $words->total(),
                 'next_page_url' => $words->nextPageUrl(),
-            ]
+            ],
         ]);
     }
 
     /**
      * returns the searched data with the help of elastic search or mysql.
-     *
-     * @param Request $request
-     *
-     * @return JsonResponse
      */
-     public function search(Request $request): JsonResponse
-     {
+    public function search(Request $request): JsonResponse
+    {
         $query = $request->input('query');
         $useElastic = $this->isElasticAvailable();
 
@@ -92,138 +85,133 @@ class GeneralController extends Controller
         }
 
         return response()->json($results);
-      }
+    }
 
-      /**
-      * checks if ElasticSearch is available or not.
-      *
-      * @return bool
-      */
-      private function isElasticAvailable(): bool
-      {
-          try {
-              $client = new Client();
-              $response = $client->get(env('ELASTICSEARCH_HOST', 'http://localhost:9200'));
+    /**
+     * checks if ElasticSearch is available or not.
+     */
+    private function isElasticAvailable(): bool
+    {
+        try {
+            $client = new Client;
+            $response = $client->get(env('ELASTICSEARCH_HOST', 'http://localhost:9200'));
 
-              return $response->getStatusCode() === 200;
-          } catch (\Exception $e) {
-              return false;
-          }
-      }
+            return $response->getStatusCode() === 200;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
 
-      /**
-       * no. of words, users, teams.
-       *
-       * @return Response
-       */
-       public function landingData(): Response
-       {
+    /**
+     * no. of words, users, teams.
+     */
+    public function landingData(): Response
+    {
 
-         $totalUsers = User::count();
-         $totalTeams = Team::count();
-         $totalWords = Word::count();
+        $totalUsers = User::count();
+        $totalTeams = Team::count();
+        $totalWords = Word::count();
 
-           if (!session()->has('wordList')) {
-               session(['wordList' => Word::inRandomOrder()->take(5)->get(['id', 'word', 'meaning', 'native_lang', 'translated_lang', 'slug'])]);
-           }
+        if (! session()->has('wordList')) {
+            session(['wordList' => Word::inRandomOrder()->take(5)->get(['id', 'word', 'meaning', 'native_lang', 'translated_lang', 'slug'])]);
+        }
 
-           if (!session()->has('quizQuestions')) {
-               $words = Word::inRandomOrder()->take(10)->get(['id', 'word', 'meaning']);
-               $quizQuestions = [];
+        if (! session()->has('quizQuestions')) {
+            $words = Word::inRandomOrder()->take(10)->get(['id', 'word', 'meaning']);
+            $quizQuestions = [];
 
-               foreach ($words as $word) {
-                   $wrongOptions = Word::where('id', '!=', $word->id)
-                       ->inRandomOrder()
-                       ->take(3)
-                       ->pluck('meaning')
-                       ->toArray();
+            foreach ($words as $word) {
+                $wrongOptions = Word::where('id', '!=', $word->id)
+                    ->inRandomOrder()
+                    ->take(3)
+                    ->pluck('meaning')
+                    ->toArray();
 
-                   $options = $wrongOptions;
-                   $correctIndex = rand(0, 3);
-                   array_splice($options, $correctIndex, 0, $word->meaning);
+                $options = $wrongOptions;
+                $correctIndex = rand(0, 3);
+                array_splice($options, $correctIndex, 0, $word->meaning);
 
-                   $quizQuestions[] = [
-                       'question' => "'{$word->word}'",
-                       'options' => $options,
-                       'correctIndex' => $correctIndex
-                   ];
-               }
+                $quizQuestions[] = [
+                    'question' => "'{$word->word}'",
+                    'options' => $options,
+                    'correctIndex' => $correctIndex,
+                ];
+            }
 
-               session(['quizQuestions' => $quizQuestions]);
-           }
+            session(['quizQuestions' => $quizQuestions]);
+        }
 
-           return Inertia::render('General/Landing', [
-               'canLogin' => Route::has('login'),
-               'canRegister' => Route::has('register'),
-               'totalUsers' => $totalUsers,
-               'totalTeams' => $totalTeams,
-               'totalWords' => $totalWords,
-               'wordList' => session('wordList'),
-               'quizQuestions' => session('quizQuestions'),
-           ]);
-       }
+        return Inertia::render('General/Landing', [
+            'canLogin' => Route::has('login'),
+            'canRegister' => Route::has('register'),
+            'totalUsers' => $totalUsers,
+            'totalTeams' => $totalTeams,
+            'totalWords' => $totalWords,
+            'wordList' => session('wordList'),
+            'quizQuestions' => session('quizQuestions'),
+        ]);
+    }
 
-       public function DailyTest(): Response
-       {
-         if (!session()->has('quizQuestions')) {
-             $words = Word::inRandomOrder()->take(10)->get(['id', 'word', 'meaning']);
-             $quizQuestions = [];
+    public function DailyTest(): Response
+    {
+        if (! session()->has('quizQuestions')) {
+            $words = Word::inRandomOrder()->take(10)->get(['id', 'word', 'meaning']);
+            $quizQuestions = [];
 
-             foreach ($words as $word) {
-                 $wrongOptions = Word::where('id', '!=', $word->id)
-                     ->inRandomOrder()
-                     ->take(3)
-                     ->pluck('meaning')
-                     ->toArray();
+            foreach ($words as $word) {
+                $wrongOptions = Word::where('id', '!=', $word->id)
+                    ->inRandomOrder()
+                    ->take(3)
+                    ->pluck('meaning')
+                    ->toArray();
 
-                 $options = $wrongOptions;
-                 $correctIndex = rand(0, 3);
-                 array_splice($options, $correctIndex, 0, $word->meaning);
+                $options = $wrongOptions;
+                $correctIndex = rand(0, 3);
+                array_splice($options, $correctIndex, 0, $word->meaning);
 
-                 $quizQuestions[] = [
-                     'question' => "'{$word->word}'",
-                     'options' => $options,
-                     'correctIndex' => $correctIndex
-                 ];
-             }
+                $quizQuestions[] = [
+                    'question' => "'{$word->word}'",
+                    'options' => $options,
+                    'correctIndex' => $correctIndex,
+                ];
+            }
 
-             session(['quizQuestions' => $quizQuestions]);
-         }
+            session(['quizQuestions' => $quizQuestions]);
+        }
 
-         return Inertia::render('General/Dictionary/DailyTest', [
-             'quizQuestions' => session('quizQuestions'),
-         ]);
-       }
+        return Inertia::render('General/Dictionary/DailyTest', [
+            'quizQuestions' => session('quizQuestions'),
+        ]);
+    }
 
-       public function PlacementTest(): Response
-       {
-          return Inertia::render('General/Learn/PlacementTest');
-       }
+    public function PlacementTest(): Response
+    {
+        return Inertia::render('General/Learn/PlacementTest');
+    }
 
-       public function DailyWords(): Response
-       {
-         if (!session()->has('wordList')) {
-             session(['wordList' => Word::inRandomOrder()->take(5)->get(['id', 'word', 'meaning', 'native_lang', 'translated_lang', 'slug'])]);
-         }
+    public function DailyWords(): Response
+    {
+        if (! session()->has('wordList')) {
+            session(['wordList' => Word::inRandomOrder()->take(5)->get(['id', 'word', 'meaning', 'native_lang', 'translated_lang', 'slug'])]);
+        }
 
-         return Inertia::render('General/Dictionary/DailyWords', [
-           'wordList' => session('wordList'),
-         ]);
-       }
+        return Inertia::render('General/Dictionary/DailyWords', [
+            'wordList' => session('wordList'),
+        ]);
+    }
 
+    public function aboutUs(): Response
+    {
+        return Inertia::render('General/Communicate/AboutUs');
+    }
 
-      public function aboutUs(): Response
-      {
-          return Inertia::render('General/Communicate/AboutUs');
-      }
+    public function contactUs(): Response
+    {
+        return Inertia::render('General/Communicate/ContactUs');
+    }
 
-      public function contactUs(): Response
-      {
-          return Inertia::render('General/Communicate/ContactUs');
-      }
-
-      public function FAQ(): Response
-      {
-          return Inertia::render('General/Communicate/FAQ');
-      }
+    public function FAQ(): Response
+    {
+        return Inertia::render('General/Communicate/FAQ');
+    }
 }

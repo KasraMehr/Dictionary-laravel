@@ -9,95 +9,97 @@ use Illuminate\Http\Request;
 
 class QuestionController extends Controller
 {
-  public function store(Request $request)
-  {
-      $validated = $request->validate([
-          'question_text' => 'required|string',
-          'question_type' => 'required|in:mcq,fill_blank,match,text',
-          'options' => 'required_if:question_type,mcq|array|min:2',
-          'correct_answer' => 'required|string',
-          'points' => 'required|integer|min:1',
-          'quiz_id' => 'required|exists:quizzes,id',
-      ]);
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'question_text' => 'required|string',
+            'question_type' => 'required|in:mcq,fill_blank,match,text',
+            'options' => 'required_if:question_type,mcq|array|min:2',
+            'correct_answer' => 'required|string',
+            'points' => 'required|integer|min:1',
+            'quiz_id' => 'required|exists:quizzes,id',
+        ]);
 
-      if ($validated['question_type'] === 'mcq') {
-          // حذف گزینه‌های خالی و ایندکس‌گذاری مجدد
-          $cleanedOptions = array_values(array_filter($validated['options'], function($option) {
-              return !empty(trim($option));
-          }));
+        if ($validated['question_type'] === 'mcq') {
+            // حذف گزینه‌های خالی و ایندکس‌گذاری مجدد
+            $cleanedOptions = array_values(array_filter($validated['options'], function ($option) {
+                return ! empty(trim($option));
+            }));
 
-          // اعتبارسنجی تعداد گزینه‌ها
-          if (count($cleanedOptions) < 2) {
-              return response()->json(['message' => 'حداقل ۲ گزینه معتبر نیاز است'], 422);
-          }
+            // اعتبارسنجی تعداد گزینه‌ها
+            if (count($cleanedOptions) < 2) {
+                return response()->json(['message' => 'حداقل ۲ گزینه معتبر نیاز است'], 422);
+            }
 
-          // اعتبارسنجی گزینه صحیح
-          if (!isset($cleanedOptions[$validated['correct_answer']])) {
-              return response()->json(['message' => 'گزینه صحیح انتخاب شده معتبر نیست'], 422);
-          }
+            // اعتبارسنجی گزینه صحیح
+            if (! isset($cleanedOptions[$validated['correct_answer']])) {
+                return response()->json(['message' => 'گزینه صحیح انتخاب شده معتبر نیست'], 422);
+            }
 
-          $validated['options'] = $cleanedOptions;
-      } else {
-          unset($validated['options']);
-      }
+            $validated['options'] = $cleanedOptions;
+        } else {
+            unset($validated['options']);
+        }
 
-      Question::create($validated);
+        Question::create($validated);
 
-      $quiz = Quiz::findOrFail($validated['quiz_id']);
-      return redirect()->route('teacher.quizzes.show', $quiz)
-          ->with('success', 'سوال با موفقیت ایجاد شد.');
-  }
-      public function edit(Question $question)
-      {
-          return inertia('Teacher/Quiz/Question/Create', [
-              'question' => $question,
-              'quiz' => $question->quiz,
-          ]);
-      }
+        $quiz = Quiz::findOrFail($validated['quiz_id']);
 
-      public function update(Request $request, Question $question)
-      {
-          $validated = $request->validate([
-              'question_text' => 'required|string',
-              'question_type' => 'required|in:mcq,fill_blank,match,text',
-              'options' => 'required_if:question_type,mcq|array',
-              'correct_answer' => 'required|string',
-              'points' => 'required|integer|min:1',
-          ]);
+        return redirect()->route('teacher.quizzes.show', $quiz)
+            ->with('success', 'سوال با موفقیت ایجاد شد.');
+    }
 
-          if ($validated['question_type'] === 'mcq') {
-              // حذف گزینه‌های خالی و ایندکس‌گذاری مجدد
-              $cleanedOptions = array_values(array_filter($validated['options'], function($option) {
-                  return !empty(trim($option));
-              }));
+    public function edit(Question $question)
+    {
+        return inertia('Teacher/Quiz/Question/Create', [
+            'question' => $question,
+            'quiz' => $question->quiz,
+        ]);
+    }
 
-              // اعتبارسنجی تعداد گزینه‌ها
-              if (count($cleanedOptions) < 2) {
-                  return response()->json(['message' => 'حداقل ۲ گزینه معتبر نیاز است'], 422);
-              }
+    public function update(Request $request, Question $question)
+    {
+        $validated = $request->validate([
+            'question_text' => 'required|string',
+            'question_type' => 'required|in:mcq,fill_blank,match,text',
+            'options' => 'required_if:question_type,mcq|array',
+            'correct_answer' => 'required|string',
+            'points' => 'required|integer|min:1',
+        ]);
 
-              // اعتبارسنجی گزینه صحیح
-              if (!isset($cleanedOptions[$validated['correct_answer']])) {
-                  return response()->json(['message' => 'گزینه صحیح انتخاب شده معتبر نیست'], 422);
-              }
+        if ($validated['question_type'] === 'mcq') {
+            // حذف گزینه‌های خالی و ایندکس‌گذاری مجدد
+            $cleanedOptions = array_values(array_filter($validated['options'], function ($option) {
+                return ! empty(trim($option));
+            }));
 
-              $validated['options'] = $cleanedOptions;
-          } else {
-              unset($validated['options']);
-          }
+            // اعتبارسنجی تعداد گزینه‌ها
+            if (count($cleanedOptions) < 2) {
+                return response()->json(['message' => 'حداقل ۲ گزینه معتبر نیاز است'], 422);
+            }
 
-          $question->update($validated);
+            // اعتبارسنجی گزینه صحیح
+            if (! isset($cleanedOptions[$validated['correct_answer']])) {
+                return response()->json(['message' => 'گزینه صحیح انتخاب شده معتبر نیست'], 422);
+            }
 
-          return redirect()->route('teacher.quizzes.show', $question->quiz_id)
-              ->with('success', 'سوال با موفقیت به‌روزرسانی شد.');
-      }
+            $validated['options'] = $cleanedOptions;
+        } else {
+            unset($validated['options']);
+        }
 
-      public function destroy(Question $question)
-      {
-          $quiz_id = $question->quiz_id;
-          $question->delete();
+        $question->update($validated);
 
-          return redirect()->route('teacher.quizzes.questions.index', $quiz_id)
-              ->with('success', 'سوال با موفقیت حذف شد.');
-      }
+        return redirect()->route('teacher.quizzes.show', $question->quiz_id)
+            ->with('success', 'سوال با موفقیت به‌روزرسانی شد.');
+    }
+
+    public function destroy(Question $question)
+    {
+        $quiz_id = $question->quiz_id;
+        $question->delete();
+
+        return redirect()->route('teacher.quizzes.questions.index', $quiz_id)
+            ->with('success', 'سوال با موفقیت حذف شد.');
+    }
 }

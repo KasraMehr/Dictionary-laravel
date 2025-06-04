@@ -10,7 +10,7 @@ class StudentProfile extends Model
         'user_id', 'bio', 'phone', 'birth_date', 'country',
         'timezone', 'learning_languages', 'known_languages',
         'education_level', 'occupation', 'learning_goals',
-        'preferred_learning_style', 'daily_study_time'
+        'preferred_learning_style', 'daily_study_time',
     ];
 
     protected $casts = [

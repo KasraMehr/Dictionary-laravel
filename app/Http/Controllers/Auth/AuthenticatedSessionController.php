@@ -3,14 +3,12 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Auth\LoginRequest;
+use App\Models\StudentProgress;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
-use App\Models\StudentProgress;
-
 
 class AuthenticatedSessionController extends Controller
 {
@@ -46,7 +44,7 @@ class AuthenticatedSessionController extends Controller
         $request->validate([
             'email' => 'required|string|email',
             'password' => 'required|string',
-            'language_level' => 'nullable|integer'
+            'language_level' => 'nullable|integer',
         ]);
 
         if (Auth::attempt($request->only('email', 'password'), $request->boolean('remember'))) {
@@ -62,7 +60,7 @@ class AuthenticatedSessionController extends Controller
                 );
             }
 
-            return redirect()->intended(match($user->role) {
+            return redirect()->intended(match ($user->role) {
                 'translator' => route('translator.dashboard'),
                 'teacher' => route('teacher.dashboard'),
                 'student' => route('student.dashboard'),

@@ -3,22 +3,22 @@
 namespace Database\Seeders;
 
 use App\Models\Word;
+use GuzzleHttp\Client;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use OpenAI\Factory;
-use Symfony\Component\DomCrawler\Crawler;
 use Stichoza\GoogleTranslate\GoogleTranslate;
-use GuzzleHttp\Client;
 
 class WordSeeder extends Seeder
 {
     public function run(): void
     {
         $filePath = storage_path('app/words20k.txt');
-        if (!file_exists($filePath)) {
+        if (! file_exists($filePath)) {
             echo "❌ words.txt not found!\n";
+
             return;
         }
 
@@ -28,7 +28,7 @@ class WordSeeder extends Seeder
         $generated_words_num = 0;
 
         // ۲) ایجاد کلاینت OpenAI با endpoint مخصوص AvalAI
-        $factory = new Factory();
+        $factory = new Factory;
 
         $client = $factory->withBaseUri('https://api.avalai.ir/v1')
             ->withApiKey(env('AVALAI_API_KEY'))
@@ -36,7 +36,9 @@ class WordSeeder extends Seeder
 
         foreach ($words as $word) {
             $word = trim($word);
-            if (empty($word)) continue;
+            if (empty($word)) {
+                continue;
+            }
 
             // Translate word
             try {
@@ -70,7 +72,7 @@ class WordSeeder extends Seeder
                         ['role' => 'system', 'content' => 'تو یک مترجم فارسی‌زبان با زبان عامیانه هستی'],
                         ['role' => 'user', 'content' => $prompt],
                     ],
-                    'temperature' => 0.7
+                    'temperature' => 0.7,
                 ]);
 
                 $description = $response->choices[0]->message->content;
@@ -132,7 +134,7 @@ class WordSeeder extends Seeder
                     '-', 'noun', 'pronoun', 'verb', 'adjective', 'adverb',
                     'preposition', 'conjunction', 'interjection', 'article',
                     'determiner', 'numeral', 'auxiliary verb', 'modal verb',
-                    'participle', 'gerund', 'infinitive'
+                    'participle', 'gerund', 'infinitive',
                 ];
 
                 // اعتبارسنجی پاسخ
@@ -142,55 +144,55 @@ class WordSeeder extends Seeder
                 $grammar = '-';
             }
 
-           // try {
-           //     $prompt = "Strictly respond with ONLY the ID number (0-22) from this list that best matches the word '$word':
-           //      0: 'علوم و فناوری',
-           //      1: 'کامپیوتر و IT',
-           //      2: 'پزشکی',
-           //      3: 'اقتصاد و کسب‌وکار',
-           //      4: 'هنر و فرهنگ',
-           //      5: 'ورزش‌ها',
-           //      6: 'طبیعت و محیط زیست',
-           //      7: 'سیاست و حقوق',
-           //      8: 'تاریخ',
-           //      9: 'مذهب و فلسفه',
-           //      10: 'روانشناسی',
-           //      11: 'غذا و آشپزی',
-           //      12: 'سفر و گردشگری',
-           //      13: 'مد و پوشاک',
-           //      14: 'خودرو و حمل‌ونقل',
-           //      15: 'نظامی و امنیتی',
-           //      16: 'کودک و نوجوان',
-           //      17: 'عامیانه و اصطلاحات',
-           //      18: 'هم‌معنی و متضاد',
-           //      19: 'کلمات هم‌آوا',
-           //      20: 'اختصارات',
-           //      21: 'ریشه‌شناسی',
-           //      22: 'تلفظ'
-           //
-           //      Rules:
-           //      1. Return ONLY the number (e.g. '5')
-           //      2. No explanations or other text
-           //      3. If uncertain, return '0'";
-           //
-           //     $response = $client->chat()->create([
-           //         'model' => 'gpt-3.5-turbo',
-           //         'messages' => [
-           //             ['role' => 'system', 'content' => 'You are a category classification system.'],
-           //             ['role' => 'user', 'content' => $prompt],
-           //         ],
-           //     ]);
-           //
-           //     // استخراج عدد از پاسخ
-           //     $rawCategory = trim($response->choices[0]->message->content);
-           //     $categoryId = is_numeric($rawCategory) ? (int)$rawCategory : 0;
-           //
-           //     // محدود کردن به بازه معتبر
-           //     $categoryId = max(0, min(32, $categoryId));
-           //
-           // } catch (\Exception $e) {
-           //     $categoryId = 0; // مقدار پیش‌فرض در صورت خطا
-           // }
+            // try {
+            //     $prompt = "Strictly respond with ONLY the ID number (0-22) from this list that best matches the word '$word':
+            //      0: 'علوم و فناوری',
+            //      1: 'کامپیوتر و IT',
+            //      2: 'پزشکی',
+            //      3: 'اقتصاد و کسب‌وکار',
+            //      4: 'هنر و فرهنگ',
+            //      5: 'ورزش‌ها',
+            //      6: 'طبیعت و محیط زیست',
+            //      7: 'سیاست و حقوق',
+            //      8: 'تاریخ',
+            //      9: 'مذهب و فلسفه',
+            //      10: 'روانشناسی',
+            //      11: 'غذا و آشپزی',
+            //      12: 'سفر و گردشگری',
+            //      13: 'مد و پوشاک',
+            //      14: 'خودرو و حمل‌ونقل',
+            //      15: 'نظامی و امنیتی',
+            //      16: 'کودک و نوجوان',
+            //      17: 'عامیانه و اصطلاحات',
+            //      18: 'هم‌معنی و متضاد',
+            //      19: 'کلمات هم‌آوا',
+            //      20: 'اختصارات',
+            //      21: 'ریشه‌شناسی',
+            //      22: 'تلفظ'
+            //
+            //      Rules:
+            //      1. Return ONLY the number (e.g. '5')
+            //      2. No explanations or other text
+            //      3. If uncertain, return '0'";
+            //
+            //     $response = $client->chat()->create([
+            //         'model' => 'gpt-3.5-turbo',
+            //         'messages' => [
+            //             ['role' => 'system', 'content' => 'You are a category classification system.'],
+            //             ['role' => 'user', 'content' => $prompt],
+            //         ],
+            //     ]);
+            //
+            //     // استخراج عدد از پاسخ
+            //     $rawCategory = trim($response->choices[0]->message->content);
+            //     $categoryId = is_numeric($rawCategory) ? (int)$rawCategory : 0;
+            //
+            //     // محدود کردن به بازه معتبر
+            //     $categoryId = max(0, min(32, $categoryId));
+            //
+            // } catch (\Exception $e) {
+            //     $categoryId = 0; // مقدار پیش‌فرض در صورت خطا
+            // }
 
             // Get pronunciation from Langeek
             $pronunciation = $this->getPronunciationFromWiktionary($word);
@@ -216,11 +218,11 @@ class WordSeeder extends Seeder
                 'description' => $description,
                 'slug' => $slug,
                 'created_at' => now(),
-                'updated_at' => now()
+                'updated_at' => now(),
             ]);
             $generated_words_num++;
 
-           // $newWord->categories()->attach($categoryId);
+            // $newWord->categories()->attach($categoryId);
 
             echo "\n$generated_words_num\n ✅ Added: $word → meaning: $meaning\n pronunciation → $pronunciation \n
              description → $description \n level -> $level \n grammar -> $grammar \n image → $imagePath\n
@@ -230,10 +232,10 @@ class WordSeeder extends Seeder
 
     private function getPronunciationFromWiktionary($word): ?string
     {
-        $url = "https://en.wiktionary.org/wiki/" . urlencode($word);
+        $url = 'https://en.wiktionary.org/wiki/'.urlencode($word);
 
         try {
-            $client = new Client();
+            $client = new Client;
             $response = $client->request('GET', $url);
             $html = $response->getBody()->getContents();
 
@@ -249,44 +251,47 @@ class WordSeeder extends Seeder
 
     private function getWikiImage($word)
     {
-      $wikiImage = null;
-      try {
-          $response = Http::get("https://en.wikipedia.org/api/rest_v1/page/summary/" . urlencode($word));
-          if ($response->successful()) {
-              $data = $response->json();
+        $wikiImage = null;
+        try {
+            $response = Http::get('https://en.wikipedia.org/api/rest_v1/page/summary/'.urlencode($word));
+            if ($response->successful()) {
+                $data = $response->json();
 
-              if (!empty($data['thumbnail']['source'])) {
-                  $wikiImage = $data['thumbnail']['source'];
-              }
-              return $wikiImage;
-          }
-      } catch (\Exception $e) {
-          echo "⚠️ Wikipedia fetch failed for $word\n";
-      }
+                if (! empty($data['thumbnail']['source'])) {
+                    $wikiImage = $data['thumbnail']['source'];
+                }
+
+                return $wikiImage;
+            }
+        } catch (\Exception $e) {
+            echo "⚠️ Wikipedia fetch failed for $word\n";
+        }
     }
 
     private function saveImageFromUrl($imageUrl, $path)
     {
-    if ($imageUrl) {
-        try {
-            $imageData = Http::get($imageUrl)->body();
-            Storage::disk('public')->put($path, $imageData);
-            return $path;
-        } catch (\Exception $e) {
-            echo "⚠️ Failed to save image for $path\n";
+        if ($imageUrl) {
+            try {
+                $imageData = Http::get($imageUrl)->body();
+                Storage::disk('public')->put($path, $imageData);
+
+                return $path;
+            } catch (\Exception $e) {
+                echo "⚠️ Failed to save image for $path\n";
+            }
         }
+
+        return null;
     }
-    return null;
-}
 
     private function generateVoice($word, $path): void
     {
-      try {
-          $voiceUrl = "https://translate.google.com/translate_tts?ie=UTF-8&tl=en&client=tw-ob&q=" . urlencode($word);
-          $voiceData = Http::get($voiceUrl)->body();
-          Storage::disk('public')->put($path, $voiceData);
-      } catch (\Exception $e) {
-          echo "⚠️ Failed to generate voice for $word\n";
-      }
+        try {
+            $voiceUrl = 'https://translate.google.com/translate_tts?ie=UTF-8&tl=en&client=tw-ob&q='.urlencode($word);
+            $voiceData = Http::get($voiceUrl)->body();
+            Storage::disk('public')->put($path, $voiceData);
+        } catch (\Exception $e) {
+            echo "⚠️ Failed to generate voice for $word\n";
+        }
     }
 }

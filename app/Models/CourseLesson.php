@@ -4,8 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasOne;
-
 
 class CourseLesson extends Model
 {
@@ -15,13 +13,13 @@ class CourseLesson extends Model
         'skills',
         'content',
         'quiz_id',
-        'order'
+        'order',
     ];
 
     protected $casts = [
         'skills' => 'array',
         'content' => 'array',
-        'attachments' => 'array'
+        'attachments' => 'array',
     ];
 
     // لیست مهارت‌های قابل انتخاب
@@ -31,7 +29,7 @@ class CourseLesson extends Model
         'speaking' => 'صحبت کردن',
         'listening' => 'گوش کردن',
         'vocabulary' => 'واژگان',
-        'grammar' => 'دستور زبان'
+        'grammar' => 'دستور زبان',
     ];
 
     public function course(): BelongsTo
@@ -47,7 +45,7 @@ class CourseLesson extends Model
     // برای نمایش مهارت‌های انتخاب شده
     public function getSelectedSkillsAttribute(): array
     {
-        return array_map(function($skill) {
+        return array_map(function ($skill) {
             return self::SKILLS[$skill] ?? $skill;
         }, $this->skills ?? []);
     }
@@ -55,7 +53,7 @@ class CourseLesson extends Model
     public function users()
     {
         return $this->belongsToMany(User::class, 'course_lesson_user')
-                    ->withPivot('completed', 'progress', 'started_at', 'completed_at')
-                    ->withTimestamps();
+            ->withPivot('completed', 'progress', 'started_at', 'completed_at')
+            ->withTimestamps();
     }
 }

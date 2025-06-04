@@ -17,13 +17,13 @@ class LearningStat extends Model
         'rank',
         'last_studied_at',
         'weekly_progress',
-        'daily_goals'
+        'daily_goals',
     ];
 
     protected $casts = [
         'weekly_progress' => 'array',
         'daily_goals' => 'array',
-        'last_studied_at' => 'date'
+        'last_studied_at' => 'date',
     ];
 
     public function user()

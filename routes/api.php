@@ -4,9 +4,9 @@ use App\Http\Controllers\Api\WordImportController;
 use App\Http\Controllers\General\GeneralController;
 use App\Http\Controllers\General\LearnController;
 use App\Http\Controllers\General\TranslateController;
+use App\Models\StudentProgress;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Models\StudentProgress;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -24,7 +24,8 @@ Route::post('/set-locale', function (Illuminate\Http\Request $request) {
         session(['locale' => $locale]);
         app()->setLocale($locale);
     }
-    return response()->json(['message' => 'Language changed to ' . app()->getLocale()]);
+
+    return response()->json(['message' => 'Language changed to '.app()->getLocale()]);
 });
 
 Route::middleware('auth:sanctum')->post('/update-language-level', function (Request $request) {
@@ -43,6 +44,6 @@ Route::middleware('auth:sanctum')->post('/update-language-level', function (Requ
 
     return response()->json([
         'success' => true,
-        'progress' => $progress
+        'progress' => $progress,
     ]);
 });

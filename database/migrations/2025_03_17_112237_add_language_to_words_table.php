@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('words', function (Blueprint $table) {
-          $table->string('native_lang')->default('en')->after('word');
-          $table->string('translated_lang')->default('fa')->after('word');
+            $table->string('native_lang')->default('en')->after('word');
+            $table->string('translated_lang')->default('fa')->after('word');
         });
     }
 

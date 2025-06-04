@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\Team;
 use App\Models\User;
+use Illuminate\Database\Seeder;
 
 class TeamSeeder extends Seeder
 {
@@ -21,7 +21,7 @@ class TeamSeeder extends Seeder
             'Editors',
             'Reviewers',
             'Content Writers',
-            'Language Experts'
+            'Language Experts',
         ];
 
         $daysAgo = now()->subDays(30);
@@ -43,7 +43,7 @@ class TeamSeeder extends Seeder
 
             for ($i = 0; $i < $teamsToCreate; $i++) {
                 Team::create([
-                    'name' => fake()->company() . ' Team',
+                    'name' => fake()->company().' Team',
                     'user_id' => fake()->randomElement($userIds),
                     'created_at' => $date->copy()->addHours(fake()->numberBetween(0, 23))->addMinutes(fake()->numberBetween(0, 59)),
                     'personal_team' => false,

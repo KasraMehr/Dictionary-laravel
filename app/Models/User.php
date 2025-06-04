@@ -5,6 +5,9 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -12,9 +15,6 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Jetstream\HasTeams;
 use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Spatie\Permission\Traits\HasRoles;
 
 /**
@@ -26,11 +26,12 @@ class User extends Authenticatable
 
     /** @use HasFactory<UserFactory> */
     use HasFactory;
+
     use HasProfilePhoto;
+    use HasRoles;
     use HasTeams;
     use Notifiable;
     use TwoFactorAuthenticatable;
-    use HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -70,8 +71,6 @@ class User extends Authenticatable
      * Get the teams the user belongs to.
      *
      * This defines a many-to-many relationship between users and teams.
-     *
-     * @return BelongsToMany
      */
     public function teams(): BelongsToMany
     {
@@ -82,8 +81,6 @@ class User extends Authenticatable
      * Get the current team of the user.
      *
      * This defines a one-to-many (inverse) relationship between users and teams.
-     *
-     * @return BelongsTo
      */
     public function currentTeam(): BelongsTo
     {
@@ -94,8 +91,6 @@ class User extends Authenticatable
      * Get the words created by the user.
      *
      * This defines a one-to-many relationship between users and words.
-     *
-     * @return HasMany
      */
     public function words(): HasMany
     {
@@ -108,7 +103,7 @@ class User extends Authenticatable
      * This method filters the user's words based on the given team ID and
      * returns the total count.
      *
-     * @param int $teamId The ID of the team to check for words.
+     * @param  int  $teamId  The ID of the team to check for words.
      * @return int The number of words the user has in the specified team.
      */
     public function wordCountInTeam(int $teamId): int
@@ -151,15 +146,15 @@ class User extends Authenticatable
                 'completed_at',
                 'rating',
                 'review',
-                'last_accessed_at'
+                'last_accessed_at',
             ]);
     }
 
     public function lessons()
     {
         return $this->belongsToMany(CourseLesson::class, 'course_lesson_user')
-                    ->withPivot('completed', 'progress', 'started_at', 'completed_at')
-                    ->withTimestamps();
+            ->withPivot('completed', 'progress', 'started_at', 'completed_at')
+            ->withTimestamps();
     }
 
     public function quizzes(): BelongsToMany
@@ -183,16 +178,16 @@ class User extends Authenticatable
 
     public function savedWords()
     {
-      return $this->belongsToMany(Word::class, 'saved_words')
-          ->withPivot([
-              'review_count',
-              'last_reviewed_at',
-              'next_review_at',
-              'ease_factor',
-              'interval'
+        return $this->belongsToMany(Word::class, 'saved_words')
+            ->withPivot([
+                'review_count',
+                'last_reviewed_at',
+                'next_review_at',
+                'ease_factor',
+                'interval',
             ])
             ->withTimestamps();
-      }
+    }
 
     public function learningStats()
     {
@@ -202,8 +197,8 @@ class User extends Authenticatable
     // ایجاد رکورد آمار یادگیری هنگام ایجاد کاربر
     protected static function booted()
     {
-      static::created(function ($user) {
-          $user->learningStats()->create();
-      });
+        static::created(function ($user) {
+            $user->learningStats()->create();
+        });
     }
 }

@@ -3,10 +3,8 @@
 namespace App\Jobs;
 
 use App\Models\Word;
-use Elasticsearch\Client;
 use Elasticsearch\ClientBuilder;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
@@ -33,17 +31,17 @@ class IndexWordInElasticsearch implements ShouldQueue
 
             $client->index([
                 'index' => 'words',
-                'id'    => $this->word->id,
-                'body'  => [
-                    'word'          => $this->word->word,
-                    'meaning'       => $this->word->meaning,
-                    'user'          => $this->word->user->name ?? null,
-                    'teams'         => $this->word->user->teams->pluck('name')->toArray(),
-                    'categories'    => $this->word->categories->pluck('name')->toArray(),
-                ]
+                'id' => $this->word->id,
+                'body' => [
+                    'word' => $this->word->word,
+                    'meaning' => $this->word->meaning,
+                    'user' => $this->word->user->name ?? null,
+                    'teams' => $this->word->user->teams->pluck('name')->toArray(),
+                    'categories' => $this->word->categories->pluck('name')->toArray(),
+                ],
             ]);
         } catch (\Exception $e) {
-            \Log::error("Elasticsearch Indexing Failed: " . $e->getMessage());
+            \Log::error('Elasticsearch Indexing Failed: '.$e->getMessage());
         }
     }
 }

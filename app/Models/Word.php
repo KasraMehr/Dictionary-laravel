@@ -2,14 +2,13 @@
 
 namespace App\Models;
 
+use App\Jobs\IndexWordInElasticsearch;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Str;
-use App\Jobs\IndexWordInElasticsearch;
-
 
 /**
  * @method static findOrFail($id)
@@ -17,9 +16,9 @@ use App\Jobs\IndexWordInElasticsearch;
  */
 class Word extends Model
 {
-
     /** @use HasFactory<UserFactory> */
     use HasFactory;
+
     /**
      * The table associated with the model.
      *
@@ -75,8 +74,6 @@ class Word extends Model
      * Get the user who created the word.
      *
      * This defines a many-to-one relationship between words and users.
-     *
-     * @return BelongsTo
      */
     public function user(): BelongsTo
     {
@@ -87,8 +84,6 @@ class Word extends Model
      * Get the categories associated with the word.
      *
      * This defines a many-to-many relationship between words and categories.
-     *
-     * @return BelongsToMany
      */
     public function categories(): BelongsToMany
     {
@@ -99,8 +94,6 @@ class Word extends Model
      * Get the teams that the word belongs to.
      *
      * This defines a many-to-many relationship between words and teams.
-     *
-     * @return BelongsToMany
      */
     public function teams(): BelongsToMany
     {
@@ -111,5 +104,4 @@ class Word extends Model
     {
         return $this->belongsToMany(User::class, 'saved_words');
     }
-
 }

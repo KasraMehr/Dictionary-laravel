@@ -4,9 +4,6 @@ namespace App\Events;
 
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Broadcasting\PresenceChannel;
-use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
@@ -15,6 +12,7 @@ class UserStatus
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $userId;
+
     public $status;
 
     /**
@@ -22,8 +20,8 @@ class UserStatus
      */
     public function __construct()
     {
-      $this->userId = $userId;
-      $this->status = $status;
+        $this->userId = $userId;
+        $this->status = $status;
     }
 
     /**

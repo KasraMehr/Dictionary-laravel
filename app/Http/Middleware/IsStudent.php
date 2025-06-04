@@ -15,9 +15,10 @@ class IsStudent
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!auth()->check() || auth()->user()->role !== 'student') {
+        if (! auth()->check() || auth()->user()->role !== 'student') {
             abort(403, 'not accessable');
         }
+
         return $next($request);
     }
 }

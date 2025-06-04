@@ -11,7 +11,8 @@ use Illuminate\Support\Carbon;
 class GlobalStatsChart extends ChartWidget
 {
     protected static ?string $heading = 'Chart';
-    protected int | string | array $columnSpan = 'full';
+
+    protected int|string|array $columnSpan = 'full';
 
     protected function getFilters(): ?array
     {

@@ -3,27 +3,25 @@
 namespace App\Http\Controllers\Teacher;
 
 use App\Http\Controllers\Controller;
-use Carbon\Carbon;
 use App\Models\Course;
 use App\Models\Quiz;
 use App\Models\Teacher;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Inertia\Inertia;
-use Inertia\Response;
 
 class CourseController extends Controller
 {
-
-  public function dashboard()
+    public function dashboard()
     {
         /** @var User $teacher */
         $teacher = auth()->user();
 
         // اگر کاربر پروفایل معلم ندارد، یک پروفایل خالی ایجاد می‌کنیم
-        if (!$teacher->teacher) {
+        if (! $teacher->teacher) {
             $teacher->teacher()->create([]);
             $teacher->refresh();
         }
@@ -38,14 +36,14 @@ class CourseController extends Controller
         $latestCourses = $teacher->courses()
             ->select('courses.*')
             ->withCount(['users as student_count'])
-            ->with(['users' => function($query) {
+            ->with(['users' => function ($query) {
                 $query->select('course_user.progress')
                     ->where('user_id', auth()->id());
             }])
             ->latest()
             ->take(3)
             ->get()
-            ->map(function($course) {
+            ->map(function ($course) {
                 return [
                     'id' => $course->id,
                     'name' => $course->title,
@@ -57,7 +55,7 @@ class CourseController extends Controller
         // دانشجویان آنلاین
         $onlineStudents = $teacher->students()
             // ->where('last_activity_at', '>=', Carbon::now()->subMinutes(15))
-            ->with(['courses' => function($query) use ($teacher) {
+            ->with(['courses' => function ($query) use ($teacher) {
                 $query->whereIn('courses.id', $teacher->courses()->pluck('id'))
                     // ->orderBy('course_user.last_accessed_at', 'desc')
                     ->limit(1);
@@ -65,15 +63,15 @@ class CourseController extends Controller
             ->select('users.*')
             ->take(4)
             ->get()
-            ->map(function($student) {
+            ->map(function ($student) {
                 return [
                     'id' => $student->id,
                     'name' => $student->name,
                     'avatar' => $student->profile_photo_url,
                     'course' => $student->courses->first()->title ?? 'بدون دوره',
                     // 'lastActivity' => $student->last_activity_at
-                        // ? Carbon::parse($student->last_activity_at)->diffForHumans()
-                        // : 'عدم فعالیت',
+                    // ? Carbon::parse($student->last_activity_at)->diffForHumans()
+                    // : 'عدم فعالیت',
                 ];
             });
 
@@ -159,10 +157,10 @@ class CourseController extends Controller
             'فروردین', 'اردیبهشت', 'خرداد',
             'تیر', 'مرداد', 'شهریور',
             'مهر', 'آبان', 'آذر',
-            'دی', 'بهمن', 'اسفند'
+            'دی', 'بهمن', 'اسفند',
         ];
 
-        $currentMonth = (int)date('m') - 1;
+        $currentMonth = (int) date('m') - 1;
         $result = [];
 
         for ($i = 0; $i < $count; $i++) {
@@ -202,15 +200,16 @@ class CourseController extends Controller
 
         return response()->json([
             'data' => $data,
-            'labels' => $labels
+            'labels' => $labels,
         ]);
     }
 
     public function profile()
     {
         $teacher = Teacher::with('user')
-        ->where('user_id', Auth::id())
+            ->where('user_id', Auth::id())
             ->firstOrFail();
+
         return Inertia::render('Teacher/Profile', [
             'teacher' => $teacher,
         ]);
@@ -278,7 +277,7 @@ class CourseController extends Controller
         return redirect()->back()->with('success', 'پروفایل با موفقیت به‌روزرسانی شد.');
     }
 
-  public function index()
+    public function index()
     {
         $courses = Course::withCount(['users', 'course_lessons', 'quizzes'])
             ->get();
@@ -292,6 +291,7 @@ class CourseController extends Controller
     {
         $levels = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
         $languages = ['en' => 'English', 'fa' => 'فارسی', 'ar' => 'العربية'];
+
         return inertia('Teacher/Courses/Create', [
             'levels' => $levels,
             'languages' => $languages,
@@ -311,16 +311,15 @@ class CourseController extends Controller
             'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'trailer_url' => 'nullable|url',
             'language' => 'required|string|max:2',
-            'status' => 'required|in:draft,published'
+            'status' => 'required|in:draft,published',
         ]);
 
         $slug = Str::slug($request->title);
-            $count = Course::where('slug', $slug)->count();
+        $count = Course::where('slug', $slug)->count();
 
-            if ($count > 0) {
-                $slug = $slug . '-' . time();
-            }
-
+        if ($count > 0) {
+            $slug = $slug.'-'.time();
+        }
 
         // ذخیره تصویر thumbnail اگر وجود دارد
         if ($request->hasFile('thumbnail')) {
@@ -350,46 +349,47 @@ class CourseController extends Controller
 
     public function edit(Course $course)
     {
-          $levels = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
+        $levels = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
 
-          return inertia('Teacher/Courses/Edit', [
-              'course' => $course,
-              'levels' => $levels,
-          ]);
+        return inertia('Teacher/Courses/Edit', [
+            'course' => $course,
+            'levels' => $levels,
+        ]);
     }
+
     public function update(Request $request, Course $course)
     {
-      $validated = $request->validate([
-          'title' => 'required|string|max:255',
-          'description' => 'nullable|string',
-          'level' => 'required|in:A1,A2,B1,B2,C1,C2',
-          'topic' => 'nullable|string|max:255',
-          'is_free' => 'boolean',
-          'price' => 'nullable|numeric|min:0',
-          'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-          'trailer_url' => 'nullable|url',
-          'language' => 'required|string|max:2',
-          'status' => 'required|in:draft,published',
-      ]);
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'level' => 'required|in:A1,A2,B1,B2,C1,C2',
+            'topic' => 'nullable|string|max:255',
+            'is_free' => 'boolean',
+            'price' => 'nullable|numeric|min:0',
+            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'trailer_url' => 'nullable|url',
+            'language' => 'required|string|max:2',
+            'status' => 'required|in:draft,published',
+        ]);
 
-      // مدیریت تصویر
-      if ($request->hasFile('thumbnail')) {
-          // حذف تصویر قبلی اگر وجود داشت
-          if ($course->thumbnail) {
-              Storage::disk('public')->delete($course->thumbnail);
-          }
-          $validated['thumbnail'] = $request->file('thumbnail')->store('course-thumbnails', 'public');
-      } elseif ($request->remove_thumbnail) {
-          if ($course->thumbnail) {
-              Storage::disk('public')->delete($course->thumbnail);
-          }
-          $validated['thumbnail'] = null;
-      }
+        // مدیریت تصویر
+        if ($request->hasFile('thumbnail')) {
+            // حذف تصویر قبلی اگر وجود داشت
+            if ($course->thumbnail) {
+                Storage::disk('public')->delete($course->thumbnail);
+            }
+            $validated['thumbnail'] = $request->file('thumbnail')->store('course-thumbnails', 'public');
+        } elseif ($request->remove_thumbnail) {
+            if ($course->thumbnail) {
+                Storage::disk('public')->delete($course->thumbnail);
+            }
+            $validated['thumbnail'] = null;
+        }
 
-      $course->update($validated);
+        $course->update($validated);
 
-      return redirect()->route('teacher.courses.index')
-          ->with('success', 'دوره با موفقیت به‌روزرسانی شد.');
+        return redirect()->route('teacher.courses.index')
+            ->with('success', 'دوره با موفقیت به‌روزرسانی شد.');
     }
 
     public function destroy(Course $course)

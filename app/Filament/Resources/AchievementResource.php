@@ -3,9 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\AchievementResource\Pages;
-use App\Filament\Resources\AchievementResource\RelationManagers;
 use App\Models\Achievement;
-use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
@@ -17,8 +15,6 @@ use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class AchievementResource extends Resource
 {
@@ -27,7 +23,9 @@ class AchievementResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     protected static ?string $navigationLabel = 'Achievements';
+
     protected static ?string $pluralModelLabel = 'Achievements';
+
     protected static ?string $modelLabel = 'Achievement';
 
     public static function form(Form $form): Form

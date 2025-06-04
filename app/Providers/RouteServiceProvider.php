@@ -10,7 +10,7 @@ class RouteServiceProvider extends ServiceProvider
     /**
      * مسیر پیش‌فرض بعد از لاگین
      */
-     public const HOME = '/redirect-after-login';
+    public const HOME = '/redirect-after-login';
 
     /**
      * Bootstrap your route-related services.
@@ -30,6 +30,7 @@ class RouteServiceProvider extends ServiceProvider
     public static function homeRoute(): string
     {
         $user = auth()->user();
+
         return match ($user->role) {
             'student' => route('student.dashboard'),
             'teacher' => route('teacher.dashboard'),

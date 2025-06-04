@@ -8,7 +8,7 @@ class StudentProgress extends Model
 {
     protected $fillable = [
         'user_id', 'level', 'xp',
-        'lessons_completed', 'words_learned'
+        'lessons_completed', 'words_learned',
     ];
 
     public function user()

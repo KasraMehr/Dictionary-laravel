@@ -12,13 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('resources', function (Blueprint $table) {
-          $table->id();
-          $table->foreignId('course_id')->nullable()->constrained()->onDelete('cascade');
-          $table->string('title');
-          $table->string('file_path')->nullable();
-          $table->string('type')->default('pdf');
-          $table->text('description')->nullable();
-          $table->timestamps();
+            $table->id();
+            $table->foreignId('course_id')->nullable()->constrained()->onDelete('cascade');
+            $table->string('title');
+            $table->string('file_path')->nullable();
+            $table->string('type')->default('pdf');
+            $table->text('description')->nullable();
+            $table->timestamps();
         });
     }
 

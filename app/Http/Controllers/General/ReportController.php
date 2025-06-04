@@ -14,12 +14,10 @@ class ReportController extends Controller
 {
     /**
      * Displays a top users and teams along no. of words, users, teams.
-     *
-     * @return Response
      */
     public function statisticReport(): Response
     {
-          $chartData = [
+        $chartData = [
             '1_week' => [
                 'users' => User::where('created_at', '>=', now()->subWeek())->count(),
                 'words' => Word::where('created_at', '>=', now()->subWeek())->count(),

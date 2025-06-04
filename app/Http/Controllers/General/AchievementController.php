@@ -10,7 +10,8 @@ class AchievementController extends Controller
 {
     public function index(): \Inertia\Response
     {
-        $achievements =  Achievement::all();
+        $achievements = Achievement::all();
+
         return Inertia::render('General/Learn/Achievements', [
             'achievements' => $achievements,
         ]);

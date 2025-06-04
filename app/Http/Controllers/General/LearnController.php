@@ -4,18 +4,17 @@ namespace App\Http\Controllers\General;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Course;
 use App\Models\Teacher;
 use App\Models\Word;
-use App\Models\Course;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-
 
 class LearnController extends Controller
 {
     public function learn()
     {
-      return Inertia::render('General/Learn/Learn');
+        return Inertia::render('General/Learn/Learn');
     }
 
     public function levelLesson($level)
@@ -32,7 +31,7 @@ class LearnController extends Controller
                 'last_page' => $words->lastPage(),
                 'per_page' => $words->perPage(),
                 'total' => $words->total(),
-            ]
+            ],
         ]);
     }
 
@@ -40,7 +39,7 @@ class LearnController extends Controller
     {
         $request->validate([
             'level' => 'required|string|in:A1,A2,B1,B2,C1,C2',
-            'page' => 'required|integer|min:1'
+            'page' => 'required|integer|min:1',
         ]);
 
         $words = Word::with(['categories:id,name'])
@@ -54,17 +53,17 @@ class LearnController extends Controller
                 'last_page' => $words->lastPage(),
                 'per_page' => $words->perPage(),
                 'total' => $words->total(),
-            ]
+            ],
         ]);
     }
 
     public function topics()
     {
-      $categories = Category::withCount('words')->get();
+        $categories = Category::withCount('words')->get();
 
-      return Inertia::render('General/Learn/Topics', [
-          'categories' => $categories,
-      ]);
+        return Inertia::render('General/Learn/Topics', [
+            'categories' => $categories,
+        ]);
     }
 
     public function levels()
@@ -98,7 +97,7 @@ class LearnController extends Controller
 
         return Inertia::render('General/Learn/Teachers', [
             'teachers' => $teachers,
-            'filters' => $request->only(['search', 'language', 'method'])
+            'filters' => $request->only(['search', 'language', 'method']),
         ]);
     }
 
@@ -108,9 +107,9 @@ class LearnController extends Controller
 
         // فیلتر بر اساس جستجو
         if ($request->has('search')) {
-            $query->where(function($q) use ($request) {
+            $query->where(function ($q) use ($request) {
                 $q->where('title', 'like', '%'.$request->search.'%')
-                  ->orWhere('description', 'like', '%'.$request->search.'%');
+                    ->orWhere('description', 'like', '%'.$request->search.'%');
             });
         }
 
@@ -146,22 +145,22 @@ class LearnController extends Controller
         // یافتن دوره با اسلاگ داده شده
         $course = Course::with([
             'instructor',
-//            'reviews.user',
-//            'chapters.lessons'
+            //            'reviews.user',
+            //            'chapters.lessons'
         ])
 //            ->withCount(['students', 'reviews'])
             ->where('slug', $slug)
             ->where('status', 'published')
             ->firstOrFail();
 
-//        $course->average_rating = $course->reviews->avg('rating') ?? 0;
+        //        $course->average_rating = $course->reviews->avg('rating') ?? 0;
 
         // توزیع امتیازها
-//        $ratingsDistribution = [5 => 0, 4 => 0, 3 => 0, 2 => 0, 1 => 0];
-//        foreach ($course->reviews as $review) {
-//            $ratingsDistribution[$review->rating]++;
-//        }
-//        $course->ratings_distribution = $ratingsDistribution;
+        //        $ratingsDistribution = [5 => 0, 4 => 0, 3 => 0, 2 => 0, 1 => 0];
+        //        foreach ($course->reviews as $review) {
+        //            $ratingsDistribution[$review->rating]++;
+        //        }
+        //        $course->ratings_distribution = $ratingsDistribution;
 
         // یافتن دوره‌های مرتبط با الگوریتم پیشرفته
         $relatedCourses = $this->getRelatedCourses($course);
@@ -253,9 +252,9 @@ class LearnController extends Controller
     public function show_teacher(Teacher $teacher)
     {
         $teacher->load('user');
+
         return Inertia::render('Teacher/Show', [
             'teacher' => $teacher,
         ]);
     }
-
 }

@@ -4,9 +4,6 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
-use App\Models\Team;
-use App\Models\User;
 
 class TeamMemberMiddleware
 {
@@ -15,23 +12,22 @@ class TeamMemberMiddleware
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-     public function handle(Request $request, Closure $next): \Symfony\Component\HttpFoundation\Response
-     {
-       $team = $request->route('team');
+    public function handle(Request $request, Closure $next): \Symfony\Component\HttpFoundation\Response
+    {
+        $team = $request->route('team');
 
-       $team->loadMissing(['owner', 'users']);
+        $team->loadMissing(['owner', 'users']);
 
-       if (!$team) {
-          abort(404, 'Team not found');
+        if (! $team) {
+            abort(404, 'Team not found');
         }
 
         $user = $request->user();
 
         if (($team->owner && $team->owner->id === $user->id) || $team->users->contains($user->id)) {
-          return $next($request);
+            return $next($request);
         }
 
         abort(403, 'You are not a member of this team.');
-      }
-
+    }
 }

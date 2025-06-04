@@ -22,7 +22,7 @@ class ContactController extends Controller
         $contact = Contact::create($validatedData);
 
         // ارسال ایمیل (اختیاری)
-        Mail::raw("New contact message from {$request->name} - {$request->email}: {$request->message}", function ($message) use ($request) {
+        Mail::raw("New contact message from {$request->name} - {$request->email}: {$request->message}", function ($message) {
             $message->to('kasramehrali@gmail.com')
                 ->subject('New Contact Message');
         });

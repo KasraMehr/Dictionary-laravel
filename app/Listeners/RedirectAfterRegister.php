@@ -15,7 +15,7 @@ class RedirectAfterRegister
         $user = $event->user;
 
         // تغییر مسیر بر اساس role
-        return redirect()->to(match($user->role) {
+        return redirect()->to(match ($user->role) {
             'student' => route('student.dashboard'),
             'teacher' => route('teacher.dashboard'),
             'translator' => route('translator.dashboard'),

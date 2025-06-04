@@ -9,6 +9,7 @@ use App\Http\Controllers\General\SocialAuthController;
 use App\Http\Controllers\Student\StudentCourseController;
 use App\Http\Controllers\Student\StudentDashboard;
 use App\Http\Controllers\Student\StudentQuizController;
+use App\Http\Controllers\Teacher\CourseController;
 use App\Http\Controllers\Teacher\CourseLessonController;
 use App\Http\Controllers\Teacher\QuestionController;
 use App\Http\Controllers\Teacher\QuizController;
@@ -18,13 +19,11 @@ use App\Http\Controllers\Translator\CategoryController;
 use App\Http\Controllers\Translator\DashboardController;
 use App\Http\Controllers\Translator\TeamController;
 use App\Http\Controllers\Translator\WordController;
-use App\Http\Controllers\Teacher\CourseController;
 use App\Http\Middleware\IsStudent;
 use App\Http\Middleware\IsTeacher;
 use App\Http\Middleware\IsTranslator;
 use App\Http\Middleware\TeamMemberMiddleware;
 use Illuminate\Support\Facades\Route;
-
 
 Route::get('/', [GeneralController::class, 'landingData'])->name('landing');
 Route::get('/reports', [ReportController::class, 'statisticReport'])->name('reports');
@@ -51,7 +50,6 @@ Route::get('/courses', [LearnController::class, 'courses'])->name('courses.index
 Route::get('/courses/{course}', [LearnController::class, 'show_course'])->name('courses.show');
 Route::get('/word/{native_lang}-{translated_lang}/{word:slug}', [WordController::class, 'show'])->name('word.show');
 
-
 Route::get('/csrf-token', function () {
     return response()->json(['csrf_token' => csrf_token()]);
 });
@@ -63,7 +61,7 @@ Route::post('/contact', [ContactController::class, 'store'])->name('contact.stor
 Route::get('/redirect-after-login', function () {
     $user = auth()->user();
 
-    return redirect()->to(match($user->role) {
+    return redirect()->to(match ($user->role) {
         'translator' => route('translator.dashboard'),
         'teacher' => route('teacher.dashboard'),
         'student' => route('student.dashboard'),
@@ -71,8 +69,7 @@ Route::get('/redirect-after-login', function () {
     });
 })->middleware(['auth', 'verified']);
 
-Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function ()
-{
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
     Route::middleware([IsTranslator::class])->prefix('translator')->name('translator.')->group(function () {
 
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -87,7 +84,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
         // Category Management Routes
         Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
         Route::post('/categories', [CategoryController::class, 'store'])->name('categories.store');
-        Route::get('/categories/{id}/words', [CategoryController::class, 'getCategoryWords']); //get the words of a category
+        Route::get('/categories/{id}/words', [CategoryController::class, 'getCategoryWords']); // get the words of a category
         Route::put('/categories/{category}', [CategoryController::class, 'update'])->name('categories.update'); // Update category
         Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy'); // Delete category
 
@@ -113,11 +110,11 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
         Route::get('/profile', [CourseController::class, 'profile'])->name('profile');
         Route::put('/profile/update', [CourseController::class, 'profile_update'])->name('profile.update');
         Route::resource('courses', CourseController::class)
-        ->names('courses');
+            ->names('courses');
 
         Route::prefix('courses/{course}')->group(function () {
-          Route::get('/lessons', [CourseLessonController::class, 'index'])
-              ->name('courses.lessons.index');
+            Route::get('/lessons', [CourseLessonController::class, 'index'])
+                ->name('courses.lessons.index');
 
             Route::get('/lessons/create', [CourseLessonController::class, 'create'])
                 ->name('courses.lessons.create');
