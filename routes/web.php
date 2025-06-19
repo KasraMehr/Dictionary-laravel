@@ -19,19 +19,27 @@ use App\Http\Controllers\Translator\CategoryController;
 use App\Http\Controllers\Translator\DashboardController;
 use App\Http\Controllers\Translator\TeamController;
 use App\Http\Controllers\Translator\WordController;
+use App\Http\Controllers\GameController;
 use App\Http\Middleware\IsStudent;
 use App\Http\Middleware\IsTeacher;
 use App\Http\Middleware\IsTranslator;
 use App\Http\Middleware\TeamMemberMiddleware;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [GeneralController::class, 'landingData'])->name('landing');
+Route::get('/dictionary', [GeneralController::class, 'landingData'])->name('landing');
+Route::get('/', [GeneralController::class, 'home'])->name('home');
 Route::get('/reports', [ReportController::class, 'statisticReport'])->name('reports');
 Route::get('/library', [GeneralController::class, 'index'])->name('library');
 Route::get('/search', [GeneralController::class, 'search'])->name('search');
 Route::get('/daily-test', [GeneralController::class, 'DailyTest'])->name('DailyTest');
 Route::get('/placement-test', [GeneralController::class, 'PlacementTest'])->name('PlacementTest');
 Route::get('/daily-words', [GeneralController::class, 'DailyWords'])->name('DailyWords');
+
+Route::get('/games', [GameController::class, 'landing'])->name('games.landing');
+Route::get('/games/spelling-bee', [GameController::class, 'spellingBee'])->name('games.spellingBee');
+Route::get('/games/wordle', [GameController::class, 'wordle'])->name('games.wordle');
+Route::get('/games/hangman', [GameController::class, 'hangman'])->name('games.hangman');
+
 
 // Communicate routes
 Route::get('/about-us', [GeneralController::class, 'aboutUs'])->name('aboutUs');
