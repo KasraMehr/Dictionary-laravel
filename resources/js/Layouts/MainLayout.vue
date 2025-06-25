@@ -80,7 +80,7 @@ const setLanguage = (lang) => {
                         <div class="flex items-center">
                             <!-- Logo -->
                             <div class="shrink-0 flex items-center h-full">
-                                <Link :href="route('landing')">
+                                <Link :href="route('home')">
                                     <img src="/logo.svg" alt="logo" class="h-full w-auto max-h-16 object-contain" />
                                 </Link>
                             </div>
