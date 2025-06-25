@@ -200,6 +200,11 @@ class GeneralController extends Controller
         ]);
     }
 
+    public function home(): Response
+    {
+        return Inertia::render('General/Home');
+    }
+
     public function aboutUs(): Response
     {
         return Inertia::render('General/Communicate/AboutUs');
