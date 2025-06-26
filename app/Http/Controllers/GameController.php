@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Hangman;
+use App\Models\Wordle;
+use App\Models\SpellingBee;
 use Inertia\Inertia;
 
 class GameController extends Controller
@@ -15,17 +18,33 @@ class GameController extends Controller
 
     public function spellingBee()
     {
-      return Inertia::render('Games/SpellingBee');
+        $spellingBeeWord = SpellingBee::inRandomOrder()->first();
+
+        return Inertia::render('Games/SpellingBee', [
+            'centerLetter' => substr($spellingBeeWord->word, 0, 1), // حرف اول کلمه به‌عنوان حرف مرکزی
+            'outerLetters' => str_split(substr($spellingBeeWord->word, 1)), // بقیه حروف
+            'possibleWords' => $spellingBeeWord->answers, // کلمات ممکن
+        ]);
     }
 
     public function wordle()
     {
-      return Inertia::render('Games/Wordle');
+        // انتخاب یک کلمه تصادفی برای Wordle
+        $wordleWord = Wordle::inRandomOrder()->first();
+
+        return Inertia::render('Games/Wordle', [
+            'wordOfTheDay' => $wordleWord->word,
+        ]);
     }
 
     public function hangman()
     {
-      return Inertia::render('Games/Hangman');
+        // انتخاب یک کلمه تصادفی برای Hangman
+        $hangmanWord = Hangman::inRandomOrder()->first();
+
+        return Inertia::render('Games/Hangman', [
+            'wordOfTheDay' => $hangmanWord->word,
+        ]);
     }
 
     /**
