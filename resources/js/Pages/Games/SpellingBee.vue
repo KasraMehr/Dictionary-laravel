@@ -264,8 +264,10 @@ import MainLayout from '@/Layouts/MainLayout.vue';
 const centerLetter = ref('S');
 const outerLetters = ref(['P', 'E', 'L', 'I', 'N', 'G']);
 const possibleWords = ref([
-  'SING', 'SPIN', 'LENS',
-  'SPELL', 'SPINE', 'LIPS', 'LINES', 'SELL'
+  "GELS", "GINS", "LEGS", "LENS", "LINES",
+  "LIPS", "LISP", "PELIS", "PENS", "PIGS",
+  "PINGS", "PINS", "SIGN", "SING", "SINGLE",
+  "SLING", "SLIP", "SNIP", "SPIEL", "SPIN", "SPINE"
 ]);
 
 // Game state
