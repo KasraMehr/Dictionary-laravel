@@ -401,6 +401,11 @@
     "contact_information": "معلومات الاتصال",
     "experience_and_background": "الخبرات والسيرة الذاتية",
     "submit_new_review": "إرسال تقييم جديد",
-    "telephone": "هاتف"
+    "telephone": "هاتف",
+    "dictionary": "قاموس",
+    "games": "ألعاب",
+    "hangman": "الرجل المشنوق",
+    "spelling_bee": "تهجئة الكلمات",
+    "wordle": "ووردل"
 
 }

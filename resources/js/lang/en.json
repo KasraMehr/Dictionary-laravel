@@ -401,6 +401,11 @@
     "contact_information": "Contact Information",
     "experience_and_background": "Experience and Background",
     "submit_new_review": "Submit New Review",
-    "telephone": "Telephone"
+    "telephone": "Telephone",
+    "dictionary": "Dictionary",
+    "games": "Games",
+    "hangman": "Hangman",
+    "spelling_bee": "Spelling Bee",
+    "wordle": "Wordle"
 
 }

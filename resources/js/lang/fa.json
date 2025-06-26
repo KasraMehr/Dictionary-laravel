@@ -402,7 +402,12 @@
     "contact_information": "اطلاعات تماس",
     "experience_and_background": "سوابق و تجربیات",
     "submit_new_review": "ثبت نظر جدید",
-    "telephone": "تلفن"
+    "telephone": "تلفن",
+    "dictionary": "دیکشنری",
+    "games": "بازی‌ها",
+    "hangman": "حدس کلمه (دارزن)",
+    "spelling_bee": "املای کلمات",
+    "wordle": "وردل"
 
 
 }
