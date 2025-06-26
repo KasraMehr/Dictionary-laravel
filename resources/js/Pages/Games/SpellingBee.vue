@@ -254,6 +254,12 @@
 import { ref, computed, onMounted } from 'vue';
 import MainLayout from '@/Layouts/MainLayout.vue';
 
+// defineProps({
+//   centerLetter: String,
+//   outerLetters: Array,
+//   possibleWords: Array,
+// });
+
 // Game configuration
 const centerLetter = ref('S');
 const outerLetters = ref(['P', 'E', 'L', 'I', 'N', 'G']);

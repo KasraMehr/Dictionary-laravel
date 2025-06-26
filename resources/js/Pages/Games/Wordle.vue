@@ -24,7 +24,7 @@
           <div
             v-for="(cell, cellIndex) in row"
             :key="cellIndex"
-            class="aspect-square w-full max-w-[3.5rem] sm:max-w-[4.5rem] flex items-center justify-center text-xl sm:text-2xl font-bold rounded border-2 dark:border-gray-600"
+            class="aspect-square text-gray-900 dark:text-gray-200 w-full max-w-[3.5rem] flex items-center justify-center text-xl sm:text-2xl font-bold rounded border-2 dark:border-gray-600"
             :class="getCellClasses(cell, rowIndex)"
           >
             {{ cell.letter }}
@@ -36,12 +36,12 @@
       <div class="w-full max-w-xs sm:max-w-md px-2">
         <div class="flex flex-col gap-1 sm:gap-2">
           <!-- Top Row -->
-          <div class="flex justify-center gap-0.5 sm:gap-1">
+          <div class="flex justify-center gap-[2px] sm:gap-1">
             <button
               v-for="letter in 'QWERTYUIOP'.split('')"
               :key="letter"
               @click="typeLetter(letter)"
-              class="h-10 sm:h-12 px-1 sm:px-2 text-sm sm:text-base bg-gray-200 dark:bg-gray-700 rounded font-medium dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600"
+              class="h-10 sm:h-12 min-w-[28px] sm:min-w-[36px] px-1 sm:px-2 text-xs sm:text-sm bg-gray-200 dark:bg-gray-700 rounded font-medium dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600"
               :class="getKeyClass(letter)"
             >
               {{ letter }}
@@ -49,12 +49,12 @@
           </div>
 
           <!-- Middle Row -->
-          <div class="flex justify-center gap-0.5 sm:gap-1">
+          <div class="flex justify-center gap-[2px] sm:gap-1">
             <button
               v-for="letter in 'ASDFGHJKL'.split('')"
               :key="letter"
               @click="typeLetter(letter)"
-              class="h-10 sm:h-12 px-1 sm:px-2 text-sm sm:text-base bg-gray-200 dark:bg-gray-700 rounded font-medium dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600"
+              class="h-10 sm:h-12 min-w-[28px] sm:min-w-[36px] px-1 sm:px-2 text-xs sm:text-sm bg-gray-200 dark:bg-gray-700 rounded font-medium dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600"
               :class="getKeyClass(letter)"
             >
               {{ letter }}
@@ -62,10 +62,10 @@
           </div>
 
           <!-- Bottom Row -->
-          <div class="flex justify-center gap-0.5 sm:gap-1">
+          <div class="flex justify-center gap-[2px] sm:gap-1">
             <button
               @click="typeLetter('ENTER')"
-              class="h-10 sm:h-12 px-1 sm:px-2 text-xs sm:text-sm bg-gray-200 dark:bg-gray-700 rounded font-medium dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600"
+              class="h-10 sm:h-12 min-w-[40px] sm:min-w-[48px] px-1 sm:px-2 text-xs sm:text-sm bg-gray-200 dark:bg-gray-700 rounded font-medium dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600"
             >
               ENTER
             </button>
@@ -73,20 +73,21 @@
               v-for="letter in 'ZXCVBNM'.split('')"
               :key="letter"
               @click="typeLetter(letter)"
-              class="h-10 sm:h-12 px-1 sm:px-2 text-sm sm:text-base bg-gray-200 dark:bg-gray-700 rounded font-medium dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600"
+              class="h-10 sm:h-12 min-w-[28px] sm:min-w-[36px] px-1 sm:px-2 text-xs sm:text-sm bg-gray-200 dark:bg-gray-700 rounded font-medium dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600"
               :class="getKeyClass(letter)"
             >
               {{ letter }}
             </button>
             <button
               @click="typeLetter('⌫')"
-              class="h-10 sm:h-12 px-1 sm:px-2 text-sm sm:text-base bg-gray-200 dark:bg-gray-700 rounded font-medium dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600"
+              class="h-10 sm:h-12 min-w-[40px] sm:min-w-[48px] px-1 sm:px-2 text-xs sm:text-sm bg-gray-200 dark:bg-gray-700 rounded font-medium dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600"
             >
               ⌫
             </button>
           </div>
         </div>
       </div>
+
     </div>
 
     <!-- Stats Modal -->
@@ -171,6 +172,9 @@ import MainLayout from '@/Layouts/MainLayout.vue';
 // Game configuration
 const WORD_LENGTH = 5;
 const MAX_ATTEMPTS = 6;
+defineProps({
+  wordOfTheDay: String,
+});
 const WORDS = [
   'REACT', 'VUEJS', 'WORLD', 'HELLO',
   'GAMES', 'CODER', 'FRAME', 'BUILD',
@@ -236,9 +240,9 @@ const typeLetter = (key) => {
 const checkWord = () => {
   // Check if word is complete
   if (currentCol.value !== WORD_LENGTH) {
-    showMessage.value = true;
-    messageTitle.value = 'Not enough letters';
-    messageText.value = 'Please enter a 5-letter word';
+    // showMessage.value = true;
+    // messageTitle.value = 'Not enough letters';
+    // messageText.value = 'Please enter a 5-letter word';
     return;
   }
 

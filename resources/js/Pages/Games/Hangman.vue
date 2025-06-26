@@ -85,14 +85,17 @@
       </div>
     </div>
 
-    <!-- Keyboard -->
-    <div class="grid grid-cols-9 gap-2 mb-8">
+    <!-- Keyboard Section -->
+    <div
+      class="grid grid-cols-9 gap-1 sm:gap-2 max-w-sm sm:max-w-xl mx-auto mt-4 px-2 sm:px-4 my-4"
+    >
       <button
         v-for="letter in alphabet"
         :key="letter"
         @click="guessLetter(letter)"
         :disabled="gameOver || guessedLetters.includes(letter)"
-        class="w-8 h-10 flex items-center justify-center bg-gray-200 dark:bg-gray-700 rounded font-bold dark:text-white disabled:opacity-40"
+        class="w-6 h-8 sm:w-10 sm:h-12 flex items-center justify-center rounded font-bold text-sm sm:text-base
+               bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white disabled:opacity-40 transition-colors duration-200"
         :class="{
           'bg-green-200 dark:bg-green-800': correctLetters.includes(letter),
           'bg-red-200 dark:bg-red-800': incorrectLetters.includes(letter)
@@ -101,6 +104,7 @@
         {{ letter }}
       </button>
     </div>
+
 
     <!-- Game Over Message -->
     <div v-if="gameOver" class="text-center">
@@ -125,6 +129,9 @@
 import { ref, onMounted } from 'vue';
 import MainLayout from '@/Layouts/MainLayout.vue';
 
+defineProps({
+  wordOfTheDay: String,
+});
 // Game configuration
 const words = [
   'VUE', 'JAVASCRIPT', 'DEVELOPER', 'HANGMAN', 'PROGRAMMING',
