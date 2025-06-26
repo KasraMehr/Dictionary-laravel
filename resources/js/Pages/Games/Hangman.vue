@@ -129,9 +129,9 @@
 import { ref, onMounted } from 'vue';
 import MainLayout from '@/Layouts/MainLayout.vue';
 
-defineProps({
-  wordOfTheDay: String,
-});
+// defineProps({
+//   wordOfTheDay: String,
+// });
 // Game configuration
 const words = [
   'VUE', 'JAVASCRIPT', 'DEVELOPER', 'HANGMAN', 'PROGRAMMING',

@@ -18,33 +18,39 @@ class GameController extends Controller
 
     public function spellingBee()
     {
-        $spellingBeeWord = SpellingBee::inRandomOrder()->first();
+        // $spellingBeeWord = SpellingBee::inRandomOrder()->first();
 
-        return Inertia::render('Games/SpellingBee', [
-            'centerLetter' => substr($spellingBeeWord->word, 0, 1), // حرف اول کلمه به‌عنوان حرف مرکزی
-            'outerLetters' => str_split(substr($spellingBeeWord->word, 1)), // بقیه حروف
-            'possibleWords' => $spellingBeeWord->answers, // کلمات ممکن
-        ]);
+        return Inertia::render('Games/SpellingBee'
+        // ,[
+            // 'centerLetter' => substr($spellingBeeWord->word, 0, 1), // حرف اول کلمه به‌عنوان حرف مرکزی
+            // 'outerLetters' => str_split(substr($spellingBeeWord->word, 1)), // بقیه حروف
+            // 'possibleWords' => $spellingBeeWord->answers, // کلمات ممکن
+        // ]
+      );
     }
 
     public function wordle()
     {
         // انتخاب یک کلمه تصادفی برای Wordle
-        $wordleWord = Wordle::inRandomOrder()->first();
+        // $wordleWord = Wordle::inRandomOrder()->first();
 
-        return Inertia::render('Games/Wordle', [
-            'wordOfTheDay' => $wordleWord->word,
-        ]);
+        return Inertia::render('Games/Wordle'
+        // , [
+        //     'wordOfTheDay' => $wordleWord->word,
+        // ]
+      );
     }
 
     public function hangman()
     {
         // انتخاب یک کلمه تصادفی برای Hangman
-        $hangmanWord = Hangman::inRandomOrder()->first();
+        // $hangmanWord = Hangman::inRandomOrder()->first();
 
-        return Inertia::render('Games/Hangman', [
-            'wordOfTheDay' => $hangmanWord->word,
-        ]);
+        return Inertia::render('Games/Hangman'
+        // , [
+        //     'wordOfTheDay' => $hangmanWord->word,
+        // ]
+      );
     }
 
     /**

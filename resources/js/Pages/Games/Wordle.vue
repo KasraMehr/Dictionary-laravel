@@ -172,9 +172,9 @@ import MainLayout from '@/Layouts/MainLayout.vue';
 // Game configuration
 const WORD_LENGTH = 5;
 const MAX_ATTEMPTS = 6;
-defineProps({
-  wordOfTheDay: String,
-});
+// defineProps({
+//   wordOfTheDay: String,
+// });
 const WORDS = [
   'REACT', 'VUEJS', 'WORLD', 'HELLO',
   'GAMES', 'CODER', 'FRAME', 'BUILD',
