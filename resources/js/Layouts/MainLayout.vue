@@ -104,8 +104,8 @@ const setLanguage = (lang) => {
                                             {{ $t('register') }}
                                         </NavLink>
                                     </template>
-                                    <NavLink :href="route('library')" :active="route().current('library')" class="text-black dark:text-white">
-                                        {{ $t('words_bank') }}
+                                    <NavLink :href="route('games.landing')" :active="route().current('games.landing')" class="text-black dark:text-white">
+                                        {{ $t('games') }}
                                     </NavLink>
                                     <Dropdown align="right" width="48">
                                         <template #trigger>
@@ -250,10 +250,10 @@ const setLanguage = (lang) => {
                                     {{ $t('register') }}
                                 </ResponsiveNavLink>
                             </template>
-                            <ResponsiveNavLink :href="route('library')"
-                                               :active="route().current('library')"
+                            <ResponsiveNavLink :href="route('games.landing')"
+                                               :active="route().current('games.landing')"
                                                class="block px-3 py-2 rounded-lg hover:bg-white/30 dark:hover:bg-gray-800/50">
-                                {{ $t('words_bank') }}
+                                {{ $t('games') }}
                             </ResponsiveNavLink>
                             <ResponsiveNavLink :href="route('learn')"
                                                :active="route().current('learn')"
@@ -361,21 +361,21 @@ const setLanguage = (lang) => {
                     </h4>
                     <div class="space-y-4">
                         <div>
-                            <a :href="route('library')" class="cursor-pointer text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors duration-300 flex items-center group">
+                            <a :href="route('landing')" class="cursor-pointer text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors duration-300 flex items-center group">
                                 <span class="w-1.5 h-1.5 bg-gray-400 rounded-full mx-2 group-hover:bg-red-500 transition-all duration-300"></span>
-                                {{ $t('words_bank') }}
+                                {{ $t('dictionary') }}
                             </a>
                         </div>
                         <div>
-                            <a :href="route('teachers.index')" class="cursor-pointer text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors duration-300 flex items-center group">
+                            <a :href="route('learn')" class="cursor-pointer text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors duration-300 flex items-center group">
                                 <span class="w-1.5 h-1.5 bg-gray-400 rounded-full mx-2 group-hover:bg-red-500 transition-all duration-300"></span>
-                                {{ $t('teachers') }}
+                                {{ $t('learn') }}
                             </a>
                         </div>
                         <div>
-                            <a :href="route('courses.index')" class="cursor-pointer text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors duration-300 flex items-center group">
+                            <a :href="route('games.landing')" class="cursor-pointer text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors duration-300 flex items-center group">
                                 <span class="w-1.5 h-1.5 bg-gray-400 rounded-full mx-2 group-hover:bg-red-500 transition-all duration-300"></span>
-                                {{ $t('courses') }}
+                                {{ $t('games') }}
                             </a>
                         </div>
                     </div>
@@ -390,21 +390,21 @@ const setLanguage = (lang) => {
                     </a>
                     <div class="space-y-4">
                         <div>
-                            <a :href="route('topics')" class="cursor-pointer text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors duration-300 flex items-center group">
+                            <a :href="route('teachers.index')" class="cursor-pointer text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors duration-300 flex items-center group">
                                 <span class="w-1.5 h-1.5 bg-gray-400 rounded-full mx-2 group-hover:bg-red-500 transition-all duration-300"></span>
-                                {{ $t('topics_category') }}
+                                {{ $t('teachers') }}
                             </a>
                         </div>
                         <div>
-                            <a :href="route('levels')" class="cursor-pointer text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors duration-300 flex items-center group">
+                            <a :href="route('courses.index')" class="cursor-pointer text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors duration-300 flex items-center group">
                                 <span class="w-1.5 h-1.5 bg-gray-400 rounded-full mx-2 group-hover:bg-red-500 transition-all duration-300"></span>
-                                {{ $t('levels_category') }}
+                                {{ $t('courses') }}
                             </a>
                         </div>
                         <div>
-                            <a :href="route('grammars')" class="cursor-pointer text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors duration-300 flex items-center group">
+                            <a :href="route('PlacementTest')" class="cursor-pointer text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors duration-300 flex items-center group">
                                 <span class="w-1.5 h-1.5 bg-gray-400 rounded-full mx-2 group-hover:bg-red-500 transition-all duration-300"></span>
-                                {{ $t('grammars_category') }}
+                                {{ $t('placement_test') }}
                             </a>
                         </div>
                     </div>
@@ -413,25 +413,25 @@ const setLanguage = (lang) => {
                 <!-- Quiz Column -->
                 <div class="lg:mx-auto">
                     <h4 class="text-lg text-black dark:text-white font-bold mb-6 relative inline-block after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-8 after:h-0.5 after:bg-gradient-to-r after:from-[#FF2D20] after:to-orange-500">
-                        {{ $t('quiz') }}
+                        {{ $t('games') }}
                     </h4>
                     <div class="space-y-4">
                         <div>
-                            <a :href="route('DailyWords')" class="cursor-pointer text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors duration-300 flex items-center group">
+                            <a :href="route('games.hangman')" class="cursor-pointer text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors duration-300 flex items-center group">
                                 <span class="w-1.5 h-1.5 bg-gray-400 rounded-full mx-2 group-hover:bg-red-500 transition-all duration-300"></span>
-                                {{ $t('daily_words') }}
+                                {{ $t('hangman') }}
                             </a>
                         </div>
                         <div>
-                            <a :href="route('DailyTest')" class="cursor-pointer text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors duration-300 flex items-center group">
+                            <a :href="route('games.spellingBee')" class="cursor-pointer text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors duration-300 flex items-center group">
                                 <span class="w-1.5 h-1.5 bg-gray-400 rounded-full mx-2 group-hover:bg-red-500 transition-all duration-300"></span>
-                                {{ $t('daily_test') }}
+                                {{ $t('spelling_bee') }}
                             </a>
                         </div>
                         <div>
-                            <a :href="route('PlacementTest')" class="cursor-pointer text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors duration-300 flex items-center group">
+                            <a :href="route('games.wordle')" class="cursor-pointer text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors duration-300 flex items-center group">
                                 <span class="w-1.5 h-1.5 bg-gray-400 rounded-full mx-2 group-hover:bg-red-500 transition-all duration-300"></span>
-                                {{ $t('placement_test') }}
+                                {{ $t('wordle') }}
                             </a>
                         </div>
                     </div>
