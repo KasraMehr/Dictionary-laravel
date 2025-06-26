@@ -1,6 +1,6 @@
 <template>
   <MainLayout title="Home">
-    <div class="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 font-sans transition-colors duration-500" dir="rtl">
+    <div class="relative bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 font-sans transition-colors duration-500" dir="rtl">
       <!-- Hero Section - بازطراحی شده -->
       <section class="bg-gray-200 flex items-center justify-center overflow-hidden py-24 bg-gradient-to-br dark:from-gray-900 dark:to-gray-800">
         <div class="absolute inset-0 opacity-20">
@@ -396,7 +396,7 @@
         <div class="container mx-auto px-4">
           <div class="bg-gradient-to-r from-red-500 to-orange-500 rounded-3xl p-8 md:p-12 shadow-2xl max-w-4xl mx-auto text-center">
             <h2 class="text-2xl md:text-3xl font-bold mb-6 text-white">
-              دیگر پول کلاس زبان نده!
+              دیگر پول کلاس زبان ندهید!
             </h2>
             <p class="text-xl text-white/90 mb-8">
               همین امروز یادگیری رایگان را شروع کنید
