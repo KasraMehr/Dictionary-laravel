@@ -72,7 +72,7 @@
     </div>
 
     <!-- Incorrect Letters -->
-    <div class="mb-8 text-center">
+    <div class="mb-8 text-center" dir="ltr">
       <h3 class="text-lg font-semibold dark:text-white mb-2">Incorrect Guesses:</h3>
       <div class="flex gap-2 justify-center flex-wrap">
         <span
@@ -87,14 +87,14 @@
 
     <!-- Keyboard Section -->
     <div
-      class="grid grid-cols-9 gap-1 sm:gap-2 max-w-sm sm:max-w-xl mx-auto mt-4 px-2 sm:px-4 my-4"
+      class="grid grid-cols-9 gap-2 sm:gap-4 max-w-sm sm:max-w-xl mx-auto mt-4 px-2 sm:px-4 my-4"
     >
       <button
         v-for="letter in alphabet"
         :key="letter"
         @click="guessLetter(letter)"
         :disabled="gameOver || guessedLetters.includes(letter)"
-        class="w-6 h-8 sm:w-10 sm:h-12 flex items-center justify-center rounded font-bold text-sm sm:text-base
+        class="w-8 h-10 sm:w-10 sm:h-12 flex items-center justify-center rounded font-bold text-sm sm:text-base
                bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white disabled:opacity-40 transition-colors duration-200"
         :class="{
           'bg-green-200 dark:bg-green-800': correctLetters.includes(letter),
