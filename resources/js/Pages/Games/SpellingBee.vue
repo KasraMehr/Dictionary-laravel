@@ -182,6 +182,7 @@
             draggable="true"
             @dragstart="dragFromWord(index)"
             @click="removeLetter(index)"
+            dir="ltr"
           >
             {{ letter }}
           </div>
