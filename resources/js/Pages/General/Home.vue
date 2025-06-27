@@ -404,7 +404,7 @@
             <div class="flex flex-wrap justify-center gap-4">
               <a
                 href="/register"
-                class="bg-white text-red-500 px-8 py-3 rounded-full hover:scale-105 transition-all duration-300 shadow hover:shadow-md font-bold"
+                class="relative bg-white text-red-500 px-8 py-3 rounded-full hover:scale-105 transition-all duration-300 shadow hover:shadow-md font-bold"
               >
                 شروع یادگیری رایگان
               </a>
