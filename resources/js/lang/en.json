@@ -463,6 +463,24 @@
     "interactive_learning": "Interactive learning",
     "interactive_learning_description": "Learn with engaging games and exercises",
     "final_call_description": "Start learning for free today",
-    "final_call_action": "Start learning for free"
+    "final_call_action": "Start learning for free",
+    "play_and_learn": "Play and learn a language!",
+    "games_description": "With our interactive games, learn a language 3 times faster",
+    "start_games": "Start games",
+    "why_effective_title": "Why are educational games effective?",
+    "memory_activation": "Memory activation",
+    "memory_activation_description": "Games activate long-term memory with spaced repetition",
+    "unconscious_learning": "Unconscious learning",
+    "unconscious_learning_description": "Absorb the language naturally without stress",
+    "high_focus": "High focus",
+    "high_focus_description": "The challenge-reward system triples your focus",
+    "educational_games_title": "Our educational games",
+    "educational_games_description": "Choose and start learning!",
+    "wordle_challenge": "Wordle Challenge",
+    "wordle_challenge_description": "Guess the hidden word in 6 tries and expand your vocabulary.",
+    "spelling_bee_description": "Practice correct spelling and fix common mistakes.",
+    "ready_to_start": "Ready to start?",
+    "signup_invitation": "Sign up now and join our language learning community",
+    "start_free": "Start for free - no credit card required"
 
 }

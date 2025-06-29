@@ -463,6 +463,24 @@
     "interactive_learning": "تعليم تفاعلي",
     "interactive_learning_description": "تعلم مع ألعاب وتمارين ممتعة",
     "final_call_description": "ابدأ التعلم مجانًا اليوم",
-    "final_call_action": "ابدأ التعلم مجانًا"
+    "final_call_action": "ابدأ التعلم مجانًا",
+    "play_and_learn": "العب وتعلم اللغة!",
+    "games_description": "مع ألعابنا التفاعلية، تعلم اللغة 3 مرات أسرع",
+    "start_games": "ابدأ الألعاب",
+    "why_effective_title": "لماذا الألعاب التعليمية فعالة؟",
+    "memory_activation": "تنشيط الذاكرة",
+    "memory_activation_description": "تنشط الألعاب الذاكرة طويلة المدى باستخدام التكرار المتباعد",
+    "unconscious_learning": "تعليم غير واعي",
+    "unconscious_learning_description": "استوعب اللغة بشكل طبيعي دون ضغط",
+    "high_focus": "تركيز عالٍ",
+    "high_focus_description": "نظام التحدي-المكافأة يضاعف تركيزك 3 مرات",
+    "educational_games_title": "ألعابنا التعليمية",
+    "educational_games_description": "اختر وابدأ التعلم!",
+    "wordle_challenge": "تحدي وردل",
+    "wordle_challenge_description": "خمن الكلمة المخفية في 6 محاولات وقم بتوسيع مفرداتك.",
+    "spelling_bee_description": "تدرب على الإملاء الصحيح وصحح الأخطاء الشائعة.",
+    "ready_to_start": "هل أنت مستعد للبدء؟",
+    "signup_invitation": "سجل الآن وانضم إلى مجتمع متعلمي اللغة لدينا",
+    "start_free": "ابدأ مجانًا - لا حاجة لبطاقة ائتمان"
 
 }
