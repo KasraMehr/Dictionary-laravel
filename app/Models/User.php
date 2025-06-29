@@ -201,4 +201,10 @@ class User extends Authenticatable
             $user->learningStats()->create();
         });
     }
+
+    public function canAccessPanel(\Filament\Panel $panel): bool
+    {
+        \Illuminate\Support\Facades\Log::info('Checking panel access for user: ' . $this->email . ', role: ' . ($this->role ?? 'none'));
+        return $this->role === 'admin';
+    }
 }
