@@ -107,6 +107,9 @@ const setLanguage = (lang) => {
                                     <NavLink :href="route('games.landing')" :active="route().current('games.landing')" class="text-black dark:text-white">
                                         {{ $t('games') }}
                                     </NavLink>
+                                    <NavLink :href="route('landing')" :active="route().current('landing')" class="text-black dark:text-white">
+                                        {{ $t('dictionary') }}
+                                    </NavLink>
                                     <Dropdown align="right" width="48">
                                         <template #trigger>
                                             <button
