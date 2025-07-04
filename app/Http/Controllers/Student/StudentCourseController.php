@@ -22,6 +22,8 @@ class StudentCourseController extends Controller
                     ->where('course_user.user_id', '=', $userId);
             })
             ->leftJoin('users as creators', 'creators.id', '=', 'courses.created_by')
+            ->where('courses.status', 'published')
+            ->whereHas('course_lessons')
             ->select([
                 'courses.*',
                 'creators.name as creator_name',
