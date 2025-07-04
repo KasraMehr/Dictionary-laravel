@@ -235,8 +235,17 @@ const setLanguage = (lang) => {
                     <div v-if="showingNavigationDropdown" class="sm:hidden bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg border-t border-white/20 dark:border-gray-700/30 shadow-lg">
                         <div class="pt-2 pb-3 space-y-1 px-4">
                             <ResponsiveNavLink :href="route('translator.dashboard')"
-                                               :active="route().current('dashboard')"
-                                               v-if="$page.props.auth.user"
+                                               v-if="$page.props.auth.user && $page.props.auth.user.role === 'translator'"
+                                               class="block px-3 py-2 rounded-lg hover:bg-white/30 dark:hover:bg-gray-800/50">
+                                {{ $t('dashboard') }}
+                            </ResponsiveNavLink>
+                            <ResponsiveNavLink :href="route('teacher.dashboard')"
+                                               v-else-if="$page.props.auth.user && $page.props.auth.user.role === 'teacher'"
+                                               class="block px-3 py-2 rounded-lg hover:bg-white/30 dark:hover:bg-gray-800/50">
+                                {{ $t('dashboard') }}
+                            </ResponsiveNavLink>
+                            <ResponsiveNavLink :href="route('student.dashboard')"
+                                               v-else-if="$page.props.auth.user && $page.props.auth.user.role === 'student'"
                                                class="block px-3 py-2 rounded-lg hover:bg-white/30 dark:hover:bg-gray-800/50">
                                 {{ $t('dashboard') }}
                             </ResponsiveNavLink>
