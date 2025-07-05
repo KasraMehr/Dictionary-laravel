@@ -170,6 +170,7 @@
                border-2 border-dashed border-gray-300 dark:border-gray-600 flex flex-wrap items-center justify-center gap-1"
         @dragover.prevent
         @drop="handleDrop"
+        dir="ltr"
       >
         <template v-if="currentWord.length === 0">
           <span class="text-xs text-gray-400 dark:text-gray-500">Drag or tap letters</span>
