@@ -1,7 +1,8 @@
 <script setup>
 import MainLayout from "@/Layouts/MainLayout.vue";
 import { Link } from '@inertiajs/vue3';
-import { ref, computed } from 'vue'
+import { ref, computed } from 'vue';
+import axios from 'axios';
 
 const props = defineProps({
     level: {
@@ -16,55 +17,76 @@ const props = defineProps({
         type: Object,
         default: () => ({})
     }
-})
+});
 
-const currentIndex = ref(0)
-const learnedWords = ref(JSON.parse(localStorage.getItem('learnedWords')) || [])
-const audio = ref(null)
+const currentIndex = ref(0);
+const learnedWords = ref(JSON.parse(localStorage.getItem('learnedWords')) || []);
+const audio = ref(null);
+const localWords = ref(props.words); // Local copy of words to append new ones
+const localPagination = ref(props.pagination); // Local copy of pagination data
 
-// محاسبه شده‌ها
-const currentWord = computed(() => props.words[currentIndex.value] || null)
-const isLearned = computed(() => currentWord.value && learnedWords.value.includes(currentWord.value.id))
+// Computed properties
+const currentWord = computed(() => localWords.value[currentIndex.value] || null);
+const isLearned = computed(() => currentWord.value && learnedWords.value.includes(currentWord.value.id));
 const progressPercentage = computed(() => {
-    return props.pagination.total > 0
-        ? Math.round((learnedWords.value.length / props.pagination.total) * 100)
-        : 0
-})
+    return localPagination.value.total > 0
+        ? Math.round((learnedWords.value.length / localPagination.value.total) * 100)
+        : 0;
+});
 
-// توابع
-const nextWord = () => {
-    if (currentIndex.value < props.words.length - 1) {
-        currentIndex.value++
+// Functions
+const nextWord = async () => {
+    if (currentIndex.value < localWords.value.length - 1) {
+        currentIndex.value++;
+    } else if (localPagination.value.current_page < localPagination.value.last_page) {
+        // Fetch the next page of words
+        try {
+            const response = await axios.get('/fetch-level-words', {
+                params: {
+                    level: props.level,
+                    page: localPagination.value.current_page + 1
+                }
+            });
+            const newWords = response.data.words;
+            const newPagination = response.data.pagination;
+
+            // Append new words to the existing list
+            localWords.value = [...localWords.value, ...newWords];
+            localPagination.value = newPagination;
+            currentIndex.value++; // Move to the first word of the new page
+        } catch (error) {
+            console.error('Error fetching new words:', error);
+        }
     }
-}
+};
 
 const prevWord = () => {
     if (currentIndex.value > 0) {
-        currentIndex.value--
+        currentIndex.value--;
     }
-}
+};
 
 const toggleLearned = () => {
-    if (!currentWord.value) return
+    if (!currentWord.value) return;
 
-    const wordId = currentWord.value.id
-    const index = learnedWords.value.indexOf(wordId)
+    const wordId = currentWord.value.id;
+    const index = learnedWords.value.indexOf(wordId);
 
     if (index === -1) {
-        learnedWords.value.push(wordId)
+        learnedWords.value.push(wordId);
     } else {
-        learnedWords.value.splice(index, 1)
+        learnedWords.value.splice(index, 1);
     }
 
-    localStorage.setItem('learnedWords', JSON.stringify(learnedWords.value))
-}
+    localStorage.setItem('learnedWords', JSON.stringify(learnedWords.value));
+};
 
 const playAudio = () => {
     if (currentWord.value?.voice) {
-        audio.value = new Audio(`/storage/${currentWord.value.voice}`)
-        audio.value.play()
+        audio.value = new Audio(`/storage/${currentWord.value.voice}`);
+        audio.value.play();
     }
-}
+};
 </script>
 
 <template>
