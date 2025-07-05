@@ -41,7 +41,7 @@ const nextWord = async () => {
     } else if (localPagination.value.current_page < localPagination.value.last_page) {
         // Fetch the next page of words
         try {
-            const response = await axios.get('/fetch-level-words', {
+            const response = await axios.get('/api/fetch-level-words', {
                 params: {
                     level: props.level,
                     page: localPagination.value.current_page + 1
@@ -109,7 +109,7 @@ const playAudio = () => {
                         <div class="flex justify-between items-center mb-2">
                             <span class="font-medium text-gray-700 dark:text-gray-300">پیشرفت شما:</span>
                             <span class="text-gray-600 dark:text-gray-400">
-                                {{ learnedWords.length }} از {{ pagination.total }} کلمه
+                                {{ learnedWords.length }} از {{ localPagination.total }} کلمه
                             </span>
                         </div>
                         <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5">
@@ -214,21 +214,21 @@ const playAudio = () => {
                             :disabled="currentIndex === 0"
                             class="flex-1 py-3 px-4 rounded-lg flex items-center justify-center gap-2 transition-colors rtl:flex-row-reverse"
                             :class="currentIndex === 0
-            ? 'bg-gray-100 dark:bg-gray-800 text-gray-400 cursor-not-allowed'
-            : 'bg-white dark:bg-gray-800 shadow-md hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300'"
+                                ? 'bg-gray-100 dark:bg-gray-800 text-gray-400 cursor-not-allowed'
+                                : 'bg-white dark:bg-gray-800 shadow-md hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300'"
                         >
-                            {{ $t('previous') }} <!-- استفاده از سیستم ترجمه -->
+                            {{ $t('previous') }}
                         </button>
 
                         <button
                             @click="nextWord"
-                            :disabled="currentIndex === words.length - 1"
+                            :disabled="currentIndex === localWords.length - 1 && localPagination.current_page >= localPagination.last_page"
                             class="flex-1 py-3 px-4 rounded-lg flex items-center justify-center gap-2 transition-colors rtl:flex-row-reverse"
-                            :class="currentIndex === words.length - 1
-            ? 'bg-gray-100 dark:bg-gray-800 text-gray-400 cursor-not-allowed'
-            : 'bg-white dark:bg-gray-800 shadow-md hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300'"
+                            :class="currentIndex === localWords.length - 1 && localPagination.current_page >= localPagination.last_page
+                                ? 'bg-gray-100 dark:bg-gray-800 text-gray-400 cursor-not-allowed'
+                                : 'bg-white dark:bg-gray-800 shadow-md hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300'"
                         >
-                            {{ $t('next') }} <!-- استفاده از سیستم ترجمه -->
+                            {{ $t('next') }}
                         </button>
                     </div>
                 </div>
