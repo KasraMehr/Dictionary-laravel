@@ -193,17 +193,17 @@ const removeSkill = (skill) => {
                             </div>
 
                             <!-- دکمه‌های اقدام -->
-                            <div class="flex justify-end space-x-4 pt-6 border-t border-gray-200 dark:border-gray-700">
+                            <div class="flex justify-end pt-6 border-t border-gray-200 dark:border-gray-700">
                                 <Link
                                     :href="route('teacher.courses.show', course.id)"
-                                    class="px-5 py-2.5 border border-gray-300 text-gray-700 dark:border-gray-600 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                                    class="px-5 py-2.5 mx-2 border border-gray-300 text-gray-700 dark:border-gray-600 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
                                 >
                                     انصراف
                                 </Link>
                                 <button
                                     type="submit"
                                     :disabled="form.processing || form.skills.length === 0"
-                                    class="px-5 py-2.5 bg-gradient-to-r from-blue-600 to-blue-500 text-white rounded-lg shadow hover:from-blue-700 hover:to-blue-600 transition-all disabled:opacity-70 flex items-center"
+                                    class="px-5 py-2.5 mx-2 bg-gradient-to-r from-blue-600 to-blue-500 text-white rounded-lg shadow hover:from-blue-700 hover:to-blue-600 transition-all disabled:opacity-70 flex items-center"
                                 >
                                     <svg v-if="form.processing" class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
