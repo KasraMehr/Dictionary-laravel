@@ -172,11 +172,8 @@
                         </p>
                     </div>
                 </div>
-                <div class="mt-5 sm:mt-6 grid grid-cols-2 justify-center gap-3">
-                    <SecondaryButton @click="showDeleteModal = false" class="w-1/2">
-                        انصراف
-                    </SecondaryButton>
-                    <DangerButton @click="confirmDelete" class="w-1/2">
+                <div class="mt-5 sm:mt-6 flex justify-center">
+                    <DangerButton @click="confirmDelete">
                         بله، حذف شود
                     </DangerButton>
                 </div>
