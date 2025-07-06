@@ -220,7 +220,7 @@ const getCompletionRateColor = (rate) => {
                 <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm overflow-hidden border border-gray-100 dark:border-gray-700">
                     <div class="p-5 border-b border-gray-100 dark:border-gray-700">
                         <h3 class="font-semibold text-lg text-gray-800 dark:text-gray-100 flex items-center">
-                            <span class="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></span>
+                            <span class="w-2 h-2 bg-green-500 rounded-full mx-2 animate-pulse"></span>
                             دانشجویان آنلاین
                              ({{ toPersianNumbers(onlineStudents.length) }})
                         </h3>
@@ -327,7 +327,7 @@ const getCompletionRateColor = (rate) => {
                             <span class="text-sm font-medium">دوره جدید</span>
                         </button>
                         <button
-                            class="flex flex-col items-center justify-center p-4 rounded-lg bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-300 hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors"
+                            class="flex flex-col items-center justify-center p-4 rounded-lg bg-pink-50 dark:bg-pink-900/20 text-pink-600 dark:text-pink-300 hover:bg-pink-100 dark:hover:bg-pink-900/30 transition-colors"
                             @click="router.visit('/teacher/quizzes/create')"
                         >
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
