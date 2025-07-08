@@ -6,7 +6,10 @@ namespace App\Http\Controllers\Student;
 
 use App\Http\Controllers\Controller;
 use App\Models\Course;
+use App\Models\CourseLesson;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class StudentCourseController extends Controller
 {
@@ -55,28 +58,80 @@ class StudentCourseController extends Controller
 
     public function show(Course $course)
     {
-        // بارگذاری درس‌های دوره
-        $course->load('course_lessons');
-
-        $totalLessons = $course->course_lessons->count();
-
-        // محاسبه پیشرفت کلی دوره
         $user = auth()->user();
-        $completedLessons = $course->course_lessons->filter(function ($lesson) {
-            $userPivot = $lesson->users->first()?->pivot;
 
-            return $userPivot && $userPivot->completed;
+        $course->load(['course_lessons' => function($query) use ($user) {
+            $query->with(['users' => function($query) use ($user) {
+                $query->where('user_id', $user->id);
+            }]);
+        }]);
+
+        // محاسبه پیشرفت
+        $totalLessons = $course->course_lessons->count();
+        $completedLessons = $course->course_lessons->filter(function ($lesson) {
+            return $lesson->users->isNotEmpty() && $lesson->users->first()->pivot->completed;
+        })->count();
+
+        $progress = $totalLessons > 0 ? round(($completedLessons / $totalLessons) * 100) : 0;
+
+        // اضافه کردن وضعیت تکمیل برای هر درس
+        $lessons = $course->course_lessons->map(function ($lesson) use ($user) {
+            $lesson->is_completed = $lesson->users->isNotEmpty()
+                ? $lesson->users->first()->pivot->completed
+                : false;
+            return $lesson;
         });
 
-        $progress = $totalLessons === 0 ? 0 : round(($completedLessons->count() / $totalLessons) * 100);
-
-        // ارسال داده‌ها به نمای Inertia
         return inertia('Student/Courses/Show', [
             'course' => $course,
-            'lessons' => $course->course_lessons,
+            'lessons' => $lessons,
             'progress' => $progress,
         ]);
     }
+
+    public function markAsCompleted(Request $request, CourseLesson $lesson)
+        {
+            $user = $request->user();
+
+            $user->lessons()->syncWithoutDetaching([
+                $lesson->id => [
+                    'completed' => true,
+                    'completed_at' => now(),
+                    'progress' => 100,
+                    'started_at' => now(),
+                ]
+            ]);
+
+            $course = $lesson->course;
+            $totalLessons = $course->course_lessons->count();
+            $completedLessons = $user->lessons()
+                ->where('course_id', $course->id)
+                ->where('completed', true)
+                ->count();
+
+            $courseProgress = $totalLessons > 0 ? round(($completedLessons / $totalLessons) * 100) : 0;
+
+            $user->courses()->updateExistingPivot($course->id, [
+                'progress' => $courseProgress,
+                'last_accessed_at' => now(),
+                'completed_at' => $courseProgress >= 100 ? now() : null,
+            ]);
+
+            // برای درخواست‌های Inertia
+            if ($request->header('X-Inertia')) {
+                return redirect()->back()->with([
+                    'success' => 'درس با موفقیت به عنوان تکمیل شده علامت گذاری شد',
+                    'courseProgress' => $courseProgress,
+                ]);
+            }
+
+            // برای درخواست‌های API معمولی
+            return response()->json([
+                'success' => true,
+                'message' => 'درس با موفقیت به عنوان تکمیل شده علامت گذاری شد',
+                'course_progress' => $courseProgress,
+            ]);
+        }
 
     public function destroy(Course $course)
     {
