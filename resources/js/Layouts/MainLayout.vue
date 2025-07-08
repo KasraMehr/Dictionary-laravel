@@ -527,6 +527,10 @@ export default {
         this.isDarkMode = localStorage.getItem('theme') === 'dark';
         this.applyTheme();
         document.documentElement.lang = this.$i18n.locale;
+        window.addEventListener('scroll', this.handleScroll);
+    },
+    beforeUnmount() {
+        window.removeEventListener('scroll', this.handleScroll); // ← اضافه شد
     },
     methods: {
         applyTheme() {
