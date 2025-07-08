@@ -19,7 +19,7 @@
           <div class="bg-white/10 backdrop-blur-sm p-4 rounded-xl border border-white/20">
             <div class="text-center mb-3">
               <span class="block text-sm text-red-100">پیشرفت شما</span>
-              <span class="text-2xl font-bold">{{ course.progress }}%</span>
+              <span class="text-2xl font-bold">{{ progress }}%</span>
             </div>
             <div class="w-full bg-white/30 rounded-full h-2">
               <div class="h-2 rounded-full bg-white"
@@ -66,13 +66,18 @@
             <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-100">
               {{ activeLesson.title }}
             </h2>
-            <button v-if="!activeLesson.completed"
-                    @click="markAsCompleted"
-                    class="flex items-center gap-2 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors">
+            <button
+              v-if="!activeLesson.is_completed"
+              @click="markAsCompleted"
+              class="flex items-center gap-2 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors"
+            >
               <CheckIcon class="w-5 h-5" />
               تکمیل درس
             </button>
-            <span v-else class="flex items-center gap-2 px-4 py-2 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 rounded-lg">
+            <span
+              v-else
+              class="flex items-center gap-2 px-4 py-2 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 rounded-lg"
+            >
               <CheckIcon class="w-5 h-5" />
               تکمیل شده
             </span>
@@ -183,7 +188,7 @@
 
 <script setup>
 import { ref, computed } from 'vue'
-import { Head } from '@inertiajs/vue3'
+import { Head, router } from '@inertiajs/vue3'
 import {
   BookOpenIcon,
   CheckIcon,
@@ -192,96 +197,56 @@ import {
 } from '@heroicons/vue/24/outline'
 import StudentLayout from "@/Layouts/StudentLayout.vue"
 
-const { course, lessons, progress } = defineProps({
+const props = defineProps({
   course: Object,
   lessons: Array,
   progress: Number
 });
 
-// داده‌های فیک
-// const course = ref({
-//   id: 1,
-//   title: 'آموزش پیشرفته Vue.js',
-//   description: 'دوره جامع آموزش Vue.js از مقدماتی تا پیشرفته',
-//   image_url: 'https://images.unsplash.com/photo-1626785774573-4b799315345d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-//   skills: ['خواندن', 'نوشتن', 'واژگان'],
-//   progress: 65
-// })
+const course = ref(props.course);
+const lessons = ref(props.lessons);
+const progress = ref(props.progress);
 
-// const lessons = ref([
-//   {
-//     id: 1,
-//     title: 'مقدمات Vue.js',
-//     content: [
-//       { type: 'heading', text: 'معرفی Vue.js' },
-//       { type: 'paragraph', text: 'Vue.js یک فریمورک پیشرفته جاوااسکریپت برای ساخت رابط کاربری است.' },
-//       { type: 'image', src: 'https://images.unsplash.com/photo-1633356122544-f134324a6cee?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60', caption: 'معماری Vue.js' },
-//       { type: 'paragraph', text: 'این فریمورک در سال 2014 توسط Evan You ایجاد شد.' }
-//     ],
-//     completed: true
-//   },
-//   {
-//     id: 2,
-//     title: 'اجزای Vue',
-//     content: [
-//       { type: 'heading', text: 'کامپوننت‌ها در Vue' },
-//       { type: 'paragraph', text: 'کامپوننت‌ها بلوک‌های سازنده اپلیکیشن‌های Vue هستند.' },
-//       { type: 'video', src: 'https://www.youtube.com/embed/YrxBCBibVo0' },
-//       { type: 'paragraph', text: 'هر کامپوننت می‌تواند state و template خود را داشته باشد.' }
-//     ],
-//     completed: false
-//   },
-//   {
-//     id: 3,
-//     title: 'حالت واکنشی',
-//     content: [
-//       { type: 'heading', text: 'سیستم واکنشی Vue' },
-//       { type: 'paragraph', text: 'Vue از یک سیستم واکنشی قدرتمند استفاده می‌کند.' },
-//       { type: 'image', src: 'https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60' },
-//       { type: 'paragraph', text: 'این سیستم به صورت خودکار تغییرات را تشخیص می‌دهد.' }
-//     ],
-//     completed: false
-//   }
-// ])
+const activeLesson = ref(lessons.value?.[0] ?? null);
 
-const activeLesson = ref(lessons?.[0] ?? null);
-
-// Calculate current index and navigation
+// محاسبه index و navigation
 const currentIndex = computed(() =>
     activeLesson.value
-        ? lessons.findIndex(l => l.id === activeLesson.value.id)
+        ? lessons.value.findIndex(l => l.id === activeLesson.value.id)
         : -1
 );
 
 const previousLesson = computed(() =>
-    currentIndex.value > 0 ? lessons[currentIndex.value - 1] : null
+    currentIndex.value > 0 ? lessons.value[currentIndex.value - 1] : null
 );
 
 const nextLesson = computed(() =>
-    currentIndex.value < lessons.length - 1 ? lessons[currentIndex.value + 1] : null
+    currentIndex.value < lessons.value.length - 1 ? lessons.value[currentIndex.value + 1] : null
 );
-computed(() => {
-    if (!activeLesson.value?.content) return []
 
-    if (typeof activeLesson.value.content === 'string') {
-        try {
-            return JSON.parse(activeLesson.value.content)
-        } catch {
-            return []
-        }
+// علامت گذاری درس به عنوان تکمیل شده
+const markAsCompleted = async () => {
+  try {
+    const response = await axios.put(route('student.lessons.mark-completed', {
+      lesson: activeLesson.value.id
+    }));
+
+    // به‌روزرسانی دستی وضعیت درس
+    const lessonIndex = lessons.value.findIndex(l => l.id === activeLesson.value.id);
+    if (lessonIndex !== -1) {
+      lessons.value[lessonIndex].is_completed = true;
+      lessons.value[lessonIndex].users = [{ pivot: { completed: true } }];
     }
 
-    return Array.isArray(activeLesson.value.content)
-        ? activeLesson.value.content
-        : []
-});
-// علامت گذاری درس به عنوان تکمیل شده
-const markAsCompleted = () => {
-  activeLesson.value.completed = true
-  // محاسبه پیشرفت کلی دوره
-  const completedCount = lessons.value.filter(l => l.completed).length
-  course.value.progress = Math.round((completedCount / lessons.value.length) * 100)
-}
+    // به‌روزرسانی پیشرفت دوره
+    progress.value = response.data.course_progress;
+
+    toast.success('درس با موفقیت تکمیل شد');
+  } catch (error) {
+    console.error('Error marking lesson as completed:', error);
+    toast.error('خطا در تکمیل درس');
+  }
+};
 
 const setDefaultImage = (event) => {
     event.target.src = "/images/default-image.jpg";
