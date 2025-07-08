@@ -44,7 +44,7 @@
           </h2>
 
           <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            <div class="relative bg-red-100 dark:bg-red-900/10 p-6 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 border border-gray-100 dark:border-gray-700">
+            <div class="relative bg-red-100 dark:bg-red-900/10 p-6 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-gray-700">
               <div class="w-16 h-16 bg-red-200 dark:bg-red-800/30 rounded-full flex items-center justify-center text-3xl mb-4 text-red-500 dark:text-red-400">
                 🎮
               </div>
@@ -54,7 +54,7 @@
               </p>
             </div>
 
-            <div class="relative bg-orange-100 dark:bg-orange-900/10 p-6 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 border border-gray-100 dark:border-gray-700">
+            <div class="relative bg-orange-100 dark:bg-orange-900/10 p-6 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-gray-700">
               <div class="w-16 h-16 bg-orange-200 dark:bg-orange-800/30 rounded-full flex items-center justify-center text-3xl mb-4 text-blue-500 dark:text-blue-400">
                 🧠
               </div>
@@ -64,7 +64,7 @@
               </p>
             </div>
 
-            <div class="relative bg-yellow-100 dark:bg-yellow-900/10 p-6 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 border border-gray-100 dark:border-gray-700">
+            <div class="relative bg-yellow-100 dark:bg-yellow-900/10 p-6 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-gray-700">
               <div class="w-16 h-16 bg-yellow-200 dark:bg-yellow-800/30 rounded-full flex items-center justify-center text-3xl mb-4 text-green-500 dark:text-green-400">
                 💰
               </div>
@@ -78,64 +78,74 @@
       </section>
 
       <!-- Discover Section -->
-      <section class="py-20 bg-gray-50 dark:bg-gray-900">
+      <section class="py-20 bg-gradient-to-br from-gray-50 to-blue-50 dark:from-gray-900 dark:to-gray-800">
         <div class="container mx-auto px-4 relative">
-          <div class="max-w-4xl mx-auto text-center mb-16">
+          <!-- Animated decoration elements -->
+          <div class="absolute top-0 left-0 w-32 h-32 bg-blue-200 dark:bg-blue-900/30 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
+          <div class="absolute top-0 right-0 w-32 h-32 bg-purple-200 dark:bg-purple-900/30 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
+
+          <div class="max-w-4xl mx-auto text-center mb-16 relative z-10">
             <h2 class="text-3xl md:text-4xl font-extrabold mb-6">
-              <span class="relative inline-block">
-                <span class="relative z-10">{{ $t('teachers_courses_title') }}</span>
-                <span class="absolute bottom-0 right-0 w-full h-2 bg-gradient-to-r from-blue-400 to-purple-500 opacity-20 z-0"></span>
+              <span class="relative inline-block pb-2">
+                {{ $t('teachers_courses_title') }}
+                <span class="absolute bottom-0 right-0 w-full h-1 bg-gradient-to-r from-blue-400 to-purple-500"></span>
               </span>
             </h2>
-            <p class="text-lg text-gray-600 dark:text-gray-300">
-                {{ $t('teachers_courses_description') }}
+            <p class="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
+              {{ $t('teachers_courses_description') }}
             </p>
           </div>
 
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-            <!-- For Students -->
-            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden border border-gray-100 dark:border-gray-700 hover:shadow-2xl transition-all duration-300">
-              <div class="h-48 bg-gradient-to-r from-blue-500 to-blue-600 flex items-center justify-center text-white text-6xl">
-                👩‍🎓
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto relative z-10">
+            <!-- For Students - Enhanced Card -->
+            <a href="/teachers">
+            <div class="group bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden border border-gray-100 dark:border-gray-700 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+              <div class="h-48 bg-gradient-to-r from-blue-300 to-blue-800 flex items-center justify-center text-white text-6xl relative overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent"></div>
+                <span class="relative z-10 transform group-hover:scale-110 transition-transform duration-300">👩‍🎓</span>
               </div>
               <div class="p-8">
-                <h3 class="text-xl font-bold mb-4 text-gray-800 dark:text-white">{{ $t('find_teacher_title') }}</h3>
-                <p class="text-gray-600 dark:text-gray-400 mb-6">
-                    {{ $t('find_teacher_description') }}
+                <h3 class="text-xl font-bold mb-4 text-gray-800 dark:text-white flex items-center">
+                  <span class="w-4 h-4 bg-blue-500 rounded-full mx-2"></span>
+                  {{ $t('find_teacher_title') }}
+                </h3>
+                <p class="text-gray-600 dark:text-gray-400 mb-6 leading-relaxed">
+                  {{ $t('find_teacher_description') }}
                 </p>
-                <a
-                  href="/teachers"
-                  class="inline-flex items-center text-blue-500 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium transition-colors"
-                >
-                    {{ $t('find_teacher_action') }}
-                  <svg class="mx-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <a href="/teachers" class="inline-flex items-center group-hover:text-blue-500 dark:group-hover:text-blue-400 font-medium transition-colors text-gray-500 dark:text-gray-300">
+                  {{ $t('find_teacher_action') }}
+                  <svg class="mx-2 w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                   </svg>
                 </a>
               </div>
             </div>
+            </a>
 
-            <!-- For Courses -->
-            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden border border-gray-100 dark:border-gray-700 hover:shadow-2xl transition-all duration-300">
-              <div class="h-48 bg-gradient-to-r from-purple-500 to-purple-600 flex items-center justify-center text-white text-6xl">
-                📚
+            <!-- For Courses - Enhanced Card -->
+            <a href="/courses">
+            <div class="group bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden border border-gray-100 dark:border-gray-700 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+              <div class="h-48 bg-gradient-to-r from-purple-300 to-purple-800 flex items-center justify-center text-white text-6xl relative overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent"></div>
+                <span class="relative z-10 transform group-hover:scale-110 transition-transform duration-300">📚</span>
               </div>
               <div class="p-8">
-                <h3 class="text-xl font-bold mb-4 text-gray-800 dark:text-white">{{ $t('find_courses_title') }}</h3>
-                <p class="text-gray-600 dark:text-gray-400 mb-6">
-                    {{ $t('find_courses_description') }}
+                <h3 class="text-xl font-bold mb-4 text-gray-800 dark:text-white flex items-center">
+                  <span class="w-4 h-4 bg-purple-500 rounded-full mx-2"></span>
+                  {{ $t('find_courses_title') }}
+                </h3>
+                <p class="text-gray-600 dark:text-gray-400 mb-6 leading-relaxed">
+                  {{ $t('find_courses_description') }}
                 </p>
-                <a
-                  href="/courses"
-                  class="inline-flex items-center text-purple-500 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300 font-medium transition-colors"
-                >
-                    {{ $t('find_courses_action') }}
-                  <svg class="mx-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <a href="/courses" class="inline-flex items-center group-hover:text-purple-500 dark:group-hover:text-purple-400 font-medium transition-colors text-gray-500 dark:text-gray-300">
+                  {{ $t('find_courses_action') }}
+                  <svg class="mx-2 w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                   </svg>
                 </a>
               </div>
             </div>
+            </a>
           </div>
         </div>
       </section>
@@ -324,7 +334,7 @@
               class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-full shadow-sm text-white bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 transition-all"
             >
                 {{ $t('all_games_action') }}
-              <svg class="mx-2 -ml-1 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <svg class="mx-2 -mx-1 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
               </svg>
             </a>
@@ -418,5 +428,18 @@ import MainLayout from '@/Layouts/MainLayout.vue';
 </script>
 
 <style scoped>
-/* استایل‌های سفارشی می‌توانند اینجا قرار بگیرند */
+  @keyframes blob {
+    0% { transform: translate(0px, 0px) scale(1); }
+    33% { transform: translate(30px, -50px) scale(1.1); }
+    66% { transform: translate(-20px, 20px) scale(0.9); }
+    100% { transform: translate(0px, 0px) scale(1); }
+  }
+
+  .animate-blob {
+    animation: blob 7s infinite;
+  }
+
+  .animation-delay-2000 {
+    animation-delay: 2s;
+  }
 </style>
