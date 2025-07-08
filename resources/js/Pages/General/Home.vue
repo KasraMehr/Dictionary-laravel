@@ -10,8 +10,8 @@
         <div class="relative container mx-auto px-6 text-center z-10">
           <div class="max-w-4xl mx-auto">
             <h1 class="text-4xl md:text-5xl font-extrabold mb-6 leading-tight">
-              <span class="block text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-orange-500 mb-4">
-                {{ $t('final_call_title') }}
+              <span class="block text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-orange-500 mb-4 py-1">
+                  {{ $t('final_call_title') }}
               </span>
               <span class="block">{{ $t('subtitle') }}</span>
             </h1>
