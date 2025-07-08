@@ -321,7 +321,7 @@ const setLanguage = (lang) => {
             <main class="z-0">
                 <!-- Particle Background -->
                 <div class="hidden sm:block fixed inset-0 w-full h-full opacity-20 dark:opacity-10 pointer-events-none">
-                    <div v-for="i in 30" :key="i"
+                    <!-- <div v-for="i in 30" :key="i"
                          class="absolute rounded-full bg-red-600 dark:bg-white"
                          :style="{
                  top: `${Math.random() * 100}%`,
@@ -330,7 +330,7 @@ const setLanguage = (lang) => {
                  height: `${Math.random() * 10 + 2}px`,
                  animation: `float ${Math.random() * 10 + 10}s linear infinite`,
                  animationDelay: `${Math.random() * 5}s`
-               }"></div>
+               }"></div> -->
                 </div>
                 <slot />
             </main>
