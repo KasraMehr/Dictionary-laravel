@@ -39,38 +39,38 @@
           <h2 class="text-3xl md:text-4xl font-extrabold text-center mb-16">
             <span class="relative inline-block pb-2">
               {{ $t('why_different_title') }}
-              <span class="absolute bottom-0 right-0 w-1/2 h-1 bg-gradient-to-r from-red-500 to-orange-500"></span>
+              <span class="absolute bottom-0 right-0 w-full h-1 bg-gradient-to-r from-red-500 to-orange-500"></span>
             </span>
           </h2>
 
           <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            <div class="relative bg-gray-200 dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 border border-gray-100 dark:border-gray-700">
-              <div class="w-16 h-16 bg-red-100 dark:bg-red-900/20 rounded-full flex items-center justify-center text-3xl mb-4 text-red-500">
+            <div class="relative bg-red-100 dark:bg-red-900/10 p-6 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 border border-gray-100 dark:border-gray-700">
+              <div class="w-16 h-16 bg-red-200 dark:bg-red-800/30 rounded-full flex items-center justify-center text-3xl mb-4 text-red-500 dark:text-red-400">
                 🎮
               </div>
               <h3 class="text-xl font-bold mb-3">{{ $t('gamified_learning_title') }}</h3>
               <p class="text-gray-600 dark:text-gray-400">
-                  {{ $t('gamified_learning_description') }}
+                {{ $t('gamified_learning_description') }}
               </p>
             </div>
 
-            <div class="relative bg-gray-200 dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 border border-gray-100 dark:border-gray-700">
-              <div class="w-16 h-16 bg-blue-100 dark:bg-blue-900/20 rounded-full flex items-center justify-center text-3xl mb-4 text-blue-500">
+            <div class="relative bg-orange-100 dark:bg-orange-900/10 p-6 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 border border-gray-100 dark:border-gray-700">
+              <div class="w-16 h-16 bg-orange-200 dark:bg-orange-800/30 rounded-full flex items-center justify-center text-3xl mb-4 text-blue-500 dark:text-blue-400">
                 🧠
               </div>
               <h3 class="text-xl font-bold mb-3">{{ $t('ai_title') }}</h3>
               <p class="text-gray-600 dark:text-gray-400">
-                  {{ $t('ai_description') }}
+                {{ $t('ai_description') }}
               </p>
             </div>
 
-            <div class="relative bg-gray-200 dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 border border-gray-100 dark:border-gray-700">
-              <div class="w-16 h-16 bg-green-100 dark:bg-green-900/20 rounded-full flex items-center justify-center text-3xl mb-4 text-green-500">
+            <div class="relative bg-yellow-100 dark:bg-yellow-900/10 p-6 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 border border-gray-100 dark:border-gray-700">
+              <div class="w-16 h-16 bg-yellow-200 dark:bg-yellow-800/30 rounded-full flex items-center justify-center text-3xl mb-4 text-green-500 dark:text-green-400">
                 💰
               </div>
               <h3 class="text-xl font-bold mb-3">{{ $t('free_title') }}</h3>
               <p class="text-gray-600 dark:text-gray-400">
-                  {{ $t('free_description') }}
+                {{ $t('free_description') }}
               </p>
             </div>
           </div>
