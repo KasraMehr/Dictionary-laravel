@@ -150,111 +150,55 @@
         </div>
       </section>
 
+      <!-- Learning Path Section - بخش جدید -->
       <section class="py-20 bg-gray-200 dark:bg-gray-800/50">
-        <div class="container mx-auto px-4">
-          <h2 class="text-3xl md:text-4xl font-extrabold text-center mb-16">
-            <span class="relative inline-block pb-2">
-              {{ $t('smart_learning_methods_title') }}
-              <span class="absolute bottom-0 right-0 w-1/2 h-1 bg-gradient-to-r from-blue-500 to-purple-600"></span>
-            </span>
-          </h2>
-
-          <div class="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            <!-- سطح‌بندی کلمات -->
-            <div class="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-gray-800 dark:to-gray-700 rounded-xl shadow-md overflow-hidden border border-blue-100 dark:border-gray-700 hover:shadow-lg transition-shadow duration-300">
-              <div class="p-6">
-                <div class="w-14 h-14 bg-blue-500 text-white rounded-full flex items-center justify-center text-2xl mb-4">📊</div>
-                <h3 class="text-xl font-bold mb-3 text-gray-800 dark:text-white">{{ $t('leveled_learning_title') }}</h3>
-                <p class="text-gray-600 dark:text-gray-300">
-                    {{ $t('leveled_learning_description') }}
-                </p>
-                <a
-                  href="/levels"
-                  class="inline-block mt-4 text-blue-500 dark:text-blue-400 font-medium hover:text-blue-700 dark:hover:text-blue-300 transition-colors"
-                >
-                    {{ $t('leveled_learning_action') }}
-                </a>
+        <div class="relative container mx-auto px-4">
+          <div class="max-w-5xl mx-auto bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden border border-gray-200 dark:border-gray-700">
+            <div class="md:flex">
+              <div class="md:w-full bg-gradient-to-br from-red-500 to-orange-500 p-8 text-white flex items-center">
+                <div>
+                  <h2 class="text-2xl md:text-3xl font-bold mb-4">{{ $t('smart_learning_path_title') }}</h2>
+                  <p class="mb-6">{{ $t('smart_learning_path_description') }}</p>
+                  <a
+                    href="/placement-test"
+                    class="inline-block bg-white text-red-500 px-6 py-2 rounded-full font-bold hover:bg-gray-100 transition-colors duration-300"
+                  >
+                      {{ $t('smart_learning_path_action') }}
+                  </a>
+                </div>
+              </div>
+              <div class="md:w-full p-8">
+                <ul class="space-y-6">
+                  <li class="flex items-start">
+                    <div class="flex-shrink-0 bg-red-100 dark:bg-red-900/20 text-red-500 rounded-full w-10 h-10 flex items-center justify-center mx-4 mt-1">
+                      1
+                    </div>
+                    <div>
+                      <h3 class="font-bold text-lg mb-1">{{ $t('placement_test') }}</h3>
+                      <p class="text-gray-600 dark:text-gray-400">{{ $t('level_test') }}</p>
+                    </div>
+                  </li>
+                  <li class="flex items-start">
+                    <div class="flex-shrink-0 bg-orange-100 dark:bg-orange-900/20 text-orange-500 rounded-full w-10 h-10 flex items-center justify-center mx-4 mt-1">
+                      2
+                    </div>
+                    <div>
+                      <h3 class="font-bold text-lg mb-1">{{ $t('personal_plan') }}</h3>
+                      <p class="text-gray-600 dark:text-gray-400">{{ $t('personal_plan_description') }}</p>
+                    </div>
+                  </li>
+                  <li class="flex items-start">
+                    <div class="flex-shrink-0 bg-yellow-100 dark:bg-yellow-900/20 text-yellow-500 rounded-full w-10 h-10 flex items-center justify-center mx-4 mt-1">
+                      3
+                    </div>
+                    <div>
+                      <h3 class="font-bold text-lg mb-1">{{ $t('interactive_learning') }}</h3>
+                      <p class="text-gray-600 dark:text-gray-400">{{ $t('interactive_learning_description') }}</p>
+                    </div>
+                  </li>
+                </ul>
               </div>
             </div>
-
-            <!-- موضوعی -->
-            <div class="bg-gradient-to-br from-green-50 to-green-100 dark:from-gray-800 dark:to-gray-700 rounded-xl shadow-md overflow-hidden border border-green-100 dark:border-gray-700 hover:shadow-lg transition-shadow duration-300">
-              <div class="p-6">
-                <div class="w-14 h-14 bg-green-500 text-white rounded-full flex items-center justify-center text-2xl mb-4">🗂️</div>
-                <h3 class="text-xl font-bold mb-3 text-gray-800 dark:text-white">{{ $t('thematic_learning_title') }}</h3>
-                <p class="text-gray-600 dark:text-gray-300">
-                    {{ $t('thematic_learning_description') }}
-                </p>
-                <a
-                  href="/topics"
-                  class="inline-block mt-4 text-green-500 dark:text-green-400 font-medium hover:text-green-700 dark:hover:text-green-300 transition-colors"
-                >
-                    {{ $t('thematic_learning_action') }}
-                </a>
-              </div>
-            </div>
-
-            <!-- گرامر -->
-            <div class="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-gray-800 dark:to-gray-700 rounded-xl shadow-md overflow-hidden border border-purple-100 dark:border-gray-700 hover:shadow-lg transition-shadow duration-300">
-              <div class="p-6">
-                <div class="w-14 h-14 bg-purple-500 text-white rounded-full flex items-center justify-center text-2xl mb-4">📝</div>
-                <h3 class="text-xl font-bold mb-3 text-gray-800 dark:text-white">{{ $t('interactive_grammar_title') }}</h3>
-                <p class="text-gray-600 dark:text-gray-300">
-                    {{ $t('interactive_grammar_description') }}
-                </p>
-                <a
-                  href="/grammars"
-                  class="inline-block mt-4 text-purple-500 dark:text-purple-400 font-medium hover:text-purple-700 dark:hover:text-purple-300 transition-colors"
-                >
-                    {{ $t('interactive_grammar_action') }}
-                </a>
-              </div>
-            </div>
-
-              <!-- هوش مصنوعی -->
-              <div class="bg-gradient-to-br from-orange-50 to-orange-100 dark:from-gray-800 dark:to-gray-700 rounded-xl shadow-md overflow-hidden border border-orange-100 dark:border-gray-700 hover:shadow-lg transition-shadow duration-300 opacity-75 relative">
-                  <div class="absolute top-2 right-2 bg-orange-500 text-white text-xs px-2 py-1 rounded-full">به زودی</div>
-                  <div class="p-6">
-                      <div class="w-14 h-14 bg-orange-500 text-white rounded-full flex items-center justify-center text-2xl mb-4 opacity-70">🤖</div>
-                      <h3 class="text-xl font-bold mb-3 text-gray-800 dark:text-white opacity-80">{{ $t('ai_companion_title') }}</h3>
-                      <p class="text-gray-600 dark:text-gray-300 opacity-80">
-                          {{ $t('ai_companion_description') }}
-                      </p>
-                      <span class="inline-block mt-4 text-orange-500 dark:text-orange-400 font-medium opacity-70 cursor-not-allowed">
-                          {{ $t('ai_companion_action') }}
-                      </span>
-                  </div>
-              </div>
-
-              <!-- کتاب داستان -->
-              <div class="bg-gradient-to-br from-red-50 to-red-100 dark:from-gray-800 dark:to-gray-700 rounded-xl shadow-md overflow-hidden border border-red-100 dark:border-gray-700 hover:shadow-lg transition-shadow duration-300 opacity-75 relative">
-                  <div class="absolute top-2 right-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full">به زودی</div>
-                  <div class="p-6">
-                      <div class="w-14 h-14 bg-red-500 text-white rounded-full flex items-center justify-center text-2xl mb-4 opacity-70">📚</div>
-                      <h3 class="text-xl font-bold mb-3 text-gray-800 dark:text-white opacity-80">{{ $t('story_learning_title') }}</h3>
-                      <p class="text-gray-600 dark:text-gray-300 opacity-80">
-                          {{ $t('story_learning_description') }}
-                      </p>
-                      <span class="inline-block mt-4 text-red-500 dark:text-red-400 font-medium opacity-70 cursor-not-allowed">
-                          {{ $t('story_learning_action') }}
-                      </span>
-                  </div>
-              </div>
-
-              <!-- ویدیو -->
-              <div class="bg-gradient-to-br from-yellow-50 to-yellow-100 dark:from-gray-800 dark:to-gray-700 rounded-xl shadow-md overflow-hidden border border-yellow-100 dark:border-gray-700 hover:shadow-lg transition-shadow duration-300 opacity-75 relative">
-                  <div class="absolute top-2 right-2 bg-yellow-500 text-white text-xs px-2 py-1 rounded-full">به زودی</div>
-                  <div class="p-6">
-                      <div class="w-14 h-14 bg-yellow-500 text-white rounded-full flex items-center justify-center text-2xl mb-4 opacity-70">🎬</div>
-                      <h3 class="text-xl font-bold mb-3 text-gray-800 dark:text-white opacity-80">{{ $t('video_learning_title') }}</h3>
-                      <p class="text-gray-600 dark:text-gray-300 opacity-80">
-                          {{ $t('video_learning_description') }}
-                      </p>
-                      <span class="inline-block mt-4 text-yellow-500 dark:text-yellow-400 font-medium opacity-70 cursor-not-allowed">
-                          {{ $t('video_learning_action') }}
-                      </span>
-                  </div>
-              </div>
           </div>
         </div>
       </section>
@@ -265,7 +209,7 @@
           <h2 class="text-3xl md:text-4xl font-extrabold text-center mb-16">
             <span class="relative inline-block pb-2">
               {{ $t('games_title') }}
-              <span class="absolute bottom-0 right-0 w-1/2 h-1 bg-gradient-to-r from-green-500 to-blue-500"></span>
+              <span class="absolute bottom-0 right-0 w-full h-1 bg-gradient-to-r from-blue-500 to-purple-600"></span>
             </span>
           </h2>
 
@@ -342,53 +286,151 @@
         </div>
       </section>
 
-      <!-- Learning Path Section - بخش جدید -->
       <section class="py-20 bg-gray-200 dark:bg-gray-800/50">
-        <div class="relative container mx-auto px-4">
-          <div class="max-w-4xl mx-auto bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden border border-gray-200 dark:border-gray-700">
-            <div class="md:flex">
-              <div class="md:w-1/2 bg-gradient-to-br from-red-500 to-orange-500 p-8 text-white flex items-center">
-                <div>
-                  <h2 class="text-2xl md:text-3xl font-bold mb-4">{{ $t('smart_learning_path_title') }}</h2>
-                  <p class="mb-6">{{ $t('smart_learning_path_description') }}</p>
-                  <a
-                    href="/placement-test"
-                    class="inline-block bg-white text-red-500 px-6 py-2 rounded-full font-bold hover:bg-gray-100 transition-colors duration-300"
-                  >
-                      {{ $t('smart_learning_path_action') }}
-                  </a>
+        <div class="container mx-auto px-4">
+          <h2 class="text-3xl md:text-4xl font-extrabold text-center mb-16">
+            <span class="relative inline-block pb-2">
+              {{ $t('smart_learning_methods_title') }}
+              <span class="absolute bottom-0 right-0 w-full h-1 bg-gradient-to-r from-red-500 to-orange-500"></span>
+            </span>
+          </h2>
+
+          <div class="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto px-4">
+            <!-- سطح‌بندی کلمات -->
+            <div class="group relative bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden border border-gray-100 dark:border-gray-700 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <div class="absolute inset-0 bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/30 dark:to-blue-800/30 opacity-70 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <div class="relative p-6">
+                <div class="w-14 h-14 bg-blue-500 text-white rounded-xl flex items-center justify-center text-2xl mb-4 shadow-md">
+                  📊
                 </div>
+                <h3 class="text-xl font-bold mb-3 text-gray-800 dark:text-white">{{ $t('leveled_learning_title') }}</h3>
+                <p class="text-gray-600 dark:text-gray-300 mb-4">
+                  {{ $t('leveled_learning_description') }}
+                </p>
+                <a href="/levels" class="inline-flex items-center text-blue-600 dark:text-blue-400 font-medium hover:text-blue-800 dark:hover:text-blue-300 transition-colors">
+                  {{ $t('leveled_learning_action') }}
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                    :class="{ 'mr-1': $i18n.locale === 'en', 'ml-1 transform rotate-180': $i18n.locale === 'fa' || $i18n.locale === 'ar' }">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                  </svg>
+                </a>
               </div>
-              <div class="md:w-1/2 p-8">
-                <ul class="space-y-6">
-                  <li class="flex items-start">
-                    <div class="flex-shrink-0 bg-red-100 dark:bg-red-900/20 text-red-500 rounded-full w-10 h-10 flex items-center justify-center mx-4 mt-1">
-                      1
-                    </div>
-                    <div>
-                      <h3 class="font-bold text-lg mb-1">{{ $t('placement_test') }}</h3>
-                      <p class="text-gray-600 dark:text-gray-400">{{ $t('level_test') }}</p>
-                    </div>
-                  </li>
-                  <li class="flex items-start">
-                    <div class="flex-shrink-0 bg-orange-100 dark:bg-orange-900/20 text-orange-500 rounded-full w-10 h-10 flex items-center justify-center mx-4 mt-1">
-                      2
-                    </div>
-                    <div>
-                      <h3 class="font-bold text-lg mb-1">{{ $t('personal_plan') }}</h3>
-                      <p class="text-gray-600 dark:text-gray-400">{{ $t('personal_plan_description') }}</p>
-                    </div>
-                  </li>
-                  <li class="flex items-start">
-                    <div class="flex-shrink-0 bg-yellow-100 dark:bg-yellow-900/20 text-yellow-500 rounded-full w-10 h-10 flex items-center justify-center mx-4 mt-1">
-                      3
-                    </div>
-                    <div>
-                      <h3 class="font-bold text-lg mb-1">{{ $t('interactive_learning') }}</h3>
-                      <p class="text-gray-600 dark:text-gray-400">{{ $t('interactive_learning_description') }}</p>
-                    </div>
-                  </li>
-                </ul>
+            </div>
+
+            <!-- موضوعی -->
+            <div class="group relative bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden border border-gray-100 dark:border-gray-700 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <div class="absolute inset-0 bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/30 dark:to-green-800/30 opacity-70 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <div class="relative p-6">
+                <div class="w-14 h-14 bg-green-500 text-white rounded-xl flex items-center justify-center text-2xl mb-4 shadow-md">
+                  🗂️
+                </div>
+                <h3 class="text-xl font-bold mb-3 text-gray-800 dark:text-white">{{ $t('thematic_learning_title') }}</h3>
+                <p class="text-gray-600 dark:text-gray-300 mb-4">
+                  {{ $t('thematic_learning_description') }}
+                </p>
+                <a href="/topics" class="inline-flex items-center text-green-600 dark:text-green-400 font-medium hover:text-green-800 dark:hover:text-green-300 transition-colors">
+                  {{ $t('thematic_learning_action') }}
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                    :class="{ 'mr-1': $i18n.locale === 'en', 'ml-1 transform rotate-180': $i18n.locale === 'fa' || $i18n.locale === 'ar' }">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+
+            <!-- گرامر -->
+            <div class="group relative bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden border border-gray-100 dark:border-gray-700 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <div class="absolute inset-0 bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/30 dark:to-purple-800/30 opacity-70 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <div class="relative p-6">
+                <div class="w-14 h-14 bg-purple-500 text-white rounded-xl flex items-center justify-center text-2xl mb-4 shadow-md">
+                  📝
+                </div>
+                <h3 class="text-xl font-bold mb-3 text-gray-800 dark:text-white">{{ $t('interactive_grammar_title') }}</h3>
+                <p class="text-gray-600 dark:text-gray-300 mb-4">
+                  {{ $t('interactive_grammar_description') }}
+                </p>
+                <a href="/grammars" class="inline-flex items-center text-purple-600 dark:text-purple-400 font-medium hover:text-purple-800 dark:hover:text-purple-300 transition-colors">
+                  {{ $t('interactive_grammar_action') }}
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                    :class="{ 'mr-1': $i18n.locale === 'en', 'ml-1 transform rotate-180': $i18n.locale === 'fa' || $i18n.locale === 'ar' }">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+
+            <!-- هوش مصنوعی -->
+            <div class="group relative bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden border border-gray-100 dark:border-gray-700 transition-all duration-300">
+              <div class="absolute inset-0 bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-900/20 dark:to-orange-800/20 opacity-50"></div>
+              <div class="absolute top-3 text-xs px-3 py-1 rounded-full shadow-md bg-orange-500 text-white"
+                :class="{ 'left-3': $i18n.locale === 'fa' || $i18n.locale === 'ar', 'right-3': $i18n.locale === 'en' }">
+                {{ $t('coming_soon') }}
+              </div>
+              <div class="relative p-6 opacity-90">
+                <div class="w-14 h-14 bg-orange-400 text-white rounded-xl flex items-center justify-center text-2xl mb-4 shadow-md">
+                  🤖
+                </div>
+                <h3 class="text-xl font-bold mb-3 text-gray-800 dark:text-white">{{ $t('ai_companion_title') }}</h3>
+                <p class="text-gray-600 dark:text-gray-300 mb-4">
+                  {{ $t('ai_companion_description') }}
+                </p>
+                <span class="inline-flex items-center text-orange-500 dark:text-orange-400 font-medium cursor-not-allowed">
+                  {{ $t('ai_companion_action') }}
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                    :class="{ 'mr-1': $i18n.locale === 'en', 'ml-1 transform rotate-180': $i18n.locale === 'fa' || $i18n.locale === 'ar' }">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                  </svg>
+                </span>
+              </div>
+            </div>
+
+            <!-- کتاب داستان -->
+            <div class="group relative bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden border border-gray-100 dark:border-gray-700 transition-all duration-300">
+              <div class="absolute inset-0 bg-gradient-to-br from-red-50 to-red-100 dark:from-red-900/20 dark:to-red-800/20 opacity-50"></div>
+              <div class="absolute top-3 text-xs px-3 py-1 rounded-full shadow-md bg-red-500 text-white"
+                :class="{ 'left-3': $i18n.locale === 'fa' || $i18n.locale === 'ar', 'right-3': $i18n.locale === 'en' }">
+                {{ $t('coming_soon') }}
+              </div>
+              <div class="relative p-6 opacity-90">
+                <div class="w-14 h-14 bg-red-400 text-white rounded-xl flex items-center justify-center text-2xl mb-4 shadow-md">
+                  📚
+                </div>
+                <h3 class="text-xl font-bold mb-3 text-gray-800 dark:text-white">{{ $t('story_learning_title') }}</h3>
+                <p class="text-gray-600 dark:text-gray-300 mb-4">
+                  {{ $t('story_learning_description') }}
+                </p>
+                <span class="inline-flex items-center text-red-500 dark:text-red-400 font-medium cursor-not-allowed">
+                  {{ $t('story_learning_action') }}
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                    :class="{ 'mr-1': $i18n.locale === 'en', 'ml-1 transform rotate-180': $i18n.locale === 'fa' || $i18n.locale === 'ar' }">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                  </svg>
+                </span>
+              </div>
+            </div>
+
+            <!-- ویدیو -->
+            <div class="group relative bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden border border-gray-100 dark:border-gray-700 transition-all duration-300">
+              <div class="absolute inset-0 bg-gradient-to-br from-yellow-50 to-yellow-100 dark:from-yellow-900/20 dark:to-yellow-800/20 opacity-50"></div>
+              <div class="absolute top-3 text-xs px-3 py-1 rounded-full shadow-md bg-yellow-500 text-white"
+                :class="{ 'left-3': $i18n.locale === 'fa' || $i18n.locale === 'ar', 'right-3': $i18n.locale === 'en' }">
+                {{ $t('coming_soon') }}
+              </div>
+              <div class="relative p-6 opacity-90">
+                <div class="w-14 h-14 bg-yellow-400 text-white rounded-xl flex items-center justify-center text-2xl mb-4 shadow-md">
+                  🎬
+                </div>
+                <h3 class="text-xl font-bold mb-3 text-gray-800 dark:text-white">{{ $t('video_learning_title') }}</h3>
+                <p class="text-gray-600 dark:text-gray-300 mb-4">
+                  {{ $t('video_learning_description') }}
+                </p>
+                <span class="inline-flex items-center text-yellow-500 dark:text-yellow-400 font-medium cursor-not-allowed">
+                  {{ $t('video_learning_action') }}
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                    :class="{ 'mr-2': $i18n.locale === 'en', 'ml-2 transform rotate-180': $i18n.locale === 'fa' || $i18n.locale === 'ar' }">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                  </svg>
+                </span>
               </div>
             </div>
           </div>
