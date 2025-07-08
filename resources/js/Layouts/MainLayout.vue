@@ -97,9 +97,9 @@ const setLanguage = (lang) => {
                                         {{ $t('dashboard') }}
                                     </NavLink>
                                     <template v-else>
-                                        <NavLink :href="route('login')" :active="route().current('words.index')" class="text-black dark:text-white">
+                                        <!-- <NavLink :href="route('login')" :active="route().current('words.index')" class="text-black dark:text-white">
                                             {{ $t('login') }}
-                                        </NavLink>
+                                        </NavLink> -->
                                         <NavLink :href="route('register')" :active="route().current('categories.index')" class="text-black dark:text-white">
                                             {{ $t('register') }}
                                         </NavLink>
@@ -250,11 +250,11 @@ const setLanguage = (lang) => {
                                 {{ $t('dashboard') }}
                             </ResponsiveNavLink>
                             <template v-else>
-                                <ResponsiveNavLink :href="route('login')"
+                                <!-- <ResponsiveNavLink :href="route('login')"
                                                    :active="route().current('words.index')"
                                                    class="block px-3 py-2 rounded-lg hover:bg-white/30 dark:hover:bg-gray-800/50">
                                     {{ $t('login') }}
-                                </ResponsiveNavLink>
+                                </ResponsiveNavLink> -->
                                 <ResponsiveNavLink :href="route('register')"
                                                    :active="route().current('categories.index')"
                                                    v-if="canRegister"
