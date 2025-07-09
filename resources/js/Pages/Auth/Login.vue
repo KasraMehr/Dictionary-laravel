@@ -47,17 +47,11 @@ const submit = () => {
 
 <template>
     <MainLayout title="sign in">
-    <div class="bg-gradient-to-br from-gray-100 to-gray-300 dark:from-gray-900 dark:to-gray-800 py-12">
+    <div class="bg-gradient-to-br min-h-screen  from-gray-100 to-gray-300 dark:from-gray-900 dark:to-gray-800">
         <div class="inset-0 bg-[url('/logo.svg')] bg-center bg-no-repeat bg-fixed opacity-5 dark:opacity-[0.02]"></div>
 
-        <div class="relative min-h-screen flex flex-col items-center justify-center p-4">
-            <!-- Logo Section -->
-            <Link :href="route('landing')" class="group">
-                <div class="w-48 h-48 md:w-56 md:h-56 bg-white/80 dark:bg-gray-800/80 rounded-2xl shadow-xl flex items-center justify-center transition-all duration-500 group-hover:scale-105 group-hover:shadow-2xl group-hover:ring-2 group-hover:ring-red-500/30 backdrop-blur-sm">
-                    <img src="/logo.svg" alt="logo" class="w-32 h-32 md:w-40 md:h-40 transition-transform duration-300 group-hover:scale-110" />
-                </div>
-                <h1 class="text-center mt-4 text-2xl font-bold text-gray-800 dark:text-white/90">{{ $t('language_academy') }}</h1>
-            </Link>
+        <div class="relative flex flex-col items-center justify-center p-4">
+          <h1 class="text-center text-2xl font-bold text-gray-800 dark:text-white/90">{{ $t('login') }}</h1>
 
             <!-- Form Section -->
             <div class="w-full max-w-md mt-8">
@@ -156,7 +150,7 @@ const submit = () => {
                                     <div class="w-full border-t border-gray-300 dark:border-gray-600"></div>
                                 </div>
                                 <div class="relative flex justify-center text-sm">
-                                    <span class="px-2 bg-white/80 dark:bg-gray-800/80 text-gray-500 dark:text-gray-400">
+                                    <span class="px-2 bg-white/80 dark:bg-gray-800/80 text-gray-500 dark:text-gray-400 font-semibold text-md">
                                         {{ $t('or_login_with') }}
                                     </span>
                                 </div>
