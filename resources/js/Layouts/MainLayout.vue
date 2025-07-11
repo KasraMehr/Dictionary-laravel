@@ -97,11 +97,11 @@ const setLanguage = (lang) => {
                                         {{ $t('dashboard') }}
                                     </NavLink>
                                     <template v-else>
-                                        <!-- <NavLink :href="route('login')" :active="route().current('words.index')" class="text-black dark:text-white">
+                                        <NavLink :href="route('register')" v-if="canRegister" :active="route().current('register')" class="text-black dark:text-white">
+                                            {{ $t('login') }} / {{ $t('register') }}
+                                        </NavLink>
+                                        <NavLink :href="route('login')" v-if="!canRegister" :active="route().current('login')" class="text-black dark:text-white">
                                             {{ $t('login') }}
-                                        </NavLink> -->
-                                        <NavLink :href="route('register')" :active="route().current('categories.index')" class="text-black dark:text-white">
-                                            {{ $t('register') }}
                                         </NavLink>
                                     </template>
                                     <NavLink :href="route('games.landing')" :active="route().current('games.landing')" class="text-black dark:text-white">
@@ -127,9 +127,6 @@ const setLanguage = (lang) => {
                                         </template>
 
                                         <template #content>
-                                            <div class="block px-4 py-2 text-xs text-gray-400">
-                                                {{ $t('learn') }}
-                                            </div>
                                             <DropdownLink :href="route('learn')" :active="route().current('learn')">
                                               {{ $t('learn') }}
                                             </DropdownLink>
@@ -250,16 +247,17 @@ const setLanguage = (lang) => {
                                 {{ $t('dashboard') }}
                             </ResponsiveNavLink>
                             <template v-else>
-                                <!-- <ResponsiveNavLink :href="route('login')"
+                                <ResponsiveNavLink :href="route('login')"
                                                    :active="route().current('words.index')"
+                                                   v-if="!canRegister"
                                                    class="block px-3 py-2 rounded-lg hover:bg-white/30 dark:hover:bg-gray-800/50">
                                     {{ $t('login') }}
-                                </ResponsiveNavLink> -->
+                                </ResponsiveNavLink>
                                 <ResponsiveNavLink :href="route('register')"
                                                    :active="route().current('categories.index')"
                                                    v-if="canRegister"
                                                    class="block px-3 py-2 rounded-lg hover:bg-white/30 dark:hover:bg-gray-800/50">
-                                    {{ $t('register') }}
+                                    {{ $t('login') }} / {{ $t('register') }}
                                 </ResponsiveNavLink>
                             </template>
                             <ResponsiveNavLink :href="route('games.landing')"
@@ -355,11 +353,11 @@ const setLanguage = (lang) => {
                     </p>
 
                     <div class="flex flex-row justify-center gap-4 lg:justify-start">
-                        <a :href="route('contactUs')" class="relative overflow-hidden group py-2.5 cursor-pointer px-5 h-9 block w-fit bg-gradient-to-r from-red-600 to-red-500 rounded-full shadow-lg text-xs font-medium text-white transition-all duration-300 hover:shadow-red-500/30 hover:to-red-600">
+                        <a :href="route('contactUs')" class="relative overflow-hidden group py-2.5 cursor-pointer px-5 h-9 block w-fit bg-gradient-to-r from-red-600 to-red-500 rounded-full shadow-lg text-xs font-bold text-white transition-all duration-300 hover:shadow-red-500/30 hover:to-red-600">
                             <span class="relative z-10">{{ $t('contact_us') }}</span>
                             <span class="absolute inset-0 bg-gradient-to-r from-red-700 to-red-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
                         </a>
-                        <a :href="route('register')" class="relative overflow-hidden group flex items-center justify-center gap-2 border border-red-600 rounded-full py-2 px-4 w-fit text-sm font-semibold text-red-600 transition-all duration-300 hover:text-white hover:border-transparent">
+                        <a :href="route('register')" class="relative overflow-hidden group flex items-center justify-center gap-2 border border-red-600 rounded-full py-2 px-5 w-fit text-sm font-semibold text-red-600 transition-all duration-300 hover:text-white hover:border-transparent">
                             <span class="relative z-10">{{ $t('subscribe') }}</span>
                             <span class="absolute inset-0 bg-red-600 rounded-full transform scale-0 group-hover:scale-100 transition-transform duration-300 origin-center z-0"></span>
                         </a>
@@ -368,7 +366,7 @@ const setLanguage = (lang) => {
 
                 <!-- Navigation Column -->
                 <div class="lg:mx-auto">
-                    <h4 class="text-lg text-black dark:text-white font-bold mb-6 relative inline-block after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-8 after:h-0.5 after:bg-gradient-to-r after:from-[#FF2D20] after:to-orange-500">
+                    <h4 class="text-lg text-black dark:text-white font-bold mx-2 mb-6 relative inline-block after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-full after:h-0.5 after:bg-gradient-to-r after:from-[#FF2D20] after:to-orange-500">
                         {{ $t('navigation') }}
                     </h4>
                     <div class="space-y-4">
@@ -396,7 +394,7 @@ const setLanguage = (lang) => {
                 <!-- Learn Column -->
                 <div class="lg:mx-auto">
                     <a :href="route('learn')">
-                        <h4 class="text-lg text-black dark:text-white font-bold mb-6 relative inline-block after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-8 after:h-0.5 after:bg-gradient-to-r after:from-[#FF2D20] after:to-orange-500">
+                        <h4 class="text-lg text-black dark:text-white font-bold mx-2 mb-6 relative inline-block after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-full after:h-0.5 after:bg-gradient-to-r after:from-[#FF2D20] after:to-orange-500">
                             {{ $t('learn') }}
                         </h4>
                     </a>
@@ -424,7 +422,7 @@ const setLanguage = (lang) => {
 
                 <!-- Quiz Column -->
                 <div class="lg:mx-auto">
-                    <h4 class="text-lg text-black dark:text-white font-bold mb-6 relative inline-block after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-8 after:h-0.5 after:bg-gradient-to-r after:from-[#FF2D20] after:to-orange-500">
+                    <h4 class="text-lg text-black dark:text-white font-bold mx-2 mb-6 relative inline-block after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-full after:h-0.5 after:bg-gradient-to-r after:from-[#FF2D20] after:to-orange-500">
                         {{ $t('games') }}
                     </h4>
                     <div class="space-y-4">
@@ -451,7 +449,7 @@ const setLanguage = (lang) => {
 
                 <!-- Support Column -->
                 <div class="lg:mx-auto">
-                    <h4 class="text-lg text-black dark:text-white font-bold mb-6 relative inline-block after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-8 after:h-0.5 after:bg-gradient-to-r after:from-[#FF2D20] after:to-orange-500">
+                    <h4 class="text-lg text-black dark:text-white font-bold mx-2 mb-6 relative inline-block after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-full after:h-0.5 after:bg-gradient-to-r after:from-[#FF2D20] after:to-orange-500">
                         {{ $t('support') }}
                     </h4>
                     <div class="space-y-4">
@@ -484,31 +482,43 @@ const setLanguage = (lang) => {
                     &copy; {{ new Date().getFullYear() }} {{ $t('modern_dictionary') }}. {{ $t('all_rights_reserved') }}
                 </span>
 
-                    <!-- Social Icons -->
-                    <div class="flex items-center">
-                        <!-- Twitter -->
-                        <a href="javascript:;" class="mx-4 relative group w-10 h-10 rounded-full bg-gray-200/70 dark:bg-gray-800/70 backdrop-blur-md flex items-center justify-center transition-all duration-300 hover:bg-red-500 hover:shadow-lg hover:shadow-red-500/20">
-                            <svg class="absolute top-1/2 left-1/2 w-5 h-5 text-gray-700 dark:text-gray-300 group-hover:text-white transition-colors duration-300 transform -translate-x-1/2 -translate-y-1/2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M22.46 6.003c-.77.34-1.6.57-2.47.67a4.29 4.29 0 0 0 1.88-2.36 8.635 8.635 0 0 1-2.73 1.04A4.24 4.24 0 0 0 16.62 5c-2.35 0-4.25 1.92-4.25 4.29 0 .34.04.67.1 1A12.07 12.07 0 0 1 3.11 4.4a4.28 4.28 0 0 0-.57 2.16c0 1.49.76 2.81 1.92 3.58a4.25 4.25 0 0 1-1.93-.53v.05c0 2.08 1.48 3.82 3.44 4.23-.36.1-.74.15-1.12.15-.27 0-.54-.02-.8-.07a4.25 4.25 0 0 0 3.95 2.93A8.5 8.5 0 0 1 2 18.54a12.07 12.07 0 0 0 6.29 1.85c7.56 0 11.7-6.27 11.7-11.7 0-.18 0-.35-.01-.53A8.31 8.31 0 0 0 22.46 6.003z" fill="currentColor"/>
-                            </svg>
-                        </a>
+                <!-- Social Icons -->
+                <div class="flex items-center justify-center">
+                    <!-- Telegram -->
+                    <a href="#" class="relative group w-10 h-10 mx-2 rounded-full bg-gray-200/70 dark:bg-gray-800/70 backdrop-blur-md flex items-center justify-center transition-all duration-300 hover:bg-blue-500 hover:shadow-lg hover:shadow-blue-500/20">
+                        <svg class="w-5 h-5 text-gray-700 dark:text-gray-300 group-hover:text-white transition-colors duration-300" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M22.46 2.57a1.28 1.28 0 00-1.28-.34l-19 7.14a1.29 1.29 0 00-.13 2.37l4.87 2.43 2.43 7.3a1.29 1.29 0 002.29.24l2.86-3.43 5.15 3.86a1.29 1.29 0 002.06-.83l3.43-17.14a1.29 1.29 0 00-.65-1.6zM9.72 15.43l-.57 3.43-1.72-5.15 11.43-8.57-10.14 7.29z"/>
+                        </svg>
+                    </a>
 
-                        <!-- Instagram -->
-                        <a href="javascript:;" class="mx-4 relative group w-10 h-10 rounded-full bg-gray-200/70 dark:bg-gray-800/70 backdrop-blur-md flex items-center justify-center transition-all duration-300 hover:shadow-lg hover:shadow-pink-500/20">
-                            <svg class="w-5 h-5 text-gray-700 dark:text-gray-300 group-hover:text-white transition-colors duration-300" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M12 7.5C9.51472 7.5 7.5 9.51472 7.5 12C7.5 14.4853 9.51472 16.5 12 16.5C14.4853 16.5 16.5 14.4853 16.5 12C16.5 9.51472 14.4853 7.5 12 7.5ZM9 12C9 10.3431 10.3431 9 12 9C13.6569 9 15 10.3431 15 12C15 13.6569 13.6569 15 12 15C10.3431 15 9 13.6569 9 12Z" fill="currentColor"/>
-                                <path d="M18 5C18.5523 5 19 5.44772 19 6V8C19 8.55228 18.5523 9 18 9C17.4477 9 17 8.55228 17 8V6C17 5.44772 17.4477 5 18 5Z" fill="currentColor"/>
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M1.6538 4.27606C1 5.55953 1 7.23969 1 10.6V13.4C1 16.7603 1 18.4405 1.6538 19.7239C2.2292 20.8529 3.14708 21.7708 4.27606 22.3462C5.55953 23 7.23969 23 10.6 23H13.4C16.7603 23 18.4405 23 19.7239 22.3462C20.8529 21.7708 21.7708 20.8529 22.3462 19.7239C23 18.4405 23 16.7603 23 13.4V10.6C23 7.23969 23 5.55953 22.3462 4.27606C21.7708 3.14708 20.8529 2.2292 19.7239 1.6538C18.4405 1 16.7603 1 13.4 1H10.6C7.23969 1 5.55953 1 4.27606 1.6538C3.14708 2.2292 2.2292 3.14708 1.6538 4.27606ZM12 5.5C8.41015 5.5 5.5 8.41015 5.5 12C5.5 15.5899 8.41015 18.5 12 18.5C15.5899 18.5 18.5 15.5899 18.5 12C18.5 8.41015 15.5899 5.5 12 5.5Z" fill="currentColor"/>
-                            </svg>
-                        </a>
+                    <!-- Instagram -->
+                    <a href="#" class="relative group w-10 h-10 mx-2 rounded-full bg-gray-200/70 dark:bg-gray-800/70 backdrop-blur-md flex items-center justify-center transition-all duration-300 hover:bg-pink-600 hover:shadow-lg hover:shadow-pink-500/20">
+                        <svg class="w-5 h-5 text-gray-700 dark:text-gray-300 group-hover:text-white transition-colors duration-300" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                        </svg>
+                    </a>
 
-                        <!-- YouTube -->
-                        <a href="javascript:;" class="mx-4 relative group w-10 h-10 rounded-full bg-gray-200/70 dark:bg-gray-800/70 backdrop-blur-md flex items-center justify-center transition-all duration-300 hover:bg-red-600 hover:shadow-lg hover:shadow-red-500/20">
-                            <svg class="w-5 h-5 text-gray-700 dark:text-gray-300 group-hover:text-white transition-colors duration-300" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M21.3906 6.15094C21.9999 8.04811 21.9999 12 21.9999 12C21.9999 12 21.9999 15.9519 21.3906 17.8491C21.1115 18.7668 20.3743 19.4472 19.4027 19.7116C17.4444 20.25 11.9999 20.25 11.9999 20.25C11.9999 20.25 6.55544 20.25 4.59716 19.7116C3.6256 19.4472 2.88837 18.7668 2.60928 17.8491C2 15.9519 2 12 2 12C2 12 2 8.04811 2.60928 6.15094C2.88837 5.23321 3.6256 4.55281 4.59716 4.28839C6.55544 3.75 11.9999 3.75 11.9999 3.75C11.9999 3.75 17.4444 3.75 19.4027 4.28839C20.3743 4.55281 21.1115 5.23321 21.3906 6.15094ZM15.5999 12L9.99994 8.5V15.5L15.5999 12Z" fill="currentColor"/>
-                            </svg>
-                        </a>
-                    </div>
+                    <!-- LinkedIn -->
+                    <a href="#" class="relative group w-10 h-10 mx-2 rounded-full bg-gray-200/70 dark:bg-gray-800/70 backdrop-blur-md flex items-center justify-center transition-all duration-300 hover:bg-blue-600 hover:shadow-lg hover:shadow-blue-500/20">
+                        <svg class="w-5 h-5 text-gray-700 dark:text-gray-300 group-hover:text-white transition-colors duration-300" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                        </svg>
+                    </a>
+
+                    <!-- Eitaa -->
+                    <a href="#" class="relative group w-10 h-10 mx-2 rounded-full bg-gray-200/70 dark:bg-gray-800/70 backdrop-blur-md flex items-center justify-center transition-all duration-300 hover:bg-green-600 hover:shadow-lg hover:shadow-green-500/20">
+                        <svg class="w-5 h-5 text-gray-700 dark:text-gray-300 group-hover:text-white transition-colors duration-300" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.23 7.07l-4.85 7.28a.75.75 0 01-1.24.05l-2.57-3.43a.75.75 0 01.57-1.22l3.43.86 3.43-5.14a.75.75 0 011.23.6z"/>
+                        </svg>
+                    </a>
+
+                    <!-- YouTube -->
+                    <a href="#" class="relative group w-10 h-10 mx-2 rounded-full bg-gray-200/70 dark:bg-gray-800/70 backdrop-blur-md flex items-center justify-center transition-all duration-300 hover:bg-red-600 hover:shadow-lg hover:shadow-red-500/20">
+                        <svg class="w-5 h-5 text-gray-700 dark:text-gray-300 group-hover:text-white transition-colors duration-300" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/>
+                        </svg>
+                    </a>
+                </div>
                 </div>
             </div>
         </div>
@@ -520,7 +530,8 @@ export default {
     data() {
         return {
             isDarkMode: false,
-            isHeaderFixed: false
+            isHeaderFixed: false,
+            noFixedHeaderRoutes: ['/login', '/register']
         };
     },
     mounted() {
@@ -530,7 +541,7 @@ export default {
         window.addEventListener('scroll', this.handleScroll);
     },
     beforeUnmount() {
-        window.removeEventListener('scroll', this.handleScroll); // ← اضافه شد
+        window.removeEventListener('scroll', this.handleScroll);
     },
     methods: {
         applyTheme() {
@@ -550,7 +561,11 @@ export default {
 
         },
         handleScroll() {
-            this.isHeaderFixed = window.scrollY > 60;
+            if (this.noFixedHeaderRoutes.includes(this.$page.url)) {
+                this.isHeaderFixed = false;
+            } else {
+                this.isHeaderFixed = window.scrollY > 60;
+            }
         }
     },
 };

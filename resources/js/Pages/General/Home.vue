@@ -4,7 +4,6 @@
       <!-- Hero Section - بازطراحی شده -->
       <section class="bg-gray-200 flex items-center justify-center overflow-hidden relative py-24 bg-gradient-to-br dark:from-gray-900 dark:to-gray-800">
         <div class="absolute inset-0 opacity-20">
-          <div class="absolute inset-0 bg-[url('/images/pattern.svg')] bg-repeat opacity-10"></div>
         </div>
 
         <div class="relative container mx-auto px-6 text-center z-10">
@@ -45,7 +44,7 @@
 
           <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             <div class="relative bg-red-100 dark:bg-red-900/10 p-6 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-gray-700">
-              <div class="w-16 h-16 bg-red-200 dark:bg-red-800/30 rounded-full flex items-center justify-center text-3xl mb-4 text-red-500 dark:text-red-400">
+              <div class="w-16 h-16 bg-red-100 dark:bg-red-900/10 rounded-full flex items-center justify-center text-3xl mb-4 text-red-500 dark:text-red-400">
                 🎮
               </div>
               <h3 class="text-xl font-bold mb-3">{{ $t('gamified_learning_title') }}</h3>
@@ -55,7 +54,7 @@
             </div>
 
             <div class="relative bg-orange-100 dark:bg-orange-900/10 p-6 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-gray-700">
-              <div class="w-16 h-16 bg-orange-200 dark:bg-orange-800/30 rounded-full flex items-center justify-center text-3xl mb-4 text-blue-500 dark:text-blue-400">
+              <div class="w-16 h-16 bg-orange-100 dark:bg-orange-900/10 rounded-full flex items-center justify-center text-3xl mb-4 text-blue-500 dark:text-blue-400">
                 🧠
               </div>
               <h3 class="text-xl font-bold mb-3">{{ $t('ai_title') }}</h3>
@@ -65,7 +64,7 @@
             </div>
 
             <div class="relative bg-yellow-100 dark:bg-yellow-900/10 p-6 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-gray-700">
-              <div class="w-16 h-16 bg-yellow-200 dark:bg-yellow-800/30 rounded-full flex items-center justify-center text-3xl mb-4 text-green-500 dark:text-green-400">
+              <div class="w-16 h-16 bg-yellow-100 dark:bg-yellow-900/10 rounded-full flex items-center justify-center text-3xl mb-4 text-green-500 dark:text-green-400">
                 💰
               </div>
               <h3 class="text-xl font-bold mb-3">{{ $t('free_title') }}</h3>
@@ -114,7 +113,7 @@
                 </p>
                 <a href="/teachers" class="inline-flex items-center group-hover:text-blue-500 dark:group-hover:text-blue-400 font-medium transition-colors text-gray-500 dark:text-gray-300">
                   {{ $t('find_teacher_action') }}
-                  <svg class="mx-2 w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <svg class="mx-2 w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                   </svg>
                 </a>
@@ -139,7 +138,7 @@
                 </p>
                 <a href="/courses" class="inline-flex items-center group-hover:text-purple-500 dark:group-hover:text-purple-400 font-medium transition-colors text-gray-500 dark:text-gray-300">
                   {{ $t('find_courses_action') }}
-                  <svg class="mx-2 w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <svg class="mx-2 w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                   </svg>
                 </a>
@@ -170,7 +169,7 @@
               <div class="md:w-full p-8">
                 <ul class="space-y-6">
                   <li class="flex items-start">
-                    <div class="flex-shrink-0 bg-red-100 dark:bg-red-900/20 text-red-500 rounded-full w-10 h-10 flex items-center justify-center mx-4 mt-1">
+                    <div class="flex-shrink-0 bg-red-100 dark:bg-red-800 text-red-600 dark:text-red-100 rounded-full w-10 h-10 flex items-center justify-center mx-4 mt-1 font-bold text-lg">
                       1
                     </div>
                     <div>
@@ -179,7 +178,7 @@
                     </div>
                   </li>
                   <li class="flex items-start">
-                    <div class="flex-shrink-0 bg-orange-100 dark:bg-orange-900/20 text-orange-500 rounded-full w-10 h-10 flex items-center justify-center mx-4 mt-1">
+                    <div class="flex-shrink-0 bg-orange-100 dark:bg-orange-800 text-orange-600 dark:text-orange-100 rounded-full w-10 h-10 flex items-center justify-center mx-4 mt-1 font-bold text-lg">
                       2
                     </div>
                     <div>
@@ -188,7 +187,7 @@
                     </div>
                   </li>
                   <li class="flex items-start">
-                    <div class="flex-shrink-0 bg-yellow-100 dark:bg-yellow-900/20 text-yellow-500 rounded-full w-10 h-10 flex items-center justify-center mx-4 mt-1">
+                    <div class="flex-shrink-0 bg-yellow-100 dark:bg-yellow-800 text-yellow-600 dark:text-yellow-100 rounded-full w-10 h-10 flex items-center justify-center mx-4 mt-1 font-bold text-lg">
                       3
                     </div>
                     <div>
@@ -215,58 +214,49 @@
 
           <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             <!-- Wordle -->
-            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden border border-gray-200 dark:border-gray-700 transform hover:-translate-y-2 transition-transform duration-300">
+            <div class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 transform hover:-translate-y-2 transition-all duration-300 shadow-lg hover:shadow-xl shadow-green-200 dark:shadow-green-900/30">
               <div class="h-48 bg-gradient-to-r from-green-400 to-blue-500 font-extrabold flex items-center justify-center text-white text-6xl">
-                  ✏️
+                ✏️
               </div>
               <div class="p-6">
                 <h3 class="text-xl font-bold mb-3 text-gray-800 dark:text-white">{{ $t('wordle_title') }}</h3>
                 <p class="text-gray-600 dark:text-gray-300 mb-4">
-                    {{ $t('wordle_description') }}
+                  {{ $t('wordle_description') }}
                 </p>
-                <a
-                  href="/games/wordle"
-                  class="inline-block bg-gradient-to-r from-green-400 to-blue-500 text-white px-6 py-2 rounded-full font-medium hover:shadow-md transition-all"
-                >
-                    {{ $t('game_action') }}
+                <a href="/games/wordle" class="inline-block bg-gradient-to-r from-green-400 to-blue-500 text-white px-6 py-2 rounded-full font-medium hover:shadow-lg hover:shadow-green-200/50 dark:hover:shadow-green-800/30 transition-all">
+                  {{ $t('game_action') }}
                 </a>
               </div>
             </div>
 
             <!-- Spelling Bee -->
-            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden border border-gray-200 dark:border-gray-700 transform hover:-translate-y-2 transition-transform duration-300">
+            <div class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 transform hover:-translate-y-2 transition-all duration-300 shadow-lg hover:shadow-xl shadow-yellow-200 dark:shadow-yellow-900/30">
               <div class="h-48 bg-gradient-to-r from-yellow-400 to-orange-500 flex items-center justify-center text-white text-6xl">
                 🐝
               </div>
               <div class="p-6">
                 <h3 class="text-xl font-bold mb-3 text-gray-800 dark:text-white">{{ $t('spelling_quiz_title') }}</h3>
                 <p class="text-gray-600 dark:text-gray-300 mb-4">
-                    {{ $t('spelling_quiz_description') }}
+                  {{ $t('spelling_quiz_description') }}
                 </p>
-                <a
-                  href="/games/spelling-bee"
-                  class="inline-block bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-6 py-2 rounded-full font-medium hover:shadow-md transition-all"
-                >
-                    {{ $t('game_action') }}
+                <a href="/games/spelling-bee" class="inline-block bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-6 py-2 rounded-full font-medium hover:shadow-lg hover:shadow-yellow-200/50 dark:hover:shadow-yellow-800/30 transition-all">
+                  {{ $t('game_action') }}
                 </a>
               </div>
             </div>
 
             <!-- Hangman -->
-            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden border border-gray-200 dark:border-gray-700 transform hover:-translate-y-2 transition-transform duration-300">
+            <div class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 transform hover:-translate-y-2 transition-all duration-300 shadow-lg hover:shadow-xl shadow-purple-200 dark:shadow-purple-900/30">
               <div class="h-48 bg-gradient-to-r from-purple-400 to-pink-500 flex items-center justify-center text-white text-6xl">
-                🧑‍
+                🧑‍🎤
               </div>
               <div class="p-6">
                 <h3 class="text-xl font-bold mb-3 text-gray-800 dark:text-white">{{ $t('hangman_title') }}</h3>
                 <p class="text-gray-600 dark:text-gray-300 mb-4">
-                    {{ $t('hangman_description') }}
+                  {{ $t('hangman_description') }}
                 </p>
-                <a
-                  href="/games/hangman"
-                  class="inline-block bg-gradient-to-r from-purple-400 to-pink-500 text-white px-6 py-2 rounded-full font-medium hover:shadow-md transition-all"
-                >
-                    {{ $t('game_action') }}
+                <a href="/games/hangman" class="inline-block bg-gradient-to-r from-purple-400 to-pink-500 text-white px-6 py-2 rounded-full font-medium hover:shadow-lg hover:shadow-purple-200/50 dark:hover:shadow-purple-800/30 transition-all">
+                  {{ $t('game_action') }}
                 </a>
               </div>
             </div>
@@ -275,12 +265,18 @@
           <div class="relative text-center mt-12">
             <a
               href="/games"
-              class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-full shadow-sm text-white bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 transition-all"
+              class="relative overflow-hidden inline-flex items-center px-8 py-4 rounded-full text-lg font-bold text-white shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 group"
             >
+              <!-- گرادیانت اصلی -->
+              <span class="relative z-10 flex items-center">
                 {{ $t('all_games_action') }}
-              <svg class="mx-2 -mx-1 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-              </svg>
+              </span>
+
+              <!-- گرادیانت اصلی (آبی به بنفش) -->
+              <span class="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-600"></span>
+
+              <!-- گرادیانت معکوس هنگام hover (بنفش به آبی) -->
+              <span class="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
             </a>
           </div>
         </div>

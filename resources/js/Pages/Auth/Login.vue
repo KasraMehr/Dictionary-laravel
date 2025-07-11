@@ -51,7 +51,7 @@ const submit = () => {
         <div class="inset-0 bg-[url('/logo.svg')] bg-center bg-no-repeat bg-fixed opacity-5 dark:opacity-[0.02]"></div>
 
         <div class="relative flex flex-col items-center justify-center p-4">
-          <h1 class="text-center text-2xl font-bold text-gray-800 dark:text-white/90">{{ $t('login') }}</h1>
+          <h1 class="text-center text-3xl md:text-5xl font-extrabold text-gray-800 dark:text-white/90">{{ $t('login') }}</h1>
 
             <!-- Form Section -->
             <div class="w-full max-w-md mt-8">
@@ -123,14 +123,14 @@ const submit = () => {
                         <!-- Submit Button -->
                         <div class="pt-4">
                             <PrimaryButton
-                                class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition duration-300"
+                                class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-white bg-red-600 hover:bg-red-700 dark:text-white dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition duration-300"
                                 :class="{ 'opacity-50 cursor-not-allowed': form.processing }"
                                 :disabled="form.processing"
                             >
                                 <span v-if="!form.processing" class="flex items-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mx-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <!-- <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mx-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
-                                    </svg>
+                                    </svg> -->
                                     {{ $t('login_to_account') }}
                                 </span>
                                 <span v-else class="flex items-center">

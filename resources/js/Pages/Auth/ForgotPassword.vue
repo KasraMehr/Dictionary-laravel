@@ -27,9 +27,9 @@ const submit = () => {
 
     <div class="bg-gray-200 dark:bg-gray-800 min-h-screen">
         <div class="relative min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0">
-          <h1 class="text-center text-2xl font-bold text-gray-800 dark:text-white/90">{{ $t('login') }}</h1>
+          <h1 class="text-center text-3xl md:text-5xl font-extrabold text-gray-800 dark:text-white/90">{{ $t('login') }}</h1>
 
-          <div class="w-full sm:max-w-lg mt-6 px-6 py-4">
+          <div class="w-full sm:max-w-lg mt-6 px-6 py-4 bg-gray-200 dark:bg-gray-800 rounded-lg shadow-sm shadow-gray-200/20 dark:shadow-gray-900/20">
               <div class="bg-white/80 dark:bg-gray-800/80 rounded-2xl shadow-xl overflow-hidden backdrop-blur-sm border border-white/20 dark:border-gray-700/50 p-6">
                   <!-- Status Message -->
                   <div v-if="status" class="p-4 bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-300 text-sm text-center rounded-lg mb-6">
@@ -67,7 +67,7 @@ const submit = () => {
                           </Link>
 
                           <PrimaryButton
-                              class="w-full md:w-auto flex justify-center py-3 px-6 border border-transparent rounded-lg shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition duration-300"
+                              class="w-full md:w-auto flex justify-center py-3 px-6 border border-transparent rounded-lg shadow-sm text-white bg-red-600 hover:bg-red-700 dark:text-white dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition duration-300"
                               :class="{ 'opacity-50 cursor-not-allowed': form.processing }"
                               :disabled="form.processing"
                           >
