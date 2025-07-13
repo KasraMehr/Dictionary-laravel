@@ -73,7 +73,7 @@ const setLanguage = (lang) => {
         <Banner />
 
         <div class="min-h-screen bg-gray-50-100 dark:bg-gray-900">
-            <nav :class="{ 'fixed top-0 left-0 w-full bg-gray-100 dark:bg-gray-800 z-50 shadow-md': isHeaderFixed }">
+            <nav :class="{ 'fixed top-0 left-0 w-full bg-white dark:bg-gray-900 z-50 shadow-md': isHeaderFixed }">
                 <!-- Main Menu -->
                 <div class="w-full mx-auto px-4 sm:px-24">
                     <div class="flex justify-between h-16">
@@ -146,7 +146,7 @@ const setLanguage = (lang) => {
 
                             <!-- Change Theme Button -->
                             <div>
-                                <button @click="toggleTheme" class="p-2 rounded-full bg-white dark:bg-gray-700">
+                                <button @click="toggleTheme" class="p-2 rounded-full bg-gray-100 dark:bg-gray-800">
                                     <svg v-if="isDarkMode" class="w-6 h-6 text-gray-800 dark:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <circle cx="12" cy="12" r="4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></circle>
                                         <path stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
