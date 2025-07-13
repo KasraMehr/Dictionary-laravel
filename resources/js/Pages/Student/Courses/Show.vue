@@ -23,7 +23,7 @@
             </div>
             <div class="w-full bg-white/30 rounded-full h-2">
               <div class="h-2 rounded-full bg-white"
-                   :style="`width: ${course.progress}%`"></div>
+                   :style="`width: ${progress}%`"></div>
             </div>
           </div>
         </div>
