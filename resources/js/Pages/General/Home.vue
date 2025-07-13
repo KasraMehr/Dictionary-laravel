@@ -3,8 +3,8 @@
     <div class="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 font-sans transition-colors duration-500">
       <!-- Hero Section - بازطراحی شده -->
       <section class="bg-gray-200 flex items-center justify-center overflow-hidden relative py-24 bg-gradient-to-br dark:from-gray-900 dark:to-gray-800">
-        <div class="absolute inset-0 opacity-20">
-        </div>
+        <!-- <div class="absolute inset-0 opacity-20">
+        </div> -->
 
         <div class="relative container mx-auto px-6 text-center z-10">
           <div class="max-w-4xl mx-auto">
