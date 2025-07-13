@@ -187,8 +187,10 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
-import { Head, router } from '@inertiajs/vue3'
+import {ref, computed, watch} from 'vue'
+import {Head, router, usePage} from '@inertiajs/vue3'
+import { useToast } from 'vue-toastification';
+
 import {
   BookOpenIcon,
   CheckIcon,
@@ -198,16 +200,29 @@ import {
 import StudentLayout from "@/Layouts/StudentLayout.vue"
 
 const props = defineProps({
-  course: Object,
-  lessons: Array,
-  progress: Number
+    course: Object,
+    lessons: Array,
+    progress: Number,
+    flash: Object, // اضافه کردن flash به props
 });
 
+// دسترسی به فلش مسیج‌ها
+const { props: pageProps } = usePage();
+
+const toast = useToast();
 const course = ref(props.course);
 const lessons = ref(props.lessons);
 const progress = ref(props.progress);
 
 const activeLesson = ref(lessons.value?.[0] ?? null);
+
+watch(() => pageProps.flash, (newFlash) => {
+    if (newFlash?.success) {
+        toast.success(newFlash.success);
+    } else if (newFlash?.error) {
+        toast.error(newFlash.error);
+    }
+}, { deep: true });
 
 // محاسبه index و navigation
 const currentIndex = computed(() =>
@@ -225,29 +240,33 @@ const nextLesson = computed(() =>
 );
 
 // علامت گذاری درس به عنوان تکمیل شده
-const markAsCompleted = async () => {
-  try {
-    const response = await axios.put(route('student.lessons.mark-completed', {
-      lesson: activeLesson.value.id
-    }));
-
-    // به‌روزرسانی دستی وضعیت درس
-    const lessonIndex = lessons.value.findIndex(l => l.id === activeLesson.value.id);
-    if (lessonIndex !== -1) {
-      lessons.value[lessonIndex].is_completed = true;
-      lessons.value[lessonIndex].users = [{ pivot: { completed: true } }];
+const markAsCompleted = () => {
+    if (!activeLesson.value?.id) {
+        toast.error('درس انتخاب نشده است');
+        return;
     }
 
-    // به‌روزرسانی پیشرفت دوره
-    progress.value = response.data.course_progress;
-
-    toast.success('درس با موفقیت تکمیل شد');
-  } catch (error) {
-    console.error('Error marking lesson as completed:', error);
-    toast.error('خطا در تکمیل درس');
-  }
+    router.put(route('student.lessons.mark-completed', {
+        lesson: activeLesson.value.id
+    }), {}, {
+        preserveState: false, // حالت صفحه حفظ نشود
+        preserveScroll: false, // اسکرول حفظ نشود
+        onSuccess: () => {
+            console.log({
+                progress: props.progress,
+                dailyProgress: props.dailyProgress,
+                weeklyProgress: props.weeklyProgress,
+                streak: props.streak,
+                xp: props.xp,
+                level: props.level,
+            });
+        },
+        onError: (errors) => {
+            console.error('Error marking lesson as completed:', errors);
+            toast.error(errors.error || 'خطا در تکمیل درس');
+        }
+    });
 };
-
 const setDefaultImage = (event) => {
     event.target.src = "/images/default-image.jpg";
 };

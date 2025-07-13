@@ -105,26 +105,28 @@
                     <div class="mt-4">
                         <div class="flex items-center justify-between text-sm mb-1">
                             <span class="text-gray-500 dark:text-gray-400">پیشرفت</span>
-                            <span v-if="course.pivot" class="font-medium">{{ course.pivot.progress }}%</span>
+                            <span v-if="course.pivot" class="font-medium text-gray-500 dark:text-gray-400">{{ course.pivot_progress }}%</span>
                         </div>
                         <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
                             <div
                                 v-if="course.pivot"
                                 class="h-2 rounded-full"
                                 :class="{
-                                  'bg-green-500': course.pivot.progress === 100,
-                                  'bg-blue-500': course.pivot.progress < 100 && course.pivot.progress > 0,
-                                  'bg-gray-400': course.pivot.progress === 0
+                                  'bg-green-500': course.pivot_progress === 100,
+                                  'bg-blue-500': course.pivot_progress < 100 && course.pivot_progress > 0,
+                                  'bg-gray-400': course.pivot_progress === 0
                                 }"
-                                :style="`width: ${course.pivot.progress}%`"
+                                :style="`width: ${course.pivot_progress}%`"
                             ></div>
                         </div>
                     </div>
 
                     <div class="mt-4 flex items-center justify-between">
-                      <span v-if="course.pivot" class="text-xs text-gray-500 dark:text-gray-400">
-                        تاریخ شروع: {{ formatDate(course.pivot.enrolled_at) }}
-                      </span>
+<!--                       TODO: fix dates -->
+<!--                      <span v-if="course.pivot" class="text-xs text-gray-500 dark:text-gray-400">-->
+<!--                        تاریخ شروع: {{ formatDate(course.pivot_enrolled_at) }}-->
+<!--                      </span>-->
+
                         <div class="flex gap-2">
                             <button
                                 @click="continueCourse(course)"
@@ -133,9 +135,9 @@
                                 ادامه یادگیری
                             </button>
                             <button
-                                v-if="course.pivot && course.pivot.progress < 100"
+                                v-if="course.pivot && course.pivot_progress < 100"
                                 @click="showCourseDetails(course)"
-                                class="px-3 py-1.5 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 text-sm rounded-lg transition-colors"
+                                class="px-3 py-1.5 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 text-sm rounded-lg transition-colors text-gray-500 dark:text-gray-400"
                             >
                                 جزئیات
                             </button>
@@ -172,7 +174,7 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                        <img :src="selectedCourse.image_url" class="w-full rounded-lg" />
+                        <img :src="`/storage/${selectedCourse.thumbnail}`" class="w-full rounded-lg"  :alt="selectedCourse.title"/>
                     </div>
                     <div>
                         <div class="space-y-4">
@@ -184,30 +186,31 @@
                             <div>
                                 <h4 class="font-medium text-gray-700 dark:text-gray-300 mb-2">پیشرفت شما</h4>
                                 <div class="flex items-center justify-between text-sm mb-1">
-                                    <span class="text-gray-500 dark:text-gray-400">{{ selectedCourse.pivot.progress }}% تکمیل شده</span>
-                                    <span class="font-medium">{{ completedLessons }}/{{ totalLessons }} درس</span>
+                                    <span class="text-gray-500 dark:text-gray-400">{{ selectedCourse.pivot_progress }}% تکمیل شده</span>
+<!--                                    <span class="font-medium">{{ completedLessons }}/{{ totalLessons }} درس</span>-->
                                 </div>
                                 <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
                                     <div
                                         class="h-2 rounded-full bg-indigo-500"
-                                        :style="`width: ${selectedCourse.pivot.progress}%`"
+                                        :style="`width: ${selectedCourse.pivot_progress}%`"
                                     ></div>
                                 </div>
                             </div>
 
-                            <div>
-                                <h4 class="font-medium text-gray-700 dark:text-gray-300 mb-2">جزئیات ثبت‌نام</h4>
-                                <div class="grid grid-cols-2 gap-4 text-sm">
-                                    <div>
-                                        <p class="text-gray-500 dark:text-gray-400">تاریخ شروع</p>
-                                        <p class="text-gray-800 dark:text-gray-200">{{ formatDate(selectedCourse.pivot.enrolled_at) }}</p>
-                                    </div>
-                                    <div>
-                                        <p class="text-gray-500 dark:text-gray-400">آخرین فعالیت</p>
-                                        <p class="text-gray-800 dark:text-gray-200">{{ formatDate(selectedCourse.pivot.updated_at) }}</p>
-                                    </div>
-                                </div>
-                            </div>
+<!--                            TODO: fix dates-->
+<!--                            <div>-->
+<!--                                <h4 class="font-medium text-gray-700 dark:text-gray-300 mb-2">جزئیات ثبت‌نام</h4>-->
+<!--                                <div class="grid grid-cols-2 gap-4 text-sm">-->
+<!--                                    <div>-->
+<!--                                        <p class="text-gray-500 dark:text-gray-400">تاریخ شروع</p>-->
+<!--                                        <p class="text-gray-800 dark:text-gray-200">{{ formatDate(selectedCourse.pivot_enrolled_at) }}</p>-->
+<!--                                    </div>-->
+<!--                                    <div>-->
+<!--                                        <p class="text-gray-500 dark:text-gray-400">آخرین فعالیت</p>-->
+<!--                                        <p class="text-gray-800 dark:text-gray-200">{{ formatDate(selectedCourse.pivot_updated_at) }}</p>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
                         </div>
 
                         <div class="mt-6 flex gap-3">
@@ -217,12 +220,12 @@
                             >
                                 ادامه دوره
                             </button>
-                            <button
-                                @click="unrollCourse(selectedCourse)"
-                                class="px-4 py-2 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors"
-                            >
-                                انصراف از دوره
-                            </button>
+<!--                            <button-->
+<!--                                @click="unrollCourse(selectedCourse)"-->
+<!--                                class="px-4 py-2 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors"-->
+<!--                            >-->
+<!--                                انصراف از دوره-->
+<!--                            </button>-->
                         </div>
                     </div>
                 </div>
@@ -319,7 +322,7 @@ const filters = ref({
 // Computed
 const completedLessons = computed(() => {
     return selectedCourse.value
-        ? Math.floor((selectedCourse.value.pivot.progress / 100) * selectedCourse.value.lessons_count)
+        ? Math.floor((selectedCourse.value.pivot_progress / 100) * selectedCourse.value.lessons_count)
         : 0
 })
 
