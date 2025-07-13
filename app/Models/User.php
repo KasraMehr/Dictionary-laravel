@@ -198,7 +198,7 @@ class User extends Authenticatable
     protected static function booted()
     {
         static::created(function ($user) {
-            $user->learningStats()->create();
+            $user->learningStat()->create();
         });
     }
 

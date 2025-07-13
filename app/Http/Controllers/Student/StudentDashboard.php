@@ -108,7 +108,7 @@ class StudentDashboard extends Controller
 
     protected function getLearningStats($user)
     {
-        $stats = $user->learningStats;
+        $stats = $user->learningStat;
 
         return [
             'learnedWords' => $stats->learned_words_count ?? 0,
