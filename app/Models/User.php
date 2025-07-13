@@ -189,7 +189,7 @@ class User extends Authenticatable
             ->withTimestamps();
     }
 
-    public function learningStats()
+    public function learningStat(): HasOne
     {
         return $this->hasOne(LearningStat::class);
     }

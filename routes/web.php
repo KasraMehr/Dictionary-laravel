@@ -181,7 +181,6 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
         Route::get('/lessons/{id}', [WordController::class, 'show'])->name('words.show'); // Show specific word
 
         Route::put('/lessons/{lesson}/mark-completed', [StudentCourseController::class, 'markAsCompleted'])
-            ->middleware(['auth', 'verified'])
             ->name('lessons.mark-completed');
 
         Route::get('/quizzes', [StudentQuizController::class, 'index'])->name('quiz.index');
