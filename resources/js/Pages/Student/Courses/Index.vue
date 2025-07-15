@@ -122,10 +122,9 @@
                     </div>
 
                     <div class="mt-4 flex items-center justify-between">
-<!--                       TODO: fix dates -->
-<!--                      <span v-if="course.pivot" class="text-xs text-gray-500 dark:text-gray-400">-->
-<!--                        تاریخ شروع: {{ formatDate(course.pivot_enrolled_at) }}-->
-<!--                      </span>-->
+                      <span v-if="course.pivot" class="text-xs text-gray-500 dark:text-gray-400">
+                        تاریخ شروع: {{ formatDate(course.pivot_enrolled_at) }}
+                      </span>
 
                         <div class="flex gap-2">
                             <button
@@ -197,20 +196,19 @@
                                 </div>
                             </div>
 
-<!--                            TODO: fix dates-->
-<!--                            <div>-->
-<!--                                <h4 class="font-medium text-gray-700 dark:text-gray-300 mb-2">جزئیات ثبت‌نام</h4>-->
-<!--                                <div class="grid grid-cols-2 gap-4 text-sm">-->
-<!--                                    <div>-->
-<!--                                        <p class="text-gray-500 dark:text-gray-400">تاریخ شروع</p>-->
-<!--                                        <p class="text-gray-800 dark:text-gray-200">{{ formatDate(selectedCourse.pivot_enrolled_at) }}</p>-->
-<!--                                    </div>-->
-<!--                                    <div>-->
-<!--                                        <p class="text-gray-500 dark:text-gray-400">آخرین فعالیت</p>-->
-<!--                                        <p class="text-gray-800 dark:text-gray-200">{{ formatDate(selectedCourse.pivot_updated_at) }}</p>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
+                            <div>
+                                <h4 class="font-medium text-gray-700 dark:text-gray-300 mb-2">جزئیات ثبت‌نام</h4>
+                                <div class="grid grid-cols-2 gap-4 text-sm">
+                                    <div>
+                                        <p class="text-gray-500 dark:text-gray-400">تاریخ شروع</p>
+                                        <p class="text-gray-800 dark:text-gray-200">{{ formatDate(selectedCourse.pivot_enrolled_at) }}</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-gray-500 dark:text-gray-400">آخرین فعالیت</p>
+                                        <p class="text-gray-800 dark:text-gray-200">{{ formatDate(selectedCourse.pivot_last_accessed_at) }}</p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="mt-6 flex gap-3">

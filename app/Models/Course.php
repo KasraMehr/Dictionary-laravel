@@ -15,20 +15,10 @@ class Course extends Model
 
     public function users(): BelongsToMany
     {
-        return $this->belongsToMany(User::class)
-            ->using(CourseUser::class)
-            ->withPivot([
-                'enrolled_at',
-                'progress',
-                'is_favorite',
-                'completed_at',
-                'rating',
-                'review',
-                'last_accessed_at',
-            ]);
+        return $this->belongsToMany(User::class, 'course_user', 'course_id', 'user_id');
     }
 
-    public function instructor(): BelongsTo
+    public function teacher(): BelongsTo
     {
         return $this->belongsTo(User::class, 'created_by');
     }

@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Student;
 use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\CourseLesson;
+use App\Models\CourseUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Inertia\Inertia;
@@ -34,6 +35,7 @@ class StudentCourseController extends Controller
                 'course_user.enrolled_at as pivot_enrolled_at',
                 'course_user.updated_at as pivot_updated_at',
                 'course_user.is_favorite as pivot_is_favorite',
+                'course_user.last_accessed_at as pivot_last_accessed_at',
             ])
             ->with(['course_lessons' => function($query) use ($userId) {
                 $query->with(['users' => function($query) use ($userId) {
@@ -54,10 +56,12 @@ class StudentCourseController extends Controller
             $course->pivot_progress = $totalLessons > 0 ? round(($completedLessons / $totalLessons) * 100) : 0;
             $course->pivot_enrolled_at = $course->pivot_enrolled_at ?? null;
             $course->pivot_is_favorite = $course->pivot_is_favorite ?? false;
+            $course->pivot_last_accessed_at = $course->pivot_last_accessed_at ?? null;
             $course->pivot = (object) [
                 'progress' => $course->pivot_progress,
                 'enrolled_at' => $course->pivot_enrolled_at,
                 'is_favorite' => $course->pivot_is_favorite,
+                'last_accessed_at'=> $course->pivot_last_accessed_at,
             ];
             return $course;
         });
@@ -133,8 +137,18 @@ class StudentCourseController extends Controller
             $user = $request->user();
             $now = now();
 
+            // بررسی کاربر
+            if (!$user || !$user->id) {
+                \Log::error('User is not authenticated or invalid', ['user_id' => $user->id ?? 'null']);
+                return inertia('Student/Courses/Show', [
+                    'error' => 'کاربر احراز هویت نشده است',
+                ])->with(['error' => 'کاربر احراز هویت نشده است']);
+            }
+
             // بررسی وجود درس و دوره
-            if (!$lesson->course) {
+            $course = $lesson->course;
+            if (!$course || !$course->id) {
+                \Log::error('Course is not valid or not associated with the lesson', ['course_id' => $course->id ?? 'null']);
                 return inertia('Student/Courses/Show', [
                     'error' => 'درس به دوره‌ای متصل نیست',
                 ])->with(['error' => 'درس به دوره‌ای متصل نیست']);
@@ -150,8 +164,7 @@ class StudentCourseController extends Controller
                 ]
             ]);
 
-            // بارگذاری دوره و درس‌ها مشابه متد show
-            $course = $lesson->course;
+            // بارگذاری دوره و درس‌ها
             $course->load(['course_lessons' => function ($query) use ($user) {
                 $query->with(['users' => function ($query) use ($user) {
                     $query->where('user_id', $user->id);
@@ -165,12 +178,21 @@ class StudentCourseController extends Controller
             })->count();
             $courseProgress = $totalLessons > 0 ? round(($completedLessons / $totalLessons) * 100) : 0;
 
-            // به‌روزرسانی پیشرفت دوره در pivot
-            $user->courses()->updateExistingPivot($course->id, [
-                'progress' => $courseProgress,
-                'last_accessed_at' => $now,
-                'completed_at' => $courseProgress >= 100 ? $now : null,
-            ]);
+            // استفاده از رابطه courses برای ایجاد یا به‌روزرسانی رکورد
+            $user->courses()->sync([
+                $course->id => [
+                    'enrolled_at' => $now,
+                    'progress' => $courseProgress,
+                    'last_accessed_at' => $now,
+                    'completed_at' => $courseProgress >= 100 ? $now : null,
+                    'is_favorite' => false,
+                    'rating' => null,
+                    'review' => null,
+                    'payment_status' => 'pending',
+                    'transaction_id' => null,
+                    'expires_at' => null,
+                ]
+            ], false);
 
             // اضافه کردن وضعیت تکمیل برای هر درس
             $lessons = $course->course_lessons->map(function ($lesson) use ($user) {
@@ -185,12 +207,14 @@ class StudentCourseController extends Controller
             $lastStudiedAt = $learningStat->last_studied_at ? Carbon::parse($learningStat->last_studied_at) : null;
             $streak = $learningStat->active_days_streak ?? 0;
 
-            if (!$lastStudiedAt || $lastStudiedAt->isBefore($now->startOfDay())) {
-                if ($lastStudiedAt && $lastStudiedAt->isYesterday()) {
+            if ($lastStudiedAt && $lastStudiedAt->isBefore($now->startOfDay())) {
+                if ($lastStudiedAt->isYesterday()) {
                     $streak++;
                 } else {
                     $streak = 1;
                 }
+            } elseif (!$lastStudiedAt) {
+                $streak = 1;
             }
 
             $dailyProgress = $learningStat->daily_goals ?? [];
@@ -222,38 +246,47 @@ class StudentCourseController extends Controller
 
             // پاسخ به درخواست Inertia
             if ($request->header('X-Inertia')) {
-                return inertia('Student/Courses/Show', [
-                    'course' => $course,
-                    'lessons' => $lessons,
+                return back()->with([
+                    'flash' => ['success' => 'درس با موفقیت به عنوان تکمیل شده علامت گذاری شد'],
                     'progress' => $courseProgress,
-                    'dailyProgress' => $dailyProgress[$today],
-                    'weeklyProgress' => $weeklyProgress[$weekStart],
+                    'dailyProgress' => $dailyProgress[$today] ?? 0,
+                    'weeklyProgress' => $weeklyProgress[$weekStart] ?? 0,
                     'streak' => $streak,
                     'xp' => $studentProgress->xp,
                     'level' => $newLevel,
-                    'flash' => ['success' => 'درس با موفقیت به عنوان تکمیل شده علامت گذاری شد'],
+                    // اضافه کردن اطلاعات درس برای آپدیت
+                    'lesson' => [
+                        'id' => $lesson->id,
+                        'is_completed' => true
+                    ]
                 ]);
             }
 
             // پاسخ به درخواست API
             return response()->json([
                 'success' => true,
-                'message' => 'درس با موفقیت به عنوان تکمیل شده علامت گذاری شد',
-                'course' => $course,
-                'lessons' => $lessons,
-                'course_progress' => $courseProgress,
-                'daily_progress' => $dailyProgress[$today],
-                'weekly_progress' => $weeklyProgress[$weekStart],
+                'message' => 'درس با موفقیت تکمیل شد',
+                'progress' => $courseProgress,
+                'dailyProgress' => $dailyProgress,
+                'weeklyProgress' => $weeklyProgress,
                 'streak' => $streak,
                 'xp' => $studentProgress->xp,
                 'level' => $newLevel,
+                'lesson' => [
+                    'id' => $lesson->id,
+                    'is_completed' => true
+                ]
             ]);
         } catch (\Exception $e) {
-            \Log::error('Error in markAsCompleted: ' . $e->getMessage());
+            \Log::error('Error in markAsCompleted: ' . $e->getMessage(), [
+                'user_id' => $user->id ?? 'null',
+                'course_id' => $course->id ?? 'null',
+                'lesson_id' => $lesson->id ?? 'null',
+            ]);
             if ($request->header('X-Inertia')) {
                 return inertia('Student/Courses/Show', [
                     'course' => $lesson->course,
-                    'lessons' => $lesson->course->course_lessons,
+                    'lessons' => $lesson->course ? $lesson->course->course_lessons : [],
                     'progress' => 0,
                     'flash' => ['error' => env('APP_DEBUG') ? $e->getMessage() : 'خطایی در سرور رخ داد'],
                 ]);

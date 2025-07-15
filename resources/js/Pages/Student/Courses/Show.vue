@@ -204,6 +204,7 @@ const props = defineProps({
     lessons: Array,
     progress: Number,
     flash: Object, // اضافه کردن flash به props
+    lesson: Object
 });
 
 // دسترسی به فلش مسیج‌ها
@@ -221,6 +222,21 @@ watch(() => pageProps.flash, (newFlash) => {
         toast.success(newFlash.success);
     } else if (newFlash?.error) {
         toast.error(newFlash.error);
+    }
+}, { deep: true });
+
+watch(() => props.lesson, (newLesson) => {
+    if (newLesson && activeLesson.value && newLesson.id === activeLesson.value.id) {
+        activeLesson.value = { ...activeLesson.value, is_completed: newLesson.is_completed };
+
+        // آپدیت لیست lessons
+        const lessons = lessons.value.map(lesson => {
+            if (lesson.id === newLesson.id) {
+                return { ...lesson, is_completed: newLesson.is_completed };
+            }
+            return lesson;
+        });
+        lessons.value = lesson;
     }
 }, { deep: true });
 
@@ -249,17 +265,25 @@ const markAsCompleted = () => {
     router.put(route('student.lessons.mark-completed', {
         lesson: activeLesson.value.id
     }), {}, {
-        preserveState: false, // حالت صفحه حفظ نشود
-        preserveScroll: false, // اسکرول حفظ نشود
-        onSuccess: () => {
-            console.log({
-                progress: props.progress,
-                dailyProgress: props.dailyProgress,
-                weeklyProgress: props.weeklyProgress,
-                streak: props.streak,
-                xp: props.xp,
-                level: props.level,
+        preserveState: true,
+        preserveScroll: true,
+        onSuccess: (response) => {
+            // آپدیت مقادیر پیشرفت بدون تغییر درس فعال
+            progress.value = response.props.progress;
+
+            // آپدیت وضعیت تکمیل شدن درس فعلی در لیست lessons
+            const updatedLessons = lessons.value.map(lesson => {
+                if (lesson.id === activeLesson.value.id) {
+                    return { ...lesson, is_completed: true };
+                }
+                return lesson;
             });
+            lessons.value = updatedLessons;
+
+            // آپدیت activeLesson برای نمایش تغییرات
+            activeLesson.value = { ...activeLesson.value, is_completed: true };
+
+            toast.success('درس با موفقیت تکمیل شد');
         },
         onError: (errors) => {
             console.error('Error marking lesson as completed:', errors);
