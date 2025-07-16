@@ -57,6 +57,9 @@ Route::get('/teachers/{teacher}', [LearnController::class, 'show_teacher'])->nam
 Route::get('/courses', [LearnController::class, 'courses'])->name('courses.index');
 Route::get('/courses/{course}', [LearnController::class, 'show_course'])->name('courses.show');
 Route::get('/word/{native_lang}-{translated_lang}/{word:slug}', [WordController::class, 'show'])->name('word.show');
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::post('/words/toggle-save', [GeneralController::class, 'toggle'])->name('words.toggle-save');;
+});
 
 Route::get('/csrf-token', function () {
     return response()->json(['csrf_token' => csrf_token()]);
