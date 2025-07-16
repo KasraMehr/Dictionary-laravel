@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\General;
 
 use App\Http\Controllers\Controller;
+use App\Models\SavedWord;
 use App\Models\Team;
 use App\Models\User;
 use App\Models\Word;
@@ -198,6 +199,30 @@ class GeneralController extends Controller
         return Inertia::render('General/Dictionary/DailyWords', [
             'wordList' => session('wordList'),
         ]);
+    }
+
+    public function toggle(Request $request)
+    {
+        $request->validate([
+            'word_id' => 'required|exists:words,id'
+        ]);
+
+        if (!auth()->check()) {
+            return redirect()->route('login');
+        }
+
+        $savedWord = SavedWord::firstOrNew([
+            'user_id' => auth()->id(),
+            'word_id' => $request->word_id
+        ]);
+
+        if ($savedWord->exists) {
+            $savedWord->delete();
+            return back()->with('success', 'Word removed from saved list');
+        }
+
+        $savedWord->save();
+        return back()->with('success', 'Word added to saved list');
     }
 
     public function home(): Response
