@@ -135,7 +135,7 @@
                                 </div>
                                 <span class="text-gray-700 dark:text-gray-300">کلمات یادگرفته شده</span>
                             </div>
-                            <span class="font-medium text-gray-700 dark:text-gray-100">{{ learningStats.learnedWords.toLocaleString() }}</span>
+                            <span class="font-medium text-gray-700 dark:text-gray-100">{{ totalWords }}</span>
                         </div>
 
                         <div class="flex items-center justify-between">
@@ -161,7 +161,7 @@
                         <div class="pt-4 border-t border-gray-100 dark:border-gray-700">
                             <div class="flex items-center justify-between">
                                 <span class="text-gray-700 dark:text-gray-300">رتبه شما</span>
-                                <span class="font-medium text-red-600 dark:text-red-400">#{{ learningStats.rank }} از {{ learningStats.totalUsers.toLocaleString() }}</span>
+                                <span class="font-medium text-red-600 dark:text-red-400">#{{ learningStats.rank }} از {{ totalUsers }}</span>
                             </div>
                         </div>
                     </div>
@@ -235,6 +235,8 @@ const props = defineProps({
     userLevel: String,
     xp: Number,
     weeklyStudyMinutes: Number,
+    totalUsers: Number,
+    totalWords: Number,
 });
 
 
@@ -253,19 +255,17 @@ console.log(props.weeklyStudyMinutes);
 
 const handleAction = (action) => {
     switch(action.title) {
-        case 'ادامه یادگیری':
-            if (props.activeCourses.length > 0) {
-                window.location.href = `/student/courses/${props.activeCourses[0].id}`;
-            }
+        case 'دوره ها':
+            window.location.href = '/student/courses';
             break;
-        case 'کلمه جدید':
-            // باز کردن مودال اضافه کردن کلمه جدید
+        case 'آزمون ها':
+            window.location.href = '/student/quizzes';
             break;
-        case 'تمرین تلفظ':
-            window.location.href = '/student/practice/pronunciation';
+        case 'کلمات ذخیره شده':
+            window.location.href = '/student/saved-words';
             break;
-        case 'فلش کارت':
-            window.location.href = '/student/flashcards';
+        case 'پروفایل':
+            window.location.href = '/student/profile';
             break;
     }
 };

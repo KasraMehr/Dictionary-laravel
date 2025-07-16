@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Student;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,6 +17,9 @@ class StudentDashboard extends Controller
         $user = Auth::user();
         $student = $user->studentProfile;
         $studentProgress = $user->studentProgress;
+        $totalUsers = User::count();
+        $totalWords = $user->savedWords()->count();
+
 
         return Inertia::render('Student/Dashboard', [
             'student' => $student,
@@ -28,6 +32,8 @@ class StudentDashboard extends Controller
             'userLevel' => $this->calculateUserLevel($user),
             'xp' => $this->calculateUserXP($user),
             'weeklyStudyMinutes' => $this->calculateWeeklyStudyMinutes($user),
+            'totalUsers' => $totalUsers,
+            'totalWords' => $totalWords,
 
         ]);
     }
@@ -37,26 +43,26 @@ class StudentDashboard extends Controller
         return [
             [
                 'icon' => 'play',
-                'title' => 'ادامه یادگیری',
+                'title' => 'دوره ها',
                 'subtitle' => 'دوره فعلی خود را ادامه دهید',
                 'bgColor' => 'bg-indigo-500',
             ],
             [
                 'icon' => 'plus-circle',
-                'title' => 'کلمه جدید',
-                'subtitle' => 'کلمه ای به دیکشنری اضافه کنید',
+                'title' => 'آزمون ها',
+                'subtitle' => 'آزمون بدهید و سطح خود را بسنجید',
                 'bgColor' => 'bg-green-500',
             ],
             [
                 'icon' => 'microphone',
-                'title' => 'تمرین تلفظ',
-                'subtitle' => 'مهارت speaking خود را تقویت کنید',
+                'title' => 'کلمات ذخیره شده',
+                'subtitle' => 'کلمات ذخیره شده خود را ببینید',
                 'bgColor' => 'bg-amber-500',
             ],
             [
                 'icon' => 'book-open',
-                'title' => 'فلش کارت',
-                'subtitle' => 'کلمات را مرور کنید',
+                'title' => 'پروفایل',
+                'subtitle' => 'پروفایل خود را به سلیقه خودتان ادیت کنید',
                 'bgColor' => 'bg-purple-500',
             ],
         ];
