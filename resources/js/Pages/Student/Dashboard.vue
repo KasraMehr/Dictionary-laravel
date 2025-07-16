@@ -172,7 +172,7 @@
             <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm overflow-hidden">
                 <div class="border-b border-gray-100 dark:border-gray-700 px-6 py-4 flex items-center justify-between">
                     <h2 class="font-semibold text-lg text-gray-800 dark:text-gray-100">کلمات ذخیره شده اخیر</h2>
-                    <Link href="/student/saved" class="text-sm text-red-600 dark:text-red-400 hover:underline">
+                    <Link href="/student/saved-words" class="text-sm text-red-600 dark:text-red-400 hover:underline">
                         مشاهده همه
                     </Link>
                 </div>
@@ -213,8 +213,8 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
-import { Link, usePage } from '@inertiajs/vue3';
+import { computed } from 'vue';
+import { Link } from '@inertiajs/vue3';
 import {
     StarIcon,
     ClockIcon,
