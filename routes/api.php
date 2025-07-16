@@ -18,6 +18,7 @@ Route::get('/import-word/{word}', [WordImportController::class, 'importWord']);
 Route::get('/fetch-words', [GeneralController::class, 'fetchWords']);
 Route::get('/fetch-level-words', [LearnController::class, 'fetchWords']);
 
+
 Route::post('/set-locale', function (Illuminate\Http\Request $request) {
     $locale = $request->input('locale');
     if (in_array($locale, ['en', 'fa', 'ar'])) {
