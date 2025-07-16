@@ -125,7 +125,7 @@ class User extends Authenticatable
         return $this->hasOne(StudentProfile::class);
     }
 
-    public function studentProgress()
+    public function studentProgress(): HasMany
     {
         return $this->hasMany(StudentProgress::class);
     }
@@ -140,7 +140,7 @@ class User extends Authenticatable
         return $this->belongsToMany(Course::class, 'course_user', 'user_id', 'course_id');
     }
 
-    public function lessons()
+    public function lessons(): BelongsToMany
     {
         return $this->belongsToMany(CourseLesson::class, 'course_lesson_user')
             ->withPivot('completed', 'progress', 'started_at', 'completed_at')
@@ -166,17 +166,11 @@ class User extends Authenticatable
             ->withTimestamps();
     }
 
-    public function savedWords()
+    public function savedWords(): BelongsToMany
     {
         return $this->belongsToMany(Word::class, 'saved_words')
-            ->withPivot([
-                'review_count',
-                'last_reviewed_at',
-                'next_review_at',
-                'ease_factor',
-                'interval',
-            ])
-            ->withTimestamps();
+            ->withTimestamps()
+            ->withPivot(['review_count', 'last_reviewed_at', 'next_review_at', 'ease_factor', 'interval']);
     }
 
     public function learningStat(): HasOne

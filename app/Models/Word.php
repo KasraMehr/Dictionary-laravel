@@ -100,8 +100,15 @@ class Word extends Model
         return $this->belongsToMany(Team::class, 'team_word', 'word_id', 'team_id');
     }
 
-    public function savedByUsers()
+    public function savedByUsers(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'saved_words');
+        return $this->belongsToMany(User::class, 'saved_words')
+            ->withTimestamps()
+            ->withPivot(['review_count', 'last_reviewed_at', 'next_review_at', 'ease_factor', 'interval']);
+    }
+
+    public function isSavedByUser($userId): bool
+    {
+        return $this->savedByUsers()->where('user_id', $userId)->exists();
     }
 }
