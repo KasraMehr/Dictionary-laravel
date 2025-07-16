@@ -1,38 +1,47 @@
 <script setup>
-import { Head, Link } from "@inertiajs/vue3";
+import {Link, router, useForm, usePage} from "@inertiajs/vue3";
 import MainLayout from '@/Layouts/MainLayout.vue';
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 
-defineProps({
+const props = defineProps({
     word: Object,
     dailyWords: Array,
-    synonyms: Array
+    synonyms: Array,
+    isSaved: Boolean,
+    auth: Object
 });
 
-const audioRefs = ref({});
-const isFavorite = ref(false);
+const isSaved = ref(props.isSaved);
+const isLoading = ref(false);
 
-// Check if word is favorite (mock function - replace with actual implementation)
-const checkFavorite = (wordId) => {
-    // This should be replaced with actual logic to check favorites
-    return false;
+const toggleSave = (word) => {
+    if (!props.auth?.user) {
+        window.location.href = '/login';
+        return;
+    }
+
+    isLoading.value = true;
+
+    router.post(route('words.toggle-save'), {
+        word_id: word.id
+    }, {
+        preserveScroll: true,
+        onSuccess: () => {
+            isSaved.value = !isSaved.value;
+        },
+        onFinish: () => {
+            isLoading.value = false;
+        }
+    });
 };
 
+
+const audioRefs = ref({});
 const playAudio = (id) => {
     if (audioRefs.value[id]) {
         audioRefs.value[id].play();
     }
 };
-
-const addToFavorites = (word) => {
-    // Implement favorite functionality
-    isFavorite.value = !isFavorite.value;
-    // Add API call to save favorite
-};
-
-// onMounted(() => {
-//     isFavorite.value = checkFavorite(word.id);
-// });
 
 const setDefaultImage = (event) => {
     event.target.src = "/images/default-image.jpg";
@@ -99,9 +108,28 @@ const setDefaultImage = (event) => {
                                     </div>
                                     <p class="mt-2 text-lg italic text-gray-600 dark:text-gray-300">{{ word.pronunciation }}</p>
                                 </div>
-                                <button @click="addToFavorites(word)" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" :class="isFavorite ? 'text-yellow-400 fill-yellow-400' : 'text-gray-400 dark:text-gray-500'" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
+                                <button
+                                    @click="toggleSave(word)"
+                                    class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                                    :title="isSaved ? 'Remove from saved' : 'Add to saved'"
+                                >
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        class="w-6 h-6"
+                                        :class="{
+                                            'text-yellow-400 fill-yellow-400': isSaved,
+                                            'text-gray-400 dark:text-gray-500': !isSaved
+                                        }"
+                                        viewBox="0 0 24 24"
+                                        stroke-width="1.5"
+                                        stroke="currentColor"
+                                        fill="none"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z"
+                                        />
                                     </svg>
                                 </button>
                             </div>

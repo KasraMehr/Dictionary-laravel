@@ -41,19 +41,18 @@ class WordController extends Controller
      */
     public function show(Request $request, string $lang1, string $lang2, string $word): Response
     {
-        $word = Word::with('categories')
+        $word = Word::with(['categories'])
             ->where('word', $word)
             ->where('native_lang', $lang1)
             ->where('translated_lang', $lang2)
             ->firstOrFail();
 
-        $dailyWords = Word::inRandomOrder()->take(5)->get(['id', 'word', 'native_lang', 'translated_lang']);
-        $synonyms = Word::inRandomOrder()->take(5)->get(['id', 'word', 'meaning', 'native_lang', 'translated_lang']);
-
         return Inertia::render('Translator/Words/Word', [
             'word' => $word,
-            'dailyWords' => $dailyWords,
-            'synonyms' => $synonyms,
+            'dailyWords' => Word::inRandomOrder()->take(5)->get(),
+            'synonyms' => Word::inRandomOrder()->take(5)->get(),
+            'isSaved' => auth()->check() ? $word->isSavedByUser(auth()->id()) : false,
+            'auth' => ['user' => auth()->user()] // اضافه کردن اطلاعات احراز هویت
         ]);
     }
 
