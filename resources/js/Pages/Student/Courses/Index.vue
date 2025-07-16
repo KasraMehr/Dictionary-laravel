@@ -97,9 +97,6 @@
                             <h3 class="font-bold text-lg text-gray-800 dark:text-gray-100 mb-1">{{ course.title }}</h3>
                             <p class="text-sm text-gray-500 dark:text-gray-400">{{ course.creator_name }}</p>
                         </div>
-                        <div class="flex items-center space-x-1 text-yellow-500">
-                            <StarIcon v-for="i in 5" :key="i" class="w-4 h-4" :class="{'text-gray-300 dark:text-gray-600': i > course.rating}" />
-                        </div>
                     </div>
 
                     <div class="mt-4">
