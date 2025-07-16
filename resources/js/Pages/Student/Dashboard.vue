@@ -18,8 +18,8 @@
                             <div class="text-center">
                                 <p class="text-sm opacity-80">امتیاز</p>
                                 <p class="text-xl font-bold">
-                                  <!-- {{ progress.xp.toLocaleString() }} -->
-                                  0
+                                   {{ xp }}
+
                                 </p>
                             </div>
                         </div>
@@ -68,7 +68,7 @@
                         class="border border-gray-100 dark:border-gray-700 rounded-xl overflow-hidden hover:shadow-md transition-shadow"
                     >
                         <div class="relative">
-                            <img :src="course.image" class="w-full h-40 object-cover" />
+                            <img :src="`/storage/${course.thumbnail}`" class="w-full h-40 object-cover"  :alt="course.title"/>
                             <div class="absolute bottom-3 left-3 bg-red-600 text-white text-xs px-2 py-1 rounded">
                                 {{ course.progress }}% تکمیل شده
                             </div>
@@ -78,14 +78,6 @@
                             <p class="text-sm text-gray-500 dark:text-gray-400 mb-3">{{ course.teacher }}</p>
 
                             <div class="flex items-center justify-between">
-                                <div class="flex items-center space-x-1 text-yellow-500">
-                                    <StarIcon
-                                        v-for="i in 5"
-                                        :key="i"
-                                        class="w-4 h-4"
-                                        :class="{'text-gray-300 dark:text-gray-600': i > course.rating}"
-                                    />
-                                </div>
                                 <Link
                                     :href="`/student/courses/${course.id}`"
                                     class="text-red-600 dark:text-red-400 text-sm hover:underline"
@@ -200,15 +192,17 @@
                                     <BookmarkIcon class="w-5 h-5 fill-current" />
                                 </button>
                             </div>
-                            <p class="text-sm text-gray-500 dark:text-gray-400">{{ word.meaning }}</p>
+                            <p class="text-sm text-gray-700 dark:text-gray-100">{{ word.meaning }}</p>
                             <div class="mt-3 flex items-center justify-between">
-                                <span class="text-xs px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded">{{ word.level }}</span>
-                                <button
-                                    @click="showWordExamples(word.id)"
-                                    class="text-xs text-red-600 dark:text-red-400 hover:underline"
-                                >
-                                    مثال‌ها
-                                </button>
+                                <span class="text-xs px-1 py-1 bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-200 rounded">{{ word.level }}</span>
+                                <span class="text-xs px-1 py-1 bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-200 rounded">{{ word.grammar }}</span>
+
+<!--                                <button-->
+<!--                                    @click="showWordExamples(word.id)"-->
+<!--                                    class="text-xs text-red-600 dark:text-red-400 hover:underline"-->
+<!--                                >-->
+<!--                                    مثال‌ها-->
+<!--                                </button>-->
                             </div>
                         </div>
                     </div>
@@ -232,21 +226,30 @@ import StudentLayout from "@/Layouts/StudentLayout.vue";
 
 const props = defineProps({
     student: Object,
-    progress: Object,
+    studentProgress: Object,
     quickActions: Array,
     activeCourses: Array,
     savedWords: Array,
     dailyChallenge: Object,
     learningStats: Object,
     userLevel: String,
+    xp: Number,
+    weeklyStudyMinutes: Number,
 });
 
-console.log(props.userLevel);
+
 
 const weeklyProgress = computed(() => {
-    // این مقدار می‌تواند از سرور محاسبه شود
-    return Math.min(100, Math.floor((usePage().props.auth.user.weekly_study_minutes || 0) / 300 * 100));
+    const maxPercent = 100;
+    const percentPerLesson = 5;
+    const lessonCount = Math.floor((props.weeklyStudyMinutes || 0)); // هر دقیقه یا هر بار مطالعه = یک درس
+
+    const progress = lessonCount * percentPerLesson;
+
+    return Math.min(progress, maxPercent);
 });
+
+console.log(props.weeklyStudyMinutes);
 
 const handleAction = (action) => {
     switch(action.title) {
@@ -268,7 +271,7 @@ const handleAction = (action) => {
 };
 
 const startDailyChallenge = () => {
-    window.location.href = '/student/daily-challenge';
+    window.location.href = '/student/quizzes';
 };
 
 const unsaveWord = (wordId) => {

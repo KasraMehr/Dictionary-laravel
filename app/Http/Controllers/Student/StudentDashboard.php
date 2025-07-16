@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Student;
 
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -25,6 +26,9 @@ class StudentDashboard extends Controller
             'dailyChallenge' => $this->getDailyChallenge($user),
             'learningStats' => $this->getLearningStats($user),
             'userLevel' => $this->calculateUserLevel($user),
+            'xp' => $this->calculateUserXP($user),
+            'weeklyStudyMinutes' => $this->calculateWeeklyStudyMinutes($user),
+
         ]);
     }
 
@@ -61,7 +65,6 @@ class StudentDashboard extends Controller
     protected function getActiveCourses($user)
     {
         return $user->courses()
-            ->whereNull('course_user.completed_at') // تغییر این خط
             ->with('teacher')
             ->orderByDesc('course_user.updated_at')
             ->limit(3)
@@ -71,9 +74,8 @@ class StudentDashboard extends Controller
                     'id' => $course->id,
                     'title' => $course->title,
                     'teacher' => $course->teacher->name,
-                    'image' => $course->image_url,
+                    'thumbnail' => $course->thumbnail,
                     'progress' => $course->pivot->progress,
-                    'rating' => $course->average_rating,
                 ];
             });
     }
@@ -87,16 +89,16 @@ class StudentDashboard extends Controller
             ->map(function ($word) {
                 return [
                     'id' => $word->id,
-                    'word' => $word->text,
-                    'meaning' => $word->translation,
+                    'word' => $word->word,
+                    'meaning' => $word->meaning,
                     'level' => $word->level,
+                    'grammar' => $word->grammar,
                 ];
             });
     }
 
     protected function getDailyChallenge($user)
     {
-        // در اینجا می‌توانید منطق دریافت چالش روزانه را پیاده‌سازی کنید
         return [
             'title' => '10 کلمه جدید امروز',
             'description' => 'این 10 کلمه را یاد بگیرید و 50 امتیاز کسب کنید!',
@@ -146,6 +148,42 @@ class StudentDashboard extends Controller
         }
 
         return 'A1';
+    }
+
+    protected function calculateUserXP($user)
+    {
+        $progress = $user->studentProgress->first();
+
+        if (! $progress) {
+            return 0;
+        }
+
+        $xp = $progress->xp;
+
+        return $xp;
+    }
+
+    protected function calculateWeeklyStudyMinutes($user)
+    {
+        $learningStat = $user->learningStat;
+
+        if (! $learningStat) {
+            return 0;
+        }
+
+        $weeklyProgress = $learningStat->weekly_progress ?? [];
+        $total = 0;
+
+        // هفته جاری
+        $startOfWeek = Carbon::now()->startOfWeek()->format('Y-m-d');
+
+        foreach ($weeklyProgress as $week => $minutes) {
+            if ($week === $startOfWeek) {
+                $total += $minutes;
+            }
+        }
+
+        return $total;
     }
 
     protected function formatStudyTime($minutes)
