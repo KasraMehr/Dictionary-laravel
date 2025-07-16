@@ -1,5 +1,5 @@
 <script setup>
-import {Link, router, useForm, usePage} from "@inertiajs/vue3";
+import {Link, router} from "@inertiajs/vue3";
 import MainLayout from '@/Layouts/MainLayout.vue';
 import { ref } from 'vue';
 
@@ -138,7 +138,7 @@ const setDefaultImage = (event) => {
                             <div class="p-6">
                                 <div class="relative aspect-video rounded-lg overflow-hidden bg-gray-100 dark:bg-gray-700 flex items-center justify-center">
                                     <img :src="word.image ? `/storage/${word.image}` : '/images/default.png'"
-                                         :alt='word.name'
+                                         :alt='word.word'
                                          class="w-full h-full object-cover" @error="setDefaultImage">
                                     <div v-if="!word.image" class="absolute inset-0 flex items-center justify-center">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
