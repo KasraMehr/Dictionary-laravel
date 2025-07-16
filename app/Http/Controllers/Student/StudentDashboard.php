@@ -244,4 +244,18 @@ class StudentDashboard extends Controller
 
         return redirect()->back()->with('success', 'پروفایل با موفقیت بروزرسانی شد');
     }
+
+    public function SavedWords(): Response|\Inertia\ResponseFactory
+    {
+        $user = Auth::user();
+
+        // Eager load the word relationships you need
+        $savedWords = $user->savedWords()
+            ->with(['categories'])
+            ->get();
+
+        return inertia('Student/SavedWords', [
+            'savedWords' => $savedWords
+        ]);
+    }
 }
