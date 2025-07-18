@@ -159,10 +159,14 @@
                         </div>
 
                         <div class="pt-4 border-t border-gray-100 dark:border-gray-700">
+                          <a
+                            href="/student/leaderboard"
+                          >
                             <div class="flex items-center justify-between">
                                 <span class="text-gray-700 dark:text-gray-300">رتبه شما</span>
                                 <span class="font-medium text-red-600 dark:text-red-400">#{{ learningStats.rank }} از {{ totalUsers }}</span>
                             </div>
+                          </a>
                         </div>
                     </div>
                 </div>
