@@ -286,7 +286,7 @@ class StudentDashboard extends Controller
                     'lessons_completed' => $progress->lessons_completed ?? 0,
                 ];
             })
-            ->sortByDesc('rank') // مرتب‌سازی بر اساس رتبه
+            ->sortByDesc('xp') // مرتب‌سازی بر اساس رتبه
             ->values()
             ->toArray();
 
