@@ -278,10 +278,10 @@ class StudentDashboard extends Controller
                     'name' => $user->name,
                     'profile_photo_url' => $user->profile_photo_url,
                     'rank' => $user->learningStat->rank ?? 0,
-                    'learned_words' => $user->learningStat->learned_words_count ?? 0,
+                    'learned_words' => $user->savedWords()->count() ?? 0,
                     'active_streak' => $user->learningStat->active_days_streak ?? 0,
                     'total_study_minutes' => $user->learningStat->total_study_minutes ?? 0,
-                    'xp' => $progress->xp ?? 0, // دسترسی به xp پس از first()
+                    'xp' => $progress->xp ?? 0,
                     'level' => $progress->level ?? 1,
                     'lessons_completed' => $progress->lessons_completed ?? 0,
                 ];
