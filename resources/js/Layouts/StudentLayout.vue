@@ -8,7 +8,7 @@ import {
     BookOpenIcon,
     MoonIcon,
     SunIcon,
-    BoltIcon,
+    TrophyIcon,
     ArrowLeftOnRectangleIcon,
     HomeIcon,
     ChartBarIcon,
@@ -73,12 +73,12 @@ const logout = () => {
     router.post(route('logout'))
 }
 
-const startDailyChallenge = () => {
-    console.log('Daily challenge started')
+const leaderBoard = () => {
+    window.location.href = '/student/leaderboard';
 }
 
-const openFlashcards = () => {
-    console.log('Flashcards opened')
+const openSavedWords = () => {
+    window.location.href = '/student/saved-words';
 }
 </script>
 
@@ -156,37 +156,37 @@ const openFlashcards = () => {
               </button>
 
                 <!-- Progress -->
-                <div v-if="!miniMode" class="mt-4 space-y-3">
-                    <div class="flex items-center justify-between text-sm">
-                        <span class="text-gray-600 dark:text-gray-300">پیشرفت امروز</span>
-                        <span class="font-medium text-gray-700 dark:text-gray-100">{{ dailyProgress }}%</span>
-                    </div>
-                    <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                        <div class="bg-gradient-to-r from-red-500 to-amber-500 h-2 rounded-full"
-                             :style="`width: ${dailyProgress}%`"></div>
-                    </div>
+<!--                <div v-if="!miniMode" class="mt-4 space-y-3">-->
+<!--                    <div class="flex items-center justify-between text-sm">-->
+<!--                        <span class="text-gray-600 dark:text-gray-300">پیشرفت امروز</span>-->
+<!--                        <span class="font-medium text-gray-700 dark:text-gray-100">{{ dailyProgress }}%</span>-->
+<!--                    </div>-->
+<!--                    <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">-->
+<!--                        <div class="bg-gradient-to-r from-red-500 to-amber-500 h-2 rounded-full"-->
+<!--                             :style="`width: ${dailyProgress}%`"></div>-->
+<!--                    </div>-->
 
-                    <!-- Streak -->
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center gap-2">
-                            <FireIcon class="w-5 h-5 text-amber-500" />
-                            <span class="text-sm text-gray-600 dark:text-gray-300">روزهای متوالی</span>
-                        </div>
-                        <span class="font-medium text-gray-700 dark:text-gray-100">{{ streakDays }}</span>
-                    </div>
-                </div>
+<!--                    &lt;!&ndash; Streak &ndash;&gt;-->
+<!--                    <div class="flex items-center justify-between">-->
+<!--                        <div class="flex items-center gap-2">-->
+<!--                            <FireIcon class="w-5 h-5 text-amber-500" />-->
+<!--                            <span class="text-sm text-gray-600 dark:text-gray-300">روزهای متوالی</span>-->
+<!--                        </div>-->
+<!--                        <span class="font-medium text-gray-700 dark:text-gray-100">{{ streakDays }}</span>-->
+<!--                    </div>-->
+<!--                </div>-->
             </div>
 
             <!-- Quick Actions -->
             <div v-if="!miniMode" class="p-4 border-b border-gray-200 dark:border-gray-700">
                 <div class="grid grid-cols-2 gap-3">
-                    <button @click="startDailyChallenge" class="flex flex-col items-center p-3 bg-white dark:bg-gray-700 rounded-lg hover:shadow-md transition-all">
-                        <BoltIcon class="w-6 h-6 text-red-500 mb-1" />
-                        <span class="text-xs font-medium text-gray-700 dark:text-gray-200">چالش روزانه</span>
+                    <button @click="leaderBoard" class="flex flex-col items-center p-3 bg-gray-200 dark:bg-gray-700 rounded-lg hover:shadow-md transition-all">
+                        <TrophyIcon class="w-6 h-6 text-red-500 mb-1" />
+                        <span class="text-xs font-medium text-gray-700 dark:text-gray-200">جدول رده بندی</span>
                     </button>
-                    <button @click="openFlashcards" class="flex flex-col items-center p-3 bg-white dark:bg-gray-700 rounded-lg hover:shadow-md transition-all">
+                    <button @click="openSavedWords" class="flex flex-col items-center p-3 bg-gray-200 dark:bg-gray-700 rounded-lg hover:shadow-md transition-all">
                         <BookOpenIcon class="w-6 h-6 text-red-500 mb-1" />
-                        <span class="text-xs font-medium text-gray-700 dark:text-gray-200">فلش کارت</span>
+                        <span class="text-xs font-medium text-gray-700 dark:text-gray-200">کلمات ذخیره شده</span>
                     </button>
                 </div>
             </div>
@@ -308,6 +308,17 @@ const openFlashcards = () => {
                             @click="isMobileMenuOpen = false"
                         />
                     </nav>
+
+                    <div class="grid grid-cols-2 m-2 gap-2">
+                        <button @click="leaderBoard" class="flex flex-col items-center p-3 bg-gray-200 dark:bg-gray-700 rounded-lg hover:shadow-md transition-all">
+                            <TrophyIcon class="w-6 h-6 text-red-500 mb-1" />
+                            <span class="text-xs font-medium text-gray-700 dark:text-gray-200">جدول رده بندی</span>
+                        </button>
+                        <button @click="openSavedWords" class="flex flex-col items-center p-3 bg-gray-200 dark:bg-gray-700 rounded-lg hover:shadow-md transition-all">
+                            <BookOpenIcon class="w-6 h-6 text-red-500 mb-1" />
+                            <span class="text-xs font-medium text-gray-700 dark:text-gray-200">کلمات ذخیره شده</span>
+                        </button>
+                    </div>
 
                     <div class="p-4 border-t border-gray-200 dark:border-gray-700">
                         <div class="flex items-center justify-between mb-4">
