@@ -255,8 +255,6 @@ const weeklyProgress = computed(() => {
     return Math.min(progress, maxPercent);
 });
 
-console.log(props.weeklyStudyMinutes);
-
 const handleAction = (action) => {
     switch(action.title) {
         case 'دوره ها':
