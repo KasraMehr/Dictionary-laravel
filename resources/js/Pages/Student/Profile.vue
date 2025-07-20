@@ -3,11 +3,11 @@
     <div class="bg-gray-50 dark:bg-gray-800 min-h-screen p-6">
       <div class="max-w-6xl mx-auto">
         <!-- Header با افکت Glass Morphism -->
-        <div class="backdrop-blur-lg bg-white/30 dark:bg-gray-800/50 rounded-2xl shadow-xl p-6 mb-8 border border-white/20">
+        <div class="backdrop-blur-lg bg-gray-200 dark:bg-gray-900/80 rounded-2xl shadow-xl p-6 mb-8 border border-gray-400/20 dark:border-gray-700">
           <div class="flex flex-col md:flex-row items-center gap-6">
             <!-- آواتار -->
             <div class="relative">
-              <img :src="user.profile_photo_path ? `/storage/${user.profile_photo_path}` : '/images/default-avatar.jpg'"
+              <img :src="user.profile_photo_url"
                    class="w-32 h-32 rounded-full border-4 border-white/50 shadow-lg">
               <button v-if="isEditing" @click="editAvatar" class="absolute bottom-2 right-2 bg-red-500 text-white p-2 rounded-full shadow-md hover:bg-red-600 transition">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -21,8 +21,8 @@
               <div class="mb-4">
                 <label class="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">نام کامل</label>
                 <input v-if="isEditing" v-model="form.name" type="text"
-                       class="text-3xl font-bold bg-white/50 dark:bg-gray-700/50 rounded px-3 py-2 w-full border border-gray-300 dark:border-gray-600">
-                <h1 v-else class="text-3xl font-bold text-gray-800 dark:text-white">
+                       class="text-2xl font-bold bg-white/50 dark:bg-gray-700/50 rounded px-3 py-2 w-full border border-gray-300 dark:border-gray-600 text-gray-800 dark:text-white">
+                <h1 v-else class="text-2xl font-bold text-gray-800 dark:text-white">
                   {{ user.name }}
                 </h1>
               </div>
@@ -40,7 +40,7 @@
                 <div>
                   <label class="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">تلفن همراه</label>
                   <input v-if="isEditing" v-model="form.phone" type="tel"
-                         class="bg-white/50 dark:bg-gray-700/50 rounded px-3 py-2 w-full border border-gray-300 dark:border-gray-600">
+                         class="bg-white/50 dark:bg-gray-700/50 rounded px-3 py-2 w-full border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-100">
                   <p v-else class="text-gray-700 dark:text-gray-300">
                     {{ studentProfile.phone || 'ثبت نشده' }}
                   </p>
@@ -49,7 +49,7 @@
                 <div>
                   <label class="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">کشور/شهر</label>
                   <input v-if="isEditing" v-model="form.country" type="text"
-                         class="bg-white/50 dark:bg-gray-700/50 rounded px-3 py-2 w-full border border-gray-300 dark:border-gray-600">
+                         class="bg-white/50 dark:bg-gray-700/50 rounded px-3 py-2 w-full border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-100">
                   <p v-else class="text-gray-700 dark:text-gray-300">
                     {{ studentProfile.country || 'ثبت نشده' }}
                   </p>
@@ -63,7 +63,7 @@
           <!-- ستون سمت چپ -->
           <div class="lg:col-span-2 space-y-6">
             <!-- کارت پیشرفت -->
-            <div class="backdrop-blur-lg bg-white/30 dark:bg-gray-800/50 rounded-2xl shadow-xl p-6 border border-white/20">
+            <div class="backdrop-blur-lg bg-gray-200 dark:bg-gray-900/80 rounded-2xl shadow-xl p-6 border border-gray-400/20 dark:border-gray-700">
               <h2 class="text-xl font-semibold text-gray-800 dark:text-white mb-4">پیشرفت یادگیری</h2>
 
               <div v-for="progress in progressData" :key="progress.language_id" class="mb-6">
@@ -94,7 +94,7 @@
             </div>
 
             <!-- کارت اهداف یادگیری -->
-            <div class="backdrop-blur-lg bg-white/30 dark:bg-gray-800/50 rounded-2xl shadow-xl p-6 border border-white/20">
+            <div class="backdrop-blur-lg bg-gray-200 dark:bg-gray-900/80 rounded-2xl shadow-xl p-6 border border-gray-400/20 dark:border-gray-700">
               <h2 class="text-xl font-semibold text-gray-800 dark:text-white mb-4">اهداف یادگیری</h2>
 
               <label v-if="isEditing" class="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">اهداف خود را وارد کنید</label>
@@ -107,115 +107,115 @@
           </div>
 
           <!-- ستون سمت راست -->
-          <div class="space-y-6">
-            <!-- کارت اطلاعات شخصی -->
-            <div class="backdrop-blur-lg bg-white/30 dark:bg-gray-800/50 rounded-2xl shadow-xl p-6 border border-white/20">
-              <h2 class="text-xl font-semibold text-gray-800 dark:text-white mb-4">اطلاعات شخصی</h2>
+            <div class="space-y-6">
+                <!-- کارت اطلاعات شخصی -->
+                <div class="backdrop-blur-lg bg-gray-200 dark:bg-gray-900/80 rounded-2xl shadow-xl p-6 border border-gray-400/20 dark:border-gray-700">
+                    <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-100 mb-4">اطلاعات شخصی</h2>
 
-              <div class="space-y-4">
-                <div>
-                  <label class="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">زبان‌های در حال یادگیری</label>
-                  <Multiselect
-                    v-if="isEditing"
-                    v-model="form.learning_languages"
-                    mode="tags"
-                    :options="languageOptions"
-                    placeholder="انتخاب کنید"
-                    :close-on-select="false"
-                    class="dark:bg-gray-700/50 dark:text-white"
-                  />
-                  <div v-else>
-                    <p v-if="studentProfile.learning_languages && studentProfile.learning_languages.length" class="text-gray-700 dark:text-gray-300">
-                      <span v-for="(lang, index) in studentProfile.learning_languages" :key="index"
-                            class="inline-block bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 px-2 py-1 rounded-full text-sm mr-1 mb-1">
-                        {{ lang }}
-                      </span>
-                    </p>
-                    <p v-else class="text-gray-500 italic">ثبت نشده</p>
-                  </div>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">زبان‌های در حال یادگیری</label>
+                            <Multiselect
+                                v-if="isEditing"
+                                v-model="form.learning_languages"
+                                mode="tags"
+                                :options="languageOptions"
+                                placeholder="انتخاب کنید"
+                                :close-on-select="false"
+                                class="dark:bg-gray-800 dark:text-gray-100 dark:border-gray-700"
+                            />
+                            <div v-else>
+                                <p v-if="studentProfile.learning_languages && studentProfile.learning_languages.length" class="text-gray-700 dark:text-gray-200">
+                                    <span v-for="(lang, index) in studentProfile.learning_languages" :key="index"
+                                          class="inline-block bg-red-100 dark:bg-red-800/70 text-red-800 dark:text-red-100 px-2 py-1 rounded-full text-sm mr-1 mb-1">
+                                      {{ lang }}
+                                    </span>
+                                </p>
+                                <p v-else class="text-gray-500 dark:text-gray-400 italic">ثبت نشده</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">زبان‌های مسلط</label>
+                            <Multiselect
+                                v-if="isEditing"
+                                v-model="form.known_languages"
+                                mode="tags"
+                                :options="languageOptions"
+                                placeholder="انتخاب کنید"
+                                :close-on-select="false"
+                                class="dark:bg-gray-800 dark:text-gray-100 dark:border-gray-700"
+                            />
+                            <div v-else>
+                                <p v-if="studentProfile.known_languages && studentProfile.known_languages.length" class="text-gray-700 dark:text-gray-200">
+                                    <span v-for="(lang, index) in studentProfile.known_languages" :key="index"
+                                          class="inline-block bg-green-100 dark:bg-green-800/70 text-green-800 dark:text-green-100 px-2 py-1 rounded-full text-sm mr-1 mb-1">
+                                      {{ lang }}
+                                    </span>
+                                </p>
+                                <p v-else class="text-gray-500 dark:text-gray-400 italic">ثبت نشده</p>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">سبک یادگیری ترجیحی</label>
+                            <select v-if="isEditing" v-model="form.preferred_learning_style"
+                                    class="text-gray-700 dark:text-gray-200 bg-white/50 dark:bg-gray-800 dark:border-gray-700 rounded px-3 py-2 w-full border border-gray-300">
+                                <option value="">انتخاب کنید</option>
+                                <option value="بصری">بصری</option>
+                                <option value="شنیداری">شنیداری</option>
+                                <option value="خواندن/نوشتن">خواندن/نوشتن</option>
+                                <option value="عملی">عملی</option>
+                                <option value="بصری + شنیداری">بصری + شنیداری</option>
+                            </select>
+                            <p v-else class="text-gray-700 dark:text-gray-200">
+                                {{ studentProfile.preferred_learning_style || 'ثبت نشده' }}
+                            </p>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">زمان مطالعه روزانه (دقیقه)</label>
+                            <input v-if="isEditing" v-model="form.daily_study_time" type="number" min="0"
+                                   class="text-gray-700 dark:text-gray-200 bg-white/50 dark:bg-gray-800 dark:border-gray-700 rounded px-3 py-2 w-full border border-gray-300">
+                            <p v-else class="text-gray-700 dark:text-gray-200">
+                                {{ studentProfile.daily_study_time ? studentProfile.daily_study_time + ' دقیقه' : 'ثبت نشده' }}
+                            </p>
+                        </div>
+                    </div>
                 </div>
 
-                <div>
-                  <label class="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">زبان‌های مسلط</label>
-                  <Multiselect
-                    v-if="isEditing"
-                    v-model="form.known_languages"
-                    mode="tags"
-                    :options="languageOptions"
-                    placeholder="انتخاب کنید"
-                    :close-on-select="false"
-                    class="dark:bg-gray-700/50 dark:text-white"
-                  />
-                  <div v-else>
-                    <p v-if="studentProfile.known_languages && studentProfile.known_languages.length" class="text-gray-700 dark:text-gray-300">
-                      <span v-for="(lang, index) in studentProfile.known_languages" :key="index"
-                            class="inline-block bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2 py-1 rounded-full text-sm mr-1 mb-1">
-                        {{ lang }}
-                      </span>
-                    </p>
-                    <p v-else class="text-gray-500 italic">ثبت نشده</p>
-                  </div>
-                </div>
+                <!-- کارت اطلاعات تحصیلی/شغلی -->
+                <div class="backdrop-blur-lg bg-gray-200 dark:bg-gray-900/80 rounded-2xl shadow-xl p-6 border border-gray-400/20 dark:border-gray-700">
+                    <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-100 mb-4">اطلاعات تحصیلی و شغلی</h2>
 
-                <div>
-                  <label class="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">سبک یادگیری ترجیحی</label>
-                  <select v-if="isEditing" v-model="form.preferred_learning_style"
-                          class="text-gray-700 dark:text-gray-300 bg-white/50 dark:bg-gray-700/50 rounded px-3 py-2 w-full border border-gray-300 dark:border-gray-600">
-                    <option value="">انتخاب کنید</option>
-                    <option value="بصری">بصری</option>
-                    <option value="شنیداری">شنیداری</option>
-                    <option value="خواندن/نوشتن">خواندن/نوشتن</option>
-                    <option value="عملی">عملی</option>
-                    <option value="بصری + شنیداری">بصری + شنیداری</option>
-                  </select>
-                  <p v-else class="text-gray-700 dark:text-gray-300">
-                    {{ studentProfile.preferred_learning_style || 'ثبت نشده' }}
-                  </p>
-                </div>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">سطح تحصیلات</label>
+                            <select v-if="isEditing" v-model="form.education_level"
+                                    class="text-gray-700 dark:text-gray-200 bg-white/50 dark:bg-gray-800 dark:border-gray-700 rounded px-3 py-2 w-full border border-gray-300">
+                                <option value="">انتخاب کنید</option>
+                                <option value="دیپلم">دیپلم</option>
+                                <option value="کاردانی">کاردانی</option>
+                                <option value="کارشناسی">کارشناسی</option>
+                                <option value="کارشناسی ارشد">کارشناسی ارشد</option>
+                                <option value="دکتری">دکتری</option>
+                            </select>
+                            <p v-else class="text-gray-700 dark:text-gray-200">
+                                {{ studentProfile.education_level || 'ثبت نشده' }}
+                            </p>
+                        </div>
 
-                <div>
-                  <label class="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">زمان مطالعه روزانه (دقیقه)</label>
-                  <input v-if="isEditing" v-model="form.daily_study_time" type="number" min="0"
-                         class="text-gray-700 dark:text-gray-300 bg-white/50 dark:bg-gray-700/50 rounded px-3 py-2 w-full border border-gray-300 dark:border-gray-600">
-                  <p v-else class="text-gray-700 dark:text-gray-300">
-                    {{ studentProfile.daily_study_time ? studentProfile.daily_study_time + ' دقیقه' : 'ثبت نشده' }}
-                  </p>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">شغل</label>
+                            <input v-if="isEditing" v-model="form.occupation" type="text"
+                                   class="text-gray-700 dark:text-gray-200 bg-white/50 dark:bg-gray-800 dark:border-gray-700 rounded px-3 py-2 w-full border border-gray-300">
+                            <p v-else class="text-gray-700 dark:text-gray-200">
+                                {{ studentProfile.occupation || 'ثبت نشده' }}
+                            </p>
+                        </div>
+                    </div>
                 </div>
-              </div>
             </div>
-
-            <!-- کارت اطلاعات تحصیلی/شغلی -->
-            <div class="backdrop-blur-lg bg-white/30 dark:bg-gray-800/50 rounded-2xl shadow-xl p-6 border border-white/20">
-              <h2 class="text-xl font-semibold text-gray-800 dark:text-white mb-4">اطلاعات تحصیلی و شغلی</h2>
-
-              <div class="space-y-4">
-                <div>
-                  <label class="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">سطح تحصیلات</label>
-                  <select v-if="isEditing" v-model="form.education_level"
-                          class="text-gray-700 dark:text-gray-300 bg-white/50 dark:bg-gray-700/50 rounded px-3 py-2 w-full border border-gray-300 dark:border-gray-600">
-                    <option value="">انتخاب کنید</option>
-                    <option value="دیپلم">دیپلم</option>
-                    <option value="کاردانی">کاردانی</option>
-                    <option value="کارشناسی">کارشناسی</option>
-                    <option value="کارشناسی ارشد">کارشناسی ارشد</option>
-                    <option value="دکتری">دکتری</option>
-                  </select>
-                  <p v-else class="text-gray-700 dark:text-gray-300">
-                    {{ studentProfile.education_level || 'ثبت نشده' }}
-                  </p>
-                </div>
-
-                <div>
-                  <label class="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">شغل</label>
-                  <input v-if="isEditing" v-model="form.occupation" type="text"
-                         class="text-gray-700 dark:text-gray-300 bg-white/50 dark:bg-gray-700/50 rounded px-3 py-2 w-full border border-gray-300 dark:border-gray-600">
-                  <p v-else class="text-gray-700 dark:text-gray-300">
-                    {{ studentProfile.occupation || 'ثبت نشده' }}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
       <!-- دکمه ویرایش -->
@@ -284,7 +284,8 @@ export default {
         daily_study_time: this.studentProfile.daily_study_time,
         learning_goals: this.studentProfile.learning_goals,
         education_level: this.studentProfile.education_level,
-        occupation: this.studentProfile.occupation
+        occupation: this.studentProfile.occupation,
+        avatarPreview: null
       },
       progressData: this.progress,
       languageOptions: [
@@ -313,17 +314,17 @@ export default {
       this.isEditing = false;
     },
 
-    saveChanges() {
-      this.$inertia.patch(route('student.profile.update'), this.form, {
-        preserveScroll: true,
-        onSuccess: () => {
-          this.isEditing = false;
-        },
-        onError: () => {
-          this.resetForm();
-        }
-      });
-    },
+      saveChanges() {
+          this.$inertia.patch(route('student.profile.update'), this.form, {
+              preserveScroll: true,
+              onSuccess: () => {
+                  this.isEditing = false;
+              },
+              onError: () => {
+                  this.resetForm();
+              }
+          });
+      },
 
     resetForm() {
       this.form = {
@@ -341,28 +342,71 @@ export default {
       };
     },
 
-    editAvatar() {
-      const input = document.createElement('input');
-      input.type = 'file';
-      input.accept = 'image/*';
+      editAvatar() {
+          const input = document.createElement('input');
+          input.type = 'file';
+          input.accept = 'image/*';
 
-      input.onchange = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-          const formData = new FormData();
-          formData.append('avatar', file);
+          input.onchange = (e) => {
+              const file = e.target.files[0];
+              if (!file) return;
 
-          this.$inertia.post(route('student.profile.avatar'), formData, {
-            preserveScroll: true,
-            onSuccess: () => {
-              this.$inertia.reload();
-            }
-          });
-        }
-      };
+              // اعتبارسنجی فایل
+              if (!file.type.startsWith('image/')) {
+                  this.showError('لطفاً فقط فایل تصویری انتخاب کنید');
+                  return;
+              }
 
-      input.click();
-    }
+              if (file.size > 2 * 1024 * 1024) {
+                  this.showError('حجم فایل نباید بیشتر از 2 مگابایت باشد');
+                  return;
+              }
+
+              // ایجاد پیش‌نمایش موقت
+              const previewUrl = URL.createObjectURL(file);
+              this.form.avatarPreview = previewUrl;
+
+              // آماده‌سازی فرم داده
+              const formData = new FormData();
+              formData.append('profile_photo', file);
+              formData.append('_method', 'PATCH');
+
+              // ارسال درخواست
+              this.$inertia.post(route('student.profile.update'), formData, {
+                  preserveScroll: true,
+                  onSuccess: () => {
+                      URL.revokeObjectURL(previewUrl);
+                      this.form.avatarPreview = null;
+                      this.showSuccess('آواتار با موفقیت به‌روزرسانی شد');
+                  },
+                  onError: (errors) => {
+                      URL.revokeObjectURL(previewUrl);
+                      this.form.avatarPreview = null;
+                      this.showError(errors.profile_photo?.[0] || 'خطا در آپلود تصویر پروفایل');
+                  }
+              });
+          };
+
+          input.click();
+      },
+
+// متدهای کمکی برای نمایش پیام
+      showError(message) {
+          if (this.$page.props?.flash) {
+              this.$page.props.flash.error = message;
+          } else {
+              console.error('Error:', message);
+              // یا استفاده از یک سیستم toast جایگزین
+          }
+      },
+
+      showSuccess(message) {
+          if (this.$page.props?.flash) {
+              this.$page.props.flash.success = message;
+          } else {
+              console.log('Success:', message);
+          }
+      }
   }
 };
 </script>

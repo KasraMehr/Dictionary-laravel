@@ -7,6 +7,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -217,7 +218,7 @@ class StudentDashboard extends Controller
     {
         $user = Auth::user();
 
-        $request->validate([
+        $validated = $request->validate([
             'name' => 'required|string|max:255',
             'bio' => 'nullable|string|max:500',
             'phone' => 'nullable|string|max:20',
@@ -229,16 +230,24 @@ class StudentDashboard extends Controller
             'learning_goals' => 'nullable|string',
             'preferred_learning_style' => 'nullable|string|max:100',
             'daily_study_time' => 'nullable|integer|min:0',
-            'theme' => 'nullable|in:light,dark',
+            'profile_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'remove_profile_photo' => 'nullable|boolean',
         ]);
 
-        // بروزرسانی اطلاعات کاربر
-        $user->update([
-            'name' => $request->name,
-            'theme' => $request->theme ?? $user->theme,
-        ]);
 
-        // بروزرسانی یا ایجاد پروفایل
+        // مدیریت تصویر پروفایل
+        if ($validated['remove_profile_photo'] ?? false) {
+            $this->removeProfilePhoto($user);
+        }
+
+        if ($request->hasFile('profile_photo')) {
+            $this->updateProfilePhoto($user, $request->file('profile_photo'));
+        }
+
+        // آپدیت اطلاعات کاربر
+        $user->update(['name' => $validated['name']]);
+
+        // آپدیت پروفایل دانشجو
         $user->studentProfile()->updateOrCreate(
             ['user_id' => $user->id],
             $request->only([
@@ -248,7 +257,30 @@ class StudentDashboard extends Controller
             ])
         );
 
-        return redirect()->back()->with('success', 'پروفایل با موفقیت بروزرسانی شد');
+        return redirect()->back()->with([
+            'success' => 'پروفایل با موفقیت بروزرسانی شد',
+            'user' => $user->fresh()
+        ]);
+    }
+
+    protected function removeProfilePhoto($user)
+    {
+        if ($user->profile_photo_path) {
+            Storage::disk('public')->delete($user->profile_photo_path);
+            $user->forceFill(['profile_photo_path' => null])->save();
+        }
+    }
+
+    protected function updateProfilePhoto($user, $photo)
+    {
+        // حذف تصویر قبلی
+        if ($user->profile_photo_path) {
+            Storage::disk('public')->delete($user->profile_photo_path);
+        }
+
+        // ذخیره تصویر جدید
+        $path = $photo->store('student-profile-photos', 'public');
+        $user->forceFill(['profile_photo_path' => $path])->save();
     }
 
     public function SavedWords(): Response|\Inertia\ResponseFactory
