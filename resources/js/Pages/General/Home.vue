@@ -1,6 +1,6 @@
 <template>
   <MainLayout title="Home">
-    <div class="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 font-sans transition-colors duration-500">
+    <div class="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 font-sans transition-colors duration-500 overflow-hidden">
       <!-- Hero Section - بازطراحی شده -->
       <section class="bg-gray-200 flex items-center justify-center overflow-hidden relative py-24 bg-gradient-to-br dark:from-gray-900 dark:to-gray-800">
         <!-- <div class="absolute inset-0 opacity-20">
