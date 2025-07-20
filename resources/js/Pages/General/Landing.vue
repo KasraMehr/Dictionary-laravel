@@ -209,10 +209,10 @@ onMounted(() => {
                             <!-- Stats Cards -->
                             <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 animate-fade-in-up animate-delay-700 my-12">
                                 <div v-for="(stat, index) in [
-                        { title: $t('total_users'), value: totalUsers, icon: '👥' },
-                        { title: $t('total_teams'), value: totalTeams, icon: '👨‍👩‍👧‍👦' },
-                        { title: $t('total_words'), value: totalWords, icon: '📖' }
-                    ]" :key="index"
+                                        { title: $t('total_users'), value: totalUsers, icon: '👥' },
+                                        { title: $t('total_teams'), value: totalTeams, icon: '👨‍👩‍👧‍👦' },
+                                        { title: $t('total_words'), value: totalWords, icon: '📖' }
+                                    ]" :key="index"
                                      class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-white/20">
                                     <div class="text-4xl mb-3">{{ stat.icon }}</div>
                                     <div class="text-lg font-medium text-gray-600 dark:text-gray-300">{{ stat.title }}</div>
@@ -223,9 +223,9 @@ onMounted(() => {
                             </div>
                         </div>
 
-                        <section class="relative py-20 px-4 sm:px-6 lg:px-8 overflow-hidden my-12">
+                        <section class="relative py-8 p-4 sm:px-6 lg:px-8 overflow-hidden my-12">
                           <!-- Background gradient -->
-                          <div class="absolute inset-0 rounded-2xl bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl p-8 shadow-xl border-t border-white/20 transition-all duration-500 hover:shadow-2xl"></div>
+                          <div class="absolute inset-0 rounded-2xl bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl p-8 shadow-lg border-t border-white/20 transition-all duration-500 hover:shadow-2xl"></div>
 
                           <div class="relative max-w-7xl mx-auto">
                             <div class="text-center">
@@ -240,7 +240,7 @@ onMounted(() => {
                             <div class="mt-16 grid gap-8 md:grid-cols-2 lg:gap-12">
                               <!-- Teacher Card -->
                               <div class="relative group">
-                                <div class="absolute -inset-0.5 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-2xl blur opacity-75 group-hover:opacity-100 transition-all duration-300"></div>
+                                <div class="absolute -inset-0.5 bg-gradient-to-r from-indigo-500/60 to-purple-600/60 rounded-2xl blur opacity-75 group-hover:opacity-100 transition-all duration-300"></div>
                                 <div class="relative bg-white/20 dark:bg-gray-800/50 backdrop-blur-lg rounded-2xl p-8 border border-white/20 dark:border-gray-700/50 shadow-lg hover:shadow-xl transition-all duration-300">
                                   <div class="flex items-center justify-center w-16 h-16 bg-indigo-100/30 dark:bg-indigo-900/30 rounded-full mx-auto backdrop-blur-sm">
                                     <svg class="w-8 h-8 text-indigo-600 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -256,7 +256,7 @@ onMounted(() => {
                                   <div class="mt-8">
                                     <NavLink
                                       :href="route('register', { role: 'teacher' })"
-                                      class="w-full flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-xl text-white bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 shadow-md transition-all duration-300"
+                                      class="w-full flex items-center justify-center px-6 py-3 border border-transparent text-lg font-bold rounded-xl text-white bg-gradient-to-r from-indigo-500/60 to-purple-600/60 hover:from-indigo-600 hover:to-purple-700 shadow-md transition-all duration-300"
                                     >
                                       {{ $t('register_as_teacher') }}
                                     </NavLink>
@@ -266,7 +266,7 @@ onMounted(() => {
 
                               <!-- Student Card -->
                               <div class="relative group">
-                                <div class="absolute -inset-0.5 bg-gradient-to-r from-[#FF2D20] to-orange-500 rounded-2xl blur opacity-75 group-hover:opacity-100 transition-all duration-300"></div>
+                                <div class="absolute -inset-0.5 bg-gradient-to-r from-[#FF2D20]/60 to-orange-500/60 rounded-2xl blur opacity-75 group-hover:opacity-100 transition-all duration-300"></div>
                                 <div class="relative bg-white/20 dark:bg-gray-800/50 backdrop-blur-lg rounded-2xl p-8 border border-white/20 dark:border-gray-700/50 shadow-lg hover:shadow-xl transition-all duration-300">
                                   <div class="flex items-center justify-center w-16 h-16 bg-red-100/30 dark:bg-red-900/30 rounded-full mx-auto backdrop-blur-sm">
                                     <svg class="w-8 h-8 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -282,7 +282,7 @@ onMounted(() => {
                                   <div class="mt-8">
                                     <NavLink
                                       :href="route('register', { role: 'student' })"
-                                      class="w-full flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-xl text-white bg-gradient-to-r from-[#FF2D20] to-orange-500 hover:from-red-600 hover:to-orange-700 shadow-md transition-all duration-300"
+                                      class="w-full flex items-center justify-center px-6 py-3 border border-transparent text-lg font-bold rounded-xl text-white bg-gradient-to-r from-[#FF2D20]/60 to-orange-500/60 hover:from-red-600 hover:to-orange-700 shadow-md transition-all duration-300"
                                     >
                                       {{ $t('register_as_student') }}
                                     </NavLink>
@@ -294,9 +294,9 @@ onMounted(() => {
                             <div class="mt-12 text-center">
                               <p class="text-base text-gray-700 dark:text-gray-400">
                                 {{ $t('already_have_account') }}
-                                <NavLink :href="route('login')" class="font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300 transition-colors duration-300">
+                                <Link :href="route('login')" class="p-2 font-extrabold text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 transition-colors hover:underline duration-300">
                                   {{ $t('sign_in') }}
-                                </NavLink>
+                                </Link>
                               </p>
                             </div>
                           </div>
@@ -344,25 +344,29 @@ onMounted(() => {
 
                             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                                 <div class="relative">
-                        <textarea v-model="inputText"
-                              class="w-full h-48 p-4 bg-white/90 dark:bg-gray-700/90 border-0 rounded-xl shadow-lg focus:ring-2 focus:ring-[#FF2D20]/30 outline-none resize-none transition-all duration-300"
-                              :placeholder="$t('enter_text_to_translate')"></textarea>
-                                    <div class="absolute bottom-4 right-4 text-xs text-gray-400">
+                                    <textarea
+                                        v-model="inputText"
+                                        :dir="['fa', 'ar'].includes(sourceLang) ? 'rtl' : 'ltr'"
+                                        :class="{ 'text-right': ['fa', 'ar'].includes(sourceLang), 'text-left': sourceLang === 'en'}"
+                                        class="w-full h-48 p-4 bg-white/90 dark:bg-gray-700/90 border-0 rounded-xl shadow-lg focus:ring-2 focus:ring-[#FF2D20]/30 outline-none resize-none transition-all duration-300"
+                                        :placeholder="$t('enter_text_to_translate')"
+                                    ></textarea>
+                                    <div
+                                        class="absolute bottom-4 text-xs text-gray-400"
+                                        :class="{ 'left-4': $i18n.locale === 'fa' || $i18n.locale === 'ar', 'right-4': $i18n.locale === 'en'
+                                      }">
                                         {{ inputText.length }}/5000
                                     </div>
                                 </div>
 
                                 <div class="relative">
-                        <textarea v-model="translatedText"
-                              class="w-full h-48 p-4 bg-gray-100/90 dark:bg-gray-600/90 border-0 rounded-xl shadow-lg outline-none resize-none transition-all duration-300"
-                              readonly></textarea>
-                                    <button v-if="translatedText"
-                                            @click="copyTranslation"
-                                            class="absolute bottom-4 right-4 p-2 bg-gray-200 dark:bg-gray-700 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-all duration-300">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.666 3.888A2.25 2.25 0 0013.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 01-.75.75H9a.75.75 0 01-.75-.75v0c0-.212.029-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 01-2.25 2.25H6.75A2.25 2.25 0 014.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 011.927-.184" />
-                                        </svg>
-                                    </button>
+                                    <textarea
+                                        v-model="translatedText"
+                                        :dir="['fa', 'ar'].includes(targetLang) ? 'rtl' : 'ltr'"
+                                        :class="{ 'text-right': ['fa', 'ar'].includes(targetLang), 'text-left': targetLang === 'en'}"
+                                        class="w-full h-48 p-4 bg-gray-100/90 dark:bg-gray-600/90 border-0 rounded-xl shadow-lg outline-none resize-none transition-all duration-300"
+                                        readonly
+                                    ></textarea>
                                 </div>
                             </div>
 
@@ -378,10 +382,10 @@ onMounted(() => {
                         <!-- Languages Showcase -->
                         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 animate-fade-in-up animate-delay-1100">
                             <div v-for="(lang, index) in [
-                { name: 'فارسی', code: 'fa', flag: 'iran-flag.jpeg', color: 'rgba(218, 41, 28, 0.7)' },
-                { name: 'English', code: 'en', flag: 'uk-flag.jpg', color: 'rgba(0, 82, 156, 0.7)' },
-                { name: 'العربية', code: 'ar', flag: 'sa-flag.jpg', color: 'rgba(0, 133, 63, 0.7)' }
-                ]" :key="index"
+                                 { name: 'فارسی', code: 'fa', flag: 'iran-flag.jpeg', color: 'rgba(218, 41, 28, 0.7)' },
+                                 { name: 'English', code: 'en', flag: 'uk-flag.jpg', color: 'rgba(0, 82, 156, 0.7)' },
+                                 { name: 'العربية', code: 'ar', flag: 'sa-flag.jpg', color: 'rgba(0, 133, 63, 0.7)' }
+                                 ]" :key="index"
                                  class="relative overflow-hidden rounded-2xl p-8 text-center flex flex-col items-center gap-6 transition-all duration-500 hover:-translate-y-2 shadow-xl h-full"
                                  :style="{ backgroundImage: `linear-gradient(to bottom right, ${lang.color}, rgba(0,0,0,0.7)), url(/images/languages/${lang.flag})`, backgroundSize: 'cover', backgroundPosition: 'center' }">
 

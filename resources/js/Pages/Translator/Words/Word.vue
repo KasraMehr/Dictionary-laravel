@@ -2,6 +2,7 @@
 import {Link, router} from "@inertiajs/vue3";
 import MainLayout from '@/Layouts/MainLayout.vue';
 import { ref } from 'vue';
+import { SpeakerWaveIcon } from '@heroicons/vue/24/outline';
 
 const props = defineProps({
     word: Object,
@@ -91,16 +92,8 @@ const setDefaultImage = (event) => {
                                     <div class="flex items-center gap-3">
                                         <h1 class="text-3xl font-bold text-gray-900 dark:text-white">{{ word.word }}</h1>
                                         <button @click="playAudio(word.id)"
-                                                class="w-9 h-9 flex items-center justify-center bg-gray-100 dark:bg-gray-700 rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-700 dark:text-gray-300"
-                                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                                 stroke-linecap="round" stroke-linejoin="round">
-                                                <path d="M3 10v4"/>
-                                                <path d="M7 5v14"/>
-                                                <path d="M11 3v18"/>
-                                                <path d="M15 6v12"/>
-                                                <path d="M19 10v4"/>
-                                            </svg>
+                                                class="w-8 h-8 flex items-center justify-center bg-gray-100 dark:bg-gray-700 rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+                                            <SpeakerWaveIcon class="w-5 h-5 text-gray-700 dark:text-gray-300" />
                                         </button>
                                         <audio :ref="el => { if (el) audioRefs[word.id] = el }">
                                             <source :src="`/storage/${word.voice}`" type="audio/mpeg">
@@ -210,7 +203,7 @@ const setDefaultImage = (event) => {
                             </div>
                             <div class="p-6">
                                 <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-3">{{ $t('synonym_words') }}</h3>
-                                <ul class="space-y-2">
+                                <ul class="space-y-2 mb-24">
                                     <li v-for="(synonym, index) in synonyms" :key="index"
                                         class="group">
                                         <Link :href="`/word/${synonym.native_lang}-${synonym.translated_lang}/${synonym.word}`"
