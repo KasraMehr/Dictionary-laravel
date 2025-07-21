@@ -66,21 +66,6 @@
             <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-100">
               {{ activeLesson.title }}
             </h2>
-            <button
-              v-if="!activeLesson.is_completed"
-              @click="markAsCompleted"
-              class="flex items-center gap-2 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors"
-            >
-              <CheckIcon class="w-5 h-5" />
-              تکمیل درس
-            </button>
-            <span
-              v-else
-              class="flex items-center gap-2 px-4 py-2 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 rounded-lg"
-            >
-              <CheckIcon class="w-5 h-5" />
-              تکمیل شده
-            </span>
           </div>
 
             <!-- محتوای درس -->
@@ -102,7 +87,7 @@
                         <!-- نمایش محتوای بر اساس مهارت‌ها -->
                         <div v-if="activeLesson.content">
                             <!-- محتوای خواندن -->
-                            <div v-if="activeLesson.content.reading" class="mb-8 p-4 bg-gray-50 dark:bg-gray-900/20 rounded-lg">
+                            <div v-if="activeLesson.content.reading" class="mb-8 p-4 bg-red-50 dark:bg-red-900/20 rounded-lg">
                                 <h3 class="text-xl font-bold mb-4">متن خواندن</h3>
                                 <p class="whitespace-pre-line">{{ activeLesson.content.reading }}</p>
                             </div>
@@ -129,7 +114,7 @@
                                 <p class="whitespace-pre-line">{{ activeLesson.content.vocabulary }}</p>
                             </div>
 
-                            <div v-if="activeLesson.content.grammar" class="mb-8 p-4 bg-red-50 dark:bg-red-900/20 rounded-lg">
+                            <div v-if="activeLesson.content.grammar" class="mb-8 p-4 bg-pink-50 dark:bg-pink-900/20 rounded-lg">
                                 <h3 class="text-xl font-bold mb-4">دستور زبان</h3>
                                 <p class="whitespace-pre-line">{{ activeLesson.content.grammar }}</p>
                             </div>
@@ -160,6 +145,23 @@
                         </a>
                     </div>
                 </div>
+            </div>
+            <div class="flex items-center justify-between mb-6">
+                <button
+                    v-if="!activeLesson.is_completed"
+                    @click="markAsCompleted"
+                    class="flex items-center gap-2 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors"
+                >
+                    <CheckIcon class="w-5 h-5" />
+                    تکمیل درس
+                </button>
+                <span
+                    v-else
+                    class="flex items-center gap-2 px-4 py-2 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400 rounded-lg"
+                >
+              <CheckIcon class="w-5 h-5" />
+              تکمیل شده
+            </span>
             </div>
 
           <!-- ناوبری بین درس‌ها -->
