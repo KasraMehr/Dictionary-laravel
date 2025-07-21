@@ -119,25 +119,42 @@
                     </div>
 
                     <div class="mt-4 flex items-center justify-between">
-                      <span v-if="course.pivot" class="text-xs text-gray-500 dark:text-gray-400">
-                        تاریخ شروع: {{ formatDate(course.pivot_enrolled_at) }}
-                      </span>
-
                         <div class="flex gap-2">
                             <button
+                                v-if="course.pivot_progress === 100"
                                 @click="continueCourse(course)"
-                                class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-sm rounded-lg transition-colors"
+                                class="px-3 py-1.5 bg-green-500 hover:bg-green-600 text-white text-sm rounded-lg transition-colors"
+                            >
+                                تکمیل شده
+                            </button>
+
+                            <button
+                                v-else-if="course.pivot_enrolled_at"
+                                @click="continueCourse(course)"
+                                class="px-3 py-1.5 bg-blue-500 hover:bg-blue-600 text-white text-sm rounded-lg transition-colors"
                             >
                                 ادامه یادگیری
                             </button>
+
+                            <button
+                                v-else
+                                @click="continueCourse(course)"
+                                class="px-3 py-1.5 bg-indigo-500 hover:bg-indigo-600 text-white text-sm rounded-lg transition-colors"
+                            >
+                                شروع یادگیری
+                            </button>
+
                             <button
                                 v-if="course.pivot && course.pivot_progress < 100"
                                 @click="showCourseDetails(course)"
-                                class="px-3 py-1.5 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 text-sm rounded-lg transition-colors text-gray-500 dark:text-gray-400"
+                                class="px-3 py-1.5 border border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 text-sm rounded-lg transition-colors"
                             >
                                 جزئیات
                             </button>
                         </div>
+                        <span v-if="course.pivot_enrolled_at" class="text-xs text-gray-500 dark:text-gray-400">
+                          تاریخ شروع: {{ formatDate(course.pivot_enrolled_at) }}
+                        </span>
                     </div>
                 </div>
             </div>
@@ -170,13 +187,13 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                        <img :src="`/storage/${selectedCourse.thumbnail}`" class="w-full rounded-lg"  :alt="selectedCourse.title"/>
+                        <img :src="`/storage/${selectedCourse.thumbnail}`" class="w-full rounded-lg"  @error="setDefaultImage" :alt="selectedCourse.title"/>
                     </div>
                     <div>
                         <div class="space-y-4">
                             <div>
-                                <h4 class="font-medium text-gray-700 dark:text-gray-300 mb-2">توضیحات دوره</h4>
-                                <p class="text-gray-600 dark:text-gray-400">{{ selectedCourse.description }}</p>
+                                <div class="font-medium text-gray-700 dark:text-gray-300 mb-2">توضیحات دوره</div>
+                                <div class="text-gray-600 dark:text-gray-400 w-full break-words whitespace-pre-line"> {{ selectedCourse.description }} </div>
                             </div>
 
                             <div>
@@ -193,7 +210,7 @@
                                 </div>
                             </div>
 
-                            <div>
+                            <div v-if="selectedCourse.pivot_enrolled_at">
                                 <h4 class="font-medium text-gray-700 dark:text-gray-300 mb-2">جزئیات ثبت‌نام</h4>
                                 <div class="grid grid-cols-2 gap-4 text-sm">
                                     <div>
