@@ -355,6 +355,27 @@
               </div>
             </div>
 
+            <!-- کتاب داستان -->
+            <div class="group relative bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden border border-gray-100 dark:border-gray-700 transition-all duration-300">
+                <div class="absolute inset-0 bg-gradient-to-br from-red-50 to-red-100 dark:from-red-900/20 dark:to-red-800/20 opacity-50"></div>
+                <div class="relative p-6 opacity-90">
+                    <div class="w-14 h-14 bg-red-400 text-white rounded-xl flex items-center justify-center text-2xl mb-4 shadow-md">
+                        📚
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-gray-800 dark:text-white">{{ $t('story_learning_title') }}</h3>
+                    <p class="text-gray-600 dark:text-gray-300 mb-4">
+                        {{ $t('story_learning_description') }}
+                    </p>
+                    <a href="/learn/books" class="inline-flex items-center text-red-500 dark:text-red-400 font-medium hover:text-red-800 dark:hover:text-red-300 transition-colors">
+                        {{ $t('story_learning_action') }}
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                             :class="{ 'mr-1': $i18n.locale === 'en', 'ml-1 transform rotate-180': $i18n.locale === 'fa' || $i18n.locale === 'ar' }">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
             <!-- هوش مصنوعی -->
             <div class="group relative bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden border border-gray-100 dark:border-gray-700 transition-all duration-300">
               <div class="absolute inset-0 bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-900/20 dark:to-orange-800/20 opacity-50"></div>
@@ -372,31 +393,6 @@
                 </p>
                 <span class="inline-flex items-center text-orange-500 dark:text-orange-400 font-medium cursor-not-allowed">
                   {{ $t('ai_companion_action') }}
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                    :class="{ 'mr-1': $i18n.locale === 'en', 'ml-1 transform rotate-180': $i18n.locale === 'fa' || $i18n.locale === 'ar' }">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                  </svg>
-                </span>
-              </div>
-            </div>
-
-            <!-- کتاب داستان -->
-            <div class="group relative bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden border border-gray-100 dark:border-gray-700 transition-all duration-300">
-              <div class="absolute inset-0 bg-gradient-to-br from-red-50 to-red-100 dark:from-red-900/20 dark:to-red-800/20 opacity-50"></div>
-              <div class="absolute top-3 text-xs px-3 py-1 rounded-full shadow-md bg-red-500 text-white"
-                :class="{ 'left-3': $i18n.locale === 'fa' || $i18n.locale === 'ar', 'right-3': $i18n.locale === 'en' }">
-                {{ $t('coming_soon') }}
-              </div>
-              <div class="relative p-6 opacity-90">
-                <div class="w-14 h-14 bg-red-400 text-white rounded-xl flex items-center justify-center text-2xl mb-4 shadow-md">
-                  📚
-                </div>
-                <h3 class="text-xl font-bold mb-3 text-gray-800 dark:text-white">{{ $t('story_learning_title') }}</h3>
-                <p class="text-gray-600 dark:text-gray-300 mb-4">
-                  {{ $t('story_learning_description') }}
-                </p>
-                <span class="inline-flex items-center text-red-500 dark:text-red-400 font-medium cursor-not-allowed">
-                  {{ $t('story_learning_action') }}
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
                     :class="{ 'mr-1': $i18n.locale === 'en', 'ml-1 transform rotate-180': $i18n.locale === 'fa' || $i18n.locale === 'ar' }">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />

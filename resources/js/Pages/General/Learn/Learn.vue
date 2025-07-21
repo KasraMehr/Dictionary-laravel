@@ -35,6 +35,15 @@ const learningMethods = ref([
         icon: "📝"
     },
     {
+        title: t('learning_with_story'),
+        description: t('story_based_learning'),
+        link: "learn/books",
+        image: "/images/story.png",
+        stats: "0",
+        statLabel: t('course'),
+        icon: "📖"
+    },
+    {
         title: t('learning_with_ai'),
         description: t('interactive_ai_learning'),
         link: "/learning/ai",
@@ -43,16 +52,6 @@ const learningMethods = ref([
         statLabel: t('active_lesson'),
         comingSoon: true,
         icon: "🤖"
-    },
-    {
-        title: t('learning_with_story'),
-        description: t('story_based_learning'),
-        link: "/learning/ai",
-        image: "/images/story.png",
-        stats: "0",
-        statLabel: t('course'),
-        comingSoon: true,
-        icon: "📖"
     },
 ]);
 
