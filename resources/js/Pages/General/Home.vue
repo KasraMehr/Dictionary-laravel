@@ -291,90 +291,100 @@
             </span>
           </h2>
 
+
           <div class="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto px-4">
             <!-- سطح‌بندی کلمات -->
-            <div class="group relative bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden border border-gray-100 dark:border-gray-700 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <div class="absolute inset-0 bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/30 dark:to-blue-800/30 opacity-70 group-hover:opacity-100 transition-opacity duration-300"></div>
-              <div class="relative p-6">
-                <div class="w-14 h-14 bg-blue-500 text-white rounded-xl flex items-center justify-center text-2xl mb-4 shadow-md">
-                  📊
-                </div>
-                <h3 class="text-xl font-bold mb-3 text-gray-800 dark:text-white">{{ $t('leveled_learning_title') }}</h3>
-                <p class="text-gray-600 dark:text-gray-300 mb-4">
-                  {{ $t('leveled_learning_description') }}
-                </p>
-                <a href="/levels" class="inline-flex items-center text-blue-600 dark:text-blue-400 font-medium hover:text-blue-800 dark:hover:text-blue-300 transition-colors">
-                  {{ $t('leveled_learning_action') }}
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                    :class="{ 'mr-1': $i18n.locale === 'en', 'ml-1 transform rotate-180': $i18n.locale === 'fa' || $i18n.locale === 'ar' }">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                  </svg>
-                </a>
-              </div>
-            </div>
+              <a href="/levels">
+                  <div class="group relative bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden border border-gray-100 dark:border-gray-700 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                      <div class="absolute inset-0 bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/30 dark:to-blue-800/30 opacity-70 group-hover:opacity-100 transition-opacity duration-300"></div>
+                      <div class="relative p-6">
+                          <div class="w-14 h-14 bg-blue-500 text-white rounded-xl flex items-center justify-center text-2xl mb-4 shadow-md">
+                              📊
+                          </div>
+                          <h3 class="text-xl font-bold mb-3 text-gray-800 dark:text-white">{{ $t('leveled_learning_title') }}</h3>
+                          <p class="text-gray-600 dark:text-gray-300 mb-4">
+                              {{ $t('leveled_learning_description') }}
+                          </p>
+                          <span class="inline-flex items-center text-blue-600 dark:text-blue-400 font-medium hover:text-blue-800 dark:hover:text-blue-300 transition-colors">
+                            {{ $t('leveled_learning_action') }}
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                                 :class="{ 'mr-1': $i18n.locale === 'en', 'ml-1 transform rotate-180': $i18n.locale === 'fa' || $i18n.locale === 'ar' }">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                            </svg>
+                          </span>
+                      </div>
+                  </div>
+              </a>
 
             <!-- موضوعی -->
-            <div class="group relative bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden border border-gray-100 dark:border-gray-700 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <div class="absolute inset-0 bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/30 dark:to-green-800/30 opacity-70 group-hover:opacity-100 transition-opacity duration-300"></div>
-              <div class="relative p-6">
-                <div class="w-14 h-14 bg-green-500 text-white rounded-xl flex items-center justify-center text-2xl mb-4 shadow-md">
-                  🗂️
-                </div>
-                <h3 class="text-xl font-bold mb-3 text-gray-800 dark:text-white">{{ $t('thematic_learning_title') }}</h3>
-                <p class="text-gray-600 dark:text-gray-300 mb-4">
-                  {{ $t('thematic_learning_description') }}
-                </p>
-                <a href="/topics" class="inline-flex items-center text-green-600 dark:text-green-400 font-medium hover:text-green-800 dark:hover:text-green-300 transition-colors">
+              <a href="/topics">
+                  <div class="group relative bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden border border-gray-100 dark:border-gray-700 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                      <div class="absolute inset-0 bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/30 dark:to-green-800/30 opacity-70 group-hover:opacity-100 transition-opacity duration-300"></div>
+                      <div class="relative p-6">
+                          <div class="w-14 h-14 bg-green-500 text-white rounded-xl flex items-center justify-center text-2xl mb-4 shadow-md">
+                              🗂️
+                          </div>
+                          <h3 class="text-xl font-bold mb-3 text-gray-800 dark:text-white">{{ $t('thematic_learning_title') }}</h3>
+                          <p class="text-gray-600 dark:text-gray-300 mb-4">
+                              {{ $t('thematic_learning_description') }}
+                          </p>
+                          <span class="inline-flex items-center text-green-600 dark:text-green-400 font-medium hover:text-green-800 dark:hover:text-green-300 transition-colors">
                   {{ $t('thematic_learning_action') }}
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                    :class="{ 'mr-1': $i18n.locale === 'en', 'ml-1 transform rotate-180': $i18n.locale === 'fa' || $i18n.locale === 'ar' }">
+                       :class="{ 'mr-1': $i18n.locale === 'en', 'ml-1 transform rotate-180': $i18n.locale === 'fa' || $i18n.locale === 'ar' }">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                   </svg>
-                </a>
-              </div>
-            </div>
+                </span>
+                      </div>
+                  </div>
+              </a>
 
             <!-- گرامر -->
-            <div class="group relative bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden border border-gray-100 dark:border-gray-700 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <div class="absolute inset-0 bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/30 dark:to-purple-800/30 opacity-70 group-hover:opacity-100 transition-opacity duration-300"></div>
-              <div class="relative p-6">
-                <div class="w-14 h-14 bg-purple-500 text-white rounded-xl flex items-center justify-center text-2xl mb-4 shadow-md">
-                  📝
-                </div>
-                <h3 class="text-xl font-bold mb-3 text-gray-800 dark:text-white">{{ $t('interactive_grammar_title') }}</h3>
-                <p class="text-gray-600 dark:text-gray-300 mb-4">
-                  {{ $t('interactive_grammar_description') }}
-                </p>
-                <a href="/grammars" class="inline-flex items-center text-purple-600 dark:text-purple-400 font-medium hover:text-purple-800 dark:hover:text-purple-300 transition-colors">
+              <a href="/grammars">
+                  <div class="group relative bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden border border-gray-100 dark:border-gray-700 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                      <div class="absolute inset-0 bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/30 dark:to-purple-800/30 opacity-70 group-hover:opacity-100 transition-opacity duration-300"></div>
+                      <div class="relative p-6">
+                          <div class="w-14 h-14 bg-purple-500 text-white rounded-xl flex items-center justify-center text-2xl mb-4 shadow-md">
+                              📝
+                          </div>
+                          <h3 class="text-xl font-bold mb-3 text-gray-800 dark:text-white">{{ $t('interactive_grammar_title') }}</h3>
+                          <p class="text-gray-600 dark:text-gray-300 mb-4">
+                              {{ $t('interactive_grammar_description') }}
+                          </p>
+                          <span class="inline-flex items-center text-purple-600 dark:text-purple-400 font-medium hover:text-purple-800 dark:hover:text-purple-300 transition-colors">
                   {{ $t('interactive_grammar_action') }}
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                    :class="{ 'mr-1': $i18n.locale === 'en', 'ml-1 transform rotate-180': $i18n.locale === 'fa' || $i18n.locale === 'ar' }">
+                       :class="{ 'mr-1': $i18n.locale === 'en', 'ml-1 transform rotate-180': $i18n.locale === 'fa' || $i18n.locale === 'ar' }">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                   </svg>
-                </a>
-              </div>
-            </div>
+                </span>
+
+                      </div>
+                  </div>
+              </a>
 
             <!-- کتاب داستان -->
-            <div class="group relative bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden border border-gray-100 dark:border-gray-700 transition-all duration-300">
-                <div class="absolute inset-0 bg-gradient-to-br from-red-50 to-red-100 dark:from-red-900/20 dark:to-red-800/20 opacity-50"></div>
-                <div class="relative p-6 opacity-90">
-                    <div class="w-14 h-14 bg-red-400 text-white rounded-xl flex items-center justify-center text-2xl mb-4 shadow-md">
-                        📚
-                    </div>
-                    <h3 class="text-xl font-bold mb-3 text-gray-800 dark:text-white">{{ $t('story_learning_title') }}</h3>
-                    <p class="text-gray-600 dark:text-gray-300 mb-4">
-                        {{ $t('story_learning_description') }}
-                    </p>
-                    <a href="/learn/books" class="inline-flex items-center text-red-500 dark:text-red-400 font-medium hover:text-red-800 dark:hover:text-red-300 transition-colors">
+              <a href="/learn/books">
+                  <div class="group relative bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden border border-gray-100 dark:border-gray-700 transition-all duration-300 hover:-translate-y-1">
+                      <div class="absolute inset-0 bg-gradient-to-br from-red-50 to-red-100 dark:from-red-900/20 dark:to-red-800/20 opacity-50"></div>
+                      <div class="relative p-6 opacity-90">
+                          <div class="w-14 h-14 bg-red-400 text-white rounded-xl flex items-center justify-center text-2xl mb-4 shadow-md">
+                              📚
+                          </div>
+                          <h3 class="text-xl font-bold mb-3 text-gray-800 dark:text-white">{{ $t('story_learning_title') }}</h3>
+                          <p class="text-gray-600 dark:text-gray-300 mb-4">
+                              {{ $t('story_learning_description') }}
+                          </p>
+                          <span class="inline-flex items-center text-red-500 dark:text-red-400 font-medium hover:text-red-800 dark:hover:text-red-300 transition-colors">
                         {{ $t('story_learning_action') }}
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
                              :class="{ 'mr-1': $i18n.locale === 'en', 'ml-1 transform rotate-180': $i18n.locale === 'fa' || $i18n.locale === 'ar' }">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                         </svg>
-                    </a>
-                </div>
-            </div>
+                    </span>
+                      </div>
+                  </div>
+              </a>
 
             <!-- هوش مصنوعی -->
             <div class="group relative bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden border border-gray-100 dark:border-gray-700 transition-all duration-300">
