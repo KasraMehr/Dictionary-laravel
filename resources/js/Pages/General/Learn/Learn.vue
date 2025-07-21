@@ -39,7 +39,7 @@ const learningMethods = ref([
         description: t('story_based_learning'),
         link: "learn/books",
         image: "/images/story.png",
-        stats: "0",
+        stats: "6",
         statLabel: t('course'),
         icon: "📖"
     },
