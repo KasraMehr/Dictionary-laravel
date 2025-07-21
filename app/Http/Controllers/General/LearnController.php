@@ -233,7 +233,6 @@ class LearnController extends Controller
             $relatedCourses = $relatedCourses->merge($sameLanguagePopular);
         }
 
-        // اگر باز هم کافی نبود، دوره‌های پرطرفدار عمومی
         if ($relatedCourses->count() < 3) {
             $popularCourses = Course::query()
                 ->where('id', '!=', $currentCourse->id)
@@ -256,5 +255,10 @@ class LearnController extends Controller
         return Inertia::render('Teacher/Show', [
             'teacher' => $teacher,
         ]);
+    }
+
+    public function books(): \Inertia\Response
+    {
+        return Inertia::render('General/Learn/Books/Index');
     }
 }

@@ -57,6 +57,7 @@ Route::get('/teachers/{teacher}', [LearnController::class, 'show_teacher'])->nam
 Route::get('/courses', [LearnController::class, 'courses'])->name('courses.index');
 Route::get('/courses/{course}', [LearnController::class, 'show_course'])->name('courses.show');
 Route::get('/word/{native_lang}-{translated_lang}/{word:slug}', [WordController::class, 'show'])->name('word.show');
+Route::get('/learn/books', [LearnController::class, 'books'])->name('books');
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/words/toggle-save', [GeneralController::class, 'toggle'])->name('words.toggle-save');;
 });
