@@ -144,7 +144,7 @@ class LearnController extends Controller
     {
         // یافتن دوره با اسلاگ داده شده
         $course = Course::with([
-            'instructor',
+            'teacher',
             //            'reviews.user',
             //            'chapters.lessons'
         ])
