@@ -146,7 +146,7 @@ const setLanguage = (lang) => {
 
                             <!-- Change Theme Button -->
                             <div>
-                                <button @click="toggleTheme" class="p-2 rounded-full bg-gray-100 dark:bg-gray-800">
+                                <button @click="toggleTheme" aria-label="Toggle theme change button" class="p-2 rounded-full bg-gray-100 dark:bg-gray-800">
                                     <svg v-if="isDarkMode" class="w-6 h-6 text-gray-800 dark:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <circle cx="12" cy="12" r="4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></circle>
                                         <path stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -366,9 +366,9 @@ const setLanguage = (lang) => {
 
                 <!-- Navigation Column -->
                 <div class="lg:mx-auto">
-                    <h4 class="text-lg text-black dark:text-white font-bold mx-2 mb-6 relative inline-block after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-full after:h-0.5 after:bg-gradient-to-r after:from-[#FF2D20] after:to-orange-500">
+                    <div class="text-lg text-black dark:text-white font-bold mx-2 mb-6 relative inline-block after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-full after:h-0.5 after:bg-gradient-to-r after:from-[#FF2D20] after:to-orange-500">
                         {{ $t('navigation') }}
-                    </h4>
+                    </div>
                     <div class="space-y-4">
                         <div>
                             <a :href="route('landing')" class="cursor-pointer text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors duration-300 flex items-center group">
@@ -394,9 +394,9 @@ const setLanguage = (lang) => {
                 <!-- Learn Column -->
                 <div class="lg:mx-auto">
                     <a :href="route('learn')">
-                        <h4 class="text-lg text-black dark:text-white font-bold mx-2 mb-6 relative inline-block after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-full after:h-0.5 after:bg-gradient-to-r after:from-[#FF2D20] after:to-orange-500">
+                        <div class="text-lg text-black dark:text-white font-bold mx-2 mb-6 relative inline-block after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-full after:h-0.5 after:bg-gradient-to-r after:from-[#FF2D20] after:to-orange-500">
                             {{ $t('learn') }}
-                        </h4>
+                        </div>
                     </a>
                     <div class="space-y-4">
                         <div>
@@ -422,9 +422,9 @@ const setLanguage = (lang) => {
 
                 <!-- Quiz Column -->
                 <div class="lg:mx-auto">
-                    <h4 class="text-lg text-black dark:text-white font-bold mx-2 mb-6 relative inline-block after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-full after:h-0.5 after:bg-gradient-to-r after:from-[#FF2D20] after:to-orange-500">
+                    <div class="text-lg text-black dark:text-white font-bold mx-2 mb-6 relative inline-block after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-full after:h-0.5 after:bg-gradient-to-r after:from-[#FF2D20] after:to-orange-500">
                         {{ $t('games') }}
-                    </h4>
+                    </div>
                     <div class="space-y-4">
                         <div>
                             <a :href="route('games.hangman')" class="cursor-pointer text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors duration-300 flex items-center group">
@@ -449,9 +449,9 @@ const setLanguage = (lang) => {
 
                 <!-- Support Column -->
                 <div class="lg:mx-auto">
-                    <h4 class="text-lg text-black dark:text-white font-bold mx-2 mb-6 relative inline-block after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-full after:h-0.5 after:bg-gradient-to-r after:from-[#FF2D20] after:to-orange-500">
+                    <div class="text-lg text-black dark:text-white font-bold mx-2 mb-6 relative inline-block after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-full after:h-0.5 after:bg-gradient-to-r after:from-[#FF2D20] after:to-orange-500">
                         {{ $t('support') }}
-                    </h4>
+                    </div>
                     <div class="space-y-4">
                         <div>
                             <a :href="route('aboutUs')" class="cursor-pointer text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors duration-300 flex items-center group">
