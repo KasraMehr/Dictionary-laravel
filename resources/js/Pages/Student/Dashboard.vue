@@ -68,7 +68,7 @@
                         class="border border-gray-100 dark:border-gray-700 rounded-xl overflow-hidden hover:shadow-md transition-shadow"
                     >
                         <div class="relative">
-                            <img :src="`/storage/${course.thumbnail}`" class="w-full h-40 object-cover"  :alt="course.title"/>
+                            <img :src="`/storage/${course.thumbnail}`" class="w-full h-40 object-cover"  :alt="course.title" @error="handleImageError"/>
                             <div class="absolute bottom-3 left-3 bg-red-600 text-white text-xs px-2 py-1 rounded">
                                 {{ course.progress }}% تکمیل شده
                             </div>
@@ -285,7 +285,8 @@ const unsaveWord = (wordId) => {
         });
 };
 
-const showWordExamples = (wordId) => {
-    // باز کردن مودال مثال‌های کلمه
+const handleImageError = (event) => {
+    event.target.src = '/images/default-image.jpg';
+    event.target.onerror = null;
 };
 </script>
