@@ -14,9 +14,8 @@ class IsAdmin
             return $next($request);
         }
 
-        if (auth()->check() || auth()->user()->role === 'admin') {
+        if (auth()->check() && auth()->user()->role === 'admin') {
             return $next($request);
-
         }
 
         abort(403, __('auth.unauthorized'));

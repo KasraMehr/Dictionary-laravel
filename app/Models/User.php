@@ -178,17 +178,10 @@ class User extends Authenticatable
         return $this->hasOne(LearningStat::class);
     }
 
-    // ایجاد رکورد آمار یادگیری هنگام ایجاد کاربر
     protected static function booted()
     {
         static::created(function ($user) {
             $user->learningStat()->create();
         });
-    }
-
-    public function canAccessPanel(\Filament\Panel $panel): bool
-    {
-        \Illuminate\Support\Facades\Log::info('Checking panel access for user: ' . $this->email . ', role: ' . ($this->role ?? 'none'));
-        return $this->role === 'admin';
     }
 }
