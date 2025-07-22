@@ -5,7 +5,8 @@
       <div class="absolute inset-0 bg-gradient-to-r from-red-600 to-red-800 opacity-90"></div>
       <div class="relative z-10 p-8 backdrop-blur-sm bg-white/10 text-white">
         <div class="flex flex-col md:flex-row md:items-center gap-6">
-          <img :src="`/storage/${course.thumbnail}`"  alt="${course.thumbnail}" @error="setDefaultImage" class="w-32 h-32 rounded-xl object-cover border-2 border-white/20 shadow-lg" />
+            <img :src="`/storage/${course.thumbnail}`" alt="${course.thumbnail}" @error="setDefaultImage"
+                 class="w-32 h-32 rounded-xl object-cover justify-self-center border-2 border-white/20 shadow-lg mx-auto md:mx-0" />
           <div class="flex-1">
             <h1 class="text-3xl font-bold mb-2">{{ course.title }}</h1>
             <p class="text-red-100">{{ course.description }}</p>
@@ -33,30 +34,58 @@
     <!-- محتوای اصلی -->
     <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
       <!-- سایدبار -->
-      <div class="lg:col-span-1">
-        <div class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg rounded-2xl p-4 border border-gray-200/30 dark:border-gray-700/30 shadow-sm">
-          <h3 class="font-bold text-lg text-gray-800 dark:text-gray-100 mb-4 flex items-center gap-2">
-            <BookOpenIcon class="w-5 h-5 text-red-600" />
-            سرفصل‌های دوره
-          </h3>
-          <div class="space-y-2">
-            <button v-for="(lesson, index) in lessons"
-                    @click="activeLesson = lesson"
-                    :class="{
-                      'dark:bg-red-900/30 border-red-200 dark:border-red-700': activeLesson.id === lesson.id,
-                      'border-transparent': activeLesson.id !== lesson.id
-                    }"
-                    class="w-full text-right p-3 rounded-lg border hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors">
-              <div class="flex items-center justify-between">
-                <span class="font-medium text-gray-800 dark:text-gray-200">درس {{ index + 1 }}: {{ lesson.title }}</span>
-                <span v-if="lesson.completed" class="p-1 bg-red-100 dark:bg-red-900 rounded-full">
-                  <CheckIcon class="w-4 h-4 text-red-600 dark:text-red-400" />
-                </span>
-              </div>
-            </button>
-          </div>
+        <div class="lg:col-span-1">
+            <div class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg rounded-2xl p-4 border border-gray-200/30 dark:border-gray-700/30 shadow-sm">
+                <button
+                    @click="mobileMenuOpen = !mobileMenuOpen"
+                    class="md:hidden w-full flex justify-between items-center mb-2 group"
+                >
+                    <div class="flex items-center gap-2">
+                        <!-- خط چین زیر عنوان برای نشان دادن قابلیت کلیک -->
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-red-500 transition-all duration-300 group-hover:w-full"></span>
+                        <h3 class="font-bold text-lg text-gray-800 dark:text-gray-100 flex items-center gap-2 relative">
+                            <BookOpenIcon class="w-5 h-5 text-red-600" />
+                            سرفصل‌های دوره
+                        </h3>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs text-gray-500 dark:text-gray-400">لیست درس‌ها</span>
+                        <ChevronDownIcon
+                            class="w-5 h-5 text-gray-500 transition-transform duration-200"
+                            :class="{'transform rotate-180': mobileMenuOpen}"
+                        />
+                    </div>
+                </button>
+
+                <!-- عنوان برای دسکتاپ -->
+                <h3 class="hidden md:block font-bold text-lg text-gray-800 dark:text-gray-100 mb-4 flex items-center gap-2">
+                    <BookOpenIcon class="w-5 h-5 text-red-600" />
+                    سرفصل‌های دوره
+                </h3>
+
+                <div
+                    class="space-y-2 transition-all duration-200 overflow-hidden"
+                    :class="{'max-h-0 md:max-h-none': !mobileMenuOpen, 'max-h-[1000px]': mobileMenuOpen}"
+                >
+                    <button
+                        v-for="(lesson, index) in lessons"
+                        @click="activeLesson = lesson"
+                        :class="{
+                          'dark:bg-red-900/30 border-red-200 dark:border-red-700': activeLesson.id === lesson.id,
+                          'border-transparent': activeLesson.id !== lesson.id
+                        }"
+                        class="w-full text-right p-3 rounded-lg border hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
+                    >
+                        <div class="flex items-center justify-between">
+                            <span class="font-medium text-gray-800 dark:text-gray-200">درس {{ index + 1 }}: {{ lesson.title }}</span>
+                            <span v-if="lesson.completed" class="p-1 bg-red-100 dark:bg-red-900 rounded-full">
+                              <CheckIcon class="w-4 h-4 text-red-600 dark:text-red-400" />
+                            </span>
+                        </div>
+                    </button>
+                </div>
+            </div>
         </div>
-      </div>
 
       <!-- محتوای درس -->
       <div class="lg:col-span-3">
@@ -190,14 +219,15 @@
 
 <script setup>
 import {ref, computed, watch} from 'vue'
-import {Head, router, usePage} from '@inertiajs/vue3'
+import {router, usePage} from '@inertiajs/vue3'
 import { useToast } from 'vue-toastification';
 
 import {
   BookOpenIcon,
   CheckIcon,
   ArrowLeftIcon,
-  ArrowRightIcon
+  ArrowRightIcon,
+  ChevronDownIcon,
 } from '@heroicons/vue/24/outline'
 import StudentLayout from "@/Layouts/StudentLayout.vue"
 
@@ -216,6 +246,7 @@ const toast = useToast();
 const course = ref(props.course);
 const lessons = ref(props.lessons);
 const progress = ref(props.progress);
+const mobileMenuOpen = ref(false)
 
 const activeLesson = ref(lessons.value?.[0] ?? null);
 
