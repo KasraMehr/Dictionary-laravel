@@ -46,6 +46,8 @@ Route::get('/about-us', [GeneralController::class, 'aboutUs'])->name('aboutUs');
 Route::get('/contact-us', [GeneralController::class, 'contactUs'])->name('contactUs');
 Route::get('/FAQ', [GeneralController::class, 'FAQ'])->name('faq');
 
+Route::get('/kids-landing', [GeneralController::class, 'kidLanding'])->name('kidLanding');
+
 Route::get('/achievements', [AchievementController::class, 'index']);
 Route::get('/learn', [LearnController::class, 'learn'])->name('learn');
 Route::get('/topics', [LearnController::class, 'topics'])->name('topics');

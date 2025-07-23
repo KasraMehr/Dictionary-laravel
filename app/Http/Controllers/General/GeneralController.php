@@ -244,4 +244,9 @@ class GeneralController extends Controller
     {
         return Inertia::render('General/Communicate/FAQ');
     }
+
+    public function kidLanding(): Response
+    {
+        return Inertia::render('General/KidLanding');
+    }
 }
