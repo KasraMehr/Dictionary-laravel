@@ -16,7 +16,7 @@ defineProps({
 const form = useForm({
     email: '',
     password: '',
-    remember: false,
+    remember: true,
     language_level: null
 });
 
@@ -100,7 +100,7 @@ const submit = () => {
 
                         <!-- Remember Me & Forgot Password -->
                         <div class="flex items-center justify-between">
-                            <label class="flex items-center">
+                            <!-- <label class="flex items-center">
                                 <Checkbox
                                     v-model:checked="form.remember"
                                     name="remember"
@@ -109,7 +109,7 @@ const submit = () => {
                                 <span class="mx-2 text-sm text-gray-600 dark:text-gray-400">
                                     {{ $t('remember_me') }}
                                 </span>
-                            </label>
+                            </label> -->
 
                             <Link
                                 v-if="canResetPassword"
