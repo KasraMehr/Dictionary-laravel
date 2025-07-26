@@ -106,7 +106,7 @@
           <div class="flex justify-between mt-6">
             <button @click="prevChapter"
                     :disabled="currentChapterIndex === 0"
-                    class="bg-gray-200 dark:bg-gray-700 px-4 py-2 rounded-lg disabled:opacity-50">
+                    class="bg-gray-200 dark:bg-gray-700 px-4 py-2 rounded-lg disabled:opacity-50 text-gray-800 dark:text-gray-100">
               فصل قبلی
             </button>
             <button @click="nextChapter"
