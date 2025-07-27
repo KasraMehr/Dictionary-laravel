@@ -266,4 +266,9 @@ class LearnController extends Controller
     {
         return Inertia::render('General/Learn/GrammarLesson');
     }
+
+    public function topicLearn()
+    {
+        return Inertia::render('General/Learn/TopicWords');
+    }
 }
