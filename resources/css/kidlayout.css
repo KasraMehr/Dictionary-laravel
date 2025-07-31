@@ -4,7 +4,7 @@
     border-radius: 35px;
 }
 
-.swiper-slide {
+.layout .swiper-slide {
     text-align: center;
     font-size: 18px;
 
@@ -16,24 +16,24 @@
 
 }
 
-.swiper-slide img {
+.layout .swiper-slide img {
     display: block;
     width: 100%;
     height: 90%;
     object-fit: cover;
     border-radius: 35px;
 }
-.swiper-pagination-bullet{
+.layout .swiper-pagination-bullet{
     background-color: white;
     opacity: 1;
 }
-.swiper-pagination-bullet-active {
+.layout .swiper-pagination-bullet-active {
     background-color: #ffba00 !important;
     width: 15px;
     border-radius: 10px;
 }
 
-.swiper-pagination,
+.layout .swiper-pagination,
 .swiper-pagination-clickable,
 .swiper-pagination-bullets,
 .swiper-pagination-horizontal {
@@ -42,7 +42,7 @@
     
 }
 @media (min-width:768px) and (max-width:875px) {
-.swiper-pagination,
+.layout .swiper-pagination,
 .swiper-pagination-clickable,
 .swiper-pagination-bullets,
 .swiper-pagination-horizontal {
