@@ -14,8 +14,9 @@ import "swiper/css";
 
 import "swiper/css/pagination";
 
+
 // import required modules
-import { Autoplay, Pagination } from "swiper/modules";
+import { Autoplay, Pagination} from "swiper/modules";
 
 defineProps({
     title: String,
@@ -115,9 +116,9 @@ const setLanguage = (lang) => {
                 <div class="w-full mx-auto px-5 lg:px-[76px] md:pt-2">
                     <div class="flex justify-between items-center h-16">
                         <div
-                            class="flex items-center border-2 border-[#704ee7] rounded-[35px] justify-between pl-3 pr-1 h-[43px] max-md:hidden"
+                            class="flex items-center gap-x-3 border-2 border-[#704ee7] rounded-[35px] justify-between pl-4 pr-1 h-[43px] max-md:hidden"
                         >
-                            <div class="flex rounded-full bg-[#704ee7] w-[40%]">
+                            <div class="flex rounded-full bg-[#704ee7] h-[33px]">
                                 <img
                                     src="/images/kidlanding/Group.png"
                                     alt=""
@@ -129,43 +130,47 @@ const setLanguage = (lang) => {
                                 :href="route('login')"
                                 v-if="!canRegister"
                                 :active="route().current('login')"
-                                class="text-[#704ee7] text-[18px] dark:text-white"
+                                class="text-[#704ee7] text-[17px] dark:text-white"
                             >
                                 {{ $t("login") }}
                             </a>
-                            <a
-                                v-else-if="
-                                    $page.props.auth.user &&
-                                    $page.props.auth.user.role === 'teacher'
-                                "
-                                :href="route('teacher.dashboard')"
-                                :active="route().current('dashboard')"
-                                class="text-[#704ee7] text-[18px] dark:text-white"
-                            >
-                                {{ $t("dashboard") }}
-                            </a>
-                            <a
-                                v-else-if="
-                                    $page.props.auth.user &&
-                                    $page.props.auth.user.role === 'student'
-                                "
-                                :href="route('student.dashboard')"
-                                :active="route().current('dashboard')"
-                                class="text-[#704ee7] text-[18px] dark:text-white"
-                            >
-                                {{ $t("dashboard") }}
-                            </a>
-                            <template v-else>
-                                <a
-                                    :href="route('register')"
-                                    v-if="canRegister"
-                                    :active="route().current('register')"
-                                    class="text-[#704ee7] text-[18px] dark:text-white"
-                                >
-                                    {{ $t("login") }} /
-                                    {{ $t("register") }}
-                                </a>
-                            </template>
+                             <a
+                                        v-else-if="
+                                            $page.props.auth.user &&
+                                            $page.props.auth.user.role ===
+                                                'teacher'
+                                        "
+                                        :href="route('teacher.dashboard')"
+                                        :active="route().current('dashboard')"
+                                        class="text-[#704ee7] text-[17px] dark:text-white"
+                                    >
+                                       {{ $t("dashboard") }}
+                                    </a>
+                                    <a
+                                        v-else-if="
+                                            $page.props.auth.user &&
+                                            $page.props.auth.user.role ===
+                                                'student'
+                                        "
+                                        :href="route('student.dashboard')"
+                                        :active="route().current('dashboard')"
+                                        class="text-[#704ee7] text-[17px] dark:text-white"
+                                    >
+                                        {{ $t("dashboard") }}
+                                    </a>
+                                    <template v-else>
+                                        <a
+                                            :href="route('register')"
+                                            v-if="canRegister"
+                                            :active="
+                                                route().current('register')
+                                            "
+                                            class="text-[#704ee7] text-[17px] dark:text-white"
+                                        >
+                                            {{ $t("login") }} /
+                                            {{ $t("register") }}
+                                        </a>
+                                    </template>
                         </div>
 
                         <div class="flex items-center max-md:hidden">
@@ -175,6 +180,7 @@ const setLanguage = (lang) => {
                                 class="hidden md:flex items-center md:items-stretch overflow-x-auto md:overflow-x-visible ms-4 text-black dark:text-white"
                             >
                                 <div class="flex gap-1.5">
+                                   
                                     <a
                                         :href="route('games.landing')"
                                         :active="
@@ -315,7 +321,7 @@ const setLanguage = (lang) => {
                 <!-- Mobile Menu -->
                 <div
                     v-show="isOpen"
-                    class="fixed inset-0 bg-black bg-opacity-50 z-30"
+                    class="fixed inset-0 bg-black bg-opacity-50 z-30 md:hidden"
                 ></div>
 
                 <transition
@@ -329,42 +335,42 @@ const setLanguage = (lang) => {
                     <div
                         v-show="isOpen"
                         ref="sidebarRef"
-                        class="fixed top-0 right-0 w-64 h-full bg-white z-40 shadow-lg transition-all ease-in-out duration-250"
+                        class="fixed top-0 right-0 w-64 h-full bg-white z-40 shadow-lg transition-all ease-in-out duration-250 md:hidden"
                         :class="isOpen ? 'translate-x-0 ' : 'translate-x-full '"
                     >
                         <div
                             class="pt-3 pb-3 h-full space-y-1 md:px-8 pr-5 pl-2"
                         >
-                            <ResponsiveNavLink
+                            <div
                                 :href="route('translator.dashboard')"
                                 v-if="
                                     $page.props.auth.user &&
                                     $page.props.auth.user.role === 'translator'
                                 "
-                                class="block px-3 py-2 rounded-lg hover:bg-white/30 dark:hover:bg-gray-800/50"
+                                class="px-3 py-2 w-[120px] justify-center font-semibold rounded-[35px] border-2 border-[#704ee7] text-[#704ee7] flex items-center"
                             >
                                 {{ $t("dashboard") }}
-                            </ResponsiveNavLink>
-                            <ResponsiveNavLink
+                            </div>
+                            <div
                                 :href="route('teacher.dashboard')"
                                 v-else-if="
                                     $page.props.auth.user &&
                                     $page.props.auth.user.role === 'teacher'
                                 "
-                                class="block px-3 py-2 rounded-lg hover:bg-white/30 dark:hover:bg-gray-800/50"
+                                class="px-3 py-2 w-[120px] justify-center font-semibold rounded-[35px] border-2 border-[#704ee7] text-[#704ee7] flex items-center"
                             >
                                 {{ $t("dashboard") }}
-                            </ResponsiveNavLink>
-                            <ResponsiveNavLink
+                            </div>
+                            <div
                                 :href="route('student.dashboard')"
                                 v-else-if="
                                     $page.props.auth.user &&
                                     $page.props.auth.user.role === 'student'
                                 "
-                                class="block px-3 py-2 rounded-lg hover:bg-white/30 dark:hover:bg-gray-800/50"
+                                class="px-3 py-2 w-[120px] justify-center font-semibold rounded-[35px] border-2 border-[#704ee7] text-[#704ee7] flex items-center"
                             >
                                 {{ $t("dashboard") }}
-                            </ResponsiveNavLink>
+                            </div>
 
                             <template v-else>
                                 <div class="flex gap-x-3">
@@ -502,7 +508,7 @@ const setLanguage = (lang) => {
     >
         <img src="/images/kidlanding/moj.png" alt="" />
         <div
-            class="bg-[#f8f1ff] backdrop-blur-md border-b shadow-sm mx-auto w-full px-4 md:px-10 sm:flex sm:flex-col sm:items-center md:block sm:px-24 relative"
+            class="bg-[#f8f1ff] backdrop-blur-md border-b  shadow-sm mx-auto w-full px-4 md:px-10 sm:flex sm:flex-col sm:items-center md:block sm:px-24 relative"
         >
             <img
                 src="/images/kidlanding/Ellipse 38.png"
@@ -515,9 +521,7 @@ const setLanguage = (lang) => {
                 class="flex max-md:flex-col-reverse gap-y-16 max-sm:max-w-sm max-sm:mx-auto max-md:pt-6 md:pt-3 justify-around sm:w-[90%] md:w-[100%]"
             >
                 <!-- Logo & Description Column -->
-                <div
-                    class="mb-5 md:mb-0 flex flex-col gap-y-8 lg:w-[50%] md:w-[43%] w-[100%]"
-                >
+                <div class="mb-5 md:mb-0 flex flex-col gap-y-8 lg:w-[50%] md:w-[43%] w-[100%]">
                     <a
                         :href="route('landing')"
                         class="cursor-pointer hidden md:flex items-center justify-center lg:justify-center gap-x-2 transition-transform hover:scale-[1.02]"
@@ -594,9 +598,7 @@ const setLanguage = (lang) => {
                         </div>
                     </div>
                 </div>
-                <div
-                    class="flex flex-col md:w-[50%] lg:w-[48%] gap-y-5 lg:gap-y-3 items-center"
-                >
+                <div class="flex flex-col md:w-[50%] lg:w-[48%] gap-y-5 lg:gap-y-3 items-center">
                     <div
                         class="flex flex-col text-[20px] sm:text-[26px] md:text-[22px] lg:text-[30.5px] items-center font-extrabold"
                     >
@@ -605,14 +607,8 @@ const setLanguage = (lang) => {
                             و عشق به <span class="text-[#704ee7]">يادگيری</span>
                         </p>
                     </div>
-                    <div
-                        class="lg:w-2/3 md:w-[82%] w-[90%] xl:p-2.5 p-1.5 xl:pb-1.5 bg-[#704ee7] rounded-[35px] relative layout"
-                    >
-                        <img
-                            src="/images/kidlanding/Frame (5).png"
-                            alt=""
-                            class="absolute -left-[9%] -top-[16%] hidden md:flex w-[20%]"
-                        />
+                    <div class="lg:w-2/3 md:w-[82%] w-[90%] xl:p-2.5 p-1.5 xl:pb-1.5 bg-[#704ee7] rounded-[35px] relative layout">
+                        <img src="/images/kidlanding/Frame (5).png" alt="" class="absolute -left-[9%] -top-[16%] hidden md:flex w-[20%]">
                         <swiper
                             :spaceBetween="30"
                             :centeredSlides="true"
@@ -621,10 +617,10 @@ const setLanguage = (lang) => {
                                 disableOnInteraction: false,
                             }"
                             :pagination="{
-                                clickable: true,
+                                clickable: true
                             }"
                             :navigation="true"
-                            :modules="[Autoplay, Pagination]"
+                            :modules="[Autoplay,Pagination]"
                             class="mySwiper5"
                         >
                             <swiper-slide>
