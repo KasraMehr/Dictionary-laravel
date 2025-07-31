@@ -34,7 +34,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
 </script>
 
 <template>
-    <KidLayout>
+    <KidLayout title="Landing Kids">
     <div class="flex flex-col gap-y-16 mb-7" dir="rtl">
         <!-- first section -->
         <div class="flex py-2">
@@ -52,12 +52,12 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                     class="xl:w-[9%] lg:w-[8%] md:w-[10%] sm:w-[10%] w-[13%]"
                 />
                 <img
-                    src="/public/images/kidlanding/Group 39.png"
+                    src="/images/kidlanding/Group 39.png"
                     alt="img"
                     class="xl:w-[85%] lg:w-[72%] md:w-[70%] sm:w-[60%] -rotate-12 hidden sm:flex"
                 />
                 <img
-                    src="/public/images/kidlanding/Ellipse 24.png"
+                    src="/images/kidlanding/Ellipse 24.png"
                     alt="img"
                     class="w-[13%] sm:hidden"
                 />
