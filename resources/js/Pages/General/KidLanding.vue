@@ -1,4 +1,4 @@
-/images<script setup>
+<script setup>
 
 // Import Swiper Vue.js components
 import { Swiper, SwiperSlide } from "swiper/vue";
@@ -9,6 +9,8 @@ import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
+
+import "../../../css/kidLanding.css";
 
 import { computed, onMounted, onUnmounted, ref } from "vue";
 import MainLayout from "@/Layouts/MainLayout.vue";
@@ -1912,65 +1914,3 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
     </div>
     </KidLayout>
 </template>
-
-<style scoped>
-
-
-  html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-  }
-  .swiper {
-    width: 100%;
-    height: 100%;
-  }
-
-  .swiper-slide {
-    text-align: center;
-    font-size: 18px;
-
-
-    /* Center slide text vertically */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .swiper-slide img {
-    display: block;
-    object-fit: contain;
-  }
-
-  @media (max-width:768px) {
-   .swiper-slide {
-    filter: blur(0);
-    opacity: 1;
-    transform: scale(1);
-  }
-  .swiper-slide-active {
-    transform: scale(1.1);
-    z-index: 10;
-    border-radius: 65px;
-  }
-
-
-  .swiper-slide-next {
-    filter: blur(4px);
-    opacity: 0.6;
-    transform: scale(0.55);
-  }
-  .swiper-slide-prev{
-    filter: blur(4px);
-    opacity: 0.6;
-    transform: scale(0.55);
-  }
-
-  }
-  .swiper-button-prev::after {
-    display: none;
-  }
-  .swiper-button-next::after {
-    display: none;
-  }
-</style>
