@@ -14,9 +14,8 @@ import "swiper/css";
 
 import "swiper/css/pagination";
 
-
 // import required modules
-import { Autoplay, Pagination} from "swiper/modules";
+import { Autoplay, Pagination } from "swiper/modules";
 
 defineProps({
     title: String,
@@ -134,6 +133,39 @@ const setLanguage = (lang) => {
                             >
                                 {{ $t("login") }}
                             </a>
+                            <a
+                                v-else-if="
+                                    $page.props.auth.user &&
+                                    $page.props.auth.user.role === 'teacher'
+                                "
+                                :href="route('teacher.dashboard')"
+                                :active="route().current('dashboard')"
+                                class="text-[#704ee7] text-[18px] dark:text-white"
+                            >
+                                {{ $t("dashboard") }}
+                            </a>
+                            <a
+                                v-else-if="
+                                    $page.props.auth.user &&
+                                    $page.props.auth.user.role === 'student'
+                                "
+                                :href="route('student.dashboard')"
+                                :active="route().current('dashboard')"
+                                class="text-[#704ee7] text-[18px] dark:text-white"
+                            >
+                                {{ $t("dashboard") }}
+                            </a>
+                            <template v-else>
+                                <a
+                                    :href="route('register')"
+                                    v-if="canRegister"
+                                    :active="route().current('register')"
+                                    class="text-[#704ee7] text-[18px] dark:text-white"
+                                >
+                                    {{ $t("login") }} /
+                                    {{ $t("register") }}
+                                </a>
+                            </template>
                         </div>
 
                         <div class="flex items-center max-md:hidden">
@@ -143,43 +175,6 @@ const setLanguage = (lang) => {
                                 class="hidden md:flex items-center md:items-stretch overflow-x-auto md:overflow-x-visible ms-4 text-black dark:text-white"
                             >
                                 <div class="flex gap-1.5">
-                                    <a
-                                        v-if="
-                                            $page.props.auth.user &&
-                                            $page.props.auth.user.role ===
-                                                'teacher'
-                                        "
-                                        :href="route('teacher.dashboard')"
-                                        :active="route().current('dashboard')"
-                                        class="text-black dark:text-white"
-                                    >
-                                        {{ $t("dashboard") }}
-                                    </a>
-                                    <a
-                                        v-else-if="
-                                            $page.props.auth.user &&
-                                            $page.props.auth.user.role ===
-                                                'student'
-                                        "
-                                        :href="route('student.dashboard')"
-                                        :active="route().current('dashboard')"
-                                        class="text-black dark:text-white"
-                                    >
-                                        {{ $t("dashboard") }}
-                                    </a>
-                                    <template v-else>
-                                        <a
-                                            :href="route('register')"
-                                            v-if="canRegister"
-                                            :active="
-                                                route().current('register')
-                                            "
-                                            class="text-black dark:text-white"
-                                        >
-                                            {{ $t("login") }} /
-                                            {{ $t("register") }}
-                                        </a>
-                                    </template>
                                     <a
                                         :href="route('games.landing')"
                                         :active="
@@ -507,7 +502,7 @@ const setLanguage = (lang) => {
     >
         <img src="/images/kidlanding/moj.png" alt="" />
         <div
-            class="bg-[#f8f1ff] backdrop-blur-md border-b  shadow-sm mx-auto w-full px-4 md:px-10 sm:flex sm:flex-col sm:items-center md:block sm:px-24 relative"
+            class="bg-[#f8f1ff] backdrop-blur-md border-b shadow-sm mx-auto w-full px-4 md:px-10 sm:flex sm:flex-col sm:items-center md:block sm:px-24 relative"
         >
             <img
                 src="/images/kidlanding/Ellipse 38.png"
@@ -520,7 +515,9 @@ const setLanguage = (lang) => {
                 class="flex max-md:flex-col-reverse gap-y-16 max-sm:max-w-sm max-sm:mx-auto max-md:pt-6 md:pt-3 justify-around sm:w-[90%] md:w-[100%]"
             >
                 <!-- Logo & Description Column -->
-                <div class="mb-5 md:mb-0 flex flex-col gap-y-8 lg:w-[50%] md:w-[43%] w-[100%]">
+                <div
+                    class="mb-5 md:mb-0 flex flex-col gap-y-8 lg:w-[50%] md:w-[43%] w-[100%]"
+                >
                     <a
                         :href="route('landing')"
                         class="cursor-pointer hidden md:flex items-center justify-center lg:justify-center gap-x-2 transition-transform hover:scale-[1.02]"
@@ -597,7 +594,9 @@ const setLanguage = (lang) => {
                         </div>
                     </div>
                 </div>
-                <div class="flex flex-col md:w-[50%] lg:w-[48%] gap-y-5 lg:gap-y-3 items-center">
+                <div
+                    class="flex flex-col md:w-[50%] lg:w-[48%] gap-y-5 lg:gap-y-3 items-center"
+                >
                     <div
                         class="flex flex-col text-[20px] sm:text-[26px] md:text-[22px] lg:text-[30.5px] items-center font-extrabold"
                     >
@@ -606,8 +605,14 @@ const setLanguage = (lang) => {
                             و عشق به <span class="text-[#704ee7]">يادگيری</span>
                         </p>
                     </div>
-                    <div class="lg:w-2/3 md:w-[82%] w-[90%] xl:p-2.5 p-1.5 xl:pb-1.5 bg-[#704ee7] rounded-[35px] relative">
-                        <img src="/images/kidlanding/Frame (5).png" alt="" class="absolute -left-[9%] -top-[16%] hidden md:flex w-[20%]">
+                    <div
+                        class="lg:w-2/3 md:w-[82%] w-[90%] xl:p-2.5 p-1.5 xl:pb-1.5 bg-[#704ee7] rounded-[35px] relative layout"
+                    >
+                        <img
+                            src="/images/kidlanding/Frame (5).png"
+                            alt=""
+                            class="absolute -left-[9%] -top-[16%] hidden md:flex w-[20%]"
+                        />
                         <swiper
                             :spaceBetween="30"
                             :centeredSlides="true"
@@ -616,10 +621,10 @@ const setLanguage = (lang) => {
                                 disableOnInteraction: false,
                             }"
                             :pagination="{
-                                clickable: true
+                                clickable: true,
                             }"
                             :navigation="true"
-                            :modules="[Autoplay,Pagination]"
+                            :modules="[Autoplay, Pagination]"
                             class="mySwiper5"
                         >
                             <swiper-slide>
