@@ -1,4 +1,4 @@
-<script setup>
+/images<script setup>
 
 // Import Swiper Vue.js components
 import { Swiper, SwiperSlide } from "swiper/vue";
@@ -9,8 +9,6 @@ import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-
-import "../../../css/app.css";
 
 import { computed, onMounted, onUnmounted, ref } from "vue";
 import MainLayout from "@/Layouts/MainLayout.vue";
@@ -42,22 +40,22 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                 class="flex flex-col-reverse justify-between pt-4 sm:flex sm:flex-col sm:justify-between sm:pt-7 sm:gap-y-[74px] md:gap-y-20 lg:gap-y-2-[90px] gap-y-9 items-center lg:overflow-hidden xl:w-[22.5%] lg:w-[25%] md:w-[25%] sm:w-[27.5%] w-[22.5%]"
             >
                 <img
-                    src="../../../../public/images/kidlanding/Group 36.png"
+                    src="/images/kidlanding/Group 36.png"
                     alt="img"
                     class="xl:w-[40%] lg:w-[35%] md:w-[40%] sm:w-[30%] w-[40%]"
                 />
                 <img
-                    src="../../../../public/images/kidlanding/Ellipse 24.png"
+                    src="/images/kidlanding/Ellipse 24.png"
                     alt="img"
                     class="xl:w-[9%] lg:w-[8%] md:w-[10%] sm:w-[10%] w-[13%]"
                 />
                 <img
-                    src="../../../../public/images/kidlanding/Group 39.png"
+                    src="/public/images/kidlanding/Group 39.png"
                     alt="img"
                     class="xl:w-[85%] lg:w-[72%] md:w-[70%] sm:w-[60%] -rotate-12 hidden sm:flex"
                 />
                 <img
-                    src="../../../../public/images/kidlanding/Ellipse 24.png"
+                    src="/public/images/kidlanding/Ellipse 24.png"
                     alt="img"
                     class="w-[13%] sm:hidden"
                 />
@@ -68,7 +66,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                 <div class="flex flex-col items-center">
                     <div class="flex w-[100%] sm:justify-start justify-center">
                         <img
-                            src="../../../../public/images/kidlanding/Highlight_05.png"
+                            src="/images/kidlanding/Highlight_05.png"
                             alt=""
                             class="sm:w-[9%] xl:h-16 lg:h-12 sm:py-2 sm:pr-2 md:h-10 sm:h-8 h-4 w-[16px]"
                         />
@@ -87,7 +85,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                                     آموزش
                                 </p>
                                 <img
-                                    src="../../../../public/images/kidlanding/Fake wavy line.png"
+                                    src="/images/kidlanding/Fake wavy line.png"
                                     alt=""
                                     class="xl:w-[250px] lg:w-[160px] md:w-[140px] sm:w-[110px] w-[70px]"
                                 />
@@ -99,7 +97,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                                     >سرگرمی</span
                                 >
                                 <img
-                                    src="../../../../public/images/kidlanding/Fake wavy line.png"
+                                    src="/images/kidlanding/Fake wavy line.png"
                                     alt=""
                                     class="xl:w-[270px] lg:w-[180px] md:w-[160px] sm:w-[123px] w-[80px]"
                                 />
@@ -119,7 +117,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                         >
                             <div></div>
                             <img
-                                src="../../../../public/images/kidlanding/Highlight_04.png"
+                                src="/images/kidlanding/Highlight_04.png"
                                 alt=""
                                 class="xl:h-10 lg:h-7 md:h-5 sm:h-4 h-3"
                             />
@@ -144,7 +142,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                             class="flex rounded-full bg-white lg:w-[22%] md:w-[19%] sm:w-[14%] w-[11%]"
                         >
                             <img
-                                src="../../../../public/images/kidlanding/mingcute_arrow-up-fill.png"
+                                src="/images/kidlanding/mingcute_arrow-up-fill.png"
                                 alt=""
                                 class=""
                             />
@@ -162,23 +160,23 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
             >
                 <div class="flex flex-col items-center lg:gap-0">
                     <img
-                        src="../../../../public/images/kidlanding/Group 40.png"
+                        src="/images/kidlanding/Group 40.png"
                         alt=""
                         class="xl:w-[80%] md:w-[80%] sm:w-[60%] w-[85%]"
                     />
                     <img
-                        src="../../../../public/images/kidlanding/Arrow_01.png"
+                        src="/images/kidlanding/Arrow_01.png"
                         alt=""
                         class="xl:w-[75%] lg:w-[68%] md:w-[67%] sm:w-[60%] sm:pl-8 sm:h-24 md:h-32 xl:h-40 h-20 pl-4"
                     />
                 </div>
                 <img
-                    src="../../../../public/images/kidlanding/Group 41.png"
+                    src="/images/kidlanding/Group 41.png"
                     alt=""
                     class="xl:w-[30%] lg:w-[25%] md:w-[30%] sm:w-[23%] hidden sm:flex"
                 />
                 <img
-                    src="../../../../public/images/kidlanding/Ellipse 24.png"
+                    src="/images/kidlanding/Ellipse 24.png"
                     alt=""
                     class="w-[13%] sm:hidden"
                 />
@@ -256,7 +254,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                 </p>
             </div>
             <img
-                src="../../../../public/images/kidlanding/Frame.png"
+                src="/images/kidlanding/Frame.png"
                 alt=""
                 class="md:w-[90%] lg:w-[78%] w-[50%] sm:w-[40%] md:col-start-4 md:col-end-5 col-start-2 col-end-3 mt-1"
             />
@@ -277,7 +275,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                     </p>
                 </div>
                 <img
-                    src="../../../../public/images/kidlanding/Frame 1 (1).png"
+                    src="/images/kidlanding/Frame 1 (1).png"
                     alt=""
                     class="md:w-[28%] lg:w-[26.5%] xl:w-[25%] hidden md:block"
                 />
@@ -333,13 +331,13 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                         >
                             <div class="flex justify-between">
                                 <img
-                                    src="../../../../public/images/kidlanding/Group 49 (3).png"
+                                    src="/images/kidlanding/Group 49 (3).png"
                                     alt=""
                                     class="w-[35%]"
                                 />
 
                                 <img
-                                    src="../../../../public/images/kidlanding/Group 48.png"
+                                    src="/images/kidlanding/Group 48.png"
                                     alt=""
                                     class="md:w-[40.3%] w-[35%]"
                                 />
@@ -370,13 +368,13 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                         >
                             <div class="flex justify-between">
                                 <img
-                                    src="../../../../public/images/kidlanding/Group 49.png"
+                                    src="/images/kidlanding/Group 49.png"
                                     alt=""
                                     class="opacity-50 pt-5 w-[34.7%]"
                                 />
 
                                 <img
-                                    src="../../../../public/images/kidlanding/Group 38.png"
+                                    src="/images/kidlanding/Group 38.png"
                                     alt=""
                                     class="opacity-30 w-[45%]"
                                 />
@@ -406,13 +404,13 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                         >
                             <div class="flex justify-between relative">
                                 <img
-                                    src="../../../../public/images/kidlanding/Group 49 (4).png"
+                                    src="/images/kidlanding/Group 49 (4).png"
                                     alt=""
                                     class="w-[35%]"
                                 />
 
                                 <img
-                                    src="../../../../public/images/kidlanding/Group 51.png"
+                                    src="/images/kidlanding/Group 51.png"
                                     alt=""
                                     class="pt-5 w-[28.8%]"
                                 />
@@ -455,7 +453,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                     <p class="relative underline text-[#704ee7]">
                         لبخند
                         <img
-                            src="../../../../public/images/kidlanding/Frame (1).png "
+                            src="/images/kidlanding/Frame (1).png "
                             alt=""
                             class="absolute top-0"
                         />
@@ -476,7 +474,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                         class="flex rounded-full bg-[#704ee7] lg:w-[22%] md:w-[19%] sm:w-[14%] w-[13%]"
                     >
                         <img
-                            src="../../../../public/images/kidlanding/Group.png"
+                            src="/images/kidlanding/Group.png"
                             alt=""
                             class=""
                         />
@@ -492,17 +490,17 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                 class="flex flex-col md:items-end items-center relative gap-y-20"
             >
                 <img
-                    src="../../../../public/images/kidlanding/Group 52.png"
+                    src="/images/kidlanding/Group 52.png"
                     alt=""
                     class="w-[351px] md:flex hidden"
                 />
                 <img
-                    src="../../../../public/images/kidlanding/second-g.png"
+                    src="/images/kidlanding/second-g.png"
                     alt=""
                     class="w-[600px] absolute top-[170px] md:flex hidden"
                 />
                 <img
-                    src="../../../../public/images/kidlanding/third--g.png"
+                    src="/images/kidlanding/third--g.png"
                     alt=""
                     class="sm:w-[456px] z-20 max-md:pl-0.5 w-[80%]"
                 />
@@ -518,7 +516,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                     class="flex md:items-start md:pt-3 items-end md:w-[105px] lg:w-[125px]"
                 >
                     <img
-                        src="../../../../public/images/kidlanding/Group 65.png"
+                        src="/images/kidlanding/Group 65.png"
                         alt=""
                         class="lg:w-[60%] md:w-[50%] max-md:absolute w-[7%] sm:w-[8%] right-0 top-14 translate-y-1/2"
                     />
@@ -548,7 +546,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                             class="flex rounded-full bg-[#704ee7] lg:w-[22%] md:w-[19%] sm:w-[14%] w-[13%]"
                         >
                             <img
-                                src="../../../../public/images/kidlanding/Group.png"
+                                src="/images/kidlanding/Group.png"
                                 alt=""
                                 class=""
                             />
@@ -564,12 +562,12 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                     class="flex flex-col justify-center lg:items-start items-center md:w-[105px] lg:w-[125px]"
                 >
                     <img
-                        src="../../../../public/images/kidlanding/Vector (4).png"
+                        src="/images/kidlanding/Vector (4).png"
                         alt=""
                         class="max-md:hidden lg:w-[74%] md:w-[75%]"
                     />
                     <img
-                        src="../../../../public/images/kidlanding/Vector (5).png"
+                        src="/images/kidlanding/Vector (5).png"
                         alt=""
                         class="md:hidden absolute left-0 w-[8%] top-0 -translate-y-1/2"
                     />
@@ -577,7 +575,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
             </div>
             <!-- img noghtehee -->
             <img
-                src="../../../../public/images/kidlanding/Group 124.png"
+                src="/images/kidlanding/Group 124.png"
                 alt=""
                 class="absolute bottom-0 left-0 w-[9%] md:w-[4.5%] lg:w-[4%]"
             />
@@ -602,7 +600,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                         class="flex flex-col items-center md:gap-y-5 lg:gap-y-10 lg:pr-5 md:px-3 flex-1 max-md:gap-y-6"
                     >
                         <img
-                            src="../../../../public/images/kidlanding/exam 1.png"
+                            src="/images/kidlanding/exam 1.png"
                             alt=""
                             class="md:w-[35%] w-[25%]"
                         />
@@ -635,7 +633,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                         class="flex flex-col items-center md:gap-y-5 lg:gap-y-10 md:px-3 flex-1 max-md:gap-y-6"
                     >
                         <img
-                            src="../../../../public/images/kidlanding/exam 1 (1).png"
+                            src="/images/kidlanding/exam 1 (1).png"
                             alt=""
                             class="md:w-[35%] w-[25%]"
                         />
@@ -668,7 +666,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                         class="flex flex-col items-center md:gap-y-5 lg:gap-y-10 md:pr-3 flex-1 max-md:gap-y-6"
                     >
                         <img
-                            src="../../../../public/images/kidlanding/exam 1 (2).png"
+                            src="/images/kidlanding/exam 1 (2).png"
                             alt=""
                             class="md:w-[35%] w-[25%]"
                         />
@@ -691,7 +689,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                     </div>
                 </div>
                 <img
-                    src="../../../../public/images/kidlanding/Vector (4).png"
+                    src="/images/kidlanding/Vector (4).png"
                     alt=""
                     class="max-md:hidden absolute right-0 w-[8%] top-0 lg:-translate-y-1/3 lg:translate-x-1/3 translate-x-1/4 -translate-y-1/3"
                 />
@@ -721,7 +719,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                         class="flex rounded-full bg-white lg:w-[22%] md:w-[19%] sm:w-[17%] w-[19%]"
                     >
                         <img
-                            src="../../../../public/images/kidlanding/mingcute_arrow-up-fill.png"
+                            src="/images/kidlanding/mingcute_arrow-up-fill.png"
                             alt=""
                             class=""
                         />
@@ -807,13 +805,13 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                                     بازی کنید
                                 </p>
                                 <img
-                                    src="../../../../public/images/kidlanding/Group (1).png"
+                                    src="/images/kidlanding/Group (1).png"
                                     alt=""
                                     class="md:w-[25%] w-[20%]"
                                 />
                             </div>
                             <img
-                                src="../../../../public/images/kidlanding/kid1.png"
+                                src="/images/kidlanding/kid1.png"
                                 alt=""
                                 class="w-[100%]"
                             />
@@ -841,13 +839,13 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                                     بازی کنید
                                 </p>
                                 <img
-                                    src="../../../../public/images/kidlanding/arrowexam.png"
+                                    src="/images/kidlanding/arrowexam.png"
                                     alt=""
                                     class="md:w-[25%] w-[20%]"
                                 />
                             </div>
                             <img
-                                src="../../../../public/images/kidlanding/kid2.png"
+                                src="/images/kidlanding/kid2.png"
                                 alt=""
                                 class="w-[100%]"
                             />
@@ -874,13 +872,13 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                                     بازی کنید
                                 </p>
                                 <img
-                                    src="../../../../public/images/kidlanding/Group (1).png"
+                                    src="/images/kidlanding/Group (1).png"
                                     alt=""
                                     class="md:w-[25%] w-[20%]"
                                 />
                             </div>
                             <img
-                                src="../../../../public/images/kidlanding/kid3.png"
+                                src="/images/kidlanding/kid3.png"
                                 alt=""
                                 class="w-[100%]"
                             />
@@ -890,7 +888,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                         class="absolute z-50 w-[30px] md:w-[35px] rounded-full bg-[#ffffff] border-[3px] border-[#9a50ff] my-custom-next left-[5%] top-[50%] translate-x-[-50%] translate-y-[-50%] md:hidden"
                     >
                         <img
-                            src="../../../../public/images/kidlanding/mingcute_arrow-up-fill (2).png"
+                            src="/images/kidlanding/mingcute_arrow-up-fill (2).png"
                             alt=""
                             class=""
                         />
@@ -899,7 +897,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                         class="absolute z-50 w-[30px] md:w-[35px] py-1.5 pr-1.5 rounded-full bg-[#9a50ff] my-custom-prev left-[95%] top-[50%] translate-x-[-50%] translate-y-[-50%] md:hidden"
                     >
                         <img
-                            src="../../../../public/images/kidlanding/mingcute_arrow-up-fill (1).png"
+                            src="/images/kidlanding/mingcute_arrow-up-fill (1).png"
                             alt=""
                             class="w-[80%]"
                         />
@@ -982,7 +980,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                             class="flex flex-col items-start rounded-[55px] bg-[#f6f6f6] gap-y-1 pb-8 max-md:shadow-xl"
                         >
                             <img
-                                src="../../../../public/images/kidlanding/teacher.png"
+                                src="/images/kidlanding/teacher.png"
                                 alt=""
                                 class="w-[100%] rounded-t-[55px]"
                             />
@@ -1005,7 +1003,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                                         class="flex rounded-full bg-[#704ee7] lg:w-[18%] w-[17%]"
                                     >
                                         <img
-                                            src="../../../../public/images/kidlanding/Group.png"
+                                            src="/images/kidlanding/Group.png"
                                             alt=""
                                             class=""
                                         />
@@ -1024,7 +1022,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                             class="flex flex-col items-start rounded-[55px] bg-[#f6f6f6] gap-y-1 pb-8 max-md:shadow-xl"
                         >
                             <img
-                                src="../../../../public/images/kidlanding/kidteacher.png"
+                                src="/images/kidlanding/kidteacher.png"
                                 alt=""
                                 class="w-[100%] rounded-t-[55px]"
                             />
@@ -1047,7 +1045,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                                         class="flex rounded-full bg-[#704ee7] lg:w-[18%] w-[17%]"
                                     >
                                         <img
-                                            src="../../../../public/images/kidlanding/Group.png"
+                                            src="/images/kidlanding/Group.png"
                                             alt=""
                                             class=""
                                         />
@@ -1065,7 +1063,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                             class="flex flex-col items-start rounded-[55px] bg-[#f6f6f6] gap-y-1 pb-8 max-md:shadow-xl"
                         >
                             <img
-                                src="../../../../public/images/kidlanding/teacher.png"
+                                src="/images/kidlanding/teacher.png"
                                 alt=""
                                 class="w-[100%] rounded-t-[55px]"
                             />
@@ -1088,7 +1086,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                                         class="flex rounded-full bg-[#704ee7] lg:w-[18%] w-[17%]"
                                     >
                                         <img
-                                            src="../../../../public/images/kidlanding/Group.png"
+                                            src="/images/kidlanding/Group.png"
                                             alt=""
                                             class=""
                                         />
@@ -1107,7 +1105,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                     class="absolute z-50 w-[30px] md:w-[35px] rounded-full bg-[#ffffff] border-[3px] border-[#9a50ff] my-custom-next left-[6%] top-[50%] translate-x-[-50%] translate-y-[-50%] md:hidden"
                 >
                     <img
-                        src="../../../../public/images/kidlanding/mingcute_arrow-up-fill (2).png"
+                        src="/images/kidlanding/mingcute_arrow-up-fill (2).png"
                         alt=""
                         class=""
                     />
@@ -1116,7 +1114,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                     class="absolute z-50 w-[30px] md:w-[35px] py-1.5 pr-1.5 rounded-full bg-[#9a50ff] my-custom-prev left-[94%] top-[50%] translate-x-[-50%] translate-y-[-50%] md:hidden"
                 >
                     <img
-                        src="../../../../public/images/kidlanding/mingcute_arrow-up-fill (1).png"
+                        src="/images/kidlanding/mingcute_arrow-up-fill (1).png"
                         alt=""
                         class="w-[80%]"
                     />
@@ -1126,17 +1124,17 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
         <!-- system yadigiri ayandeh -->
         <div class="flex flex-col items-center gap-y-20 relative">
             <img
-                src="../../../../public/images/kidlanding/Group 66 (1).png"
+                src="/images/kidlanding/Group 66 (1).png"
                 alt=""
                 class="absolute w-[9%] -left-5 md:left-2 top-0"
             />
             <img
-                src="../../../../public/images/kidlanding/Vector (4).png"
+                src="/images/kidlanding/Vector (4).png"
                 alt=""
                 class="absolute md:w-[4%] hidden md:flex md:right-0 -bottom-[13%]"
             />
             <img
-                src="../../../../public/images/kidlanding/Vector (6).png"
+                src="/images/kidlanding/Vector (6).png"
                 alt=""
                 class="absolute w-[6%] md:hidden right-0 -bottom-[15%]"
             />
@@ -1148,7 +1146,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                     سيستم <span class="text-[#9a50ff]">يادگيری</span> آينده!
                 </p>
                 <img
-                    src="../../../../public/images/kidlanding/labkhand.png"
+                    src="/images/kidlanding/labkhand.png"
                     alt=""
                     class="absolute bottom-[50%] left-0 w-[20%]"
                 />
@@ -1156,17 +1154,17 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
             <div class="flex md:flex-col">
                 <div class="relative flex justify-center">
                     <img
-                        src="../../../../public/images/kidlanding/Vector (8).png"
+                        src="/images/kidlanding/Vector (8).png"
                         alt=""
                         class="absolute w-[100%]"
                     />
                     <img
-                        src="../../../../public/images/kidlanding/Vector (8).png"
+                        src="/images/kidlanding/Vector (8).png"
                         alt=""
                         class="absolute w-[100%] bottom-0"
                     />
                     <img
-                        src="../../../../public/images/kidlanding/Vector (8).png"
+                        src="/images/kidlanding/Vector (8).png"
                         alt=""
                         class="md:hidden absolute top-[50%]"
                     />
@@ -1324,7 +1322,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                     <p class="relative underline text-[#704ee7]">
                         <span class="relative z-10">والدین</span>
                         <img
-                            src="../../../../public/images/kidlanding/Frame (1).png "
+                            src="/images/kidlanding/Frame (1).png "
                             alt=""
                             class="absolute top-0 z-0"
                         />
@@ -1344,7 +1342,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                         class="flex rounded-full bg-[#704ee7] md:w-[21%] w-[17%]"
                     >
                         <img
-                            src="../../../../public/images/kidlanding/Group.png"
+                            src="/images/kidlanding/Group.png"
                             alt=""
                             class=""
                         />
@@ -1360,7 +1358,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                 class="flex flex-col md:items-end items-center md:w-[45%] lg:w-[39%] w-[94%] gap-y-6 relative"
             >
                 <img
-                    src="../../../../public/images/kidlanding/setareh.png"
+                    src="/images/kidlanding/setareh.png"
                     alt=""
                     class="w-[8%] absolute z-0 -top-[3%] -right-[3%]"
                 />
@@ -1368,7 +1366,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                     class="flex flex-col bg-[#f3ebff] rounded-[30px] gap-y-2 p-4 relative z-10"
                 >
                     <img
-                        src="../../../../public/images/kidlanding/Group 84.png"
+                        src="/images/kidlanding/Group 84.png"
                         alt=""
                         class="lg:w-[23%] md:w-[30%] sm:w-[20%] w-[28%]"
                     />
@@ -1380,7 +1378,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                     </p>
                     <div class="flex justify-between items-center">
                         <img
-                            src="../../../../public/images/kidlanding/Frame (3).png"
+                            src="/images/kidlanding/Frame (3).png"
                             alt=""
                             class="md:w-[13%] lg:w-[10%] h-9"
                         />
@@ -1396,7 +1394,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                                 </p>
                             </div>
                             <img
-                                src="../../../../public/images/kidlanding/valed3.png"
+                                src="/images/kidlanding/valed3.png"
                                 alt=""
                                 class="md:w-[35%] w-[30%]"
                             />
@@ -1407,7 +1405,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                     class="flex flex-col bg-[#f3ebff] rounded-[30px] gap-y-2 p-4 relative z-10"
                 >
                     <img
-                        src="../../../../public/images/kidlanding/Group 84.png"
+                        src="/images/kidlanding/Group 84.png"
                         alt=""
                         class="lg:w-[23%] md:w-[30%] sm:w-[20%] w-[28%]"
                     />
@@ -1419,7 +1417,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                     </p>
                     <div class="flex justify-between items-center">
                         <img
-                            src="../../../../public/images/kidlanding/Frame (3).png"
+                            src="/images/kidlanding/Frame (3).png"
                             alt=""
                             class="md:w-[13%] lg:w-[10%] h-9"
                         />
@@ -1435,7 +1433,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                                 </p>
                             </div>
                             <img
-                                src="../../../../public/images/kidlanding/valed.png"
+                                src="/images/kidlanding/valed.png"
                                 alt=""
                                 class="md:w-[35%] w-[30%]"
                             />
@@ -1446,7 +1444,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                     class="flex flex-col bg-[#f3ebff] rounded-[30px] gap-y-2 p-4 relative z-10"
                 >
                     <img
-                        src="../../../../public/images/kidlanding/Group 84.png"
+                        src="/images/kidlanding/Group 84.png"
                         alt=""
                         class="lg:w-[23%] md:w-[30%] sm:w-[20%] w-[28%]"
                     />
@@ -1458,7 +1456,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                     </p>
                     <div class="flex justify-between items-center">
                         <img
-                            src="../../../../public/images/kidlanding/Frame (3).png"
+                            src="/images/kidlanding/Frame (3).png"
                             alt=""
                             class="md:w-[13%] lg:w-[10%] h-9"
                         />
@@ -1474,7 +1472,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                                 </p>
                             </div>
                             <img
-                                src="../../../../public/images/kidlanding/valed2.png"
+                                src="/images/kidlanding/valed2.png"
                                 alt=""
                                 class="md:w-[35%] w-[30%]"
                             />
@@ -1483,12 +1481,12 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                 </div>
             </div>
             <img
-                src="../../../../public/images/kidlanding/Ellipse 38.png"
+                src="/images/kidlanding/Ellipse 38.png"
                 alt=""
                 class="absolute md:bottom-0 md:right-0 max-md:scale-x-[-1] max-md:top-0 max-md:left-0"
             />
             <img
-                src="../../../../public/images/kidlanding/Ellipse 40.png"
+                src="/images/kidlanding/Ellipse 40.png"
                 alt=""
                 class="absolute md:bottom-[8%] md:right-0 max-md:scale-x-[-1] max-md:top-[7%] max-md:left-0"
             />
@@ -1518,7 +1516,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                     class="flex flex-col rounded-[35px] shadow-[#FEA031] shadow-lg py-3 pt-20 px-6 gap-y-4 relative justify-between"
                 >
                     <img
-                        src="../../../../public/images/kidlanding/Group 97 (3).png"
+                        src="/images/kidlanding/Group 97 (3).png"
                         alt=""
                         class="absolute top-4 -left-[13px] w-[166px] "
                     />
@@ -1531,7 +1529,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                     <div class="flex flex-col gap-y-1">
                         <div class="flex gap-x-1">
                             <img
-                                src="../../../../public/images/kidlanding/basil_desktop-solid.png"
+                                src="/images/kidlanding/basil_desktop-solid.png"
                                 alt=""
                                 class="w-6 h-6"
                             />
@@ -1539,14 +1537,14 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                         </div>
                         <div class="flex gap-x-1">
                             <img
-                                src="../../../../public/images/kidlanding/iconamoon_clock-fill.png"
+                                src="/images/kidlanding/iconamoon_clock-fill.png"
                                 alt=""
                             />
                             <p>پنل یک ماهه</p>
                         </div>
                         <div class="flex gap-x-1">
                             <img
-                                src="../../../../public/images/kidlanding/fluent_person-support-24-filled.png"
+                                src="/images/kidlanding/fluent_person-support-24-filled.png"
                                 alt=""
                             />
                             <p>پشتیبانی رایگان</p>
@@ -1557,7 +1555,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                         <p class="text-[21px] font-bold">خدمات:</p>
                         <div class="flex gap-x-1">
                             <img
-                                src="../../../../public/images/kidlanding/healthicons_yes.png"
+                                src="/images/kidlanding/healthicons_yes.png"
                                 alt=""
                                 class="w-6 h-6"
                             />
@@ -1565,7 +1563,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                         </div>
                         <div class="flex gap-x-1">
                             <img
-                                src="../../../../public/images/kidlanding/healthicons_yes.png"
+                                src="/images/kidlanding/healthicons_yes.png"
                                 alt=""
                                 class="w-6 h-6"
                             />
@@ -1573,7 +1571,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                         </div>
                         <div class="flex gap-x-1">
                             <img
-                                src="../../../../public/images/kidlanding/healthicons_yes.png"
+                                src="/images/kidlanding/healthicons_yes.png"
                                 alt=""
                                 class="w-6 h-6"
                             />
@@ -1584,7 +1582,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                         </div>
                         <div class="flex gap-x-1">
                             <img
-                                src="../../../../public/images/kidlanding/healthicons_yes.png"
+                                src="/images/kidlanding/healthicons_yes.png"
                                 alt=""
                                 class="w-6 h-6"
                             />
@@ -1595,7 +1593,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                         </div>
                         <div class="flex gap-x-1">
                             <img
-                                src="../../../../public/images/kidlanding/healthicons_yes.png"
+                                src="/images/kidlanding/healthicons_yes.png"
                                 alt=""
                                 class="w-6 h-6"
                             />
@@ -1615,7 +1613,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                     class="flex flex-col rounded-[35px] shadow-[#E484F3] shadow-lg py-3 pt-20 px-6 gap-y-4 relative justify-between"
                 >
                     <img
-                        src="../../../../public/images/kidlanding/Group 97 (1).png"
+                        src="/images/kidlanding/Group 97 (1).png"
                         alt=""
                         class="absolute top-4 -left-[13px] w-[166px]"
                     />
@@ -1628,7 +1626,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                     <div class="flex flex-col gap-y-1">
                         <div class="flex gap-x-1">
                             <img
-                                src="../../../../public/images/kidlanding/basil_desktop-solid (1).png"
+                                src="/images/kidlanding/basil_desktop-solid (1).png"
                                 alt=""
                                 class="w-6 h-6"
                             />
@@ -1636,14 +1634,14 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                         </div>
                         <div class="flex gap-x-1">
                             <img
-                                src="../../../../public/images/kidlanding/iconamoon_clock-fill (3).png"
+                                src="/images/kidlanding/iconamoon_clock-fill (3).png"
                                 alt=""
                             />
                             <p>پنل یک ماهه</p>
                         </div>
                         <div class="flex gap-x-1">
                             <img
-                                src="../../../../public/images/kidlanding/fluent_person-support-24-filled (3).png"
+                                src="/images/kidlanding/fluent_person-support-24-filled (3).png"
                                 alt=""
                             />
                             <p>پشتیبانی رایگان</p>
@@ -1654,7 +1652,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                         <p class="text-[21px] font-bold">خدمات:</p>
                         <div class="flex gap-x-1">
                             <img
-                                src="../../../../public/images/kidlanding/healthicons_yes.png"
+                                src="/images/kidlanding/healthicons_yes.png"
                                 alt=""
                                 class="w-6 h-6"
                             />
@@ -1662,7 +1660,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                         </div>
                         <div class="flex gap-x-1">
                             <img
-                                src="../../../../public/images/kidlanding/healthicons_yes.png"
+                                src="/images/kidlanding/healthicons_yes.png"
                                 alt=""
                                 class="w-6 h-6"
                             />
@@ -1673,7 +1671,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                         </div>
                         <div class="flex gap-x-1">
                             <img
-                                src="../../../../public/images/kidlanding/healthicons_yes.png"
+                                src="/images/kidlanding/healthicons_yes.png"
                                 alt=""
                                 class="w-6 h-6"
                             />
@@ -1684,7 +1682,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                         </div>
                         <div class="flex gap-x-1">
                             <img
-                                src="../../../../public/images/kidlanding/healthicons_yes.png"
+                                src="/images/kidlanding/healthicons_yes.png"
                                 alt=""
                                 class="w-6 h-6"
                             />
@@ -1695,7 +1693,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                         </div>
                         <div class="flex gap-x-1">
                             <img
-                                src="../../../../public/images/kidlanding/healthicons_yes.png"
+                                src="/images/kidlanding/healthicons_yes.png"
                                 alt=""
                                 class="w-6 h-6"
                             />
@@ -1715,7 +1713,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                     class="flex flex-col rounded-[35px] shadow-[#02D496] shadow-lg py-3 pt-20 px-6 gap-y-4 relative justify-between"
                 >
                     <img
-                        src="../../../../public/images/kidlanding/Group 97 (2).png"
+                        src="/images/kidlanding/Group 97 (2).png"
                         alt=""
                         class="absolute top-4 -left-[13px] w-[166px]"
                     />
@@ -1728,7 +1726,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                     <div class="flex flex-col gap-y-1">
                         <div class="flex gap-x-1">
                             <img
-                                src="../../../../public/images/kidlanding/basil_desktop-solid (2).png"
+                                src="/images/kidlanding/basil_desktop-solid (2).png"
                                 alt=""
                                 class="w-6 h-6"
                             />
@@ -1736,14 +1734,14 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                         </div>
                         <div class="flex gap-x-1">
                             <img
-                                src="../../../../public/images/kidlanding/iconamoon_clock-fill (1).png"
+                                src="/images/kidlanding/iconamoon_clock-fill (1).png"
                                 alt=""
                             />
                             <p>پنل یک ماهه</p>
                         </div>
                         <div class="flex gap-x-1">
                             <img
-                                src="../../../../public/images/kidlanding/fluent_person-support-24-filled (1).png"
+                                src="/images/kidlanding/fluent_person-support-24-filled (1).png"
                                 alt=""
                             />
                             <p>پشتیبانی رایگان</p>
@@ -1754,7 +1752,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                         <p class="text-[21px] font-bold">خدمات:</p>
                         <div class="flex gap-x-1">
                             <img
-                                src="../../../../public/images/kidlanding/healthicons_yes.png"
+                                src="/images/kidlanding/healthicons_yes.png"
                                 alt=""
                                 class="w-6 h-6"
                             />
@@ -1762,7 +1760,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                         </div>
                         <div class="flex gap-x-1">
                             <img
-                                src="../../../../public/images/kidlanding/healthicons_yes.png"
+                                src="/images/kidlanding/healthicons_yes.png"
                                 alt=""
                                 class="w-6 h-6"
                             />
@@ -1770,7 +1768,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                         </div>
                         <div class="flex gap-x-1">
                             <img
-                                src="../../../../public/images/kidlanding/healthicons_yes.png"
+                                src="/images/kidlanding/healthicons_yes.png"
                                 alt=""
                                 class="w-6 h-6"
                             />
@@ -1778,7 +1776,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                         </div>
                         <div class="flex gap-x-1">
                             <img
-                                src="../../../../public/images/kidlanding/healthicons_yes.png"
+                                src="/images/kidlanding/healthicons_yes.png"
                                 alt=""
                                 class="w-6 h-6"
                             />
@@ -1786,7 +1784,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                         </div>
                         <div class="flex gap-x-1">
                             <img
-                                src="../../../../public/images/kidlanding/healthicons_yes.png"
+                                src="/images/kidlanding/healthicons_yes.png"
                                 alt=""
                                 class="w-6 h-6"
                             />
@@ -1794,7 +1792,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                         </div>
                         <div class="flex gap-x-1">
                             <img
-                                src="../../../../public/images/kidlanding/healthicons_yes.png"
+                                src="/images/kidlanding/healthicons_yes.png"
                                 alt=""
                                 class="w-6 h-6"
                             />
@@ -1814,7 +1812,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                     class="flex flex-col rounded-[35px] shadow-[#018efd] shadow-lg py-3 pt-20 px-6 gap-y-4 relative justify-between"
                 >
                     <img
-                        src="../../../../public/images/kidlanding/Group 97 (4).png"
+                        src="/images/kidlanding/Group 97 (4).png"
                         alt=""
                         class="absolute top-4 -left-[14px] w-[124.5px]"
                     />
@@ -1822,7 +1820,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                     <div class="flex flex-col gap-y-1">
                         <div class="flex gap-x-1">
                             <img
-                                src="../../../../public/images/kidlanding/basil_desktop-solid (3).png"
+                                src="/images/kidlanding/basil_desktop-solid (3).png"
                                 alt=""
                                 class="w-6 h-6"
                             />
@@ -1830,14 +1828,14 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                         </div>
                         <div class="flex gap-x-1">
                             <img
-                                src="../../../../public/images/kidlanding/iconamoon_clock-fill (2).png"
+                                src="/images/kidlanding/iconamoon_clock-fill (2).png"
                                 alt=""
                             />
                             <p>استفاده بی نهایت</p>
                         </div>
                         <div class="flex gap-x-1">
                             <img
-                                src="../../../../public/images/kidlanding/fluent_person-support-24-filled (2).png"
+                                src="/images/kidlanding/fluent_person-support-24-filled (2).png"
                                 alt=""
                             />
                             <p>عدم پشتیبانی</p>
@@ -1848,7 +1846,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                         <p class="text-[21px] font-bold">خدمات:</p>
                         <div class="flex gap-x-1">
                             <img
-                                src="../../../../public/images/kidlanding/healthicons_yes.png"
+                                src="/images/kidlanding/healthicons_yes.png"
                                 alt=""
                                 class="w-6 h-6"
                             />
@@ -1856,7 +1854,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                         </div>
                         <div class="flex gap-x-1">
                             <img
-                                src="../../../../public/images/kidlanding/healthicons_yes.png"
+                                src="/images/kidlanding/healthicons_yes.png"
                                 alt=""
                                 class="w-6 h-6"
                             />
@@ -1864,7 +1862,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                         </div>
                         <div class="flex gap-x-1">
                             <img
-                                src="../../../../public/images/kidlanding/healthicons_yes.png"
+                                src="/images/kidlanding/healthicons_yes.png"
                                 alt=""
                                 class="w-6 h-6"
                             />
@@ -1872,7 +1870,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                         </div>
                         <div class="flex gap-x-1">
                             <img
-                                src="../../../../public/images/kidlanding/healthicons_yes-outline.png"
+                                src="/images/kidlanding/healthicons_yes-outline.png"
                                 alt=""
                                 class="w-6 h-6"
                             />
@@ -1882,7 +1880,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                         </div>
                         <div class="flex gap-x-1">
                             <img
-                                src="../../../../public/images/kidlanding/healthicons_yes-outline.png"
+                                src="/images/kidlanding/healthicons_yes-outline.png"
                                 alt=""
                                 class="w-6 h-6"
                             />
@@ -1892,7 +1890,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                         </div>
                         <div class="flex gap-x-1">
                             <img
-                                src="../../../../public/images/kidlanding/healthicons_yes-outline.png"
+                                src="/images/kidlanding/healthicons_yes-outline.png"
                                 alt=""
                                 class="w-6 h-6"
                             />
@@ -1914,3 +1912,65 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
     </div>
     </KidLayout>
 </template>
+
+<style scoped>
+
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+  }
+  .swiper {
+    width: 100%;
+    height: 100%;
+  }
+
+  .swiper-slide {
+    text-align: center;
+    font-size: 18px;
+
+
+    /* Center slide text vertically */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .swiper-slide img {
+    display: block;
+    object-fit: contain;
+  }
+
+  @media (max-width:768px) {
+   .swiper-slide {
+    filter: blur(0);
+    opacity: 1;
+    transform: scale(1);
+  }
+  .swiper-slide-active {
+    transform: scale(1.1);
+    z-index: 10;
+    border-radius: 65px;
+  }
+
+
+  .swiper-slide-next {
+    filter: blur(4px);
+    opacity: 0.6;
+    transform: scale(0.55);
+  }
+  .swiper-slide-prev{
+    filter: blur(4px);
+    opacity: 0.6;
+    transform: scale(0.55);
+  }
+
+  }
+  .swiper-button-prev::after {
+    display: none;
+  }
+  .swiper-button-next::after {
+    display: none;
+  }
+</style>

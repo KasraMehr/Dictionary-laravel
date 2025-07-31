@@ -120,7 +120,7 @@ const setLanguage = (lang) => {
                         >
                             <div class="flex rounded-full bg-[#704ee7] w-[40%]">
                                 <img
-                                    src="../../../public/images/kidlanding/Group.png"
+                                    src="/images/kidlanding/Group.png"
                                     alt=""
                                     class=""
                                 />
@@ -409,7 +409,7 @@ const setLanguage = (lang) => {
                             <div class="flex flex-col gap-y-5 pt-7">
                                 <div class="flex items-end gap-x-2">
                                     <img
-                                        src="../../../public/images/kidlanding/Group (2).png"
+                                        src="/images/kidlanding/Group (2).png"
                                         alt=""
                                     />
                                     <a
@@ -424,7 +424,7 @@ const setLanguage = (lang) => {
                                 </div>
                                 <div class="flex items-end gap-x-2">
                                     <img
-                                        src="../../../public/images/kidlanding/vector (12).png"
+                                        src="/images/kidlanding/vector (12).png"
                                         alt=""
                                     />
                                     <a
@@ -439,7 +439,7 @@ const setLanguage = (lang) => {
                                 </div>
                                 <div class="flex items-center gap-x-2">
                                     <img
-                                        src="../../../public/images/kidlanding/Group (3).png"
+                                        src="/images/kidlanding/Group (3).png"
                                         alt=""
                                     />
                                     <a
@@ -452,7 +452,7 @@ const setLanguage = (lang) => {
                                 </div>
                                 <div class="flex items-center gap-x-2">
                                     <img
-                                        src="../../../public/images/kidlanding/hugeicons_elearning-exchange.png"
+                                        src="/images/kidlanding/hugeicons_elearning-exchange.png"
                                         alt=""
                                     />
                                     <a
@@ -505,12 +505,12 @@ const setLanguage = (lang) => {
         class="bg-[#f8f1ff] backdrop-blur-md border-b flex flex-col shadow-sm"
         :dir="locale === 'en' ? 'ltr' : 'rtl'"
     >
-        <img src="../../../public/images/kidlanding/moj.png" alt="" />
+        <img src="/images/kidlanding/moj.png" alt="" />
         <div
             class="bg-[#f8f1ff] backdrop-blur-md border-b  shadow-sm mx-auto w-full px-4 md:px-10 sm:flex sm:flex-col sm:items-center md:block sm:px-24 relative"
         >
             <img
-                src="../../../public/images/kidlanding/Ellipse 38.png"
+                src="/images/kidlanding/Ellipse 38.png"
                 alt=""
                 class="absolute right-0 hidden md:flex"
             />
@@ -571,7 +571,7 @@ const setLanguage = (lang) => {
                             <div class="flex flex-col gap-y-3">
                                 <div class="flex items-center gap-x-2">
                                     <img
-                                        src="../../../public/images/kidlanding/mingcute_location-fill.png"
+                                        src="/images/kidlanding/mingcute_location-fill.png"
                                         alt=""
                                         class="h-8"
                                     />
@@ -579,7 +579,7 @@ const setLanguage = (lang) => {
                                 </div>
                                 <div class="flex items-center gap-x-2">
                                     <img
-                                        src="../../../public/images/kidlanding/majesticons_phone-retro (1).png"
+                                        src="/images/kidlanding/majesticons_phone-retro (1).png"
                                         alt=""
                                         class="h-8"
                                     />
@@ -587,7 +587,7 @@ const setLanguage = (lang) => {
                                 </div>
                                 <div class="flex items-center gap-x-2">
                                     <img
-                                        src="../../../public/images/kidlanding/mdi_email.png"
+                                        src="/images/kidlanding/mdi_email.png"
                                         alt=""
                                         class="h-8"
                                     />
@@ -607,7 +607,7 @@ const setLanguage = (lang) => {
                         </p>
                     </div>
                     <div class="lg:w-2/3 md:w-[82%] w-[90%] xl:p-2.5 p-1.5 xl:pb-1.5 bg-[#704ee7] rounded-[35px] relative">
-                        <img src="../../../public/images/kidlanding/Frame (5).png" alt="" class="absolute -left-[9%] -top-[16%] hidden md:flex w-[20%]">
+                        <img src="/images/kidlanding/Frame (5).png" alt="" class="absolute -left-[9%] -top-[16%] hidden md:flex w-[20%]">
                         <swiper
                             :spaceBetween="30"
                             :centeredSlides="true"
@@ -624,20 +624,20 @@ const setLanguage = (lang) => {
                         >
                             <swiper-slide>
                                 <img
-                                    src="../../../public/images/kidlanding/footer-slider.png"
+                                    src="/images/kidlanding/footer-slider.png"
                                     alt=""
                                     class="max-md:h-[90%]"
                                 />
                             </swiper-slide>
                             <swiper-slide>
                                 <img
-                                    src="../../../public/images/kidlanding/footer-slider.png"
+                                    src="/images/kidlanding/footer-slider.png"
                                     alt=""
                                 />
                             </swiper-slide>
                             <swiper-slide>
                                 <img
-                                    src="../../../public/images/kidlanding/footer-slider.png"
+                                    src="/images/kidlanding/footer-slider.png"
                                     alt=""
                                 />
                             </swiper-slide>
@@ -668,7 +668,7 @@ const setLanguage = (lang) => {
                                 >Modern Dictionary on Telegram</span
                             >
                             <img
-                                src="../../../public/images/kidlanding/Vector (15).png"
+                                src="/images/kidlanding/Vector (15).png"
                                 alt=""
                                 class="h-5"
                             />
@@ -683,7 +683,7 @@ const setLanguage = (lang) => {
                                 >Modern Dictionary on Instagram</span
                             >
                             <img
-                                src="../../../public/images/kidlanding/Group (6).png"
+                                src="/images/kidlanding/Group (6).png"
                                 alt=""
                                 class="h-6"
                             />
@@ -698,7 +698,7 @@ const setLanguage = (lang) => {
                                 >Modern Dictionary on YouTube</span
                             >
                             <img
-                                src="../../../public/images/kidlanding/Vector (14).png"
+                                src="/images/kidlanding/Vector (14).png"
                                 alt=""
                                 class="h-4"
                             />
@@ -713,7 +713,7 @@ const setLanguage = (lang) => {
                                 >Modern Dictionary on LinkedIn</span
                             >
                             <img
-                                src="../../../public/images/kidlanding/Group (5).png"
+                                src="/images/kidlanding/Group (5).png"
                                 alt=""
                                 class="h-5"
                             />
