@@ -51,9 +51,11 @@ Route::get('/kids-landing', [GeneralController::class, 'kidLanding'])->name('kid
 Route::get('/achievements', [AchievementController::class, 'index']);
 Route::get('/learn', [LearnController::class, 'learn'])->name('learn');
 Route::get('/topics', [LearnController::class, 'topics'])->name('topics');
+Route::get('/topics-learn', [LearnController::class, 'topicLearn'])->name('topics_Learn');
 Route::get('/levels', [LearnController::class, 'levels'])->name('levels');
 Route::get('/levels/{level}', [LearnController::class, 'levelLesson'])->name('level_lesson');
 Route::get('/grammars', [LearnController::class, 'grammars'])->name('grammars');
+Route::get('/grammar-learn', [LearnController::class, 'grammarLearn'])->name('grammar_Learn');
 Route::get('/teachers', [LearnController::class, 'teachers'])->name('teachers.index');
 Route::get('/teachers/{teacher}', [LearnController::class, 'show_teacher'])->name('teachers.show');
 Route::get('/courses', [LearnController::class, 'courses'])->name('courses.index');

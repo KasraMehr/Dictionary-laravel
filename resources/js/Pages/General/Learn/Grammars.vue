@@ -475,7 +475,7 @@ const filteredGrammar = computed(() => {
             <!-- هدر صفحه -->
             <div class="text-center mb-12">
                 <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
-          <span class="bg-gradient-to-r from-[#FF2D20] to-orange-500 bg-clip-text text-transparent">
+          <span class="bg-gradient-to-r from-blue-800 to-blue-500 bg-clip-text text-transparent">
             دانشنامه گرامر انگلیسی
           </span>
                 </h1>
@@ -502,7 +502,7 @@ const filteredGrammar = computed(() => {
                     <div class="flex flex-wrap gap-3">
                         <select
                             v-model="selectedLevel"
-                            class="px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 dark:text-white"
+                            class="py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 dark:text-white"
                         >
                             <option v-for="level in levels" :value="level">{{ level }}</option>
                         </select>
@@ -594,9 +594,9 @@ const filteredGrammar = computed(() => {
                         </div>
 
                         <div class="bg-gray-50 dark:bg-gray-700 px-6 py-4 border-t border-gray-100 dark:border-gray-600">
-                            <button class="text-blue-600 dark:text-blue-400 font-medium text-sm hover:text-blue-800 dark:hover:text-blue-300 transition-colors">
+                            <a href="/grammar-learn" class="text-blue-600 dark:text-blue-400 font-medium text-sm hover:text-blue-800 dark:hover:text-blue-300 transition-colors">
                                 مطالعه بیشتر →
-                            </button>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -649,9 +649,9 @@ const filteredGrammar = computed(() => {
                         </div>
 
                         <div class="mt-6 pt-4 border-t border-gray-100 dark:border-gray-700 flex justify-end">
-                            <button class="text-blue-600 dark:text-blue-400 font-medium text-sm hover:text-blue-800 dark:hover:text-blue-300 transition-colors">
+                            <a href="/grammar-learn" class="text-blue-600 dark:text-blue-400 font-medium text-sm hover:text-blue-800 dark:hover:text-blue-300 transition-colors">
                                 مطالعه کامل این مبحث →
-                            </button>
+                            </a>
                         </div>
                     </div>
                 </div>
