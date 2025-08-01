@@ -36,3 +36,15 @@ canvas {
   max-width: 100%;
   height: auto;
 }
+.custom-select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  background-image: none !important; /* فلش لعنتی مرورگر */
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  padding: 0 0 0 3px !important;
+ 
+}
