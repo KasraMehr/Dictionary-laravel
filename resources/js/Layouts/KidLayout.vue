@@ -125,17 +125,8 @@ const setLanguage = (lang) => {
                                     class=""
                                 />
                             </div>
-
-                            <a
-                                :href="route('login')"
-                                v-if="!canRegister"
-                                :active="route().current('login')"
-                                class="text-[#704ee7] text-[17px] dark:text-white"
-                            >
-                                {{ $t("login") }}
-                            </a>
                              <a
-                                        v-else-if="
+                                        v-if="
                                             $page.props.auth.user &&
                                             $page.props.auth.user.role ===
                                                 'teacher'
@@ -160,15 +151,14 @@ const setLanguage = (lang) => {
                                     </a>
                                     <template v-else>
                                         <a
-                                            :href="route('register')"
-                                            v-if="canRegister"
+                                            :href="route('login')"
+                                            v-if="!canRegister"
                                             :active="
-                                                route().current('register')
+                                                route().current('login')
                                             "
                                             class="text-[#704ee7] text-[17px] dark:text-white"
                                         >
-                                            {{ $t("login") }} /
-                                            {{ $t("register") }}
+                                            {{ $t("login") }} 
                                         </a>
                                     </template>
                         </div>
