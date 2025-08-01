@@ -12,8 +12,8 @@ import "swiper/css/navigation";
 
 import "../../../css/kidLanding.css";
 
+
 import { computed, onMounted, onUnmounted, ref } from "vue";
-import MainLayout from "@/Layouts/MainLayout.vue";
 import KidLayout from "@/Layouts/KidLayout.vue";
 const windowWidth = ref(window.innerWidth);
 const modules = [Autoplay, Navigation];
@@ -33,9 +33,9 @@ onUnmounted(() => {
 const centeredSlides = computed(() => windowWidth.value <= 768);
 </script>
 
-<template>
-    <KidLayout title="Landing Kids">
-    <div class="flex flex-col gap-y-16 mb-7" dir="rtl">
+<template >
+    <KidLayout title="Landing Kids" >
+    <div class="flex flex-col gap-y-16 mb-7" dir="rtl" >
         <!-- first section -->
         <div class="flex py-2">
             <div
@@ -66,20 +66,20 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                 class="flex flex-col sm:items-center pt-5 gap-y-6 xl:w-[55%] lg:w-[50%] md:w-[50%] sm:w-[45%] w-[55%]"
             >
                 <div class="flex flex-col items-center">
-                    <div class="flex w-[100%] sm:justify-start justify-center">
+                    <div class="flex  whitespace-nowrap  pl-3 sm:justify-start justify-center">
                         <img
                             src="/images/kidlanding/Highlight_05.png"
                             alt=""
                             class="sm:w-[9%] xl:h-16 lg:h-12 sm:py-2 sm:pr-2 md:h-10 sm:h-8 h-4 w-[16px]"
                         />
                         <p
-                            class="xl:text-[77px] lg:text-[60px] md:text-[48px] sm:text-[38px] text-[22px] font-[1000]"
+                            class="xl:text-[77px] lg:text-[60px] md:text-[48px] sm:text-[38px] text-[28px] font-[1000] " 
                         >
                             بهترين فضا برای
                         </p>
                     </div>
                     <div
-                        class="flex xl:text-[85px] lg:text-[65px] md:text-[53px] sm:text-[40px] text-[26px] font-[1000] justify-center"
+                        class="flex xl:text-[85px] lg:text-[65px] md:text-[53px] sm:text-[40px] text-[33px] font-[1000] justify-center"
                     >
                         <div class="flex gap-x-1 sm:gap-x-4">
                             <div class="flex flex-col">
@@ -110,7 +110,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                         class="flex flex-col box-border justify-center items-center sm:"
                     >
                         <p
-                            class="xl:text-[75px] lg:text-[65px] md:text-[48px] sm:text-[38px] text-[27px] font-[1000] xl:h-[94px] lg:h-[75px] md:h-[60px] sm:h-[50px] h-[34px]"
+                            class="xl:text-[75px] lg:text-[65px] md:text-[48px] sm:text-[38px] text-[30px] font-[1000] xl:h-[94px] lg:h-[75px] md:h-[60px] sm:h-[50px] h-[36px]"
                         >
                             کودکان
                         </p>
@@ -453,11 +453,11 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                 >
                     بچه‌ها با
                     <p class="relative underline text-[#704ee7]">
-                        لبخند
+                       <span class="relative z-10"> لبخند</span> 
                         <img
                             src="/images/kidlanding/Frame (1).png "
                             alt=""
-                            class="absolute top-0"
+                            class="absolute top-0 z-0"
                         />
                     </p>
                     دنبال می‌کنن
