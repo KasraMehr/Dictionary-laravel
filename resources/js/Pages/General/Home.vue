@@ -1,5 +1,4 @@
 <template>
-  <meta name="enamad" content="30623692" />
   <MainLayout title="Home">
     <div class="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 font-sans transition-colors duration-500 overflow-hidden">
       <!-- Hero Section - بازطراحی شده -->

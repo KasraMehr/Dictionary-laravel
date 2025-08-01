@@ -50,6 +50,7 @@ const setLanguage = (lang) => {
         <Head :title="title">
           <!-- Meta Tags for SEO -->
       <meta name="description" :content="metaDescription" />
+      <meta name="enamad" content="30623692" />
       <meta name="keywords" :content="metaKeywords" />
       <meta name="robots" content="index, follow" />
 
