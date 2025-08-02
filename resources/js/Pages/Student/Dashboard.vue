@@ -1,5 +1,5 @@
 <template>
-    <StudentLayout title="Dashboard">
+    <KidStudentLayout title="Dashboard">
         <div class="space-y-6">
             <!-- Welcome Header with Progress -->
             <div class="bg-gradient-to-r from-red-500 to-orange-600 rounded-2xl p-6 shadow-lg text-white">
@@ -213,7 +213,7 @@
                 </div>
             </div>
         </div>
-    </StudentLayout>
+    </KidStudentLayout>
 </template>
 
 <script setup>
@@ -226,7 +226,8 @@ import {
     CalendarIcon,
     BookmarkIcon
 } from '@heroicons/vue/24/outline';
-import StudentLayout from "@/Layouts/StudentLayout.vue";
+
+import KidStudentLayout from '@/Layouts/kidStudentLayout.vue';
 
 const props = defineProps({
     student: Object,
