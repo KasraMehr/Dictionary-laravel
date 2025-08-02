@@ -99,27 +99,6 @@ const getMapPointPosition = (index) => {
   return { left: `${x}%`, bottom: `${y}%` }
 }
 
-// مقداردهی اولیه بازی‌ها
-const initializeGames = () => {
-  // اینجا می‌توانید بازی‌ها را بر اساس محتوای درس مقداردهی کنید
-  // برای نمونه:
-  if (activeLesson.value.content?.listening) {
-    listeningCars.value = [
-      { id: 1, correct: false },
-      { id: 2, correct: true },
-      { id: 3, correct: false }
-    ]
-  }
-
-  if (activeLesson.value.content?.writing) {
-    writingBlanks.value = [
-      { label: 'ا', answer: '', correct: 'ب' },
-      { label: 'ی', answer: '', correct: 'ن' },
-      { label: 'ی', answer: '', correct: 'م' }
-    ]
-    writingCompleted.value = false
-  }
-}
 
 // بازی شنیداری
 const playListeningAudio = () => {
@@ -388,153 +367,168 @@ onMounted(() => {
 
 
 // reading
-const selectReadingOption = (index) => {
-  readingSelected.value = index
-  isReadingCorrect.value = index === 1 // فرض می‌کنیم گزینه دوم صحیح است
+const readingStage = ref('intro') // intro, book-selection, reading, comprehension, reward
+const currentFloor = ref(0)
+const knowledgeKeys = ref(0)
 
-  if (isReadingCorrect.value) {
-    toast.success('درست انتخاب کردید!')
-  } else {
-    toast.error('پاسخ صحیح نیست!')
-  }
-}
-
-const gameStage = ref('intro') // intro, hallway, reading, questions, reward
-const currentDoor = ref(null)
-const currentSentenceIndex = ref(0)
-const selectedAnswer = ref(null)
-const correctAnswersCount = ref(0)
-const candlesLit = ref([false, false, false])
-
-const doors = ref([
-  { unlocked: false, text: "Tom has a red robot. The robot can jump and dance." },
-  { unlocked: false, text: "One day, Tom and the robot went to the park." },
-  { unlocked: false, text: "They played with a big blue ball." }
-])
-
-// موقعیت کاراکتر
-const characterPosition1 = ref(50)
-
-// سوالات
-const questions = ref([
+// کتاب‌های موجود
+const libraryFloors = [
   {
-    text: "What color is Tom's robot?",
-    options: ["Blue", "Red", "Green"],
-    correctAnswer: 1
+    level: "آسان",
+    books: [
+      {
+        id: 1,
+        title: "ماجراهای تام و ربات",
+        level: "آسان",
+        image: "/images/book1.png",
+        content: [
+          "تام یک ربات قرمز دارد. ربات می‌تواند بپرد و برقصد.",
+          "یک روز، تام و ربات به پارک رفتند. آنجا یک توپ آبی بزرگ دیدند.",
+          "آنها با توپ بازی کردند. ربات خیلی خوشحال بود."
+        ],
+        vocabulary: [
+          { en: "robot", fa: "ربات" },
+          { en: "park", fa: "پارک" },
+          { en: "ball", fa: "توپ" }
+        ],
+        questions: [
+          {
+            id: 1,
+            text: "رنگ ربات تام چه بود؟",
+            options: ["آبی", "قرمز", "سبز"],
+            correctAnswer: 1
+          },
+          {
+            id: 2,
+            text: "تام و ربات به کجا رفتند؟",
+            options: ["مدرسه", "پارک", "خانه"],
+            correctAnswer: 1
+          },
+          {
+            id: 3,
+            text: "آنها با چه چیزی بازی کردند؟",
+            options: ["بادبادک", "دوچرخه", "توپ"],
+            correctAnswer: 2
+          }
+        ]
+      },
+      // کتاب‌های دیگر...
+    ]
   },
-  {
-    text: "Where did Tom and the robot go?",
-    options: ["School", "Park", "Home"],
-    correctAnswer: 1
-  },
-  {
-    text: "What color was the ball?",
-    options: ["Red", "Yellow", "Blue"],
-    correctAnswer: 2
-  }
-])
+  // طبقات دیگر...
+]
 
+// وضعیت فعلی بازی
+const availableBooks = computed(() => libraryFloors[currentFloor.value].books)
+const currentBook = ref(null)
 const currentQuestionIndex = ref(0)
-const currentQuestion = computed(() => questions.value[currentQuestionIndex.value])
-
-// محتوای خواندن
-const formattedReadingContent = computed(() => {
-  return activeLesson.value.content.reading.split('\n')
-    .filter(line => line.trim())
-    .map(line => ({ text: line.trim() }))
-})
+const selectedAnswerIndex = ref(null)
+const isAnswerCorrect = ref(false)
+const correctAnswersReading = ref(0)
+const vocabulary = computed(() => currentBook.value?.vocabulary || [])
 
 // شروع بازی
 const startReadingGame = () => {
-  gameStage.value = 'hallway'
+  readingStage.value = 'book-selection'
 }
 
-// نزدیک شدن به در
-const approachDoor = (index) => {
-  currentDoor.value = index
-  characterPosition.value = 10 + index * 25
+// انتخاب کتاب
+const selectBook = (book) => {
+  currentBook.value = book
+  readingStage.value = 'reading'
 }
 
-// ورود به در
-const enterDoor = (index) => {
-  if (!doors.value[index].unlocked) {
-    gameStage.value = 'reading'
-    currentSentenceIndex.value = 0
+// شروع آزمون درک مطلب
+const startComprehensionTest = () => {
+  currentQuestionIndex.value = 0
+  correctAnswersReading.value = 0
+  selectedAnswerIndex.value = null
+  readingStage.value = 'comprehension'
+}
+
+// سوال فعلی
+const currentQuestion = computed(() => {
+  return currentBook.value.questions[currentQuestionIndex.value]
+})
+
+// انتخاب پاسخ
+const selectAnswer = (index) => {
+  if (selectedAnswerIndex.value !== null) return;
+
+  selectedAnswerIndex.value = index;
+  isAnswerCorrect.value = index === currentQuestion.value.correctAnswer;
+
+  if (isAnswerCorrect.value) {
+    correctAnswers.value++;
   }
-}
+};
 
-// پخش صوت جمله
-const playSentenceAudio = (text) => {
-  // اینجا می‌توانید از Web Speech API یا فایل صوتی استفاده کنید
-  const utterance = new SpeechSynthesisUtterance(text)
-  utterance.lang = 'en-US'
-  speechSynthesis.speak(utterance)
-}
-
-// جمله بعدی
-const nextSentence = () => {
-  if (currentSentenceIndex.value < formattedReadingContent.value.length - 1) {
-    currentSentenceIndex.value++
-  } else {
-    // تمام شدن متن، رفتن به سوالات
-    gameStage.value = 'questions'
-    currentQuestionIndex.value = 0
-    selectedAnswer.value = null
-  }
-}
-
-// جمله قبلی
-const prevSentence = () => {
-  if (currentSentenceIndex.value > 0) {
-    currentSentenceIndex.value--
-  }
-}
-
-// بررسی پاسخ
-const checkAnswer = (index) => {
-  if (selectedAnswer.value !== null) return
-
-  selectedAnswer.value = index
-  if (index === currentQuestion.value.correctAnswer) {
-    correctAnswersCount.value++
-    // پخش صدای تشویق
-    new Audio('/sounds/correct.mp3').play().catch(() => {})
-  } else {
-    // پخش صدای اشتباه
-    new Audio('/sounds/wrong.mp3').play().catch(() => {})
-  }
-}
-
-// سوال بعدی
 const nextQuestion = () => {
-  if (currentQuestionIndex.value < questions.value.length - 1) {
-    currentQuestionIndex.value++
-    selectedAnswer.value = null
+  if (selectedAnswerIndex.value === null) return;
+
+  if (currentQuestionIndex.value < currentBook.value.questions.length - 1) {
+    currentQuestionIndex.value++;
+    selectedAnswerIndex.value = null;
+    isAnswerCorrect.value = false;
   } else {
-    // تمام شدن سوالات
-    gameStage.value = 'reward'
-    // روشن کردن شمع‌ها
-    candlesLit.value = candlesLit.value.map((_, i) => i < correctAnswersCount.value)
-    // باز کردن در فعلی
-    if (currentDoor.value !== null) {
-      doors.value[currentDoor.value].unlocked = true
-    }
+    readingStage.value = 'reward';
+    knowledgeKeys.value++;
   }
+};
+
+// کلاس‌های گزینه‌ها
+const getOptionClasses = (index) => {
+  if (selectedAnswerIndex.value === null) {
+    return 'bg-white hover:bg-purple-100 border border-purple-200'
+  }
+
+  if (index === currentQuestion.value.correctAnswer) {
+    return 'bg-green-100 text-green-800 border border-green-300'
+  }
+
+  if (index === selectedAnswerIndex.value && !isAnswerCorrect.value) {
+    return 'bg-red-100 text-red-800 border border-red-300'
+  }
+
+  return 'bg-white opacity-70 border border-gray-200'
 }
 
-// تکمیل بازی
+// تکمیل بازی خواندن
+const getResultMessage = () => {
+  const percentage = (correctAnswers.value / currentBook.value.questions.length) * 100;
+  if (percentage >= 80) return "عالی بود! شما تسلط خوبی روی این مطلب دارید!";
+  if (percentage >= 60) return "خوب بود! می‌توانید بهتر هم بشوید!";
+  if (percentage >= 40) return "قابل قبول! پیشنهاد می‌کنیم دوباره مطالعه کنید";
+  return "نیاز به مطالعه بیشتر دارید. ناامید نشوید!";
+};
+
+// بررسی وجود طبقات بیشتر
+const hasMoreFloors = computed(() => {
+  return currentFloor.value < libraryFloors.length - 1;
+});
+
+// تکمیل بازی خواندن
 const completeReadingGame = () => {
-  gameStage.value = 'hallway'
-  currentDoor.value = null
-  characterPosition.value = 50
-
-  // بررسی اگر همه درها باز شدند
-  if (doors.value.every(door => door.unlocked)) {
-    // نشان دادن پاداش نهایی
-    alert('تبریک! شما تمام درهای کتابخانه رو باز کردید و نور به کتاب جادویی برگشت!')
-    // اینجا می‌توانید درس را به عنوان تکمیل شده علامت بزنید
+  if (hasMoreFloors.value) {
+    currentFloor.value++;
+    readingStage.value = 'book-selection';
+    // ریست متغیرها برای طبقه جدید
+    currentBook.value = null;
+    currentQuestionIndex.value = 0;
+    selectedAnswerIndex.value = null;
+    correctAnswers.value = 0;
+  } else {
+    // پایان بازی
+    readingStage.value = 'intro'; // یا هر مرحله پایانی دیگر
+    // می‌توانید یک پیام نهایی یا انیمیشن ویژه نمایش دهید
+    alert('تبریک! شما تمام طبقات کتابخانه را کامل کردید!');
   }
-}
+};
+
+// مقداردهی اولیه
+onMounted(() => {
+  currentFloor.value = 0
+})
 
 
 
@@ -1802,168 +1796,200 @@ watch(() => props.lesson, (newLesson) => {
           </div>
         </div>
 
-        <!-- سایر فعالیت‌ها -->
         <!-- بازی خواندن - کتابخانه جادویی -->
         <!-- reading -->
-        <div v-if="activeLesson.content?.reading" class="relative bg-gray-900 rounded-xl overflow-hidden min-h-[300px] p-6 my-10">
-          <!-- پس‌زمینه تاریک کتابخانه -->
-          <div class="absolute inset-0 bg-gradient-to-b from-gray-900 via-purple-900 to-gray-900 opacity-90"></div>
+          <div v-if="activeLesson.content?.reading" class="relative min-h-[600px] bg-gradient-to-b from-purple-900 to-blue-900 rounded-xl overflow-hidden p-6">
+            <!-- پس‌زمینه کتابخانه -->
+            <div class="absolute inset-0 bg-[url('/images/magic-library-bg.jpg')] bg-cover opacity-30"></div>
 
-          <!-- عناصر کتابخانه -->
-          <div class="relative z-10 h-full p-6 flex flex-col">
-            <!-- هدر بازی -->
-            <div class="flex justify-between items-center mb-6">
-              <h3 class="flex items-center gap-2 text-2xl font-bold text-yellow-300">
-                <BookOpenIcon class="w-8 h-8" />
-                کتابخانه جادویی
-              </h3>
-              <div class="flex gap-2">
-                <span v-for="(candle, index) in candlesLit" :key="index" class="text-yellow-300">
-                  <template v-if="candle">🕯️</template>
-                  <template v-else>🕯️</template>
-                </span>
-              </div>
-            </div>
-
-            <!-- مرحله 1: انیمیشن مقدمه -->
-            <div v-if="gameStage === 'intro'" class="flex-1 flex flex-col items-center justify-center text-center">
-              <div class="max-w-md mx-auto animate-pulse">
-                <div class="text-6xl mb-4">📖</div>
-                <h4 class="text-xl font-bold text-yellow-200 mb-4">اوه نه! کتاب جادویی نورش رو از دست داده!</h4>
-                <p class="text-gray-300 mb-6">کسی مدت‌هاست متن‌هاش رو نخونده! بیا کمک کن دوباره نور رو بهش برگردونیم!</p>
-                <button @click="startReadingGame" class="px-6 py-3 bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-bold rounded-lg transition-all">
-                  شروع ماجراجویی
-                </button>
-              </div>
-            </div>
-
-            <!-- مرحله 2: راهرو تاریک -->
-            <div v-if="gameStage === 'hallway'" class="flex-1 flex flex-col">
-              <div class="relative flex buttom-0 pt-16">
-                <!-- کاراکتر کاربر -->
-                <div class="absolute buttom-0 left-1/2 transform -translate-x-1/2 w-24 h-24 transition-all duration-500"
-                     :style="{ left: characterPosition1 + '%' }">
-                  <svg viewBox="0 0 100 100" class="w-full h-full">
-                    <!-- کاراکتر شوالیه -->
-                    <circle cx="50" cy="30" r="20" fill="#fcd34d" />
-                    <rect x="35" y="50" width="30" height="40" rx="5" fill="#3b82f6" />
-                    <path d="M40,35 Q50,25 60,35" stroke="#1e293b" stroke-width="2" fill="none" />
-                    <circle cx="40" cy="25" r="3" fill="#1e293b" />
-                    <circle cx="60" cy="25" r="3" fill="#1e293b" />
-                    <!-- کلاه شوالیه -->
-                    <path d="M30,15 L70,15 L65,5 L35,5 Z" fill="#ef4444" />
-                  </svg>
-                </div>
-
-                <!-- درهای قفل شده -->
-                <div v-for="(door, index) in doors" :key="index"
-                     class="absolute buttom-4 w-16 h-32 bg-amber-800 border-4 border-amber-900 rounded-t-lg flex flex-col items-center justify-center cursor-pointer transition-transform"
-                     :class="{
-                       'opacity-50': !door.unlocked,
-                       'hover:scale-105': currentDoor === index
-                     }"
-                     :style="{ left: (10 + index * 25) + '%' }"
-                     @click="approachDoor(index)">
-                  <LockClosedIcon v-if="!door.unlocked" class="w-8 h-8 text-yellow-200" />
-                  <div v-else class="text-yellow-200 text-xs text-center p-2">✅ باز شده</div>
-                </div>
-              </div>
-
-              <!-- پیام در -->
-              <div v-if="currentDoor !== null" class="mt-4 p-4 bg-gray-800 rounded-lg border border-yellow-400 text-yellow-100">
-                <p v-if="!doors[currentDoor].unlocked">"برای باز کردن این در، این متن رو بخون!"</p>
-                <button v-if="!doors[currentDoor].unlocked"
-                        @click="enterDoor(currentDoor)"
-                        class="mt-2 px-4 py-2 bg-yellow-600 hover:bg-yellow-700 rounded-lg text-white">
-                  وارد شو
-                </button>
-              </div>
-            </div>
-
-            <!-- مرحله 3: خواندن متن -->
-            <div v-if="gameStage === 'reading'" class="flex-1 flex flex-col">
-              <div class="flex-1 overflow-y-auto p-4 bg-gray-800 bg-opacity-50 rounded-lg mb-4">
-                <!-- متن درس با جملات -->
-                <div v-for="(sentence, index) in formattedReadingContent" :key="index"
-                     class="mb-4 p-3 rounded-lg"
-                     :class="{
-                       'bg-gray-800': currentSentenceIndex === index,
-                       'opacity-70': currentSentenceIndex > index
-                     }">
-                  <div class="flex items-start gap-3">
-                    <span class="text-yellow-300 text-2xl">📖</span>
-                    <p class="text-white text-lg">{{ sentence.text }}</p>
+            <div class="relative z-10 h-full flex flex-col">
+              <!-- هدر بازی -->
+              <div class="flex justify-between items-center mb-6">
+                <h3 class="flex items-center gap-2 text-2xl font-bold text-yellow-300">
+                  <BookOpenIcon class="w-8 h-8" />
+                  کتابخانه جادویی
+                </h3>
+                <div class="flex items-center gap-2">
+                  <span class="text-yellow-300">کلیدهای دانش: {{ knowledgeKeys }}</span>
+                  <div class="w-8 h-8 bg-yellow-400 rounded-full flex items-center justify-center text-purple-900 font-bold shadow-md">
+                    {{ currentFloor + 1 }}
                   </div>
-                  <button v-if="currentSentenceIndex === index"
-                          @click="playSentenceAudio(sentence.text)"
-                          class="mt-2 flex items-center gap-1 px-3 py-1 bg-blue-600 hover:bg-blue-700 rounded-lg text-white text-sm">
-                    <PlayIcon class="w-4 h-4" />
-                    پخش صوت
-                  </button>
                 </div>
               </div>
 
-              <!-- کنترل‌های خواندن -->
-              <div class="flex justify-between">
-                <button @click="prevSentence"
-                        :disabled="currentSentenceIndex === 0"
-                        class="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-white disabled:opacity-50">
-                  جمله قبلی
-                </button>
-                <button @click="nextSentence"
-                        :disabled="currentSentenceIndex >= formattedReadingContent.length - 1"
-                        class="px-4 py-2 bg-yellow-600 hover:bg-yellow-700 rounded-lg text-white disabled:opacity-50">
-                  {{ currentSentenceIndex < formattedReadingContent.length - 1 ? 'جمله بعدی' : 'اتمام متن' }}
-                </button>
-              </div>
-            </div>
+              <!-- مراحل بازی -->
+              <div class="flex-1 flex flex-col">
+                <!-- مرحله 1: معرفی -->
+                <div v-if="readingStage === 'intro'" class="flex-1 flex flex-col items-center justify-center">
+                  <div class="bg-white bg-opacity-10 rounded-2xl p-6 max-w-md w-full text-center shadow-lg border-2 border-yellow-400">
+                    <div class="wizard-character animate-bounce mb-6">
+                      <img src="/images/wizard.png" alt="جادوگر" class="w-32 h-32 mx-auto">
+                    </div>
+                    <p class="text-lg text-yellow-200 mb-4">"سلام! من نگهبان کتابخانه جادویی هستم. کتاب‌های ما قدرت خود را از دست داده‌اند چون کسی آن‌ها را نمی‌خواند!"</p>
+                    <button @click="startReadingGame" class="px-6 py-3 bg-yellow-500 hover:bg-yellow-600 text-purple-900 rounded-lg font-bold transition-colors">
+                      بازیابی قدرت کتاب‌ها
+                    </button>
+                  </div>
+                </div>
 
-            <!-- مرحله 4: سوالات -->
-            <div v-if="gameStage === 'questions'" class="flex-1 flex flex-col items-center justify-center">
-              <div class="max-w-md w-full bg-gray-800 rounded-xl p-6 shadow-lg">
-                <h4 class="text-xl font-bold text-yellow-300 mb-4 text-center">سوال:</h4>
-                <p class="text-white mb-6 text-center">{{ currentQuestion.text }}</p>
+                <!-- مرحله 2: انتخاب کتاب -->
+                <div v-if="readingStage === 'book-selection'" class="flex-1 flex flex-col">
+                  <div class="bg-white bg-opacity-10 rounded-2xl p-6 flex-1 flex flex-col">
+                    <div class="wizard-character mb-6">
+                      <img src="/images/wizard.png" alt="جادوگر" class="w-24 h-24 mx-auto">
+                    </div>
 
-                <div class="space-y-3">
-                  <button v-for="(option, index) in currentQuestion.options"
+                    <div class="mb-6 text-center">
+                      <p class="text-lg text-yellow-200 mb-4">"لطفاً یک کتاب را برای خواندن انتخاب کن:"</p>
+                    </div>
+
+                    <div class="books-grid grid grid-cols-2 md:grid-cols-3 gap-4">
+                      <div
+                        v-for="(book, index) in availableBooks"
+                        :key="index"
+                        @click="selectBook(book)"
+                        class="book-card bg-purple-800 bg-opacity-50 p-4 rounded-lg border-2 border-transparent hover:border-yellow-400 transition-all cursor-pointer text-center"
+                      >
+                        <div class="book-cover bg-blue-900 w-full h-32 rounded mb-2 flex items-center justify-center text-5xl">
+                          📖
+                        </div>
+                        <h4 class="text-yellow-200 font-bold">{{ book.title }}</h4>
+                        <p class="text-purple-200 text-sm">سطح: {{ book.level }}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- مرحله 3: خواندن متن -->
+                <div v-if="readingStage === 'reading'" class="flex-1 flex flex-col">
+                  <div class="bg-white bg-opacity-10 rounded-2xl p-6 flex-1 flex flex-col">
+                    <!-- نمایش کتاب باز شده -->
+                    <div class="opened-book flex-1 flex bg-amber-50 bg-opacity-90 rounded-lg overflow-hidden">
+                      <!-- صفحه چپ (تصویر) -->
+                      <div class="book-page w-1/2 p-4 hidden md:flex items-center justify-center border-r border-amber-200">
+                        <img :src="currentBook.image" :alt="currentBook.title" class="max-h-full max-w-full rounded">
+                      </div>
+
+                      <!-- صفحه راست (متن) -->
+                      <div class="book-page w-full md:w-1/2 p-6 overflow-y-auto">
+                        <h3 class="text-xl font-bold text-purple-900 mb-4">{{ currentBook.title }}</h3>
+
+                        <div class="text-content">
+                          <p
+                            v-for="(paragraph, index) in currentBook.content"
+                            :key="index"
+                            class="mb-4 text-gray-800"
+                          >
+                            {{ paragraph }}
+                          </p>
+                        </div>
+
+                        <!-- واژه‌نامه سریع -->
+                        <div class="quick-glossary mt-6 p-3 bg-purple-100 rounded-lg">
+                          <h4 class="font-bold text-purple-800 mb-2">واژه‌نامه:</h4>
+                          <div class="flex flex-wrap gap-2">
+                            <span
+                              v-for="(word, index) in vocabulary"
+                              :key="index"
+                              class="px-2 py-1 bg-white text-purple-800 rounded text-sm"
+                            >
+                              {{ word.en }}: {{ word.fa }}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- کنترل‌های خواندن -->
+                    <div class="flex justify-between mt-4">
+                      <button
+                        @click="readingStage = 'book-selection'"
+                        class="px-4 py-2 bg-purple-700 hover:bg-purple-600 text-white rounded-lg"
+                      >
+                        تغییر کتاب
+                      </button>
+                      <button
+                        @click="startComprehensionTest"
+                        class="px-6 py-2 bg-yellow-500 hover:bg-yellow-600 text-purple-900 rounded-lg font-bold"
+                      >
+                        شروع آزمون درک مطلب
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- مرحله 4: آزمون درک مطلب -->
+                <div v-if="readingStage === 'comprehension'" class="flex-1 flex flex-col items-center justify-center">
+                  <div class="bg-white bg-opacity-90 rounded-2xl p-8 w-full max-w-2xl">
+                    <div class="flex items-center gap-4 mb-6">
+                      <img :src="currentBook.image" :alt="currentBook.title" class="w-16 h-16 rounded-lg">
+                      <h3 class="text-xl font-bold text-purple-800">{{ currentBook.title }}</h3>
+                    </div>
+
+                    <div class="question-card mb-6 p-6 bg-purple-50 rounded-lg">
+                      <h4 class="text-lg font-bold text-purple-700 mb-4">سوال {{ currentQuestionIndex + 1 }} از {{ currentBook.questions.length }}:</h4>
+                      <p class="text-gray-800 mb-6">{{ currentQuestion.text }}</p>
+
+                      <div class="options-grid grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <button
+                          v-for="(option, index) in currentQuestion.options"
                           :key="index"
-                          @click="checkAnswer(index)"
-                          class="w-full p-3 text-left rounded-lg transition-all"
-                          :class="{
-                            'bg-gray-700 hover:bg-gray-600': selectedAnswer === null,
-                            'bg-green-600': selectedAnswer !== null && index === currentQuestion.correctAnswer,
-                            'bg-red-600': selectedAnswer === index && index !== currentQuestion.correctAnswer,
-                            'bg-gray-600': selectedAnswer !== null && selectedAnswer !== index && index !== currentQuestion.correctAnswer
-                          }">
-                    {{ option }}
+                          @click="selectAnswer(index)"
+                          class="p-3 text-left rounded-lg transition-all"
+                          :class="getOptionClasses(index)"
+                          :disabled="selectedAnswerIndex !== null"
+                        >
+                          {{ option }}
+                        </button>
+                      </div>
+                    </div>
+
+                    <div class="flex justify-between items-center">
+                      <span class="text-sm text-purple-600">
+                        پاسخ‌های صحیح: {{ correctAnswers }} از {{ currentBook.questions.length }}
+                      </span>
+                      <button
+                        @click="nextQuestion"
+                        :disabled="selectedAnswerIndex === null"
+                        class="px-6 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-bold"
+                        :class="{ 'opacity-50 cursor-not-allowed': selectedAnswerIndex === null }"
+                      >
+                        {{ currentQuestionIndex < currentBook.questions.length - 1 ? 'سوال بعدی' : 'پایان آزمون' }}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div v-if="readingStage === 'reward'" class="flex-1 flex flex-col items-center justify-center">
+                <div class="bg-white bg-opacity-90 rounded-2xl p-8 text-center max-w-md w-full shadow-lg border-2 border-yellow-400">
+                  <div class="text-6xl mb-4">✨</div>
+                  <h4 class="text-2xl font-bold text-purple-800 mb-4">تبریک! آزمون را به پایان رساندید!</h4>
+
+                  <div class="result-display mb-6 p-4 bg-purple-100 rounded-lg">
+                    <p class="text-lg font-bold text-purple-700">
+                      نتیجه: {{ correctAnswers }} از {{ currentBook.questions.length }} سوال صحیح
+                    </p>
+                    <p class="text-purple-600 mt-2">
+                      {{ getResultMessage() }}
+                    </p>
+                  </div>
+
+                  <div class="reward-animation mb-6">
+                    <img src="/images/magic-key.png" alt="کلید دانش" class="w-24 h-24 mx-auto animate-bounce">
+                    <p class="text-yellow-600 font-bold mt-2">+1 کلید دانش</p>
+                  </div>
+
+                  <button
+                    @click="completeReadingGame"
+                    class="px-6 py-3 bg-yellow-500 hover:bg-yellow-600 text-purple-900 rounded-lg font-bold transition-colors"
+                  >
+                    {{ hasMoreFloors ? 'برو به طبقه بعدی' : 'بازگشت به کتابخانه' }}
                   </button>
                 </div>
-
-                <button v-if="selectedAnswer !== null"
-                        @click="nextQuestion"
-                        class="mt-6 w-full py-2 bg-yellow-600 hover:bg-yellow-700 rounded-lg text-white">
-                  ادامه
-                </button>
               </div>
-            </div>
-
-            <!-- مرحله 5: پاداش -->
-            <div v-if="gameStage === 'reward'" class="flex-1 flex flex-col items-center justify-center text-center">
-              <div class="animate-bounce text-6xl mb-6">🎉</div>
-              <h4 class="text-2xl font-bold text-yellow-300 mb-4">آفرین! موفق شدی!</h4>
-              <p class="text-white mb-6">شما {{ correctAnswersCount }} از {{ questions.length }} سوال را درست پاسخ دادید!</p>
-
-              <div class="flex justify-center gap-2 mb-6">
-                <span v-for="n in correctAnswersCount" :key="n" class="text-2xl text-yellow-300">🕯️</span>
-              </div>
-
-              <button @click="completeReadingGame"
-                      class="px-6 py-3 bg-green-600 hover:bg-green-700 rounded-lg text-white font-bold">
-                دریافت مهر طلایی
-              </button>
             </div>
           </div>
-        </div>
 
         <!-- Writing -->
         <!-- بازی نوشتن - اتاق فرماندهی -->
@@ -3307,5 +3333,43 @@ watch(() => props.lesson, (newLesson) => {
 @keyframes float {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-10px); }
+}
+
+.wizard-character {
+  transition: all 0.3s ease;
+}
+
+.animate-bounce {
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.book-card {
+  transition: all 0.2s ease;
+}
+
+.book-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.opened-book {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.book-page {
+  transition: all 0.3s ease;
+}
+
+.quick-glossary {
+  transition: all 0.3s ease;
+}
+
+.quick-glossary:hover {
+  transform: scale(1.02);
 }
 </style>
