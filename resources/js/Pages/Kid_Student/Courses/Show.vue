@@ -533,9 +533,17 @@ onMounted(() => {
 
 
 // writing
-const writingStage = ref('fillBlank') // fillBlank, buildSentence, writeStory, correctText, result
+const writingStage = ref('intro') // intro, fillBlank, buildSentence, writeStory, correctText, result
 const score = ref(0)
 const level = ref(1)
+
+// مراحل بازی با اطلاعات کامل
+const gameStages = [
+  { name: 'fillBlank', stageName: 'پر کردن جای خالی', maxScore: 20 },
+  { name: 'buildSentence', stageName: 'جمله سازی', maxScore: 25 },
+  { name: 'writeStory', stageName: 'داستان نویسی', maxScore: 30 },
+  { name: 'correctText', stageName: 'تصحیح متن', maxScore: 25 }
+]
 
 // مرحله 1: پر کردن جای خالی
 const fillBlankExercises = ref([
@@ -583,8 +591,8 @@ const sentenceExercises = ref([
     correctSentence: ["The dog", "is eating", "a bone"]
   }
 ])
-const currentSentenceIndex1 = ref(0)
-const currentSentence = computed(() => sentenceExercises.value[currentSentenceIndex1.value])
+const currentSentenceIndex = ref(0)
+const currentSentence = computed(() => sentenceExercises.value[currentSentenceIndex.value])
 const userSentence = ref([])
 
 // مرحله 3: داستان نویسی
@@ -639,15 +647,44 @@ onMounted(() => {
   resetWritingGame()
 })
 
+// شروع بازی نوشتن
+const startWritingGame = () => {
+  writingStage.value = 'fillBlank'
+  score.value = 0
+  level.value = 1
+  resetAllStages()
+}
+
+// ریست تمام مراحل
+const resetAllStages = () => {
+  currentFillBlankIndex.value = 0
+  currentSentenceIndex.value = 0
+  currentStoryIndex.value = 0
+  currentTextIndex.value = 0
+  stageResults.value = []
+
+  fillBlankExercises.value.forEach(ex => ex.userAnswer = "")
+  resetSentence()
+  resetStory()
+  resetTextCorrection()
+}
+
 // متدهای مرحله 1: پر کردن جای خالی
 const selectFillBlankOption = (option) => {
   currentFillBlank.value.userAnswer = option
 }
 
 const checkFillBlankAnswer = () => {
+  if (!currentFillBlank.value.userAnswer) {
+    toastError("لطفاً یک گزینه انتخاب کنید")
+    return
+  }
+
   const isCorrect = currentFillBlank.value.userAnswer === currentFillBlank.value.correctAnswer
+  const stageScore = isCorrect ? gameStages[0].maxScore / fillBlankExercises.value.length : 0
+  score.value += stageScore
+
   if (isCorrect) {
-    score.value += 20
     toastSuccess("آفرین! پاسخ درست بود.")
   } else {
     toastError(`اشتباه است! پاسخ صحیح: ${currentFillBlank.value.correctAnswer}`)
@@ -657,14 +694,18 @@ const checkFillBlankAnswer = () => {
     currentFillBlankIndex.value++
     currentFillBlank.value.userAnswer = ""
   } else {
-    stageResults.value.push({ stage: "fillBlank", passed: true })
+    stageResults.value.push({
+      stage: "fillBlank",
+      stageName: gameStages[0].stageName,
+      passed: true
+    })
     writingStage.value = "buildSentence"
     resetSentence()
   }
 }
 
 // متدهای مرحله 2: جمله سازی با تصاویر
-const dragStart1 = (event, index, type) => {
+const dragStart = (event, index, type) => {
   event.dataTransfer.setData("type", type)
   event.dataTransfer.setData("index", index)
 }
@@ -679,24 +720,17 @@ const dropItem = (event) => {
       userSentence.value.push(word)
     }
   } else if (type === "word") {
-    // تغییر ترتیب کلمات
     const draggedWord = userSentence.value[index]
     userSentence.value.splice(index, 1)
-
-    // پیدا کردن موقعیت جدید
     const dropPosition = getDropPosition(event)
-    if (dropPosition >= 0 && dropPosition <= userSentence.value.length) {
-      userSentence.value.splice(dropPosition, 0, draggedWord)
-    } else {
-      userSentence.value.push(draggedWord)
-    }
+    userSentence.value.splice(dropPosition, 0, draggedWord)
   }
 }
 
 const getDropPosition = (event) => {
   const dropY = event.clientY
   const words = event.currentTarget.querySelectorAll("div")
-  let position = -1
+  let position = userSentence.value.length
 
   words.forEach((word, index) => {
     const rect = word.getBoundingClientRect()
@@ -717,20 +751,30 @@ const resetSentence = () => {
 }
 
 const checkSentence = () => {
+  if (userSentence.value.length === 0) {
+    toastError("لطفاً یک جمله بسازید")
+    return
+  }
+
   const isCorrect = JSON.stringify(userSentence.value) === JSON.stringify(currentSentence.value.correctSentence)
+  const stageScore = isCorrect ? gameStages[1].maxScore : 0
+  score.value += stageScore
 
   if (isCorrect) {
-    score.value += 25
     toastSuccess("جمله شما صحیح است! آفرین!")
   } else {
     toastError(`جمله صحیح: ${currentSentence.value.correctSentence.join(" ")}`)
   }
 
-  if (currentSentenceIndex1.value < sentenceExercises.value.length - 1) {
-    currentSentenceIndex1.value++
+  if (currentSentenceIndex.value < sentenceExercises.value.length - 1) {
+    currentSentenceIndex.value++
     resetSentence()
   } else {
-    stageResults.value.push({ stage: "buildSentence", passed: isCorrect })
+    stageResults.value.push({
+      stage: "buildSentence",
+      stageName: gameStages[1].stageName,
+      passed: isCorrect
+    })
     writingStage.value = "writeStory"
     resetStory()
   }
@@ -759,16 +803,26 @@ const resetStory = () => {
 }
 
 const checkStory = () => {
+  if (userStory.value.length === 0) {
+    toastError("لطفاً یک داستان بنویسید")
+    return
+  }
+
   const isCorrect = JSON.stringify(userStory.value) === JSON.stringify(currentStory.value.correctStory)
+  const stageScore = isCorrect ? gameStages[2].maxScore : 0
+  score.value += stageScore
 
   if (isCorrect) {
-    score.value += 30
     toastSuccess("داستان شما عالی بود!")
   } else {
     toastError("اشکالاتی در داستان وجود دارد. دوباره تلاش کنید!")
   }
 
-  stageResults.value.push({ stage: "writeStory", passed: isCorrect })
+  stageResults.value.push({
+    stage: "writeStory",
+    stageName: gameStages[2].stageName,
+    passed: isCorrect
+  })
   writingStage.value = "correctText"
   resetTextCorrection()
 }
@@ -780,10 +834,10 @@ const selectWord = (pIndex, sIndex, wIndex, word) => {
 }
 
 const isWordWrong = (pos) => {
-  if (typeof pos === "string") {
-    return currentText.value.mistakes.hasOwnProperty(pos)
+  if (Array.isArray(pos)) {
+    return currentText.value.mistakes.hasOwnProperty(`${pos[0]}-${pos[1]}-${pos[2]}`)
   }
-  return currentText.value.mistakes.hasOwnProperty(`${pos[0]}-${pos[1]}-${pos[2]}`)
+  return currentText.value.mistakes.hasOwnProperty(pos)
 }
 
 const getSuggestions = (word) => {
@@ -816,7 +870,10 @@ const checkTextCorrection = () => {
   }
 
   const accuracy = Math.round((correctCount / totalMistakes) * 100)
-  score.value += accuracy * 0.25
+  const stageScore = Math.round((accuracy / 100) * gameStages[3].maxScore)
+  score.value += stageScore
+
+  if (score.value > 100) score.value = 100
 
   if (accuracy === 100) {
     toastSuccess("همه اشتباهات را پیدا کردید! عالی!")
@@ -824,25 +881,12 @@ const checkTextCorrection = () => {
     toastError(`شما ${correctCount} از ${totalMistakes} اشتباه را پیدا کردید.`)
   }
 
-  stageResults.value.push({ stage: "correctText", passed: accuracy >= 80 })
+  stageResults.value.push({
+    stage: "correctText",
+    stageName: gameStages[3].stageName,
+    passed: accuracy >= 50
+  })
   writingStage.value = "result"
-}
-
-// متدهای عمومی
-const resetWritingGame = () => {
-  writingStage.value = "fillBlank"
-  score.value = 0
-  level.value = 1
-  currentFillBlankIndex.value = 0
-  currentSentenceIndex1.value = 0
-  currentStoryIndex.value = 0
-  currentTextIndex.value = 0
-  stageResults.value = []
-
-  fillBlankExercises.value.forEach(ex => ex.userAnswer = "")
-  resetSentence()
-  resetStory()
-  resetTextCorrection()
 }
 
 const resetTextCorrection = () => {
@@ -851,20 +895,26 @@ const resetTextCorrection = () => {
   corrections.value = {}
 }
 
+// تکمیل بازی
 const completeWritingGame = () => {
   // علامت گذاری درس به عنوان تکمیل شده
   // و رفتن به مرحله بعد یا بازگشت به نقشه
+  writingStage.value = "intro"
+  resetAllStages()
 }
 
+// نمایش پیام‌ها
 const toastSuccess = (message) => {
-  // نمایش پیام موفقیت
+  // در حالت واقعی می‌توانید از یک کتابخانه toast استفاده کنید
   console.log("✅ " + message)
 }
 
 const toastError = (message) => {
-  // نمایش پیام خطا
   console.log("❌ " + message)
 }
+
+
+
 
 // vocabulary
 const vocabStage = ref('intro') // intro, identify, pronounce, match, spell, reward
@@ -1798,7 +1848,7 @@ watch(() => props.lesson, (newLesson) => {
 
         <!-- بازی خواندن - کتابخانه جادویی -->
         <!-- reading -->
-          <div v-if="activeLesson.content?.reading" class="relative min-h-[600px] bg-gradient-to-b from-purple-900 to-blue-900 rounded-xl overflow-hidden p-6">
+          <div v-if="activeLesson.content?.reading" class="relative min-h-[600px] bg-gradient-to-b from-purple-900 to-blue-900 rounded-xl overflow-hidden p-6 my-10">
             <!-- پس‌زمینه کتابخانه -->
             <div class="absolute inset-0 bg-[url('/images/magic-library-bg.jpg')] bg-cover opacity-30"></div>
 
@@ -1823,7 +1873,7 @@ watch(() => props.lesson, (newLesson) => {
                 <div v-if="readingStage === 'intro'" class="flex-1 flex flex-col items-center justify-center">
                   <div class="bg-white bg-opacity-10 rounded-2xl p-6 max-w-md w-full text-center shadow-lg border-2 border-yellow-400">
                     <div class="wizard-character animate-bounce mb-6">
-                      <img src="/images/wizard.png" alt="جادوگر" class="w-32 h-32 mx-auto">
+                      <img src="/images/kid_courses/wizard.png" alt="جادوگر" class="w-32 h-32 mx-auto">
                     </div>
                     <p class="text-lg text-yellow-200 mb-4">"سلام! من نگهبان کتابخانه جادویی هستم. کتاب‌های ما قدرت خود را از دست داده‌اند چون کسی آن‌ها را نمی‌خواند!"</p>
                     <button @click="startReadingGame" class="px-6 py-3 bg-yellow-500 hover:bg-yellow-600 text-purple-900 rounded-lg font-bold transition-colors">
@@ -1836,7 +1886,7 @@ watch(() => props.lesson, (newLesson) => {
                 <div v-if="readingStage === 'book-selection'" class="flex-1 flex flex-col">
                   <div class="bg-white bg-opacity-10 rounded-2xl p-6 flex-1 flex flex-col">
                     <div class="wizard-character mb-6">
-                      <img src="/images/wizard.png" alt="جادوگر" class="w-24 h-24 mx-auto">
+                      <img src="/images/kid_courses/wizard.png" alt="جادوگر" class="w-24 h-24 mx-auto">
                     </div>
 
                     <div class="mb-6 text-center">
@@ -1976,7 +2026,7 @@ watch(() => props.lesson, (newLesson) => {
                   </div>
 
                   <div class="reward-animation mb-6">
-                    <img src="/images/magic-key.png" alt="کلید دانش" class="w-24 h-24 mx-auto animate-bounce">
+                    <img src="/images/kid_courses/magic-key.png" alt="کلید دانش" class="w-24 h-24 mx-auto animate-bounce">
                     <p class="text-yellow-600 font-bold mt-2">+1 کلید دانش</p>
                   </div>
 
@@ -1993,257 +2043,284 @@ watch(() => props.lesson, (newLesson) => {
 
         <!-- Writing -->
         <!-- بازی نوشتن - اتاق فرماندهی -->
-          <div v-if="activeLesson.content?.writing" class="relative bg-gray-900 rounded-xl overflow-hidden min-h-[300px] p-6 my-10">
-            <!-- پس‌زمینه اتاق فرماندهی -->
-            <div class="absolute inset-0 bg-gradient-to-b from-gray-900 via-blue-900 to-gray-900 opacity-90"></div>
-            <div class="absolute inset-0 bg-[url('/images/command-center-bg.png')] bg-cover opacity-20"></div>
+        <div v-if="activeLesson.content?.writing" class="relative min-h-[600px] bg-gradient-to-b from-gray-900 to-blue-900 rounded-xl overflow-hidden p-6 my-10">
+          <!-- پس‌زمینه اتاق فرماندهی -->
+          <div class="absolute inset-0 bg-[url('/images/command-center-bg.png')] bg-cover opacity-20"></div>
 
-            <div class="relative z-10 h-full flex flex-col">
-              <!-- هدر بازی -->
-              <div class="flex justify-between items-center mb-6">
-                <h3 class="flex items-center gap-2 text-2xl font-bold text-green-400">
-                  <PencilIcon class="w-8 h-8" />
-                  مأموریت: پیام پنهان فرمانده!
-                </h3>
-                <div class="flex items-center gap-2">
-                  <span class="text-yellow-400">امتیاز: {{ score }}/100</span>
-                  <div class="w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center text-black font-bold">
-                    {{ level }}
+          <div class="relative z-10 h-full flex flex-col">
+            <!-- هدر بازی -->
+            <div class="flex justify-between items-center mb-6">
+              <h3 class="flex items-center gap-2 text-2xl font-bold text-green-400">
+                <PencilIcon class="w-8 h-8" />
+                مأموریت: پیام پنهان فرمانده!
+              </h3>
+              <div class="flex items-center gap-2">
+                <span class="text-yellow-400">امتیاز: {{ Math.floor(score) }}/100</span>
+                <div class="w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center text-black font-bold shadow-md">
+                  {{ level }}
+                </div>
+              </div>
+            </div>
+
+            <!-- مراحل بازی -->
+            <div class="flex-1 flex flex-col">
+              <!-- مرحله 1: معرفی -->
+              <div v-if="writingStage === 'intro'" class="flex-1 flex flex-col items-center justify-center">
+                <div class="bg-black bg-opacity-70 rounded-2xl p-8 max-w-md w-full text-center border-2 border-green-500">
+                  <div class="commander-character animate-bounce mb-6">
+                    <img src="/images/commander.png" alt="فرمانده" class="w-32 h-32 mx-auto">
                   </div>
+                  <h4 class="text-xl font-bold text-green-400 mb-4">مأموریت ویژه!</h4>
+                  <p class="text-white mb-6">"سلام سرباز! ما نیاز داریم که مهارت‌های نوشتاری تو را آزمایش کنیم. آماده‌ای این چالش را بپذیری؟"</p>
+                  <button
+                    @click="startWritingGame"
+                    class="px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg font-bold transition-colors"
+                  >
+                    پذیرفتن مأموریت
+                  </button>
                 </div>
               </div>
 
-              <!-- مراحل بازی -->
-              <div class="flex-1 flex flex-col">
-                <!-- مرحله 1: پر کردن جای خالی -->
-                <div v-if="writingStage === 'fillBlank'" class="space-y-6">
-                  <div class="bg-black bg-opacity-70 p-6 rounded-lg border border-blue-500">
-                    <p class="text-white text-xl mb-4">پر کردن جای خالی:</p>
-                    <p class="text-2xl text-green-400 mb-6">
-                      {{ currentFillBlank.sentenceBefore }}
-                      <span class="relative inline-block mx-2">
-                        <input
-                          v-model="currentFillBlank.userAnswer"
-                          type="text"
-                          class="w-32 px-2 py-1 bg-gray-800 border-b-2 border-yellow-500 text-white text-center focus:outline-none focus:border-green-500"
-                          @keyup.enter="checkFillBlankAnswer"
-                        />
-                        <span class="absolute bottom-0 left-0 right-0 h-0.5 bg-yellow-500 animate-pulse"></span>
-                      </span>
-                      {{ currentFillBlank.sentenceAfter }}
-                    </p>
-                    <div class="flex flex-wrap gap-3">
-                      <button
-                        v-for="(option, index) in currentFillBlank.options"
-                        :key="index"
-                        @click="selectFillBlankOption(option)"
-                        class="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-white transition-colors"
-                      >
-                        {{ option }}
+              <!-- مرحله 2: پر کردن جای خالی -->
+              <div v-if="writingStage === 'fillBlank'" class="space-y-6">
+                <div class="bg-black bg-opacity-70 p-6 rounded-lg border border-blue-500">
+                  <p class="text-white text-xl mb-4">پر کردن جای خالی:</p>
+                  <p class="text-2xl text-green-400 mb-6">
+                    {{ currentFillBlank.sentenceBefore }}
+                    <span class="relative inline-block mx-2">
+                      <input
+                        v-model="currentFillBlank.userAnswer"
+                        type="text"
+                        class="w-32 px-2 py-1 bg-gray-800 border-b-2 border-yellow-500 text-white text-center focus:outline-none focus:border-green-500"
+                        @keyup.enter="checkFillBlankAnswer"
+                      />
+                      <span class="absolute bottom-0 left-0 right-0 h-0.5 bg-yellow-500 animate-pulse"></span>
+                    </span>
+                    {{ currentFillBlank.sentenceAfter }}
+                  </p>
+                  <div class="flex flex-wrap gap-3">
+                    <button
+                      v-for="(option, index) in currentFillBlank.options"
+                      :key="index"
+                      @click="selectFillBlankOption(option)"
+                      class="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-white transition-colors"
+                    >
+                      {{ option }}
+                    </button>
+                  </div>
+                </div>
+                <button
+                  @click="checkFillBlankAnswer"
+                  class="px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg text-white font-bold self-center"
+                >
+                  تأیید پاسخ
+                </button>
+              </div>
+
+              <!-- مرحله 3: جمله سازی با تصاویر -->
+              <div v-if="writingStage === 'buildSentence'" class="space-y-6" dir="ltr">
+                <div class="bg-black bg-opacity-70 p-6 rounded-lg border border-blue-500">
+                  <p class="text-white text-xl mb-4">با این تصاویر یک جمله بسازید:</p>
+                  <div class="flex flex-wrap gap-4 mb-6">
+                    <div
+                      v-for="(image, index) in currentSentence.images"
+                      :key="'image'+index"
+                      class="w-24 h-24 bg-gray-800 rounded-lg flex items-center justify-center cursor-move"
+                      draggable="true"
+                      @dragstart="dragStart($event, index, 'image')"
+                    >
+                      <img :src="image.url" :alt="image.label" class="max-w-full max-h-full">
+                      <span class="sr-only">{{ image.label }}</span>
+                    </div>
+                  </div>
+                  <div
+                    @drop="dropItem($event)"
+                    @dragover.prevent
+                    class="min-h-20 bg-gray-800 p-4 rounded-lg border-2 border-dashed border-blue-400 flex flex-wrap gap-2"
+                  >
+                    <div
+                      v-for="(word, index) in userSentence"
+                      :key="'word'+index"
+                      class="px-3 py-2 bg-blue-600 rounded-lg text-white flex items-center gap-2 cursor-move"
+                      draggable="true"
+                      @dragstart="dragStart($event, index, 'word')"
+                    >
+                      {{ word }}
+                      <button @click="removeWord(index)" class="text-red-400 hover:text-red-300">
+                        &times;
                       </button>
                     </div>
                   </div>
+                </div>
+                <div class="flex justify-center gap-4">
                   <button
-                    @click="checkFillBlankAnswer"
-                    class="px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg text-white font-bold self-center"
+                    @click="checkSentence"
+                    class="px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg text-white font-bold"
                   >
-                    تأیید پاسخ
+                    بررسی جمله
+                  </button>
+                  <button
+                    @click="resetSentence"
+                    class="px-6 py-3 bg-gray-600 hover:bg-gray-700 rounded-lg text-white font-bold"
+                  >
+                    شروع مجدد
                   </button>
                 </div>
+              </div>
 
-                <!-- مرحله 2: جمله سازی با تصاویر -->
-                <div v-if="writingStage === 'buildSentence'" class="space-y-6" dir="ltr">
-                  <div class="bg-black bg-opacity-70 p-6 rounded-lg border border-blue-500">
-                    <p class="text-white text-xl mb-4">با این تصاویر یک جمله بسازید:</p>
-                    <div class="flex flex-wrap gap-4 mb-6">
-                      <div
-                        v-for="(image, index) in currentSentence.images"
-                        :key="'image'+index"
-                        class="w-24 h-24 bg-gray-800 rounded-lg flex items-center justify-center cursor-move"
-                        draggable="true"
-                        @dragstart="dragStart1($event, index, 'image')"
-                      >
-                        <img :src="image.url" :alt="image.label" class="max-w-full max-h-full">
-                        <span class="sr-only">{{ image.label }}</span>
-                      </div>
-                    </div>
+              <!-- مرحله 4: داستان نویسی -->
+              <div v-if="writingStage === 'writeStory'" class="space-y-6" dir="ltr">
+                <div class="bg-black bg-opacity-70 p-6 rounded-lg border border-blue-500">
+                  <p class="text-white text-xl mb-4">داستان خود را بنویسید:</p>
+                  <p class="text-green-400 mb-4">{{ currentStory.prompt }}</p>
+                  <div class="flex flex-wrap gap-4 mb-4">
                     <div
-                      @drop="dropItem($event)"
-                      @dragover.prevent
-                      class="min-h-20 bg-gray-800 p-4 rounded-lg border-2 border-dashed border-blue-400 flex flex-wrap gap-2"
+                      v-for="(item, index) in currentStory.items"
+                      :key="'story-item'+index"
+                      class="px-3 py-2 bg-gray-700 rounded-lg text-white cursor-move"
+                      draggable="true"
+                      @dragstart="dragStart($event, index, 'story')"
                     >
+                      {{ item }}
+                    </div>
+                  </div>
+                  <div
+                    @drop="dropStoryItem($event)"
+                    @dragover.prevent
+                    class="min-h-40 bg-gray-800 p-4 rounded-lg border-2 border-dashed border-blue-400"
+                  >
+                    <div
+                      v-if="userStory.length === 0"
+                      class="text-gray-500 text-center py-8"
+                    >
+                      آیتم‌ها را به اینجا بکشید تا داستان خود را بسازید
+                    </div>
+                    <div v-else class="space-y-2">
                       <div
-                        v-for="(word, index) in userSentence"
-                        :key="'word'+index"
-                        class="px-3 py-2 bg-blue-600 rounded-lg text-white flex items-center gap-2 cursor-move"
-                        draggable="true"
-                        @dragstart="dragStart1($event, index, 'word')"
+                        v-for="(item, index) in userStory"
+                        :key="'user-story'+index"
+                        class="px-3 py-2 bg-blue-600 rounded-lg text-white flex items-center gap-2"
                       >
-                        {{ word }}
-                        <button @click="removeWord(index)" class="text-red-400 hover:text-red-300">
+                        <span>{{ item }}</span>
+                        <button @click="removeStoryItem(index)" class="text-red-400 hover:text-red-300 ml-auto">
                           &times;
                         </button>
                       </div>
                     </div>
                   </div>
-                  <div class="flex justify-center gap-4">
-                    <button
-                      @click="checkSentence"
-                      class="px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg text-white font-bold"
-                    >
-                      بررسی جمله
-                    </button>
-                    <button
-                      @click="resetSentence"
-                      class="px-6 py-3 bg-gray-600 hover:bg-gray-700 rounded-lg text-white font-bold"
-                    >
-                      شروع مجدد
-                    </button>
-                  </div>
                 </div>
-
-                <!-- مرحله 3: داستان نویسی -->
-                <div v-if="writingStage === 'writeStory'" class="space-y-6"  dir="ltr">
-                  <div class="bg-black bg-opacity-70 p-6 rounded-lg border border-blue-500">
-                    <p class="text-white text-xl mb-4">داستان خود را بنویسید:</p>
-                    <p class="text-green-400 mb-4">{{ currentStory.prompt }}</p>
-                    <div class="flex flex-wrap gap-4 mb-4">
-                      <div
-                        v-for="(item, index) in currentStory.items"
-                        :key="'story-item'+index"
-                        class="px-3 py-2 bg-gray-700 rounded-lg text-white cursor-move"
-                        draggable="true"
-                        @dragstart="dragStart1($event, index, 'story')"
-                      >
-                        {{ item }}
-                      </div>
-                    </div>
-                    <div
-                      @drop="dropStoryItem($event)"
-                      @dragover.prevent
-                      class="min-h-40 bg-gray-800 p-4 rounded-lg border-2 border-dashed border-blue-400"
-                    >
-                      <div
-                        v-if="userStory.length === 0"
-                        class="text-gray-500 text-center py-8"
-                      >
-                        آیتم‌ها را به اینجا بکشید تا داستان خود را بسازید
-                      </div>
-                      <div v-else class="space-y-2">
-                        <div
-                          v-for="(item, index) in userStory"
-                          :key="'user-story'+index"
-                          class="px-3 py-2 bg-blue-600 rounded-lg text-white flex items-center gap-2"
-                        >
-                          <span>{{ item }}</span>
-                          <button @click="removeStoryItem(index)" class="text-red-400 hover:text-red-300 ml-auto">
-                            &times;
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="flex justify-center gap-4">
-                    <button
-                      @click="checkStory"
-                      class="px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg text-white font-bold"
-                    >
-                      ارسال داستان
-                    </button>
-                    <button
-                      @click="addNewLine"
-                      class="px-6 py-3 bg-green-600 hover:bg-green-700 rounded-lg text-white font-bold"
-                    >
-                      خط جدید
-                    </button>
-                  </div>
-                </div>
-
-                <!-- مرحله 4: تصحیح متن -->
-                <div v-if="writingStage === 'correctText'" class="space-y-6"  dir="ltr">
-                  <div class="bg-black bg-opacity-70 p-6 rounded-lg border border-blue-500">
-                    <p class="text-white text-xl mb-4">اشتباهات این پیام را پیدا و اصلاح کنید:</p>
-                    <div class="bg-gray-800 p-4 rounded-lg mb-4">
-                      <div
-                        v-for="(paragraph, pIndex) in currentText.paragraphs"
-                        :key="'para'+pIndex"
-                        class="mb-4 last:mb-0"
-                      >
-                        <div
-                          v-for="(sentence, sIndex) in paragraph.split('. ')"
-                          :key="'sent'+pIndex+'-'+sIndex"
-                          class="mb-2 last:mb-0"
-                        >
-                          <span
-                            v-for="(word, wIndex) in sentence.split(' ')"
-                            :key="'word'+pIndex+'-'+sIndex+'-'+wIndex"
-                            class="mr-1 cursor-pointer hover:bg-gray-700 px-1 rounded"
-                            :class="{
-                              'text-red-500': isWordWrong(pIndex, sIndex, wIndex),
-                              'underline decoration-wavy decoration-red-500': isWordWrong(pIndex, sIndex, wIndex)
-                            }"
-                            @click="selectWord(pIndex, sIndex, wIndex, word)"
-                          >
-                            {{ word }}
-                          </span>.
-                        </div>
-                      </div>
-                    </div>
-                    <div v-if="selectedWord" class="bg-gray-800 p-4 rounded-lg">
-                      <p class="text-white mb-2">کلمه انتخاب شده: <span class="font-bold">{{ selectedWord }}</span></p>
-                      <p class="text-red-400 mb-3" v-if="isWordWrong(selectedWordPos)">این کلمه اشتباه است!</p>
-                      <div class="flex flex-wrap gap-2">
-                        <button
-                          v-for="(suggestion, index) in getSuggestions(selectedWord)"
-                          :key="'sug'+index"
-                          @click="replaceWord(suggestion)"
-                          class="px-3 py-1 bg-blue-600 hover:bg-blue-700 rounded-lg text-white"
-                        >
-                          {{ suggestion }}
-                        </button>
-                      </div>
-                    </div>
-                  </div>
+                <div class="flex justify-center gap-4">
                   <button
-                    @click="checkTextCorrection"
-                    class="px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg text-white font-bold self-center"
+                    @click="checkStory"
+                    class="px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg text-white font-bold"
                   >
-                    بررسی اصلاحات
+                    ارسال داستان
                   </button>
-                </div>
-
-                <!-- مرحله 5: نتیجه نهایی -->
-                <div v-if="writingStage === 'result'" class="flex-1 flex flex-col items-center justify-center text-center">
-                  <div class="text-6xl mb-6 animate-bounce">🎉</div>
-                  <h4 class="text-2xl font-bold text-green-400 mb-4">مأموریت تکمیل شد!</h4>
-                  <p class="text-white mb-6">امتیاز نهایی شما: {{ score }}/100</p>
-                  <div class="flex flex-wrap justify-center gap-4 mb-8">
-                    <div
-                      v-for="(result, index) in stageResults"
-                      :key="'result'+index"
-                      class="px-4 py-2 rounded-lg"
-                      :class="{
-                        'bg-green-600 text-white': result.passed,
-                        'bg-red-600 text-white': !result.passed
-                      }"
-                    >
-                      مرحله {{ index+1 }}: {{ result.passed ? '✅' : '❌' }}
-                    </div>
-                  </div>
                   <button
-                    @click="completeWritingGame"
+                    @click="addNewLine"
                     class="px-6 py-3 bg-green-600 hover:bg-green-700 rounded-lg text-white font-bold"
                   >
-                    دریافت نشان افتخار
+                    خط جدید
                   </button>
                 </div>
               </div>
+
+              <!-- مرحله 5: تصحیح متن -->
+              <div v-if="writingStage === 'correctText'" class="space-y-6" dir="ltr">
+                <div class="bg-black bg-opacity-70 p-6 rounded-lg border border-blue-500">
+                  <p class="text-white text-xl mb-4">اشتباهات این پیام را پیدا و اصلاح کنید:</p>
+                  <div class="bg-gray-800 p-4 rounded-lg mb-4">
+                    <div
+                      v-for="(paragraph, pIndex) in currentText.paragraphs"
+                      :key="'para'+pIndex"
+                      class="mb-4 last:mb-0"
+                    >
+                      <div
+                        v-for="(sentence, sIndex) in paragraph.split('. ')"
+                        :key="'sent'+pIndex+'-'+sIndex"
+                        class="mb-2 last:mb-0"
+                      >
+                        <span
+                          v-for="(word, wIndex) in sentence.split(' ')"
+                          :key="'word'+pIndex+'-'+sIndex+'-'+wIndex"
+                          class="mr-1 cursor-pointer hover:bg-gray-700 px-1 rounded"
+                          :class="{
+                            'text-red-500': isWordWrong([pIndex, sIndex, wIndex]),
+                            'bg-red-900': selectedWordPos === `${pIndex}-${sIndex}-${wIndex}`,
+                            'underline decoration-wavy decoration-red-500': isWordWrong([pIndex, sIndex, wIndex])
+                          }"
+                          @click="selectWord(pIndex, sIndex, wIndex, word)"
+                        >
+                          {{ word }}
+                        </span>.
+                      </div>
+                    </div>
+                  </div>
+
+                  <div v-if="selectedWord" class="bg-gray-800 p-4 rounded-lg">
+                    <p class="text-white mb-2">کلمه انتخاب شده: <span class="font-bold">{{ selectedWord }}</span></p>
+                    <p class="text-red-400 mb-3" v-if="isWordWrong(selectedWordPos)">این کلمه اشتباه است!</p>
+                    <div class="flex flex-wrap gap-2">
+                      <button
+                        v-for="(suggestion, index) in getSuggestions(selectedWord)"
+                        :key="'sug'+index"
+                        @click="replaceWord(suggestion)"
+                        class="px-3 py-1 bg-blue-600 hover:bg-blue-700 rounded-lg text-white"
+                      >
+                        {{ suggestion }}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <button
+                  @click="checkTextCorrection"
+                  class="px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg text-white font-bold self-center"
+                >
+                  بررسی اصلاحات
+                </button>
+              </div>
+
+              <!-- مرحله 6: نتیجه نهایی -->
+              <div v-if="writingStage === 'result'" class="flex-1 flex flex-col items-center justify-center text-center">
+                <div class="text-6xl mb-6 animate-bounce">🎉</div>
+                <h4 class="text-2xl font-bold text-green-400 mb-4">مأموریت تکمیل شد!</h4>
+                <p class="text-white mb-6">امتیاز نهایی شما: {{ Math.floor(score) }}/100</p>
+
+                <div class="w-full max-w-md bg-gray-800 rounded-lg p-6 mb-8">
+                  <h5 class="text-lg font-bold text-yellow-400 mb-4">نتایج مراحل:</h5>
+                  <div class="grid grid-cols-2 gap-4">
+                    <div
+                      v-for="(result, index) in stageResults"
+                      :key="'result'+index"
+                      class="p-3 rounded-lg flex items-center gap-2"
+                      :class="result.passed ? 'bg-green-900 text-green-100' : 'bg-red-900 text-red-100'"
+                    >
+                      <span v-if="result.passed">✓</span>
+                      <span v-else>✗</span>
+                      <span>{{ result.stageName }}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="reward-badge bg-gradient-to-b from-yellow-400 to-yellow-600 w-32 h-32 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg animate-pulse">
+                  <span class="text-4xl">🏆</span>
+                </div>
+
+                <button
+                  @click="completeWritingGame"
+                  class="px-6 py-3 bg-green-600 hover:bg-green-700 rounded-lg text-white font-bold"
+                >
+                  بازگشت به نقشه
+                </button>
+              </div>
             </div>
           </div>
+        </div>
 
         <!-- Vocabulary -->
         <!-- بازی واژگان - سرزمین ووکاها -->
-        <div v-if="activeLesson.content?.vocabulary" class="relative min-h-[300px] bg-gradient-to-b from-blue-100 to-green-100 rounded-xl overflow-hidden p-6 my-10">
+        <div v-if="activeLesson.content?.vocabulary" class="relative min-h-[600px] bg-gradient-to-b from-blue-100 to-green-100 rounded-xl overflow-hidden p-6 my-10">
           <!-- پس‌زمینه فانتزی -->
           <div class="absolute inset-0 bg-[url('/images/vocab-land-bg.png')] bg-cover opacity-30"></div>
 
@@ -3371,5 +3448,26 @@ watch(() => props.lesson, (newLesson) => {
 
 .quick-glossary:hover {
   transform: scale(1.02);
+}
+
+.commander-character {
+  transition: all 0.3s ease;
+}
+
+.animate-bounce {
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.word-highlight {
+  transition: all 0.2s ease;
+}
+
+.word-highlight:hover {
+  background-color: rgba(107, 114, 128, 0.5);
 }
 </style>
