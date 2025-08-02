@@ -1,5 +1,5 @@
 <template>
-    <KidStudentLayout title="Dashboard">
+    <StudentLayout title="Dashboard">
         <div class="space-y-6">
             <!-- Welcome Header with Progress -->
             <div class="bg-gradient-to-r from-red-500 to-orange-600 rounded-2xl p-6 shadow-lg text-white">
@@ -213,7 +213,7 @@
                 </div>
             </div>
         </div>
-    </KidStudentLayout>
+    </StudentLayout>
 </template>
 
 <script setup>
@@ -227,7 +227,7 @@ import {
     BookmarkIcon
 } from '@heroicons/vue/24/outline';
 
-import KidStudentLayout from '@/Layouts/kidStudentLayout.vue';
+import StudentLayout from '@/Layouts/StudentLayout.vue';
 
 const props = defineProps({
     student: Object,
