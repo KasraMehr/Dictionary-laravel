@@ -21,22 +21,41 @@ class StudentDashboard extends Controller
         $totalUsers = User::count();
         $totalWords = $user->savedWords()->count();
 
+        if($user->studentProfile->is_child){
 
-        return Inertia::render('Student/Dashboard', [
-            'student' => $student,
-            'studentProgress' => $studentProgress,
-            'quickActions' => $this->getQuickActions(),
-            'activeCourses' => $this->getActiveCourses($user),
-            'savedWords' => $this->getSavedWords($user),
-            'dailyChallenge' => $this->getDailyChallenge($user),
-            'learningStats' => $this->getLearningStats($user),
-            'userLevel' => $this->calculateUserLevel($user),
-            'xp' => $this->calculateUserXP($user),
-            'weeklyStudyMinutes' => $this->calculateWeeklyStudyMinutes($user),
-            'totalUsers' => $totalUsers,
-            'totalWords' => $totalWords,
+          return Inertia::render('Kid_Student/Dashboard', [
+              'student' => $student,
+              'studentProgress' => $studentProgress,
+              'quickActions' => $this->getQuickActions(),
+              'activeCourses' => $this->getActiveCourses($user),
+              'savedWords' => $this->getSavedWords($user),
+              'dailyChallenge' => $this->getDailyChallenge($user),
+              'learningStats' => $this->getLearningStats($user),
+              'userLevel' => $this->calculateUserLevel($user),
+              'xp' => $this->calculateUserXP($user),
+              'weeklyStudyMinutes' => $this->calculateWeeklyStudyMinutes($user),
+              'totalUsers' => $totalUsers,
+              'totalWords' => $totalWords,
 
-        ]);
+          ]);
+        }
+        else {
+          return Inertia::render('Student/Dashboard', [
+              'student' => $student,
+              'studentProgress' => $studentProgress,
+              'quickActions' => $this->getQuickActions(),
+              'activeCourses' => $this->getActiveCourses($user),
+              'savedWords' => $this->getSavedWords($user),
+              'dailyChallenge' => $this->getDailyChallenge($user),
+              'learningStats' => $this->getLearningStats($user),
+              'userLevel' => $this->calculateUserLevel($user),
+              'xp' => $this->calculateUserXP($user),
+              'weeklyStudyMinutes' => $this->calculateWeeklyStudyMinutes($user),
+              'totalUsers' => $totalUsers,
+              'totalWords' => $totalWords,
+
+          ]);
+        }
     }
 
     protected function getQuickActions()
@@ -207,11 +226,21 @@ class StudentDashboard extends Controller
         $profile = $user->studentProfile;
         $studentProgress = $user->studentProgress;
 
-        return inertia('Student/Profile', [
-            'user' => $user,
-            'studentProfile' => $profile,
-            'studentProgress' => $studentProgress,
-        ]);
+        if($user->studentProfile->is_child){
+
+          return inertia('Kid_Student/Profile', [
+              'user' => $user,
+              'studentProfile' => $profile,
+              'studentProgress' => $studentProgress,
+          ]);
+        }
+        else {
+          return inertia('Student/Profile', [
+              'user' => $user,
+              'studentProfile' => $profile,
+              'studentProgress' => $studentProgress,
+          ]);
+        }
     }
 
     public function update(Request $request)
@@ -292,13 +321,23 @@ class StudentDashboard extends Controller
             ->with(['categories'])
             ->get();
 
-        return inertia('Student/SavedWords', [
-            'savedWords' => $savedWords
-        ]);
+        if($user->studentProfile->is_child){
+
+          return inertia('Kid_Student/SavedWords', [
+              'savedWords' => $savedWords
+          ]);
+        }
+        else {
+          return inertia('Student/SavedWords', [
+              'savedWords' => $savedWords
+          ]);
+        }
     }
 
     public function Leaderboard()
     {
+
+        $user = Auth::user();
         // دریافت کاربران به همراه اطلاعات LearningStat و StudentProgress
         $users = User::query()
             ->with(['learningStat', 'studentProgress'])
@@ -322,8 +361,16 @@ class StudentDashboard extends Controller
             ->values()
             ->toArray();
 
-        return Inertia::render('Student/Leaderboard', [
-            'users' => $users,
-        ]);
+        if($user->studentProfile->is_child){
+
+          return Inertia::render('Kid_Student/Leaderboard', [
+              'users' => $users,
+          ]);
+        }
+        else {
+          return Inertia::render('Student/Leaderboard', [
+              'users' => $users,
+          ]);
+        }
     }
 }

@@ -14,6 +14,7 @@ class StudentQuizController extends Controller
      */
     public function index()
     {
+        $user = auth()->user();
         $quizzes = Quiz::where('status', 'active')->get()->map(function ($quiz) {
             return [
                 'id' => $quiz->id,
@@ -32,17 +33,17 @@ class StudentQuizController extends Controller
             ];
         });
 
-        return Inertia::render('Student/Quiz/Index', [
-            'quizzes' => $quizzes,
-        ]);
-    }
+        if($user->studentProfile->is_child){
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+          return Inertia::render('Kid_Student/Quiz/Index', [
+              'quizzes' => $quizzes,
+          ]);
+        }
+        else {
+          return Inertia::render('Student/Quiz/Index', [
+              'quizzes' => $quizzes,
+          ]);
+        }
     }
 
     /**
@@ -50,11 +51,21 @@ class StudentQuizController extends Controller
      */
     public function show(string $id)
     {
+        $user = auth()->user();
+
         $quiz = Quiz::with('questions')->findOrFail($id);
 
-        return inertia('Student/Quiz/Show', [
-            'quiz' => $quiz,
-        ]);
+        if($user->studentProfile->is_child){
+
+          return inertia('Kid_Student/Quiz/Show', [
+              'quiz' => $quiz,
+          ]);
+        }
+        else {
+          return inertia('Student/Quiz/Show', [
+              'quiz' => $quiz,
+          ]);
+        }
     }
 
     public function submit(Request $request, $quizId)

@@ -92,10 +92,19 @@ class StudentCourseController extends Controller
             })->count(),
         ];
 
-        return inertia('Student/Courses/Index', [
+
+        if($user->studentProfile->is_child){
+          return inertia('Kid_Student/Courses/Index' , [
             'courses' => $courses,
             'stats' => $stats,
-        ]);
+          ]);
+        }
+        else {
+          return inertia('Student/Courses/Index', [
+            'courses' => $courses,
+            'stats' => $stats,
+          ]);
+        }
     }
 
     public function show(Course $course)
@@ -124,11 +133,20 @@ class StudentCourseController extends Controller
             return $lesson;
         });
 
-        return inertia('Student/Courses/Show', [
-            'course' => $course,
-            'lessons' => $lessons,
-            'progress' => $progress,
-        ]);
+        if($user->studentProfile->is_child){
+          return inertia('Kid_Student/Courses/Show', [
+              'course' => $course,
+              'lessons' => $lessons,
+              'progress' => $progress,
+          ]);
+        }
+        else {
+          return inertia('Student/Courses/Show', [
+              'course' => $course,
+              'lessons' => $lessons,
+              'progress' => $progress,
+          ]);
+        }
     }
 
     public function markAsCompleted(Request $request, CourseLesson $lesson)
