@@ -125,17 +125,8 @@ const setLanguage = (lang) => {
                                     class=""
                                 />
                             </div>
-
-                            <a
-                                :href="route('login')"
-                                v-if="!canRegister"
-                                :active="route().current('login')"
-                                class="text-[#704ee7] text-[17px] dark:text-white"
-                            >
-                                {{ $t("login") }}
-                            </a>
                              <a
-                                        v-else-if="
+                                        v-if="
                                             $page.props.auth.user &&
                                             $page.props.auth.user.role ===
                                                 'teacher'
@@ -160,15 +151,14 @@ const setLanguage = (lang) => {
                                     </a>
                                     <template v-else>
                                         <a
-                                            :href="route('register')"
-                                            v-if="canRegister"
+                                            :href="route('login')"
+                                            v-if="!canRegister"
                                             :active="
-                                                route().current('register')
+                                                route().current('login')
                                             "
                                             class="text-[#704ee7] text-[17px] dark:text-white"
                                         >
-                                            {{ $t("login") }} /
-                                            {{ $t("register") }}
+                                            {{ $t("login") }} 
                                         </a>
                                     </template>
                         </div>
@@ -186,7 +176,7 @@ const setLanguage = (lang) => {
                                         :active="
                                             route().current('games.landing')
                                         "
-                                        class="text-black border-2 rounded-[35px] px-4 py-1 active:border-black dark:text-white"
+                                        class="text-black border-[3px]  rounded-[35px] px-4 py-1 border-black dark:text-white"
                                     >
                                         خانه
                                     </a>
@@ -195,21 +185,21 @@ const setLanguage = (lang) => {
                                         :active="
                                             route().current('games.landing')
                                         "
-                                        class="text-black border-2 rounded-[35px] px-4 py-1 active:border-black dark:text-white"
+                                        class="text-black border-[3px]  border-[#B7B7B7] rounded-[35px] px-4 py-1 active:border-black dark:text-white"
                                     >
                                         {{ $t("games") }}
                                     </a>
                                     <a
                                         :href="route('landing')"
                                         :active="route().current('landing')"
-                                        class="text-black border-2 rounded-[35px] px-4 py-1 active:border-black dark:text-white"
+                                        class="text-black border-[3px]  border-[#B7B7B7] rounded-[35px] px-4 py-1 active:border-black dark:text-white"
                                     >
                                         لغت نامه
                                     </a>
                                     <Dropdown align="right" width="48">
                                         <template #trigger>
                                             <button
-                                                class="flex border-2 rounded-[35px] px-4 py-1 active:border-black items-center h-full text-black bg-white"
+                                                class="flex border-[3px]  border-[#B7B7B7] rounded-[35px] px-4 py-1 active:border-black items-center h-full text-black bg-white"
                                             >
                                                 {{ $t("learn") }}
 
@@ -231,34 +221,39 @@ const setLanguage = (lang) => {
                                         </template>
 
                                         <template #content>
-                                            <DropdownLink
+                                            <a
                                                 :href="route('learn')"
                                                 :active="
                                                     route().current('learn')
                                                 "
+                                                class="hover:bg-[#C79EFF] hover:text-white w-full rounded-t-[10px] text-center py-1"
                                             >
                                                 {{ $t("learn") }}
-                                            </DropdownLink>
-                                            <DropdownLink
+                                            </a>
+                                            <a
                                                 :href="route('teachers.index')"
                                                 :active="
                                                     route().current(
                                                         'teachers.index'
                                                     )
                                                 "
+                                                class="hover:bg-[#C79EFF] hover:text-white px-7 py-1"
+
                                             >
                                                 {{ $t("teachers") }}
-                                            </DropdownLink>
-                                            <DropdownLink
+                                            </a>
+                                            <a
                                                 :href="route('courses.index')"
                                                 :active="
                                                     route().current(
                                                         'courses.index'
                                                     )
                                                 "
+                                                class="hover:bg-[#C79EFF] hover:text-white w-full rounded-b-[10px] text-center py-1"
+
                                             >
                                                 {{ $t("courses") }}
-                                            </DropdownLink>
+                                            </a>
                                         </template>
                                     </Dropdown>
                                 </div>
@@ -444,11 +439,13 @@ const setLanguage = (lang) => {
                                         alt=""
                                     />
                                     <a
-                                        :href="route('learn')"
-                                        :active="route().current('learn')"
+                                        :href="route('courses.index')"
+                                        :active="
+                                            route().current('courses.index')
+                                        "
                                         class="block rounded-lg hover:bg-white/30 dark:hover:bg-gray-800/50"
                                     >
-                                        {{ $t("learn") }}
+                                        لغت نامه
                                     </a>
                                 </div>
                                 <div class="flex items-center gap-x-2">
@@ -456,15 +453,67 @@ const setLanguage = (lang) => {
                                         src="/images/kidlanding/hugeicons_elearning-exchange.png"
                                         alt=""
                                     />
-                                    <a
-                                        :href="route('courses.index')"
-                                        :active="
-                                            route().current('courses.index')
-                                        "
-                                        class="block rounded-lg hover:bg-white/30 dark:hover:bg-gray-800/50"
-                                    >
-                                        {{ $t("courses") }}
-                                    </a>
+                                  
+                                      <Dropdown align="right" width="48">
+                                        <template #trigger>
+                                            <button
+                                                class="flex active:border-black items-center h-full text-black bg-white"
+                                            >
+                                                {{ $t("learn") }}
+
+                                                <svg
+                                                    class=" mt-2 ms-0.5 -me-0.5 size-4"
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    fill="none"
+                                                    viewBox="0 0 24 24"
+                                                    stroke-width="1.5"
+                                                    stroke="currentColor"
+                                                >
+                                                    <path
+                                                        stroke-linecap="round"
+                                                        stroke-linejoin="round"
+                                                        d="M19.5 8.25l-7.5 7.5-7.5-7.5"
+                                                    />
+                                                </svg>
+                                            </button>
+                                        </template>
+
+                                        <template #content>
+                                            <a
+                                                :href="route('learn')"
+                                                :active="
+                                                    route().current('learn')
+                                                "
+                                                class="hover:bg-[#C79EFF] hover:text-white w-full rounded-t-[9px] text-center py-1"
+                                            >
+                                                {{ $t("learn") }}
+                                            </a>
+                                            <a
+                                                :href="route('teachers.index')"
+                                                :active="
+                                                    route().current(
+                                                        'teachers.index'
+                                                    )
+                                                "
+                                                class="hover:bg-[#C79EFF] hover:text-white px-6 py-1"
+
+                                            >
+                                                {{ $t("teachers") }}
+                                            </a>
+                                            <a
+                                                :href="route('courses.index')"
+                                                :active="
+                                                    route().current(
+                                                        'courses.index'
+                                                    )
+                                                "
+                                                class="hover:bg-[#C79EFF] hover:text-white w-full rounded-b-[7px] text-center py-1"
+
+                                            >
+                                                {{ $t("courses") }}
+                                            </a>
+                                        </template>
+                                    </Dropdown>
                                 </div>
                             </div>
                         </div>

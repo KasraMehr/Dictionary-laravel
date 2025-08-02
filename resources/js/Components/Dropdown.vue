@@ -12,7 +12,7 @@ const props = defineProps({
     },
     contentClasses: {
         type: Array,
-        default: () => ['py-1', 'bg-white dark:bg-gray-700'],
+        default: () => ['bg-white dark:bg-gray-700'],
     },
 });
 
@@ -62,10 +62,10 @@ const alignmentClasses = computed(() => {
         >
             <div
                 v-show="open"
-                class="absolute z-50 mt-2 rounded-md shadow-lg"
+                class="absolute z-50 mt-2 rounded-xl shadow-lg max-w-max"
                 :class="[widthClass, alignmentClasses]"
             >
-                <div class="rounded-md ring-1 ring-black ring-opacity-5" :class="contentClasses">
+                <div class="rounded-xl  divide-y-[3px] divide-[#B7B7B7]  flex flex-col border-[3px]  border-[#B7B7B7]  items-center ring-opacity-5" :class="contentClasses">
                     <slot name="content" />
                 </div>
             </div>
