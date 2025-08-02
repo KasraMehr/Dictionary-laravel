@@ -31,6 +31,7 @@ class CreateNewUser implements CreatesNewUsers
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
             'role' => ['required', 'in:student,teacher'],
             'language_level' => ['nullable', 'integer'],
+            'is_child' => ['nullable', 'boolean']
         ])->validate();
 
         return DB::transaction(function () use ($input) {
@@ -46,7 +47,7 @@ class CreateNewUser implements CreatesNewUsers
             if ($user->role === 'teacher') {
                 $this->createTeacher($user);
             } elseif ($user->role === 'student') {
-                $this->createStudent($user, $input['language_level'] ?? 0);
+                $this->createStudent($user, $input['language_level'] ?? 0, $input['is_child'] ?? false);
             }
 
             return $user;
@@ -80,10 +81,11 @@ class CreateNewUser implements CreatesNewUsers
         $user->teacher()->save($teacher);
     }
 
-    protected function createStudent(User $user, int $languageLevel = 0): void
+    protected function createStudent(User $user, int $languageLevel = 0, bool $isChild = false): void
     {
         $student = StudentProfile::forceCreate([
             'user_id' => $user->id,
+            'is_child' => $isChild,
         ]);
 
         $user->studentProfile()->save($student);

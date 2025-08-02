@@ -20,17 +20,27 @@ const form = useForm({
     password_confirmation: '',
     role: 'student',
     terms: false,
-    language_level: null
+    language_level: null,
+    is_child: false,
 });
 ref(false);
 
+
+
 onMounted(() => {
     const testResults = JSON.parse(localStorage.getItem('placementTestResults'));
+    const isChild = localStorage.getItem('is_child');
+
+    console.log(isChild);
     console.log('Test results from localStorage:', testResults);
 
     if (testResults) {
         form.language_level = testResults.level;
         console.log('Form language_level updated:', form.language_level);
+    }
+
+    if (isChild === 'true') {
+        form.is_child = true;
     }
 });
 

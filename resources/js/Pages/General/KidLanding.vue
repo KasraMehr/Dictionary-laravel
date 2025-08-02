@@ -31,6 +31,11 @@ onUnmounted(() => {
 });
 
 const centeredSlides = computed(() => windowWidth.value <= 768);
+
+const goToRegister = () => {
+    localStorage.setItem('is_child', 'true');
+    window.location.href = '/register';
+}
 </script>
 
 <template >
@@ -73,7 +78,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                             class="sm:w-[9%] xl:h-16 lg:h-12 sm:py-2 sm:pr-2 md:h-10 sm:h-8 h-4 w-[16px]"
                         />
                         <p
-                            class="xl:text-[77px] lg:text-[60px] md:text-[48px] sm:text-[38px] text-[28px] font-[1000] " 
+                            class="xl:text-[77px] lg:text-[60px] md:text-[48px] sm:text-[38px] text-[28px] font-[1000] "
                         >
                             بهترين فضا برای
                         </p>
@@ -149,9 +154,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                                 class=""
                             />
                         </div>
-                        <button
-                            class="text-white rounded-full font-bold sm:text-[18px] text-[12px]"
-                        >
+                        <button @click="goToRegister" class="text-white rounded-full font-bold sm:text-[18px] text-[12px]">
                             همین حالا شروع کنید
                         </button>
                     </div>
@@ -453,7 +456,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                 >
                     بچه‌ها با
                     <p class="relative underline text-[#704ee7]">
-                       <span class="relative z-10"> لبخند</span> 
+                       <span class="relative z-10"> لبخند</span>
                         <img
                             src="/images/kidlanding/Frame (1).png "
                             alt=""
@@ -481,9 +484,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                             class=""
                         />
                     </div>
-                    <button
-                        class="text-[#704ee7] rounded-full font-bold sm:text-[17px] text-[14px]"
-                    >
+                    <button @click="goToRegister" class="text-[#704ee7] rounded-full font-bold sm:text-[17px] text-[14px]">
                         رایگان شروع کنید
                     </button>
                 </div>
@@ -553,9 +554,7 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                                 class=""
                             />
                         </div>
-                        <button
-                            class="text-[#704ee7] rounded-full font-bold sm:text-[17px] text-[14px]"
-                        >
+                        <button @click="goToRegister" class="text-[#704ee7] rounded-full font-bold sm:text-[17px] text-[14px]">
                             شروع مسیر یادگیری
                         </button>
                     </div>
@@ -726,11 +725,11 @@ const centeredSlides = computed(() => windowWidth.value <= 768);
                             class=""
                         />
                     </div>
-                    <button
-                        class="text-white rounded-full font-bold sm:text-[18px] text-[12px]"
-                    >
+                    <a href="/games">
+                    <button class="text-white rounded-full font-bold sm:text-[18px] text-[12px]">
                         تمام بازی ها
                     </button>
+                    </a>
                 </div>
             </div>
             <div
