@@ -685,7 +685,7 @@ const checkFillBlankAnswer = () => {
   score.value += stageScore
 
   if (isCorrect) {
-    toastSuccess("آفرین! پاسخ درست بود.")
+    toastSuccessGrammar("آفرین! پاسخ درست بود.")
   } else {
     toastError(`اشتباه است! پاسخ صحیح: ${currentFillBlank.value.correctAnswer}`)
   }
@@ -1176,7 +1176,7 @@ const goldenKeys = ref(0)
 const collectedPieces = ref([])
 
 // اتاق‌های گرامر
-const grammarRooms = ref([
+const grammarRooms = [
   {
     title: "زمان حال ساده",
     sentence: {
@@ -1187,33 +1187,37 @@ const grammarRooms = ref([
       {
         text: "She go to school every day.",
         correct: "She goes to school every day.",
-        options: ["She goes to school every day.", "She going to school every day."]
+        options: ["She goes to school every day.", "She going to school every day."],
+        hasError: true
       },
       {
         text: "They eats breakfast at 8 AM.",
         correct: "They eat breakfast at 8 AM.",
-        options: ["They eat breakfast at 8 AM.", "They are eat breakfast at 8 AM."]
+        options: ["They eat breakfast at 8 AM.", "They are eat breakfast at 8 AM."],
+        hasError: true
       },
       {
         text: "My brother work in a hospital.",
         correct: "My brother works in a hospital.",
-        options: ["My brother works in a hospital.", "My brother working in a hospital."]
+        options: ["My brother works in a hospital.", "My brother working in a hospital."],
+        hasError: true
       },
       {
         text: "We doesn't like coffee.",
         correct: "We don't like coffee.",
-        options: ["We don't like coffee.", "We not like coffee."]
+        options: ["We don't like coffee.", "We not like coffee."],
+        hasError: true
       },
       {
         text: "Do he play football?",
         correct: "Does he play football?",
-        options: ["Does he play football?", "Is he play football?"]
+        options: ["Does he play football?", "Is he play football?"],
+        hasError: true
       }
     ],
     fillBlank: [
       {
         sentence: "She _____ to the store every Sunday.",
-        parts: ["She", "_", "to the store every Sunday."],
         options: ["goes", "going", "go"],
         correctAnswer: "goes"
       },
@@ -1250,7 +1254,7 @@ const grammarRooms = ref([
       // نمونه‌های دیگر برای گذشته ساده
     ]
   }
-])
+]
 
 // وضعیت فعلی بازی
 const targetWords = ref([])
@@ -1258,6 +1262,19 @@ const wordBank = ref([])
 const incorrectText = ref([])
 const fillBlankQuestions = ref([])
 const draggedItem = ref({ index: null, source: null })
+
+// computed properties
+const foundErrors = computed(() => {
+  return incorrectText.value.filter(item => item.corrected).length
+})
+
+const allFillBlankAnswered = computed(() => {
+  return fillBlankQuestions.value.every(q => q.userAnswer)
+})
+
+const correctFillBlankAnswers = computed(() => {
+  return fillBlankQuestions.value.filter(q => q.userAnswer === q.correctAnswer).length
+})
 
 // شروع بازی
 const startGrammarGame = () => {
@@ -1267,7 +1284,7 @@ const startGrammarGame = () => {
 
 // تنظیم بازی ساخت جمله
 const setupSentenceGame = () => {
-  const room = grammarRooms.value[currentRoom.value]
+  const room = grammarRooms[currentRoom.value]
   targetWords.value = []
   wordBank.value = [...room.sentence.words, ...room.sentence.bank]
     .sort(() => Math.random() - 0.5)
@@ -1299,34 +1316,34 @@ const onDrop = (event) => {
 }
 
 // بررسی جمله ساخته شده
-const checkSentenceGammar = () => {
-  const room = grammarRooms.value[currentRoom.value]
+const checkSentenceGrammar = () => {
+  const room = grammarRooms[currentRoom.value]
   const correctSentence = room.sentence.words.join(' ')
   const userSentence = targetWords.value.join(' ')
 
   if (userSentence === correctSentence) {
-    // جمله صحیح
     goldenKeys.value++
     grammarStage.value = 'correction'
     setupCorrectionGame()
+    toastSuccessGrammar("جمله شما صحیح است! آفرین!")
   } else {
-    // جمله نادرست
-    alert(`جمله شما: "${userSentence}"\nجمله صحیح: "${correctSentence}"`)
+    toastError(`جمله شما: "${userSentence}"\nجمله صحیح: "${correctSentence}"`)
   }
 }
 
 // ریست جمله
-const resetSentenceGammar = () => {
+const resetSentenceGrammar = () => {
   setupSentenceGame()
 }
 
 // تنظیم بازی تصحیح خطاها
 const setupCorrectionGame = () => {
-  const room = grammarRooms.value[currentRoom.value]
+  const room = grammarRooms[currentRoom.value]
   incorrectText.value = room.corrections.map(item => ({
     ...item,
     showOptions: false,
-    corrected: false
+    corrected: false,
+    isCorrect: false
   }))
 }
 
@@ -1341,87 +1358,140 @@ const showCorrectionOptions = (index) => {
 const applyCorrection = (index, correction) => {
   incorrectText.value[index].text = correction
   incorrectText.value[index].corrected = true
+  incorrectText.value[index].isCorrect = correction === incorrectText.value[index].correct
   incorrectText.value[index].showOptions = false
 }
 
-// تعداد خطاهای پیدا شده
-const foundErrors = computed(() => {
-  return incorrectText.value.filter(item => item.corrected).length
-})
-
 // بررسی تصحیح‌ها
 const checkCorrections = () => {
-  // بررسی صحت تصحیح‌ها
-  incorrectText.value.forEach(item => {
-    item.isCorrect = item.text === item.correct
-  })
-
-  // شمارش پاسخ‌های صحیح
   const correctCount = incorrectText.value.filter(item => item.isCorrect).length
 
   if (correctCount === 5) {
     goldenKeys.value += 2
     grammarStage.value = 'fill-blank'
     setupFillBlankGame()
+    toastSuccessGrammar("همه اشتباهات را پیدا کردید! عالی!")
   } else {
-    alert(`شما ${correctCount} از ۵ خطا را به درستی تصحیح کردید. دوباره تلاش کنید!`)
+    incorrectText.value.forEach(item => {
+      item.showOptions = false
+    })
+    toastError(`شما ${correctCount} از ۵ خطا را به درستی تصحیح کردید. دوباره تلاش کنید!`)
   }
 }
 
 // تنظیم بازی جایگذاری
+
 const setupFillBlankGame = () => {
-  const room = grammarRooms.value[currentRoom.value]
+  const room = grammarRooms[currentRoom.value]
   fillBlankQuestions.value = room.fillBlank.map(q => ({
     ...q,
     userAnswer: '',
     showFeedback: false,
-    isCorrect: false
+    isCorrect: false,
+    userAttempted: false,
+    // اضافه کردن این قسمت برای تبدیل جمله به بخش‌های جداگانه
+    sentenceParts: splitSentence(q.sentence)
   }))
 }
 
-// تعداد پاسخ‌های داده شده
-const allFillBlankAnswered = computed(() => {
-  return fillBlankQuestions.value.every(q => q.userAnswer)
-})
+const splitSentence = (sentence) => {
+  const parts = []
+  const words = sentence.split(' ')
+  let blankIndex = words.findIndex(w => w === '_____')
 
-// تعداد پاسخ‌های صحیح
-const correctFillBlankAnswers = computed(() => {
-  return fillBlankQuestions.value.filter(q => q.userAnswer === q.correctAnswer).length
-})
+  if (blankIndex !== -1) {
+    if (blankIndex > 0) {
+      parts.push(words.slice(0, blankIndex).join(' '))
+    }
+    parts.push('_') // جای خالی
+    if (blankIndex < words.length - 1) {
+      parts.push(words.slice(blankIndex + 1).join(' '))
+    }
+  } else {
+    parts.push(sentence)
+  }
+
+  return parts
+}
+
+const evaluateAnswer = (question) => {
+  question.userAttempted = !!question.userAnswer
+  question.isCorrect = (question.userAnswer === question.correctAnswer)
+
+  const allAnswered = fillBlankQuestions.value.every(q => !!q.userAnswer)
+  const allCorrect = fillBlankQuestions.value.every(q => q.userAnswer === q.correctAnswer)
+
+  if (allAnswered) {
+    if (allCorrect) {
+      goldenKeys.value += 3
+      grammarStage.value = 'reward'
+      toastSuccess('همه پاسخ‌ها صحیح بودند! آفرین!')
+    }
+  }
+}
 
 // بررسی پاسخ‌های جایگذاری
 const checkFillBlankAnswers = () => {
-  // نمایش فیدبک برای همه سوالات
+  let allAnswered = true
+
   fillBlankQuestions.value.forEach(q => {
-    q.showFeedback = true
-    q.isCorrect = q.userAnswer === q.correctAnswer
+    q.userAttempted = !!q.userAnswer
+    q.isCorrect = (q.userAnswer === q.correctAnswer)
+    if (!q.userAttempted) allAnswered = false
   })
 
-  // اگر همه پاسخ‌ها صحیح بودند
-  if (correctFillBlankAnswers.value === fillBlankQuestions.value.length) {
+  if (!allAnswered) {
+    toastError('لطفاً به تمام سوالات پاسخ دهید!')
+    return
+  }
+
+  const correctCount = fillBlankQuestions.value.filter(q => q.isCorrect).length
+
+  if (correctCount === fillBlankQuestions.value.length) {
     goldenKeys.value += 3
     grammarStage.value = 'reward'
+    toastSuccess('همه پاسخ‌ها صحیح بودند! آفرین!')
+  } else {
+    // نمایش فیدبک برای تمام سوالات
+    fillBlankQuestions.value.forEach(q => {
+      q.showFeedback = true
+    })
+    toastError(`شما ${correctCount} از ${fillBlankQuestions.value.length} سوال را درست پاسخ دادید!`)
   }
 }
 
 // تکمیل اتاق گرامر
 const completeGrammarRoom = () => {
-  collectedPieces.value.push(grammarRooms.value[currentRoom.value].title)
+  collectedPieces.value.push(grammarRooms[currentRoom.value].title)
 
-  // رفتن به اتاق بعدی یا پایان بازی
-  if (currentRoom.value < grammarRooms.value.length - 1) {
+  if (currentRoom.value < grammarRooms.length - 1) {
     currentRoom.value++
     grammarStage.value = 'intro'
   } else {
-    alert('تبریک! شما تمام اتاق‌های نقشه گرامر گمشده را کامل کردید!')
-    // اینجا می‌توانید درس را به عنوان تکمیل شده علامت بزنید
+    toastSuccessGrammar("تبریک! شما تمام اتاق‌های نقشه گرامر گمشده را کامل کردید!")
+    grammarStage.value = 'reward'
   }
+}
+
+// توابع کمکی
+const toastSuccessGrammar = (message) => {
+  console.log("✅ " + message)
+  // در حالت واقعی می‌توانید از یک کتابخانه toast استفاده کنید
+}
+
+const toastErrorGrammar = (message) => {
+  console.log("❌ " + message)
+  // در حالت واقعی می‌توانید از یک کتابخانه toast استفاده کنید
 }
 
 // مقداردهی اولیه
 onMounted(() => {
   currentRoom.value = 0
 })
+
+
+
+
 
 // علامت گذاری درس به عنوان تکمیل شده
 const markAsCompleted = () => {
@@ -2068,7 +2138,7 @@ watch(() => props.lesson, (newLesson) => {
               <div v-if="writingStage === 'intro'" class="flex-1 flex flex-col items-center justify-center">
                 <div class="bg-black bg-opacity-70 rounded-2xl p-8 max-w-md w-full text-center border-2 border-green-500">
                   <div class="commander-character animate-bounce mb-6">
-                    <img src="/images/commander.png" alt="فرمانده" class="w-32 h-32 mx-auto">
+                    <img src="/images/kid_courses/commander.png" alt="فرمانده" class="w-32 h-32 mx-auto">
                   </div>
                   <h4 class="text-xl font-bold text-green-400 mb-4">مأموریت ویژه!</h4>
                   <p class="text-white mb-6">"سلام سرباز! ما نیاز داریم که مهارت‌های نوشتاری تو را آزمایش کنیم. آماده‌ای این چالش را بپذیری؟"</p>
@@ -2587,7 +2657,7 @@ watch(() => props.lesson, (newLesson) => {
 
             <!-- مراحل بازی -->
             <div class="flex-1 flex flex-col">
-              <!-- مرحله 1: ورود به اتاق -->
+              <!-- مرحله 1: معرفی -->
               <div v-if="grammarStage === 'intro'" class="flex-1 flex flex-col items-center justify-center">
                 <div class="bg-white bg-opacity-90 rounded-2xl p-6 max-w-md w-full text-center shadow-lg border-2 border-amber-300">
                   <div class="owl-character animate-bounce mb-6">
@@ -2650,13 +2720,14 @@ watch(() => props.lesson, (newLesson) => {
 
                   <div class="mt-6 flex justify-center gap-4">
                     <button
-                      @click="checkSentenceGammar"
+                      @click="checkSentenceGrammar"
                       class="px-6 py-2 bg-amber-600 hover:bg-amber-700 text-white rounded-lg font-bold"
+                      :disabled="targetWords.length === 0"
                     >
                       بررسی جمله
                     </button>
                     <button
-                      @click="resetSentenceGammar"
+                      @click="resetSentenceGrammar"
                       class="px-6 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg"
                     >
                       شروع مجدد
@@ -2680,8 +2751,11 @@ watch(() => props.lesson, (newLesson) => {
                     <div
                       v-for="(sentence, index) in incorrectText"
                       :key="index"
-                      class="sentence mb-3 p-2 rounded hover:bg-amber-100 transition-colors"
-                      :class="{ 'bg-red-100': sentence.hasError && !sentence.corrected }"
+                      class="sentence mb-3 p-2 rounded hover:bg-amber-100 transition-colors cursor-pointer"
+                      :class="{
+                        'bg-red-100': sentence.hasError && !sentence.corrected,
+                        'bg-green-100': sentence.corrected && sentence.isCorrect
+                      }"
                       @click="showCorrectionOptions(index)"
                     >
                       <span v-if="!sentence.showOptions">{{ sentence.text }}</span>
@@ -2708,6 +2782,7 @@ watch(() => props.lesson, (newLesson) => {
                       @click="checkCorrections"
                       class="px-6 py-2 bg-amber-600 hover:bg-amber-700 text-white rounded-lg font-bold"
                       :disabled="foundErrors < 5"
+                      :class="{ 'opacity-50 cursor-not-allowed': foundErrors < 5 }"
                     >
                       ادامه ماجراجویی
                     </button>
@@ -2726,27 +2801,38 @@ watch(() => props.lesson, (newLesson) => {
                     <p class="text-lg text-amber-700 mb-4">"جاهای خالی را با گزینه مناسب پر کن!"</p>
                   </div>
 
-                  <div class="fill-blank-game flex-1">
+                  <div class="fill-blank-game flex-1 space-y-6" dir="ltr">
                     <div
-                      v-for="(question, index) in fillBlankQuestions"
-                      :key="index"
-                      class="question mb-6 p-4 bg-amber-50 rounded-lg"
+                      v-for="(question, qIndex) in fillBlankQuestions"
+                      :key="qIndex"
+                      class="question p-4 bg-amber-50 rounded-lg border-2"
+                      :class="{
+                        'border-green-200': question.userAttempted && question.isCorrect,
+                        'border-red-200': question.userAttempted && !question.isCorrect,
+                        'border-amber-200': !question.userAttempted
+                      }"
                     >
-                      <p class="mb-3">
+                      <p class="mb-3 text-lg">
                         <span
-                          v-for="(part, partIndex) in question.sentenceParts"
-                          :key="partIndex"
+                          v-for="(part, pIndex) in question.sentenceParts"
+                          :key="pIndex"
                           class="inline-block"
                         >
                           <template v-if="part === '_'">
                             <select
                               v-model="question.userAnswer"
-                              class="mx-1 px-2 py-1 bg-white border border-amber-300 rounded focus:outline-none focus:ring-2 focus:ring-amber-500"
+                              class="mx-1 py-1 bg-white border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
+                              :class="{
+                                'border-green-500': question.userAttempted && question.isCorrect,
+                                'border-red-500': question.userAttempted && !question.isCorrect,
+                                'border-amber-300': !question.userAttempted
+                              }"
+                              @change="evaluateAnswer(question)"
                             >
-                              <option value="">انتخاب کنید</option>
+                              <option value="" disabled selected>انتخاب کنید</option>
                               <option
-                                v-for="(option, optIndex) in question.options"
-                                :key="optIndex"
+                                v-for="(option, oIndex) in question.options"
+                                :key="oIndex"
                                 :value="option"
                               >
                                 {{ option }}
@@ -2760,19 +2846,23 @@ watch(() => props.lesson, (newLesson) => {
                       </p>
 
                       <div
-                        v-if="question.userAnswer && question.showFeedback"
-                        class="feedback p-2 rounded text-sm"
-                        :class="question.isCorrect ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'"
+                        v-if="question.userAttempted"
+                        class="feedback p-3 rounded-lg text-sm mt-2"
+                        :class="{
+                          'bg-green-100 text-green-800': question.isCorrect,
+                          'bg-red-100 text-red-800': !question.isCorrect
+                        }"
                       >
-                        {{ question.isCorrect ? '✅ پاسخ صحیح!' : '❌ پاسخ نادرست' }}
-                        <span v-if="!question.isCorrect" class="block mt-1">
-                          پاسخ صحیح: <strong>{{ question.correctAnswer }}</strong>
+                        <span v-if="question.isCorrect">✅ پاسخ صحیح!</span>
+                        <span v-else>
+                          ❌ پاسخ نادرست! پاسخ صحیح:
+                          <strong>{{ question.correctAnswer }}</strong>
                         </span>
                       </div>
                     </div>
                   </div>
 
-                  <div class="flex justify-between items-center mt-auto">
+                  <div class="flex justify-between items-center mt-6">
                     <span class="text-sm text-amber-600">
                       پاسخ‌های صحیح: {{ correctFillBlankAnswers }}/{{ fillBlankQuestions.length }}
                     </span>
@@ -2780,8 +2870,9 @@ watch(() => props.lesson, (newLesson) => {
                       @click="checkFillBlankAnswers"
                       class="px-6 py-2 bg-amber-600 hover:bg-amber-700 text-white rounded-lg font-bold"
                       :disabled="!allFillBlankAnswered"
+                      :class="{ 'opacity-50 cursor-not-allowed': !allFillBlankAnswered }"
                     >
-                      {{ correctFillBlankAnswers === fillBlankQuestions.length ? 'دریافت قطعه کتاب' : 'بررسی پاسخ‌ها' }}
+                      {{ allFillBlankAnswered ? ('دریافت قطعه کتاب') : 'لطفاً همه جاهای خالی را پر کنید' }}
                     </button>
                   </div>
                 </div>
@@ -2790,20 +2881,20 @@ watch(() => props.lesson, (newLesson) => {
               <!-- مرحله 5: دریافت پاداش -->
               <div v-if="grammarStage === 'reward'" class="flex-1 flex flex-col items-center justify-center">
                 <div class="bg-white bg-opacity-90 rounded-2xl p-8 text-center max-w-md w-full shadow-lg border-2 border-amber-300">
-                  <div class="text-6xl mb-4">🏆</div>
+                  <div class="text-6xl mb-4 animate-bounce">✨</div>
                   <h4 class="text-2xl font-bold text-amber-600 mb-4">تبریک! اتاق گرامر را کامل کردی!</h4>
                   <p class="text-amber-700 mb-6">شما یک قطعه از کتاب طلایی گرامر را پیدا کردید!</p>
 
-                  <div class="book-piece mb-6 p-4 bg-amber-100 rounded-lg inline-block">
-                    <img src="/images/book-piece.png" alt="قطعه کتاب" class="w-24 h-24 mx-auto animate-pulse">
-                    <p class="text-amber-800 font-bold mt-2">{{ grammarRooms[currentRoom].title }}</p>
+                  <div class="book-piece mb-6 p-4 bg-amber-100 rounded-lg inline-block grid grid-1">
+                    <img src="/images/kid_courses/book-piece.png" alt="قطعه کتاب" class="w-24 h-24 mx-auto">
+                    <div class="text-amber-800 font-bold mt-2">{{ grammarRooms[currentRoom].title }}</div>
                   </div>
 
                   <button
                     @click="completeGrammarRoom"
                     class="px-6 py-3 bg-amber-600 hover:bg-amber-700 text-white rounded-lg font-bold"
                   >
-                    رفتن به اتاق بعدی
+                    {{ currentRoom < grammarRooms.length - 1 ? 'برو به اتاق بعدی' : 'بازگشت به کتابخانه' }}
                   </button>
                 </div>
               </div>
