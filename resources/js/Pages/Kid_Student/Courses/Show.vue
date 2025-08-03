@@ -1004,10 +1004,6 @@ const nextWordOrStage = () => {
     recordingResult.value = null
 
     // اگر در مرحله املا هستیم، حروف جدید را آماده کنیم
-    if (vocabStage.value === 'spell') {
-      prepareSpelling()
-    }
-  } else {
     // رفتن به مرحله بعدی بازی
     switch (vocabStage.value) {
       case 'identify':
@@ -1018,12 +1014,13 @@ const nextWordOrStage = () => {
         vocabStage.value = 'match'
         break
       case 'match':
-        prepareSpelling()
-        vocabStage.value = 'spell'
-        break
-      case 'spell':
+        // prepareSpelling()
+        // vocabStage.value = 'spell'
         vocabStage.value = 'reward'
         break
+      // case 'spell':
+      //   vocabStage.value = 'reward'
+      //   break
     }
 
     currentWordIndex.value = 0
@@ -1817,10 +1814,9 @@ watch(() => props.lesson, (newLesson) => {
                     <!-- مشتری فعلی -->
                     <div class="customer mb-8 text-center">
                       <img
-                        :src="currentCustomer.image"
+                        src="/images/kid_courses/waiter.png"
                         :alt="currentCustomer.name"
                         class="w-32 h-32 mx-auto mb-4"
-                        :class="{ 'animate-pulse': customerWaiting }"
                       >
                       <div class="speech-bubble bg-orange-100 p-4 rounded-lg relative max-w-xs mx-auto">
                         <p class="text-orange-800">{{ currentPhrase.text }}</p>
@@ -2555,7 +2551,7 @@ watch(() => props.lesson, (newLesson) => {
               </div>
 
               <!-- مرحله 5: املا -->
-              <div v-if="vocabStage === 'spell'" class="flex-1 flex flex-col">
+              <!-- <div v-if="vocabStage === 'spell'" class="flex-1 flex flex-col">
                 <div class="bg-white bg-opacity-80 rounded-2xl p-6 flex-1 flex flex-col items-center justify-center">
                   <div class="wooka-character mb-6">
                     <img src="/images/kid_courses/wooka-teacher.png" alt="ووکای معلم" class="w-32 h-32 mx-auto">
@@ -2609,7 +2605,7 @@ watch(() => props.lesson, (newLesson) => {
                     بررسی املا
                   </button>
                 </div>
-              </div>
+              </div> -->
 
               <!-- مرحله 6: پاداش -->
               <div v-if="vocabStage === 'reward'" class="flex-1 flex flex-col items-center justify-center">
@@ -2619,7 +2615,7 @@ watch(() => props.lesson, (newLesson) => {
                   <p class="text-purple-700 mb-6">شما {{ correctAnswers }} از {{ stationWords.length }} کلمه رو درست یاد گرفتی!</p>
 
                   <div class="flex justify-center mb-6">
-                    <img src="/images/green-leaf.png" alt="برگ سبز" class="w-16 h-16 animate-bounce">
+                    <img src="/images/kid_courses/green-leaf1.png" alt="برگ سبز" class="w-16 h-16 animate-bounce">
                   </div>
 
                   <button
