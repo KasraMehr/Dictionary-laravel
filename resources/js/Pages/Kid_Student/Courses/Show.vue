@@ -1192,14 +1192,14 @@ const nextWordOrStage = () => {
         vocabStage.value = 'pronounce'
         break
       case 'pronounce':
-        prepareMatchingGame()
-        vocabStage.value = 'match'
-        break
-      case 'match':
-        // prepareSpelling()
-        // vocabStage.value = 'spell'
+        // prepareMatchingGame()
+        // vocabStage.value = 'match'
         vocabStage.value = 'reward'
         break
+      // case 'match':
+        // prepareSpelling()
+        // vocabStage.value = 'spell'
+        // break
       // case 'spell':
       //   vocabStage.value = 'reward'
       //   break
@@ -1240,6 +1240,55 @@ const startRecording = () => {
 }
 
 // آماده‌سازی بازی تطبیق
+const activeWordIndex = ref(null)
+const activeImageIndex = ref(null)
+
+// مدیریت تاچ برای تصاویر
+const handleImageTouchStart = (index) => {
+  activeImageIndex.value = index
+}
+
+const handleImageTouchEnd = () => {
+  if (activeWordIndex.value !== null && activeImageIndex.value !== null) {
+    tryToMatch(activeWordIndex.value, activeImageIndex.value)
+  }
+  activeImageIndex.value = null
+}
+
+// مدیریت تاچ برای کلمات
+const handleWordTouchStart = (index) => {
+  activeWordIndex.value = index
+}
+
+const handleWordTouchEnd = () => {
+  activeWordIndex.value = null
+}
+
+// انتخاب تصویر (برای دسکتاپ)
+const selectImage = (index) => {
+  if (!isMobile.value && activeWordIndex.value !== null) {
+    tryToMatch(activeWordIndex.value, index)
+    activeWordIndex.value = null
+  }
+}
+
+// انتخاب کلمه (برای دسکتاپ)
+const selectWordVocabulary = (index) => {
+  if (!isMobile.value) {
+    activeWordIndex.value = index
+  }
+}
+
+// تلاش برای تطبیق کلمه و تصویر
+const tryToMatch = (wordIndex, imageIndex) => {
+  if (matchWords.value[wordIndex].text === matchImages.value[imageIndex].word) {
+    matchWords.value[wordIndex].matched = true
+    matchImages.value[imageIndex].matched = true
+    matchedPairs.value++
+  }
+}
+
+// توابع موجود با تغییرات جزئی
 const prepareMatchingGame = () => {
   const words = [...stationWords.value]
     .sort(() => Math.random() - 0.5)
@@ -1255,24 +1304,13 @@ const prepareMatchingGame = () => {
     text: word.en,
     matched: false
   }))
+
+  // ریست حالت‌های انتخاب
+  activeWordIndex.value = null
+  activeImageIndex.value = null
+  matchedPairs.value = 0
 }
 
-// درگ کلمه برای تطبیق
-const dragWord = (event, index) => {
-  event.dataTransfer.setData("wordIndex", index)
-}
-
-// انداختن کلمه روی تصویر
-const dropOnImage = (event, imageIndex) => {
-  const wordIndex = event.dataTransfer.getData("wordIndex")
-
-  if (matchWords.value[wordIndex].text === matchImages.value[imageIndex].word) {
-    matchWords.value[wordIndex].matched = true
-    matchImages.value[imageIndex].matched = true
-  }
-}
-
-// بررسی پاسخ‌های تطبیق
 const checkMatches = () => {
   const allCorrect = matchedPairs.value === matchImages.value.length
 
@@ -1284,8 +1322,13 @@ const checkMatches = () => {
     matchWords.value.forEach(word => {
       if (!word.matched) word.matched = false
     })
+    matchImages.value.forEach(image => {
+      if (!image.matched) image.matched = false
+    })
+    matchedPairs.value = 0
   }
 }
+
 
 // آماده‌سازی بازی املا
 const prepareSpelling = () => {
@@ -1461,6 +1504,8 @@ const startGrammarGame = () => {
   setupSentenceGame()
 }
 
+// حالت‌های بازی
+
 // تنظیم بازی ساخت جمله
 const setupSentenceGame = () => {
   const room = grammarRooms[currentRoom.value]
@@ -1469,29 +1514,73 @@ const setupSentenceGame = () => {
     .sort(() => Math.random() - 0.5)
 }
 
-// شروع درگ کلمه
-const startDrag = (event, index, source) => {
-  draggedItem.value = { index, source }
-  event.dataTransfer.setData('text/plain', index)
+// انتخاب کلمه (برای موبایل)
+const selectWordGrammar = (index, source) => {
+  if (isMobile.value) {
+    if (touchState.value.activeIndex !== null && touchState.value.source !== source) {
+      // اگر قبلی از منبع دیگری انتخاب شده بود، جابجا کن
+      if (touchState.value.source === 'bank') {
+        moveWordToTarget(touchState.value.activeIndex)
+      } else {
+        moveWordToBank(touchState.value.activeIndex)
+      }
+    } else {
+      // انتخاب جدید
+      touchState.value = {
+        activeIndex: index,
+        source: source
+      }
+    }
+  } else {
+    // برای دسکتاپ از درگ و دراپ استفاده می‌کنیم
+    if (source === 'bank') {
+      moveWordToTarget(index)
+    }
+  }
 }
 
-// انداختن کلمه
-const onDrop = (event) => {
-  const { index, source } = draggedItem.value
-
-  if (source === 'bank') {
-    // اضافه کردن کلمه از بانک به جمله
+// انتقال کلمه از بانک به جمله
+const moveWordToTarget = (index) => {
+  if (index >= 0 && index < wordBank.value.length) {
     const word = wordBank.value[index]
     targetWords.value = [...targetWords.value, word]
     wordBank.value = wordBank.value.filter((_, i) => i !== index)
-  } else if (source === 'target') {
-    // جابجا کردن کلمه در جمله
-    const word = targetWords.value[index]
-    targetWords.value = targetWords.value.filter((_, i) => i !== index)
-    wordBank.value = [...wordBank.value, word]
+    touchState.value = { activeIndex: null, source: null }
   }
+}
 
-  draggedItem.value = { index: null, source: null }
+// انتقال کلمه از جمله به بانک
+const moveWordToBank = (index) => {
+  if (index >= 0 && index < targetWords.value.length) {
+    const word = targetWords.value[index]
+    wordBank.value = [...wordBank.value, word]
+    targetWords.value = targetWords.value.filter((_, i) => i !== index)
+    touchState.value = { activeIndex: null, source: null }
+  }
+}
+
+// درگ و دراپ برای دسکتاپ
+const startDrag = (event, index, source) => {
+  if (!isMobile.value) {
+    event.dataTransfer.setData('text/plain', JSON.stringify({ index, source }))
+  }
+}
+
+const onDrop = (event) => {
+  if (!isMobile.value) {
+    event.preventDefault()
+    try {
+      const { index, source } = JSON.parse(event.dataTransfer.getData('text/plain'))
+
+      if (source === 'bank') {
+        moveWordToTarget(index)
+      } else if (source === 'target') {
+        moveWordToBank(index)
+      }
+    } catch (e) {
+      console.error('Error in drop event:', e)
+    }
+  }
 }
 
 // بررسی جمله ساخته شده
@@ -1841,31 +1930,31 @@ watch(() => props.lesson, (newLesson) => {
     <!-- صفحه درس (وقتی کاربر روی یک نقطه کلیک کرد) -->
     <div v-else class="lesson-container">
       <!-- هدرس درس -->
-      <div class="lesson-header">
+      <div class="lesson-header flex flex-col md:flex-row md:items-center md:justify-between gap-3 md:gap-4 p-4">
         <button
           @click="activeLesson = null"
-          class="back-to-map"
+          class="back-to-map flex items-center gap-1 text-sm md:text-base text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400"
         >
-          <ArrowLeftIcon class="w-5 h-5" />
+          <ArrowLeftIcon class="w-4 h-4 md:w-5 md:h-5" />
           بازگشت به نقشه
         </button>
 
-        <h2 class="lesson-title">
-          <span class="ml-1 text-gray-800 dark:text-gray-200">درس {{ currentIndex + 1 }}:</span>
+        <h2 class="lesson-title text-center md:text-right text-lg md:text-xl font-semibold text-gray-900 dark:text-white flex-1">
+          <span class="ml-1 text-gray-600 dark:text-gray-300">درس {{ currentIndex + 1 }}:</span>
           {{ activeLesson.title }}
         </h2>
 
-        <div class="lesson-progress">
-          <span v-if="activeLesson.is_completed" class="completed-badge">
-            <CheckIcon class="w-5 h-5" />
+        <div class="lesson-progress flex justify-center md:justify-start">
+          <span v-if="activeLesson.is_completed" class="completed-badge flex items-center gap-1 px-3 py-1 rounded-full bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 text-xs md:text-sm">
+            <CheckIcon class="w-4 h-4 md:w-5 md:h-5" />
             تکمیل شده
           </span>
           <button
             v-else
             @click="markAsCompleted"
-            class="complete-button"
+            class="complete-button flex items-center gap-1 px-3 py-1 rounded-full bg-blue-100 dark:bg-blue-900 hover:bg-blue-200 dark:hover:bg-blue-800 text-blue-800 dark:text-blue-200 text-xs md:text-sm"
           >
-            <CheckIcon class="w-5 h-5" />
+            <CheckIcon class="w-4 h-4 md:w-5 md:h-5" />
             تکمیل درس
           </button>
         </div>
@@ -2714,32 +2803,46 @@ watch(() => props.lesson, (newLesson) => {
               </div>
 
               <!-- مرحله 4: تطبیق تصویر و کلمه -->
-              <div v-if="vocabStage === 'match'" class="flex-1 flex flex-col">
-                <div class="bg-white bg-opacity-80 rounded-2xl p-6 flex-1 flex flex-col">
-                  <div class="text-center mb-6">
+              <!-- <div v-if="vocabStage === 'match'" class="flex-1 flex flex-col">
+                <div class="bg-white bg-opacity-80 rounded-2xl p-4 md:p-6 flex-1 flex flex-col">
+                  <div class="text-center mb-4 md:mb-6">
                     <p class="text-lg text-purple-700">"حالا کلمه‌ها رو به تصویر درست وصل کن!"</p>
                   </div>
 
-                  <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
+                  <div class="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 mb-4 md:mb-6">
                     <div
                       v-for="(image, index) in matchImages"
                       :key="'img'+index"
-                      class="bg-white rounded-lg p-3 shadow-md border-2 border-transparent hover:border-purple-300 transition-all"
-                      @dragover.prevent
-                      @drop="dropOnImage($event, index)"
+                      class="bg-white rounded-lg p-2 md:p-3 shadow-md border-2 border-transparent transition-all"
+                      :class="{
+                        'border-purple-300': activeImageIndex === index,
+                        'border-green-500': image.matched
+                      }"
+                      @click="selectImage(index)"
+                      @touchstart="handleImageTouchStart(index)"
+                      @touchend="handleImageTouchEnd"
                     >
-                      <img :src="image.url" :alt="image.word" class="w-full h-32 object-contain">
+                      <img
+                        :src="image.url"
+                        :alt="image.word"
+                        class="w-full h-24 md:h-32 object-contain"
+                      >
                     </div>
                   </div>
 
-                  <div class="flex flex-wrap gap-3 justify-center">
+                  <div class="flex flex-wrap gap-2 md:gap-3 justify-center">
                     <div
                       v-for="(word, index) in matchWords"
                       :key="'word'+index"
-                      draggable="true"
-                      @dragstart="dragWord($event, index)"
-                      class="px-4 py-2 bg-purple-100 text-purple-800 rounded-lg cursor-move hover:bg-purple-200 transition-colors"
-                      :class="{ 'invisible': word.matched }"
+                      class="px-3 py-1 md:px-4 md:py-2 bg-purple-100 text-purple-800 rounded-lg cursor-pointer transition-colors"
+                      :class="{
+                        'invisible': word.matched,
+                        'bg-purple-200': activeWordIndex === index,
+                        'ring-2 ring-purple-500': activeWordIndex === index
+                      }"
+                      @click="selectWord(index)"
+                      @touchstart="handleWordTouchStart(index)"
+                      @touchend="handleWordTouchEnd"
                     >
                       {{ word.text }}
                     </div>
@@ -2747,13 +2850,21 @@ watch(() => props.lesson, (newLesson) => {
 
                   <button
                     @click="checkMatches"
-                    class="mt-6 px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-bold self-center"
+                    class="mt-4 md:mt-6 px-4 py-2 md:px-6 md:py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-bold self-center"
                     :disabled="matchedPairs < matchImages.length"
+                    :class="{
+                      'opacity-50 cursor-not-allowed': matchedPairs < matchImages.length,
+                      'hover:bg-purple-600': matchedPairs < matchImages.length
+                    }"
                   >
                     بررسی پاسخ‌ها
                   </button>
+
+                  <div v-if="isMobile" class="mt-4 text-sm text-gray-600 text-center">
+                    <p>برای تطبیق: ابتدا روی کلمه و سپس روی تصویر مربوطه کلیک کنید</p>
+                  </div>
                 </div>
-              </div>
+              </div> -->
 
               <!-- مرحله 5: املا -->
               <!-- <div v-if="vocabStage === 'spell'" class="flex-1 flex flex-col">
@@ -2873,45 +2984,47 @@ watch(() => props.lesson, (newLesson) => {
 
               <!-- مرحله 2: ساخت جمله -->
               <div v-if="grammarStage === 'sentence'" class="flex-1 flex flex-col">
-                <div class="bg-white bg-opacity-90 rounded-2xl p-6 flex-1 flex flex-col">
-                  <div class="owl-character mb-6">
-                    <img src="/images/kid_courses/wise-owl.png" alt="جغد دانا" class="w-24 h-24 mx-auto">
+                <div class="bg-white bg-opacity-90 rounded-2xl p-4 md:p-6 flex-1 flex flex-col">
+                  <div class="owl-character mb-4 md:mb-6">
+                    <img src="/images/kid_courses/wise-owl.png" alt="جغد دانا" class="w-16 h-16 md:w-24 md:h-24 mx-auto">
                   </div>
 
-                  <div class="mb-6 text-center">
-                    <p class="text-lg text-amber-700 mb-4">"برای گفتن کاری که هر روز انجام می‌دهیم، از چه زمانی استفاده می‌کنیم؟"</p>
-                    <p class="text-sm text-gray-500">کلمات را بکشید و در محل مناسب رها کنید</p>
+                  <div class="mb-4 md:mb-6 text-center">
+                    <p class="text-base md:text-lg text-amber-700 mb-2 md:mb-4">"برای گفتن کاری که هر روز انجام می‌دهیم، از چه زمانی استفاده می‌کنیم؟"</p>
+                    <p class="text-xs md:text-sm text-gray-500" v-if="!isMobile">کلمات را بکشید و در محل مناسب رها کنید</p>
+                    <p class="text-xs md:text-sm text-gray-500" v-else>روی کلمات کلیک کنید تا به جمله اضافه شوند</p>
                   </div>
 
                   <div class="grammar-game-area flex-1 flex flex-col">
                     <!-- ناحیه هدف برای ساخت جمله -->
                     <div
-                      class="target-area flex-1 bg-amber-50 rounded-lg p-4 mb-4 flex flex-wrap gap-2 min-h-20 border-2 border-dashed border-amber-300"
-                      @drop="onDrop($event)"
-                      @dragover.prevent
-                      @dragenter.prevent
+                      class="target-area flex-1 bg-amber-50 rounded-lg p-3 md:p-4 mb-3 md:mb-4 flex flex-wrap gap-2 min-h-20 border-2 border-dashed border-amber-300"
+                      ref="targetArea"
                     >
                       <div
                         v-for="(word, index) in targetWords"
                         :key="index"
-                        class="word bg-amber-100 text-amber-800 px-3 py-2 rounded-lg cursor-move"
-                        draggable="true"
-                        @dragstart="startDrag($event, index, 'target')"
+                        class="word bg-amber-100 text-amber-800 px-2 py-1 md:px-3 md:py-2 rounded-lg cursor-pointer"
+                        @click="moveWordToBank(index)"
+                        @touchstart="handleTouchStart(index, 'target')"
+                        @touchend="handleTouchEnd"
                       >
                         {{ word }}
+                        <span class="md:hidden text-amber-600 ml-1">×</span>
                       </div>
                     </div>
 
                     <!-- بانک کلمات -->
-                    <div class="word-bank bg-amber-50 rounded-lg p-4 border-2 border-amber-200">
-                      <p class="text-sm text-amber-600 mb-2">کلمات موجود:</p>
+                    <div class="word-bank bg-amber-50 rounded-lg p-3 md:p-4 border-2 border-amber-200">
+                      <p class="text-xs md:text-sm text-amber-600 mb-1 md:mb-2">کلمات موجود:</p>
                       <div class="flex flex-wrap gap-2">
                         <div
                           v-for="(word, index) in wordBank"
                           :key="'bank-'+index"
-                          class="word bg-white text-amber-800 px-3 py-2 rounded-lg cursor-move shadow-sm"
-                          draggable="true"
-                          @dragstart="startDrag($event, index, 'bank')"
+                          class="word bg-white text-amber-800 px-2 py-1 md:px-3 md:py-2 rounded-lg cursor-pointer shadow-sm"
+                          @click="moveWordToTarget(index)"
+                          @touchstart="handleTouchStart(index, 'bank')"
+                          @touchend="handleTouchEnd"
                         >
                           {{ word }}
                         </div>
@@ -2919,17 +3032,18 @@ watch(() => props.lesson, (newLesson) => {
                     </div>
                   </div>
 
-                  <div class="mt-6 flex justify-center gap-4">
+                  <div class="mt-4 md:mt-6 flex justify-center gap-3 md:gap-4 flex-wrap">
                     <button
                       @click="checkSentenceGrammar"
-                      class="px-6 py-2 bg-amber-600 hover:bg-amber-700 text-white rounded-lg font-bold"
+                      class="px-4 py-1 md:px-6 md:py-2 bg-amber-600 hover:bg-amber-700 text-white rounded-lg font-bold text-sm md:text-base"
                       :disabled="targetWords.length === 0"
+                      :class="{'opacity-50 cursor-not-allowed': targetWords.length === 0}"
                     >
                       بررسی جمله
                     </button>
                     <button
                       @click="resetSentenceGrammar"
-                      class="px-6 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg"
+                      class="px-4 py-1 md:px-6 md:py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-lg text-sm md:text-base"
                     >
                       شروع مجدد
                     </button>
@@ -3838,5 +3952,79 @@ watch(() => props.lesson, (newLesson) => {
 .user-story-item:active {
   transform: scale(1.02);
   background-color: #3182ce;
+}
+
+@media (max-width: 640px) {
+  .matching-image {
+    height: 20vw;
+    min-height: 80px;
+  }
+
+  .matching-word {
+    font-size: 0.9rem;
+    padding: 0.5rem 0.8rem;
+  }
+
+  .check-button {
+    padding: 0.8rem 1.5rem;
+    font-size: 0.9rem;
+  }
+}
+
+/* انیمیشن‌های تعاملی */
+.matching-word {
+  transition: all 0.2s ease;
+}
+
+.matching-word:active {
+  transform: scale(0.95);
+}
+
+.matching-image {
+  transition: border-color 0.2s ease;
+}
+
+.word {
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.word:active {
+  transform: scale(0.95);
+}
+
+/* انیمیشن‌ها */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-5px); }
+  40%, 80% { transform: translateX(5px); }
+}
+
+.shake {
+  animation: shake 0.5s ease-in-out;
+}
+
+/* ریسپانسیو */
+@media (max-width: 640px) {
+  .target-area, .word-bank {
+    padding: 0.75rem;
+  }
+
+  .word {
+    font-size: 0.9rem;
+    padding: 0.5rem 0.75rem;
+  }
+
+  .owl-character img {
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .word {
+    font-size: 0.8rem;
+    padding: 0.4rem 0.6rem;
+  }
 }
 </style>
