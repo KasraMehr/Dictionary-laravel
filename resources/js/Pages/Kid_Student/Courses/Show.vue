@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, watch, onMounted } from 'vue'
+import { ref, computed, watch, onMounted, reactive } from 'vue'
 import { router, usePage } from '@inertiajs/vue3'
 import { useToast } from 'vue-toastification'
 import StudentLayout from "@/Layouts/StudentLayout.vue"
@@ -705,6 +705,90 @@ const checkFillBlankAnswer = () => {
 }
 
 // متدهای مرحله 2: جمله سازی با تصاویر
+
+// متغیرهای جدید برای مدیریت تاچ
+const touchState = reactive({
+  active: false,
+  type: null,
+  index: null,
+  startTime: 0
+})
+
+const sentenceArea = ref(null)
+
+// توابع جدید برای مدیریت تاچ
+const handleTouchStart = (index, type) => {
+  touchState.active = true
+  touchState.type = type
+  touchState.index = index
+  touchState.startTime = Date.now()
+}
+
+const handleTouchEnd = () => {
+  if (!touchState.active) return
+
+  const isTap = Date.now() - touchState.startTime < 300 // کمتر از 300ms یک تاچ محسوب می‌شود
+
+  if (isTap) {
+    if (touchState.type === 'image') {
+      addWordFromImage(touchState.index)
+    } else if (touchState.type === 'word') {
+      moveWord(touchState.index)
+    }
+  }
+
+  touchState.active = false
+}
+
+const addWordFromImage = (index) => {
+  const word = currentSentence.value.images[index].label
+  if (!userSentence.value.includes(word)) {
+    userSentence.value.push(word)
+  }
+}
+
+const moveWord = (index) => {
+  // برای موبایل: نمایش یک منوی انتخاب موقعیت جدید
+  if (isMobile()) {
+    showWordPositionMenu(index)
+  } else {
+    // برای دسکتاپ: می‌توانید از درگ و دراپ استفاده کنید
+    // یا همان رفتار کلیک را پیاده‌سازی کنید
+    const word = userSentence.value[index]
+    userSentence.value.splice(index, 1)
+    userSentence.value.push(word)
+  }
+}
+
+const showWordPositionMenu = (index) => {
+  // پیاده‌سازی یک منوی شناور برای انتخاب موقعیت جدید کلمه
+  const word = userSentence.value[index]
+
+  // ایجاد یک لیست از موقعیت‌های ممکن
+  const positions = []
+  for (let i = 0; i <= userSentence.value.length; i++) {
+    if (i !== index && i !== index + 1) {
+      positions.push(i)
+    }
+  }
+
+  // نمایش منو به کاربر و منتظر ماندن برای انتخاب
+  // این یک پیاده‌سازی ساده است، می‌توانید از کتابخانه‌های UI استفاده کنید
+  const selectedPos = prompt(`موقعیت جدید برای "${word}" را انتخاب کنید (0 تا ${positions.length - 1}):`)
+
+  if (selectedPos !== null && !isNaN(selectedPos)) {
+    const newPos = parseInt(selectedPos)
+    if (newPos >= 0 && newPos <= userSentence.value.length) {
+      userSentence.value.splice(index, 1)
+      userSentence.value.splice(newPos, 0, word)
+    }
+  }
+}
+
+const isMobile = () => {
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+}
+
 const dragStart = (event, index, type) => {
   event.dataTransfer.setData("type", type)
   event.dataTransfer.setData("index", index)
@@ -781,6 +865,104 @@ const checkSentence = () => {
 }
 
 // متدهای مرحله 3: داستان نویسی
+
+const storyTouchState = ref({
+  active: false,
+  index: null,
+  startTime: 0,
+  type: null // 'item' یا 'story'
+})
+
+const storyArea = ref(null)
+
+// مدیریت تاچ برای آیتم‌های داستان
+const handleStoryTouchStart = (index) => {
+  storyTouchState.value = {
+    active: true,
+    index,
+    startTime: Date.now(),
+    type: 'item'
+  }
+}
+
+const handleStoryItemTouchStart = (index) => {
+  storyTouchState.value = {
+    active: true,
+    index,
+    startTime: Date.now(),
+    type: 'story'
+  }
+}
+
+const handleStoryTouchEnd = () => {
+  if (!storyTouchState.value.active) return
+
+  const isTap = Date.now() - storyTouchState.value.startTime < 300
+
+  if (isTap && storyTouchState.value.type === 'item') {
+    addStoryItem(storyTouchState.value.index)
+  }
+
+  storyTouchState.value.active = false
+}
+
+const handleStoryItemTouchEnd = () => {
+  if (!storyTouchState.value.active) return
+
+  const isTap = Date.now() - storyTouchState.value.startTime < 300
+
+  if (isTap && storyTouchState.value.type === 'story') {
+    moveStoryItem(storyTouchState.value.index)
+  }
+
+  storyTouchState.value.active = false
+}
+
+// توابع اصلی
+const addStoryItem = (index) => {
+  const item = currentStory.value.items[index]
+  if (!userStory.value.includes(item)) {
+    userStory.value.push(item)
+  }
+}
+
+const moveStoryItem = (index) => {
+  if (isMobile()) {
+    showStoryItemPositionMenu(index)
+  } else {
+    // برای دسکتاپ: آیتم را به انتهای لیست منتقل می‌کنیم
+    const item = userStory.value[index]
+    userStory.value.splice(index, 1)
+    userStory.value.push(item)
+  }
+}
+
+const showStoryItemPositionMenu = (index) => {
+  const item = userStory.value[index]
+  const positions = []
+
+  for (let i = 0; i <= userStory.value.length; i++) {
+    if (i !== index && i !== index + 1) {
+      positions.push(i)
+    }
+  }
+
+  // نمایش منوی انتخاب موقعیت (می‌توانید از یک UI بهتر استفاده کنید)
+  const selectedPos = prompt(
+    `موقعیت جدید برای "${item}" را انتخاب کنید (0 تا ${positions.length - 1}):\n` +
+    positions.map((pos, i) => `${i}: قبل از آیتم ${pos}`).join('\n')
+  )
+
+  if (selectedPos !== null && !isNaN(selectedPos)) {
+    const posIndex = parseInt(selectedPos)
+    if (posIndex >= 0 && posIndex < positions.length) {
+      const newPos = positions[posIndex]
+      userStory.value.splice(index, 1)
+      userStory.value.splice(newPos, 0, item)
+    }
+  }
+}
+
 const dropStoryItem = (event) => {
   const index = event.dataTransfer.getData("index")
   const item = currentStory.value.items[index]
@@ -2187,37 +2369,43 @@ watch(() => props.lesson, (newLesson) => {
               <div v-if="writingStage === 'buildSentence'" class="space-y-6" dir="ltr">
                 <div class="bg-black bg-opacity-70 p-6 rounded-lg border border-blue-500">
                   <p class="text-white text-xl mb-4">با این تصاویر یک جمله بسازید:</p>
+
+                  <!-- تصاویر قابل انتخاب -->
                   <div class="flex flex-wrap gap-4 mb-6">
                     <div
                       v-for="(image, index) in currentSentence.images"
                       :key="'image'+index"
-                      class="w-24 h-24 bg-gray-800 rounded-lg flex items-center justify-center cursor-move"
-                      draggable="true"
-                      @dragstart="dragStart($event, index, 'image')"
+                      class="w-24 h-24 bg-gray-800 rounded-lg flex items-center justify-center cursor-pointer"
+                      @click="addWordFromImage(index)"
+                      @touchstart.passive="handleTouchStart(index, 'image')"
+                      @touchend.prevent="handleTouchEnd"
                     >
                       <img :src="image.url" :alt="image.label" class="max-w-full max-h-full">
                       <span class="sr-only">{{ image.label }}</span>
                     </div>
                   </div>
+
+                  <!-- ناحیه جمله کاربر -->
                   <div
-                    @drop="dropItem($event)"
-                    @dragover.prevent
                     class="min-h-20 bg-gray-800 p-4 rounded-lg border-2 border-dashed border-blue-400 flex flex-wrap gap-2"
+                    ref="sentenceArea"
                   >
                     <div
                       v-for="(word, index) in userSentence"
                       :key="'word'+index"
-                      class="px-3 py-2 bg-blue-600 rounded-lg text-white flex items-center gap-2 cursor-move"
-                      draggable="true"
-                      @dragstart="dragStart($event, index, 'word')"
+                      class="px-3 py-2 bg-blue-600 rounded-lg text-white flex items-center gap-2"
+                      @click="moveWord(index)"
+                      @touchstart.passive="handleTouchStart(index, 'word')"
+                      @touchend.prevent="handleTouchEnd"
                     >
                       {{ word }}
-                      <button @click="removeWord(index)" class="text-red-400 hover:text-red-300">
+                      <button @click.stop="removeWord(index)" class="text-red-400 hover:text-red-300">
                         &times;
                       </button>
                     </div>
                   </div>
                 </div>
+
                 <div class="flex justify-center gap-4">
                   <button
                     @click="checkSentence"
@@ -2239,43 +2427,54 @@ watch(() => props.lesson, (newLesson) => {
                 <div class="bg-black bg-opacity-70 p-6 rounded-lg border border-blue-500">
                   <p class="text-white text-xl mb-4">داستان خود را بنویسید:</p>
                   <p class="text-green-400 mb-4">{{ currentStory.prompt }}</p>
+
+                  <!-- آیتم‌های داستان (قابل انتخاب) -->
                   <div class="flex flex-wrap gap-4 mb-4">
                     <div
                       v-for="(item, index) in currentStory.items"
                       :key="'story-item'+index"
-                      class="px-3 py-2 bg-gray-700 rounded-lg text-white cursor-move"
-                      draggable="true"
-                      @dragstart="dragStart($event, index, 'story')"
+                      class="px-3 py-2 bg-gray-700 rounded-lg text-white cursor-pointer"
+                      @click="addStoryItem(index)"
+                      @touchstart.passive="handleStoryTouchStart(index)"
+                      @touchend.prevent="handleStoryTouchEnd"
                     >
                       {{ item }}
                     </div>
                   </div>
+
+                  <!-- ناحیه داستان کاربر -->
                   <div
-                    @drop="dropStoryItem($event)"
-                    @dragover.prevent
                     class="min-h-40 bg-gray-800 p-4 rounded-lg border-2 border-dashed border-blue-400"
+                    ref="storyArea"
                   >
                     <div
                       v-if="userStory.length === 0"
                       class="text-gray-500 text-center py-8"
                     >
-                      آیتم‌ها را به اینجا بکشید تا داستان خود را بسازید
+                      روی آیتم‌ها کلیک کنید تا به داستان اضافه شوند
                     </div>
                     <div v-else class="space-y-2">
                       <div
                         v-for="(item, index) in userStory"
                         :key="'user-story'+index"
                         class="px-3 py-2 bg-blue-600 rounded-lg text-white flex items-center gap-2"
+                        @click="moveStoryItem(index)"
+                        @touchstart.passive="handleStoryItemTouchStart(index)"
+                        @touchend.prevent="handleStoryItemTouchEnd"
                       >
                         <span>{{ item }}</span>
-                        <button @click="removeStoryItem(index)" class="text-red-400 hover:text-red-300 ml-auto">
+                        <button
+                          @click.stop="removeStoryItem(index)"
+                          class="text-red-400 hover:text-red-300 ml-auto"
+                        >
                           &times;
                         </button>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div class="flex justify-center gap-4">
+
+                <div class="flex justify-center gap-4 flex-wrap">
                   <button
                     @click="checkStory"
                     class="px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg text-white font-bold"
@@ -2288,28 +2487,34 @@ watch(() => props.lesson, (newLesson) => {
                   >
                     خط جدید
                   </button>
+                  <button
+                    @click="resetStory"
+                    class="px-6 py-3 bg-gray-600 hover:bg-gray-700 rounded-lg text-white font-bold"
+                  >
+                    شروع مجدد
+                  </button>
                 </div>
               </div>
 
               <!-- مرحله 5: تصحیح متن -->
-              <div v-if="writingStage === 'correctText'" class="space-y-6" dir="ltr">
-                <div class="bg-black bg-opacity-70 p-6 rounded-lg border border-blue-500">
-                  <p class="text-white text-xl mb-4">اشتباهات این پیام را پیدا و اصلاح کنید:</p>
-                  <div class="bg-gray-800 p-4 rounded-lg mb-4">
+              <div v-if="writingStage === 'correctText'" class="space-y-4 md:space-y-6" dir="ltr">
+                <div class="bg-black bg-opacity-70 p-2 md:p-6 rounded-lg border border-blue-500">
+                  <p class="text-white text-lg md:text-xl mb-3 md:mb-4">اشتباهات این پیام را پیدا و اصلاح کنید:</p>
+                  <div class="bg-gray-800 p-1 md:p-4 rounded-lg mb-3 md:mb-4">
                     <div
                       v-for="(paragraph, pIndex) in currentText.paragraphs"
                       :key="'para'+pIndex"
-                      class="mb-4 last:mb-0"
+                      class="mb-3 md:mb-4 last:mb-0"
                     >
                       <div
                         v-for="(sentence, sIndex) in paragraph.split('. ')"
                         :key="'sent'+pIndex+'-'+sIndex"
-                        class="mb-2 last:mb-0"
+                        class="mb-1 md:mb-2 last:mb-0"
                       >
                         <span
                           v-for="(word, wIndex) in sentence.split(' ')"
                           :key="'word'+pIndex+'-'+sIndex+'-'+wIndex"
-                          class="mr-1 cursor-pointer hover:bg-gray-700 px-1 rounded"
+                          class="mr-1 cursor-pointer hover:bg-gray-700 px-0.25 md:px-1 rounded text-white text-sm md:text-base"
                           :class="{
                             'text-red-500': isWordWrong([pIndex, sIndex, wIndex]),
                             'bg-red-900': selectedWordPos === `${pIndex}-${sIndex}-${wIndex}`,
@@ -2323,15 +2528,15 @@ watch(() => props.lesson, (newLesson) => {
                     </div>
                   </div>
 
-                  <div v-if="selectedWord" class="bg-gray-800 p-4 rounded-lg">
-                    <p class="text-white mb-2">کلمه انتخاب شده: <span class="font-bold">{{ selectedWord }}</span></p>
-                    <p class="text-red-400 mb-3" v-if="isWordWrong(selectedWordPos)">این کلمه اشتباه است!</p>
-                    <div class="flex flex-wrap gap-2">
+                  <div v-if="selectedWord" class="bg-gray-800 p-3 md:p-4 rounded-lg">
+                    <p class="text-white mb-1 md:mb-2 text-sm md:text-base">کلمه انتخاب شده: <span class="font-bold">{{ selectedWord }}</span></p>
+                    <p class="text-red-400 mb-2 md:mb-3 text-sm md:text-base" v-if="isWordWrong(selectedWordPos)">این کلمه اشتباه است!</p>
+                    <div class="flex flex-wrap gap-1 md:gap-2">
                       <button
                         v-for="(suggestion, index) in getSuggestions(selectedWord)"
                         :key="'sug'+index"
                         @click="replaceWord(suggestion)"
-                        class="px-3 py-1 bg-blue-600 hover:bg-blue-700 rounded-lg text-white"
+                        class="px-2 py-0.5 md:px-3 md:py-1 bg-blue-600 hover:bg-blue-700 rounded-lg text-white text-xs md:text-sm"
                       >
                         {{ suggestion }}
                       </button>
@@ -2341,7 +2546,7 @@ watch(() => props.lesson, (newLesson) => {
 
                 <button
                   @click="checkTextCorrection"
-                  class="px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg text-white font-bold self-center"
+                  class="px-4 py-2 md:px-6 md:py-3 bg-blue-600 hover:bg-blue-700 rounded-lg text-white font-bold self-center text-sm md:text-base"
                 >
                   بررسی اصلاحات
                 </button>
@@ -3556,5 +3761,82 @@ watch(() => props.lesson, (newLesson) => {
 
 .word-highlight:hover {
   background-color: rgba(107, 114, 128, 0.5);
+}
+
+@media (max-width: 768px) {
+  .word-item {
+    padding: 0.75rem 1rem;
+    font-size: 1.1rem;
+    margin: 0.25rem;
+  }
+
+  .image-item {
+    width: 5rem;
+    height: 5rem;
+  }
+
+  .sentence-area {
+    min-height: 4rem;
+  }
+}
+
+/* انیمیشن برای بازخورد بصری */
+.word-item {
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+.word-item:active {
+  transform: scale(1.05);
+  background-color: #4299e1;
+}
+
+.image-item:active {
+  transform: scale(0.95);
+}
+
+/* استایل‌های ریسپانسیو */
+@media (max-width: 768px) {
+  .story-item {
+    padding: 0.8rem 1rem;
+    font-size: 1rem;
+    margin: 0.2rem;
+  }
+
+  .user-story-item {
+    padding: 0.8rem 1rem;
+    font-size: 1rem;
+  }
+
+  .story-area {
+    min-height: 8rem;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .action-buttons button {
+    width: 100%;
+  }
+}
+
+/* انیمیشن‌های تعاملی */
+.story-item {
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+.story-item:active {
+  transform: scale(0.95);
+  background-color: #4a5568;
+}
+
+.user-story-item {
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+.user-story-item:active {
+  transform: scale(1.02);
+  background-color: #3182ce;
 }
 </style>
