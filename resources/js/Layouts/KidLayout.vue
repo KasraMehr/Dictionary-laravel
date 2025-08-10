@@ -14,9 +14,8 @@ import "swiper/css";
 
 import "swiper/css/pagination";
 
-
 // import required modules
-import { Autoplay, Pagination} from "swiper/modules";
+import { Autoplay, Pagination } from "swiper/modules";
 
 defineProps({
     title: String,
@@ -108,7 +107,7 @@ const setLanguage = (lang) => {
         <div class="bg-gray-50-100 dark:bg-gray-900">
             <nav
                 :class="{
-                    'sticky top-0 left-0 w-full bg-white dark:bg-gray-900 z-50 shadow-md':
+                    ' left-0 w-full bg-white dark:bg-gray-900 z-50 shadow-md':
                         isHeaderFixed,
                 }"
             >
@@ -116,51 +115,67 @@ const setLanguage = (lang) => {
                 <div class="w-full mx-auto px-5 lg:px-[76px] md:pt-2">
                     <div class="flex justify-between items-center h-16">
                         <div
-                            class="flex items-center gap-x-3 border-2 border-[#704ee7] rounded-[35px] justify-between pl-4 pr-1 h-[43px] max-md:hidden"
+                            class="flex items-center border-[3px] border-[#704ee7] rounded-[35px] justify-between h-[43px] max-md:hidden"
                         >
-                            <div class="flex rounded-full bg-[#704ee7] h-[33px]">
-                                <img
-                                    src="/images/kidlanding/Group.png"
-                                    alt=""
-                                    class=""
-                                />
-                            </div>
-                             <a
-                                        v-if="
-                                            $page.props.auth.user &&
-                                            $page.props.auth.user.role ===
-                                                'teacher'
-                                        "
-                                        :href="route('teacher.dashboard')"
-                                        :active="route().current('dashboard')"
-                                        class="text-[#704ee7] text-[17px] dark:text-white"
+                            <a
+                                v-if="
+                                    $page.props.auth.user &&
+                                    $page.props.auth.user.role === 'teacher'
+                                "
+                                :href="route('teacher.dashboard')"
+                                :active="route().current('dashboard')"
+                                class="text-[#704ee7] text-[19px] dark:text-white flex gap-x-2.5 items-center pl-4 pr-1.5"
+                            >
+                                <div
+                                    class="flex rounded-full bg-[#704ee7] h-[33px]"
+                                >
+                                    <img
+                                        src="/images/kidlanding/Group.png"
+                                        alt=""
+                                        class=""
+                                    />
+                                </div>
+                                {{ $t("dashboard") }}
+                            </a>
+                            <a
+                                v-else-if="
+                                    $page.props.auth.user &&
+                                    $page.props.auth.user.role === 'student'
+                                "
+                                :href="route('student.dashboard')"
+                                :active="route().current('dashboard')"
+                                class="text-[#704ee7] text-[19px] dark:text-white flex gap-x-2.5 items-center pl-4 pr-1.5"
+                            >
+                                <div
+                                    class="flex rounded-full bg-[#704ee7] h-[33px]"
+                                >
+                                    <img
+                                        src="/images/kidlanding/Group.png"
+                                        alt=""
+                                        class=""
+                                    />
+                                </div>
+                                {{ $t("dashboard") }}
+                            </a>
+                            <template v-else>
+                                <a
+                                    :href="route('login')"
+                                    v-if="!canRegister"
+                                    :active="route().current('login')"
+                                    class="text-[#704ee7] text-[19px] dark:text-white flex gap-x-2.5 items-center pl-4 pr-1.5"
+                                >
+                                    <div
+                                        class="flex rounded-full bg-[#704ee7] h-[33px]"
                                     >
-                                       {{ $t("dashboard") }}
-                                    </a>
-                                    <a
-                                        v-else-if="
-                                            $page.props.auth.user &&
-                                            $page.props.auth.user.role ===
-                                                'student'
-                                        "
-                                        :href="route('student.dashboard')"
-                                        :active="route().current('dashboard')"
-                                        class="text-[#704ee7] text-[17px] dark:text-white"
-                                    >
-                                        {{ $t("dashboard") }}
-                                    </a>
-                                    <template v-else>
-                                        <a
-                                            :href="route('login')"
-                                            v-if="!canRegister"
-                                            :active="
-                                                route().current('login')
-                                            "
-                                            class="text-[#704ee7] text-[17px] dark:text-white"
-                                        >
-                                            {{ $t("login") }} 
-                                        </a>
-                                    </template>
+                                        <img
+                                            src="/images/kidlanding/Group.png"
+                                            alt=""
+                                            class=""
+                                        />
+                                    </div>
+                                    {{ $t("login") }}
+                                </a>
+                            </template>
                         </div>
 
                         <div class="flex items-center max-md:hidden">
@@ -170,13 +185,12 @@ const setLanguage = (lang) => {
                                 class="hidden md:flex items-center md:items-stretch overflow-x-auto md:overflow-x-visible ms-4 text-black dark:text-white"
                             >
                                 <div class="flex gap-1.5">
-                                   
                                     <a
                                         :href="route('games.landing')"
                                         :active="
                                             route().current('games.landing')
                                         "
-                                        class="text-black border-[3px]  rounded-[35px] px-4 py-1 border-black dark:text-white"
+                                        class="text-black border-[3px] rounded-[35px] px-4 py-1 border-black dark:text-white"
                                     >
                                         خانه
                                     </a>
@@ -185,21 +199,21 @@ const setLanguage = (lang) => {
                                         :active="
                                             route().current('games.landing')
                                         "
-                                        class="text-black border-[3px]  border-[#B7B7B7] rounded-[35px] px-4 py-1 active:border-black dark:text-white"
+                                        class="text-black border-[3px] border-[#B7B7B7] rounded-[35px] px-4 py-1 active:border-black dark:text-white"
                                     >
                                         {{ $t("games") }}
                                     </a>
                                     <a
                                         :href="route('landing')"
                                         :active="route().current('landing')"
-                                        class="text-black border-[3px]  border-[#B7B7B7] rounded-[35px] px-4 py-1 active:border-black dark:text-white"
+                                        class="text-black border-[3px] border-[#B7B7B7] rounded-[35px] px-4 py-1 active:border-black dark:text-white"
                                     >
                                         لغت نامه
                                     </a>
                                     <Dropdown align="right" width="48">
                                         <template #trigger>
                                             <button
-                                                class="flex border-[3px]  border-[#B7B7B7] rounded-[35px] px-4 py-1 active:border-black items-center h-full text-black bg-white"
+                                                class="flex border-[3px] border-[#B7B7B7] rounded-[35px] px-4 py-1 active:border-black items-center h-full text-black bg-white"
                                             >
                                                 {{ $t("learn") }}
 
@@ -238,7 +252,6 @@ const setLanguage = (lang) => {
                                                     )
                                                 "
                                                 class="hover:bg-[#C79EFF] hover:text-white px-7 py-1"
-
                                             >
                                                 {{ $t("teachers") }}
                                             </a>
@@ -250,7 +263,6 @@ const setLanguage = (lang) => {
                                                     )
                                                 "
                                                 class="hover:bg-[#C79EFF] hover:text-white w-full rounded-b-[10px] text-center py-1"
-
                                             >
                                                 {{ $t("courses") }}
                                             </a>
@@ -453,8 +465,8 @@ const setLanguage = (lang) => {
                                         src="/images/kidlanding/hugeicons_elearning-exchange.png"
                                         alt=""
                                     />
-                                  
-                                      <Dropdown align="right" width="48">
+
+                                    <Dropdown align="right" width="48">
                                         <template #trigger>
                                             <button
                                                 class="flex active:border-black items-center h-full text-black bg-white"
@@ -462,7 +474,7 @@ const setLanguage = (lang) => {
                                                 {{ $t("learn") }}
 
                                                 <svg
-                                                    class=" mt-2 ms-0.5 -me-0.5 size-4"
+                                                    class="mt-2 ms-0.5 -me-0.5 size-4"
                                                     xmlns="http://www.w3.org/2000/svg"
                                                     fill="none"
                                                     viewBox="0 0 24 24"
@@ -496,7 +508,6 @@ const setLanguage = (lang) => {
                                                     )
                                                 "
                                                 class="hover:bg-[#C79EFF] hover:text-white px-6 py-1"
-
                                             >
                                                 {{ $t("teachers") }}
                                             </a>
@@ -508,7 +519,6 @@ const setLanguage = (lang) => {
                                                     )
                                                 "
                                                 class="hover:bg-[#C79EFF] hover:text-white w-full rounded-b-[7px] text-center py-1"
-
                                             >
                                                 {{ $t("courses") }}
                                             </a>
@@ -557,7 +567,7 @@ const setLanguage = (lang) => {
     >
         <img src="/images/kidlanding/moj.png" alt="" />
         <div
-            class="bg-[#f8f1ff] backdrop-blur-md border-b  shadow-sm mx-auto w-full px-4 md:px-10 sm:flex sm:flex-col sm:items-center md:block sm:px-24 relative"
+            class="bg-[#f8f1ff] backdrop-blur-md border-b shadow-sm mx-auto w-full px-4 md:px-10 sm:flex sm:flex-col sm:items-center md:block sm:px-24 relative"
         >
             <img
                 src="/images/kidlanding/Ellipse 38.png"
@@ -570,30 +580,36 @@ const setLanguage = (lang) => {
                 class="flex max-md:flex-col-reverse gap-y-16 max-sm:max-w-sm max-sm:mx-auto max-md:pt-6 md:pt-3 justify-around sm:w-[90%] md:w-[100%]"
             >
                 <!-- Logo & Description Column -->
-                <div class="mb-5 md:mb-0 flex flex-col gap-y-8 lg:w-[50%] md:w-[43%] w-[100%]">
+                <div
+                    class="mb-5 md:mb-0 flex flex-col gap-y-8 lg:w-[50%] md:w-[43%] w-[100%]"
+                >
                     <a
                         :href="route('landing')"
-                        class="cursor-pointer hidden md:flex items-center justify-center lg:justify-center gap-x-2 transition-transform hover:scale-[1.02]"
+                        class="cursor-pointer hidden md:flex items-center justify-center xl:pl-14 lg:justify-around gap-x-2 transition-transform hover:scale-[1.02]"
                     >
-                        <div class="text-xl font-bold">
+                        <div
+                            class="lg:text-3xl text-2xl font-bold flex items-center"
+                        >
                             <p class="">
                                 Modern <span class="text-[#FABD15]">Dic</span>
                             </p>
+                            <img
+                                src="/logo.png"
+                                alt="logo"
+                                class="w-12 h-12 drop-shadow-lg"
+                            />
                         </div>
-                        <img
-                            src="/logo.png"
-                            alt="logo"
-                            class="w-12 h-12 drop-shadow-lg"
-                        />
                     </a>
 
-                    <div class="flex justify-center gap-12 lg:justify-center">
+                    <div
+                        class="flex justify-center gap-12 sm:gap-32 md:gap-12 lg:gap-28 lg:justify-center"
+                    >
                         <div class="flex flex-col gap-y-5">
                             <div class="flex flex-col">
                                 <p
-                                    class="text-[#6C4EE0] text-2xl font-extrabold text-center"
+                                    class="text-[#6C4EE0] text-2xl sm:text-3xl font-extrabold text-center"
                                 >
-                                    تاپيک 1
+                                    صفحات
                                 </p>
                                 <div
                                     class="w-[100%] h-1 bg-gradient-to-r from-[#F8F1FF] via-[#6C4EE0] to-[#F8F1FF]"
@@ -608,9 +624,9 @@ const setLanguage = (lang) => {
                             </div>
                         </div>
                         <div class="flex flex-col gap-y-5">
-                            <div class="flex flex-col">
+                            <div class="flex flex-col gap-y-0.5">
                                 <p
-                                    class="text-[#6C4EE0] text-2xl font-extrabold text-center"
+                                    class="text-[#6C4EE0] text-2xl sm:text-3xl font-extrabold text-center"
                                 >
                                     ارتباط با ما
                                 </p>
@@ -647,7 +663,9 @@ const setLanguage = (lang) => {
                         </div>
                     </div>
                 </div>
-                <div class="flex flex-col md:w-[50%] lg:w-[48%] gap-y-5 lg:gap-y-3 items-center">
+                <div
+                    class="flex flex-col md:w-[50%] lg:w-[48%] gap-y-5 lg:gap-y-3 items-center"
+                >
                     <div
                         class="flex flex-col text-[20px] sm:text-[26px] md:text-[22px] lg:text-[30.5px] items-center font-extrabold"
                     >
@@ -656,8 +674,14 @@ const setLanguage = (lang) => {
                             و عشق به <span class="text-[#704ee7]">يادگيری</span>
                         </p>
                     </div>
-                    <div class="lg:w-2/3 md:w-[82%] w-[90%] xl:p-2.5 p-1.5 xl:pb-1.5 bg-[#704ee7] rounded-[35px] relative layout">
-                        <img src="/images/kidlanding/Frame (5).png" alt="" class="absolute -left-[9%] -top-[16%] hidden md:flex w-[20%]">
+                    <div
+                        class="lg:w-2/3 md:w-[82%] w-[90%] xl:p-2.5 p-1.5 xl:pb-1.5 bg-[#704ee7] rounded-[35px] relative layout"
+                    >
+                        <img
+                            src="/images/kidlanding/Frame (5).png"
+                            alt=""
+                            class="absolute -left-[9%] -top-[16%] hidden md:flex w-[20%]"
+                        />
                         <swiper
                             :spaceBetween="30"
                             :centeredSlides="true"
@@ -666,10 +690,10 @@ const setLanguage = (lang) => {
                                 disableOnInteraction: false,
                             }"
                             :pagination="{
-                                clickable: true
+                                clickable: true,
                             }"
                             :navigation="true"
-                            :modules="[Autoplay,Pagination]"
+                            :modules="[Autoplay, Pagination]"
                             class="mySwiper5"
                         >
                             <swiper-slide>
@@ -809,13 +833,6 @@ export default {
             localStorage.setItem("theme", this.isDarkMode ? "dark" : "light");
             this.applyTheme();
             console.log(localStorage.getItem("theme"));
-        },
-        handleScroll() {
-            if (this.noFixedHeaderRoutes.includes(this.$page.url)) {
-                this.isHeaderFixed = false;
-            } else {
-                this.isHeaderFixed = window.scrollY > 0;
-            }
         },
     },
 };

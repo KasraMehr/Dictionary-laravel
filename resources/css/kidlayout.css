@@ -51,3 +51,6 @@
 }
     
 }
+.my-input::placeholder {
+  font-size: 13px; /* یا هر سایزی که می‌خوای */
+}

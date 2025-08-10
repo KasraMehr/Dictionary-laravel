@@ -16,6 +16,9 @@ export default {
     theme: {
    
         extend: {
+            gridTemplateColumns: {
+        16: 'repeat(16, minmax(0, 1fr))',
+      },
             fontFamily: {
                 sans: [
                     '"Vazirmatn"', // فارسی
