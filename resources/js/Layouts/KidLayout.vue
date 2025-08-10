@@ -104,10 +104,10 @@ const setLanguage = (lang) => {
 
         <Banner />
 
-        <div class="bg-gray-50-100 dark:bg-gray-900">
+        <div class="bg-gray-50-100">
             <nav
                 :class="{
-                    ' left-0 w-full bg-white dark:bg-gray-900 z-50 shadow-md':
+                    ' left-0 w-full bg-white z-50 shadow-md':
                         isHeaderFixed,
                 }"
             >
@@ -124,7 +124,7 @@ const setLanguage = (lang) => {
                                 "
                                 :href="route('teacher.dashboard')"
                                 :active="route().current('dashboard')"
-                                class="text-[#704ee7] text-[19px] dark:text-white flex gap-x-2.5 items-center pl-4 pr-1.5"
+                                class="text-[#704ee7] text-[19px]  flex gap-x-2.5 items-center pl-4 pr-1.5"
                             >
                                 <div
                                     class="flex rounded-full bg-[#704ee7] h-[33px]"
@@ -144,7 +144,7 @@ const setLanguage = (lang) => {
                                 "
                                 :href="route('student.dashboard')"
                                 :active="route().current('dashboard')"
-                                class="text-[#704ee7] text-[19px] dark:text-white flex gap-x-2.5 items-center pl-4 pr-1.5"
+                                class="text-[#704ee7] text-[19px]  flex gap-x-2.5 items-center pl-4 pr-1.5"
                             >
                                 <div
                                     class="flex rounded-full bg-[#704ee7] h-[33px]"
@@ -162,7 +162,7 @@ const setLanguage = (lang) => {
                                     :href="route('login')"
                                     v-if="!canRegister"
                                     :active="route().current('login')"
-                                    class="text-[#704ee7] text-[19px] dark:text-white flex gap-x-2.5 items-center pl-4 pr-1.5"
+                                    class="text-[#704ee7] text-[19px]  flex gap-x-2.5 items-center pl-4 pr-1.5"
                                 >
                                     <div
                                         class="flex rounded-full bg-[#704ee7] h-[33px]"
@@ -182,7 +182,7 @@ const setLanguage = (lang) => {
                             <!-- Logo -->
 
                             <div
-                                class="hidden md:flex items-center md:items-stretch overflow-x-auto md:overflow-x-visible ms-4 text-black dark:text-white"
+                                class="hidden md:flex items-center md:items-stretch overflow-x-auto md:overflow-x-visible ms-4 text-black "
                             >
                                 <div class="flex gap-1.5">
                                     <a
@@ -190,7 +190,7 @@ const setLanguage = (lang) => {
                                         :active="
                                             route().current('games.landing')
                                         "
-                                        class="text-black border-[3px] rounded-[35px] px-4 py-1 border-black dark:text-white"
+                                        class="text-black border-[3px] rounded-[35px] px-4 py-1 border-black "
                                     >
                                         خانه
                                     </a>
@@ -199,14 +199,14 @@ const setLanguage = (lang) => {
                                         :active="
                                             route().current('games.landing')
                                         "
-                                        class="text-black border-[3px] border-[#B7B7B7] rounded-[35px] px-4 py-1 active:border-black dark:text-white"
+                                        class="text-black border-[3px] border-[#B7B7B7] rounded-[35px] px-4 py-1 active:border-black "
                                     >
                                         {{ $t("games") }}
                                     </a>
                                     <a
                                         :href="route('landing')"
                                         :active="route().current('landing')"
-                                        class="text-black border-[3px] border-[#B7B7B7] rounded-[35px] px-4 py-1 active:border-black dark:text-white"
+                                        class="text-black border-[3px] border-[#B7B7B7] rounded-[35px] px-4 py-1 active:border-black "
                                     >
                                         لغت نامه
                                     </a>
@@ -404,7 +404,7 @@ const setLanguage = (lang) => {
                                         route().current('categories.index')
                                     "
                                     v-if="canRegister"
-                                    class="block px-3 py-2 rounded-lg hover:bg-white/30 dark:hover:bg-gray-800/50"
+                                    class="block px-3 py-2 rounded-lg hover:bg-white/30"
                                 >
                                     {{ $t("login") }} / {{ $t("register") }}
                                 </a>
@@ -425,7 +425,7 @@ const setLanguage = (lang) => {
                                         :active="
                                             route().current('games.landing')
                                         "
-                                        class="block rounded-lg hover:bg-white/30 dark:hover:bg-gray-800/50"
+                                        class="block rounded-lg hover:bg-white/30"
                                     >
                                         خانه
                                     </a>
@@ -440,7 +440,7 @@ const setLanguage = (lang) => {
                                         :active="
                                             route().current('games.landing')
                                         "
-                                        class="block rounded-lg hover:bg-white/30 dark:hover:bg-gray-800/50"
+                                        class="block rounded-lg hover:bg-white/30"
                                     >
                                         {{ $t("games") }}
                                     </a>
@@ -455,7 +455,7 @@ const setLanguage = (lang) => {
                                         :active="
                                             route().current('courses.index')
                                         "
-                                        class="block rounded-lg hover:bg-white/30 dark:hover:bg-gray-800/50"
+                                        class="block rounded-lg hover:bg-white/30"
                                     >
                                         لغت نامه
                                     </a>
@@ -533,7 +533,7 @@ const setLanguage = (lang) => {
             <!-- Header -->
             <header
                 v-if="$slots.header"
-                class="bg-gray-200 dark:bg-gray-800 shadow"
+                class="bg-gray-200 shadow"
             >
                 <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                     <slot name="header" />
@@ -544,7 +544,7 @@ const setLanguage = (lang) => {
             <main class="z-0">
                 <!-- Particle Background -->
                 <div
-                    class="hidden sm:block fixed inset-0 w-full h-full opacity-20 dark:opacity-10 pointer-events-none"
+                    class="hidden sm:block fixed inset-0 w-full h-full opacity-20 pointer-events-none"
                 >
                     <!-- <div v-for="i in 30" :key="i"
                          class="absolute rounded-full bg-red-600 dark:bg-white"
