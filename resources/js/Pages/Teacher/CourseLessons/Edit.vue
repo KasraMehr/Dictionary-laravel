@@ -15,7 +15,10 @@ const form = useForm({
     description: props.lesson.description,
     skills: props.lesson.skills || [],
     content: props.lesson.content || {},
-    quiz_id: props.lesson.quiz_id || null
+    quiz_id: props.lesson.quiz_id || null,
+    video: null,
+    video_upload_progress: 0,
+    should_delete_video: false
 });
 
 const addSkill = (skill) => {
@@ -32,8 +35,44 @@ const removeSkill = (skill) => {
     delete form.content[skill];
 };
 
+const handleVideoUpload = (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    // اعتبارسنجی حجم فایل
+    const maxSize = 100 * 1024 * 1024; // 100MB
+    if (file.size > maxSize) {
+        form.errors.video = 'حجم فایل نباید بیشتر از 100 مگابایت باشد';
+        return;
+    }
+
+    // اعتبارسنجی نوع فایل
+    const validTypes = ['video/mp4', 'video/quicktime', 'video/x-msvideo', 'video/x-flv', 'video/webm'];
+    if (!validTypes.includes(file.type)) {
+        form.errors.video = 'فرمت فایل ویدیویی معتبر نیست';
+        return;
+    }
+
+    form.video = file;
+    form.should_delete_video = false;
+    form.errors.video = null;
+    form.video_upload_progress = 0;
+};
+
+const removeVideo = () => {
+    form.video = null;
+    form.should_delete_video = true;
+};
+
 const submit = () => {
-    form.put(route('teacher.courses.lessons.update', [props.course.id, props.lesson.id]));
+    form.post(route('teacher.courses.lessons.update', [props.course.id, props.lesson.id]), {
+        forceFormData: true,
+        onProgress: (event) => {
+            if (form.video && event.progress) {
+                form.video_upload_progress = Math.round(event.progress.percentage);
+            }
+        },
+    });
 };
 </script>
 
@@ -97,6 +136,85 @@ const submit = () => {
                                         placeholder="توضیحات مختصر درباره این درس..."
                                         class="block w-full px-4 py-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
                                     ></textarea>
+                                </div>
+
+                                <!-- video -->
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                        ویدیوی درس
+                                    </label>
+
+                                    <!-- نمایش ویدیوی فعلی -->
+                                    <div v-if="lesson.video_url && !form.should_delete_video && !form.video" class="mb-4">
+                                        <video controls class="w-full rounded-lg mb-2">
+                                            <source :src="lesson.video_url" type="video/mp4">
+                                        </video>
+                                        <button
+                                            type="button"
+                                            @click="removeVideo"
+                                            class="text-sm text-red-600 dark:text-red-400 hover:text-red-800 dark:hover:text-red-300"
+                                        >
+                                            حذف ویدیوی فعلی
+                                        </button>
+                                    </div>
+
+                                    <!-- نمایش ویدیوی جدید انتخاب شده -->
+                                    <div v-if="form.video" class="mb-3 flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                                        <div class="flex items-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm3 2h6v4l-3-3-3 3V5z" clip-rule="evenodd" />
+                                            </svg>
+                                            <span class="text-sm font-medium">{{ form.video.name }}</span>
+                                            <span class="text-xs text-gray-500 dark:text-gray-400 ml-2">({{ (form.video.size / 1024 / 1024).toFixed(2) }} MB)</span>
+                                        </div>
+                                        <button
+                                            type="button"
+                                            @click="form.video = null"
+                                            class="text-red-500 hover:text-red-700 dark:hover:text-red-400"
+                                        >
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                            </svg>
+                                        </button>
+                                    </div>
+
+                                    <!-- نوار پیشرفت آپلود -->
+                                    <div v-if="form.progress && form.video_upload_progress > 0" class="mb-3">
+                                        <div class="flex justify-between text-xs text-gray-500 dark:text-gray-400 mb-1">
+                                            <span>در حال آپلود...</span>
+                                            <span>{{ form.video_upload_progress }}%</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                                            <div
+                                                class="bg-blue-600 h-2 rounded-full"
+                                                :style="`width: ${form.video_upload_progress}%`"
+                                            ></div>
+                                        </div>
+                                    </div>
+
+                                    <!-- فیلد آپلود -->
+                                    <label class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 dark:border-gray-600 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
+                                        <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                                            </svg>
+                                            <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                                                <span class="font-semibold">برای آپلود کلیک کنید</span> یا فایل را بکشید و رها کنید
+                                            </p>
+                                            <p class="text-xs text-gray-500 dark:text-gray-400">
+                                                MP4, MOV, AVI یا WebM (حداکثر 100MB)
+                                            </p>
+                                        </div>
+                                        <input
+                                            type="file"
+                                            class="hidden"
+                                            accept="video/mp4,video/quicktime,video/x-msvideo,video/x-flv,video/webm"
+                                            @change="handleVideoUpload"
+                                        />
+                                    </label>
+                                    <p v-if="form.errors.video" class="mt-2 text-sm text-red-600 dark:text-red-400">
+                                        {{ form.errors.video }}
+                                    </p>
                                 </div>
 
                                 <!-- انتخاب مهارت‌ها -->
