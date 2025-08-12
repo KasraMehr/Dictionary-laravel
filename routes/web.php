@@ -141,7 +141,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
             Route::get('/lessons/{lesson}/edit', [CourseLessonController::class, 'edit'])
                 ->name('courses.lessons.edit');
 
-            Route::put('/lessons/{lesson}', [CourseLessonController::class, 'update'])
+            Route::post('/lessons/{lesson}', [CourseLessonController::class, 'update'])
                 ->name('courses.lessons.update');
 
             Route::resource('quizzes', QuizController::class)
