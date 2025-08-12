@@ -105,9 +105,18 @@
                 </div>
 
                 <!-- نمایش ویدیوی اصلی درس -->
+
                 <div v-if="activeLesson.video_url" class="my-6 aspect-video bg-black rounded-xl overflow-hidden">
                     <iframe :src="activeLesson.video_url" class="w-full h-full" frameborder="0" allowfullscreen></iframe>
                 </div>
+<!--                <div v-if="activeLesson.video_url" class="text-gray-700 dark:text-gray-300 mb-8">-->
+<!--                -->
+<!--                <VideoPlayer-->
+<!--                    :src="activeLesson.video_url"-->
+<!--                    poster="/path/to/poster.jpg"-->
+<!--                />-->
+<!--                </div>-->
+
 
                 <!-- نمایش محتوای JSON -->
                 <div>
@@ -221,6 +230,7 @@
 import {ref, computed, watch} from 'vue'
 import {router, usePage} from '@inertiajs/vue3'
 import { useToast } from 'vue-toastification';
+// import VideoPlayer from '@/components/VideoPlayer.vue';
 
 import {
   BookOpenIcon,
