@@ -14,6 +14,7 @@ class CourseLesson extends Model
         'content',
         'quiz_id',
         'order',
+        'video_url'
     ];
 
     protected $casts = [
