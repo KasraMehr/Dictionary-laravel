@@ -11,6 +11,7 @@ use App\Models\CourseUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Inertia\Inertia;
+use App\Models\User;
 use Inertia\Response;
 
 class StudentCourseController extends Controller
@@ -138,12 +139,20 @@ class StudentCourseController extends Controller
         $teacher = $course->teacher;
 
         // بررسی آیا دانش‌آموز از قبل به این استاد وصل است یا نه
-        $isAttached = $user->teachers()->where('teacher_id', $teacher->id)->exists();
-
-        if (!$isAttached) {
-            // اتصال دانش‌آموز به استاد با اطلاعات pivot
-            $user->teachers()->attach($teacher->id);
-        }
+        $user->teachers()->syncWithoutDetaching([
+            $teacher->id => [
+                'level' => $this->determineStudentLevel($user),
+                'notes' => 'اتصال خودکار پس از تکمیل دوره: ' . $course->title,
+                'status' => $this->determineCourseStatus($course, $user),
+                'start_date' => now(),
+                'end_date' => $this->determineEndDate($course, $user),
+                'total_sessions' => $course->course_lessons()
+                    ->whereHas('users', function($query) use ($user) {
+                        $query->where('user_id', $user->id)
+                            ->where('completed', true);
+                    })
+                    ->count()            ]
+        ]);
 
         if($user->studentProfile->is_child){
           return inertia('Kid_Student/Courses/Show', [
@@ -332,6 +341,45 @@ class StudentCourseController extends Controller
         return floor($xp / 100) + 1;
     }
 
+    private function determineStudentLevel(User $user): string
+    {
+        $progress = $user->studentProgress()->firstOrCreate();
+
+        if ($progress->xp >= 500) return 'advanced';
+        if ($progress->xp >= 200) return 'intermediate';
+        return 'beginner';
+    }
+
+    private function determineCourseStatus(Course $course, User $user): string
+    {
+        $totalLessons = $course->course_lessons->count();
+        $completedLessons = $course->course_lessons->filter(function ($lesson) use ($user) {
+            return $lesson->users->contains($user->id) &&
+                $lesson->users->find($user->id)->pivot->completed;
+        })->count();
+
+        $progress = $totalLessons > 0 ? ($completedLessons / $totalLessons) * 100 : 0;
+
+        if ($progress === 100) return 'completed';
+        if ($progress > 0) return 'active';
+        return 'paused';
+    }
+
+    private function determineEndDate(Course $course, User $user): ?Carbon
+    {
+        $lastCompletedLesson = $course->course_lessons()
+            ->whereHas('users', function($query) use ($user) {
+                $query->where('user_id', $user->id)
+                    ->where('completed', true);
+            })
+            ->orderByDesc('completed_at')
+            ->first();
+
+        return ($lastCompletedLesson && $lastCompletedLesson->pivot)
+            ? $lastCompletedLesson->pivot->updated_at
+            : null;
+    }
+
     public function destroy(Course $course)
     {
         auth()->user()->courses()->detach($course);
@@ -339,4 +387,6 @@ class StudentCourseController extends Controller
         return redirect()->route('student.courses.index')
             ->with('success', 'از دوره انصراف دادید.');
     }
+
+
 }
