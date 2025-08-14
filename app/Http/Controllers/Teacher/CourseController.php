@@ -20,8 +20,7 @@ class CourseController extends Controller
         /** @var User $teacher */
         $teacher = auth()->user();
 
-        // اگر کاربر پروفایل معلم ندارد، یک پروفایل خالی ایجاد می‌کنیم
-        if (! $teacher->teacher) {
+        if (!$teacher->teacher) {
             $teacher->teacher()->create([]);
             $teacher->refresh();
         }
@@ -32,15 +31,15 @@ class CourseController extends Controller
             'activeStudents' => $teacher->students()->count(),
         ];
 
-        // آخرین دوره‌ها
+        // آخرین دوره‌ها - نسخه اصلاح شده
         $latestCourses = $teacher->courses()
-            ->select('courses.*')
+            ->select('courses.id', 'courses.title', 'courses.created_at') // اضافه کردن created_at
             ->withCount(['users as student_count'])
-            ->with(['users' => function ($query) {
+            ->with(['users' => function ($query) use ($teacher) {
                 $query->select('course_user.progress')
-                    ->where('user_id', auth()->id());
+                    ->where('user_id', $teacher->id);
             }])
-            ->latest()
+            ->orderBy('courses.created_at', 'desc') // مشخص کردن جدول
             ->take(3)
             ->get()
             ->map(function ($course) {
@@ -49,18 +48,17 @@ class CourseController extends Controller
                     'name' => $course->title,
                     'students' => $course->student_count,
                     'progress' => $course->users->first()->pivot->progress ?? 0,
+                    'created_at' => $course->created_at, // در صورت نیاز
                 ];
             });
 
         // دانشجویان آنلاین
         $onlineStudents = $teacher->students()
-            // ->where('last_activity_at', '>=', Carbon::now()->subMinutes(15))
+            ->select('users.id', 'users.name', 'users.profile_photo_path')
             ->with(['courses' => function ($query) use ($teacher) {
-                $query->whereIn('courses.id', $teacher->courses()->pluck('id'))
-                    // ->orderBy('course_user.last_accessed_at', 'desc')
+                $query->whereIn('courses.id', $teacher->courses()->pluck('courses.id'))
                     ->limit(1);
             }])
-            ->select('users.*')
             ->take(4)
             ->get()
             ->map(function ($student) {
@@ -69,22 +67,13 @@ class CourseController extends Controller
                     'name' => $student->name,
                     'avatar' => $student->profile_photo_url,
                     'course' => $student->courses->first()->title ?? 'بدون دوره',
-                    // 'lastActivity' => $student->last_activity_at
-                    // ? Carbon::parse($student->last_activity_at)->diffForHumans()
-                    // : 'عدم فعالیت',
                 ];
             });
-
-        // داده‌های نمودارها
-        // $activityData = $this->getActivityData($teacher);
-        // $performanceData = $this->getPerformanceData($teacher);
 
         return Inertia::render('Teacher/Dashboard', [
             'stats' => $stats,
             'latestCourses' => $latestCourses,
             'onlineStudents' => $onlineStudents,
-            // 'activityData' => $activityData,
-            // 'performanceData' => $performanceData,
             'teacherProfile' => $teacher->teacher,
         ]);
     }

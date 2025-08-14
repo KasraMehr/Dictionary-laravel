@@ -133,6 +133,18 @@ class StudentCourseController extends Controller
             return $lesson;
         });
 
+
+
+        $teacher = $course->teacher;
+
+        // بررسی آیا دانش‌آموز از قبل به این استاد وصل است یا نه
+        $isAttached = $user->teachers()->where('teacher_id', $teacher->id)->exists();
+
+        if (!$isAttached) {
+            // اتصال دانش‌آموز به استاد با اطلاعات pivot
+            $user->teachers()->attach($teacher->id);
+        }
+
         if($user->studentProfile->is_child){
           return inertia('Kid_Student/Courses/Show', [
               'course' => $course,
