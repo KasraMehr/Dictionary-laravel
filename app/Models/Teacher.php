@@ -36,6 +36,18 @@ class Teacher extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function courses()
+    {
+        return $this->hasManyThrough(
+            Course::class,       // مدل مقصد
+            User::class,        // مدل میانی
+            'id',               // کلید خارجی مدل میانی (User)
+            'created_by',       // کلید خارجی مدل مقصد (Course)
+            'user_id',          // کلید محلی مدل جاری (Teacher)
+            'id'                // کلید محلی مدل میانی (User)
+        );
+    }
+
     protected function profilePhotoUrl(): Attribute
     {
         return Attribute::make(

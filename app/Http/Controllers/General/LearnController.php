@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Course;
 use App\Models\Teacher;
+use App\Models\User;
 use App\Models\Word;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -142,27 +143,18 @@ class LearnController extends Controller
 
     public function show_course($slug)
     {
-        // یافتن دوره با اسلاگ داده شده
         $course = Course::with([
-            'teacher',
-            //            'reviews.user',
-            //            'chapters.lessons'
+            'teacher.teacher', // لود کردن teacher و user مرتبط با آن
+            'teacher.courses' => function($query) use ($slug) {
+                $query->where('slug', '!=', $slug)
+                    ->where('status', 'published')
+                    ->withCount('students');
+            },
         ])
-//            ->withCount(['students', 'reviews'])
             ->where('slug', $slug)
             ->where('status', 'published')
             ->firstOrFail();
 
-        //        $course->average_rating = $course->reviews->avg('rating') ?? 0;
-
-        // توزیع امتیازها
-        //        $ratingsDistribution = [5 => 0, 4 => 0, 3 => 0, 2 => 0, 1 => 0];
-        //        foreach ($course->reviews as $review) {
-        //            $ratingsDistribution[$review->rating]++;
-        //        }
-        //        $course->ratings_distribution = $ratingsDistribution;
-
-        // یافتن دوره‌های مرتبط با الگوریتم پیشرفته
         $relatedCourses = $this->getRelatedCourses($course);
 
         return Inertia::render('General/Learn/CourseShow', [
