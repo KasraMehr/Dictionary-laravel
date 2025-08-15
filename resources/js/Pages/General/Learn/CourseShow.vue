@@ -231,13 +231,13 @@ const showVideoModal = ref(false)
                             <div v-if="activeTab === 'instructor'" class="flex flex-col md:flex-row gap-6">
                                 <div class="md:w-1/4">
                                     <div class="backdrop-blur-md bg-white/70 dark:bg-gray-800/70 p-4 rounded-xl border border-white/20 dark:border-gray-700/50">
-                                        <img :src="`/storage/${course.instructor.profile_photo_path}`"
-                                             :alt="course.instructor.name" class="w-full rounded-lg mb-4">
-                                        <h4 class="text-lg font-bold text-gray-900 dark:text-white text-center">{{ course.instructor.name }}</h4>
-                                        <p class="text-gray-600 dark:text-gray-400 text-center mb-4">{{ course.instructor.title }}</p>
+                                        <img :src="course.teacher.profile_photo_url || '/images/default-profile.jpg'"
+                                             :alt="course.teacher.name" class="w-full rounded-lg mb-4">
+                                        <h4 class="text-lg font-bold text-gray-900 dark:text-white text-center">{{ course.teacher.name }}</h4>
+                                        <p class="text-gray-600 dark:text-gray-400 text-center mb-4">{{ course.teacher.title }}</p>
 
-                                        <div class="flex justify-center space-x-4">
-                                            <a v-for="(link, platform) in course.instructor.social_links" :key="platform" :href="link" target="_blank" class="text-gray-500 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400">
+                                        <div class="flex justify-center space-x-4" v-if="course.teacher.social_links">
+                                            <a v-for="(link, platform) in course.teacher.social_links" :key="platform" :href="link" target="_blank" class="text-gray-500 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400">
                                                 <i :class="getSocialIcon(platform)" class="h-5 w-5"></i>
                                             </a>
                                         </div>
@@ -246,11 +246,11 @@ const showVideoModal = ref(false)
 
                                 <div class="md:w-3/4 prose dark:prose-invert max-w-none">
                                     <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">{{ $t('about_instructor') }}</h3>
-                                    <div v-html="course.instructor.bio"></div>
+                                    <div v-html="course.teacher.bio"></div>
 
                                     <h3 class="text-xl font-bold text-gray-900 dark:text-white mt-8 mb-4">{{ $t('other_courses_by_instructor') }}</h3>
                                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                        <div v-for="otherCourse in course.instructor.other_courses" :key="otherCourse.id" class="border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:shadow-md transition">
+                                        <div v-for="otherCourse in course.teacher.courses" :key="otherCourse.id" class="border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:shadow-md transition">
                                             <Link :href="`/courses/${otherCourse.slug}`" class="flex items-center">
                                                 <img :src="`/storage/${otherCourse.thumbnail}`"
                                                      :alt="otherCourse.title" class="w-16 h-16 object-cover rounded-md mx-3">
