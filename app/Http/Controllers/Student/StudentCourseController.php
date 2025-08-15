@@ -10,6 +10,8 @@ use App\Models\CourseLesson;
 use App\Models\CourseUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Schema;
 use Inertia\Inertia;
 use App\Models\User;
 use Inertia\Response;
@@ -367,17 +369,25 @@ class StudentCourseController extends Controller
 
     private function determineEndDate(Course $course, User $user): ?Carbon
     {
-        $lastCompletedLesson = $course->course_lessons()
-            ->whereHas('users', function($query) use ($user) {
-                $query->where('user_id', $user->id)
-                    ->where('completed', true);
-            })
-            ->orderByDesc('completed_at')
-            ->first();
+        try {
+            // اگر ستون completed_at وجود دارد
+            if (Schema::hasColumn('course_lesson_user', 'completed_at')) {
+                return $course->course_lessons()
+                    ->whereHas('users', fn($q) => $q->where('user_id', $user->id)->where('completed', true))
+                    ->orderByDesc('course_lesson_user.completed_at')
+                    ->first()?->users->first()?->pivot?->completed_at;
+            }
 
-        return ($lastCompletedLesson && $lastCompletedLesson->pivot)
-            ? $lastCompletedLesson->pivot->updated_at
-            : null;
+            // راه‌حل جایگزین با updated_at
+            return $course->course_lessons()
+                ->whereHas('users', fn($q) => $q->where('user_id', $user->id)->where('completed', true))
+                ->orderByDesc('course_lesson_user.updated_at')
+                ->first()?->users->first()?->pivot?->updated_at;
+
+        } catch (\Exception $e) {
+            Log::error('Error getting end date', ['error' => $e->getMessage()]);
+            return null;
+        }
     }
 
     public function destroy(Course $course)
