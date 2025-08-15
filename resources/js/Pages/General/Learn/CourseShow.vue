@@ -247,20 +247,6 @@ const showVideoModal = ref(false)
                                 <div class="md:w-3/4 prose dark:prose-invert max-w-none">
                                     <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">{{ $t('about_instructor') }}</h3>
                                     <div v-html="course.teacher.bio"></div>
-
-                                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mt-8 mb-4">{{ $t('other_courses_by_instructor') }}</h3>
-                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                        <div v-for="otherCourse in course.teacher.courses" :key="otherCourse.id" class="border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:shadow-md transition">
-                                            <Link :href="`/courses/${otherCourse.slug}`" class="flex items-center">
-                                                <img :src="`/storage/${otherCourse.thumbnail}`"
-                                                     :alt="otherCourse.title" class="w-16 h-16 object-cover rounded-md mx-3">
-                                                <div>
-                                                    <h4 class="font-medium text-gray-900 dark:text-white">{{ otherCourse.title }}</h4>
-                                                    <p class="text-sm text-gray-500 dark:text-gray-400">{{ otherCourse.students_count.toLocaleString() }} دانشجو</p>
-                                                </div>
-                                            </Link>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
 

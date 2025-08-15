@@ -144,12 +144,7 @@ class LearnController extends Controller
     public function show_course($slug)
     {
         $course = Course::with([
-            'teacher.teacher', // لود کردن teacher و user مرتبط با آن
-            'teacher.courses' => function($query) use ($slug) {
-                $query->where('slug', '!=', $slug)
-                    ->where('status', 'published')
-                    ->withCount('students');
-            },
+            'teacher.teacher',
         ])
             ->where('slug', $slug)
             ->where('status', 'published')
