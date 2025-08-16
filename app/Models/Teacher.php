@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Teacher extends Model
 {
@@ -46,6 +47,11 @@ class Teacher extends Model
             'user_id',          // کلید محلی مدل جاری (Teacher)
             'id'                // کلید محلی مدل میانی (User)
         );
+    }
+
+    public function students(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'teacher_student', 'teacher_id', 'student_id');
     }
 
     protected function profilePhotoUrl(): Attribute
