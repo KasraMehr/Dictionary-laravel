@@ -17,9 +17,11 @@ class TeacherResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-academic-cap';
 
-    protected static ?string $modelLabel = 'معلم';
+    protected static ?string $modelLabel = 'Teacher';
 
-    protected static ?string $pluralModelLabel = 'معلم‌ها';
+    protected static ?string $navigationGroup = 'Users';
+
+    protected static ?string $pluralModelLabel = 'Teachers';
 
     public static function form(Form $form): Form
     {
@@ -28,50 +30,56 @@ class TeacherResource extends Resource
                 Forms\Components\Select::make('user_id')
                     ->relationship('user', 'name')
                     ->required()
-                    ->label('کاربر'),
+                    ->label('User Account [Required]')
+                    ->hint('Select associated user'),
 
                 Forms\Components\TextInput::make('title')
-                    ->label('عنوان')
-                    ->maxLength(255),
+                    ->label('Professional Title')
+                    ->maxLength(255)
+                    ->hint('e.g., Professor, Instructor'),
 
                 Forms\Components\Textarea::make('bio')
-                    ->label('بیوگرافی')
-                    ->columnSpanFull(),
+                    ->label('Biography')
+                    ->columnSpanFull()
+                    ->hint('Professional background and qualifications'),
 
                 Forms\Components\FileUpload::make('profile_photo_path')
-                    ->label('عکس پروفایل')
+                    ->label('Profile Photo')
                     ->directory('teacher-profiles')
                     ->image()
-                    ->imageEditor(),
+                    ->imageEditor()
+                    ->hint('Recommended size: 500x500px'),
 
                 Forms\Components\TagsInput::make('languages')
-                    ->label('زبان‌ها')
-                    ->separator(','),
+                    ->label('Languages Spoken')
+                    ->separator(',')
+                    ->hint('Separate with commas'),
 
                 Forms\Components\Repeater::make('experiences')
-                    ->label('تجربیات')
+                    ->label('Professional Experience')
                     ->schema([
                         Forms\Components\TextInput::make('title')
-                            ->label('عنوان')
+                            ->label('Position Title')
                             ->required(),
                         Forms\Components\TextInput::make('company')
-                            ->label('شرکت/موسسه'),
+                            ->label('Institution/Organization'),
                         Forms\Components\DatePicker::make('start_date')
-                            ->label('تاریخ شروع'),
+                            ->label('Start Date'),
                         Forms\Components\DatePicker::make('end_date')
-                            ->label('تاریخ پایان'),
+                            ->label('End Date'),
                         Forms\Components\Toggle::make('current')
-                            ->label('هم اکنون'),
+                            ->label('Current Position'),
                         Forms\Components\Textarea::make('description')
-                            ->label('توضیحات'),
+                            ->label('Responsibilities'),
                     ])
-                    ->columnSpanFull(),
+                    ->columnSpanFull()
+                    ->hint('Add relevant work history'),
 
                 Forms\Components\Repeater::make('social_links')
-                    ->label('شبکه‌های اجتماعی')
+                    ->label('Social Media Profiles')
                     ->schema([
                         Forms\Components\Select::make('platform')
-                            ->label('پلتفرم')
+                            ->label('Platform')
                             ->options([
                                 'twitter' => 'Twitter',
                                 'facebook' => 'Facebook',
@@ -82,29 +90,32 @@ class TeacherResource extends Resource
                             ])
                             ->required(),
                         Forms\Components\TextInput::make('url')
-                            ->label('لینک')
+                            ->label('Profile URL')
                             ->url()
                             ->required(),
                     ])
-                    ->columnSpanFull(),
+                    ->columnSpanFull()
+                    ->hint('Add professional social media links'),
 
                 Forms\Components\TagsInput::make('teaching_methods')
-                    ->label('روش‌های تدریس')
-                    ->separator(','),
+                    ->label('Teaching Methods')
+                    ->separator(',')
+                    ->hint('e.g., Flipped Classroom, Project-Based'),
 
                 Forms\Components\TextInput::make('phone')
-                    ->label('تلفن')
+                    ->label('Contact Number')
                     ->tel()
                     ->maxLength(20),
 
                 Forms\Components\TextInput::make('website')
-                    ->label('وبسایت')
+                    ->label('Personal Website')
                     ->url()
                     ->maxLength(255),
 
                 Forms\Components\TextInput::make('location')
-                    ->label('موقعیت جغرافیایی')
-                    ->maxLength(255),
+                    ->label('Geographic Location')
+                    ->maxLength(255)
+                    ->hint('City, Country'),
             ]);
     }
 
@@ -112,43 +123,55 @@ class TeacherResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\ImageColumn::make('profile_photo_path')
+                    ->label('Photo')
+                    ->circular(),
+
                 Tables\Columns\TextColumn::make('user.name')
-                    ->label('نام')
+                    ->label('Name')
                     ->sortable()
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('title')
-                    ->label('عنوان')
+                    ->label('Title')
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('phone')
-                    ->label('تلفن')
+                    ->label('Phone')
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('location')
-                    ->label('موقعیت')
+                    ->label('Location')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('students_count')
-                    ->label('تعداد دانشجویان')
-                    ->counts('students') // از counts برای شمارش استفاده می‌کنیم
-                    ->sortable(),
 
-                // تعداد دوره‌ها
+                Tables\Columns\TextColumn::make('students_count')
+                    ->label('Students')
+                    ->counts('students')
+                    ->sortable()
+                    ->icon('heroicon-o-user-group'),
+
                 Tables\Columns\TextColumn::make('courses_count')
-                    ->label('تعداد دوره‌ها')
-                    ->counts('courses') // از counts برای شمارش استفاده می‌کنیم
-                    ->sortable(),
+                    ->label('Courses')
+                    ->counts('courses')
+                    ->sortable()
+                    ->icon('heroicon-o-book-open'),
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('languages')
+                    ->label('Languages')
+                    ->options([])
+                    ->multiple(),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\ViewAction::make(),
+                Tables\Actions\EditAction::make()
+                    ->icon('heroicon-o-pencil'),
+                Tables\Actions\ViewAction::make()
+                    ->icon('heroicon-o-eye'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make()
+                        ->icon('heroicon-o-trash'),
                 ]),
             ]);
     }
@@ -167,7 +190,6 @@ class TeacherResource extends Resource
             'index' => Pages\ListTeachers::route('/'),
             'create' => Pages\CreateTeacher::route('/create'),
             'edit' => Pages\EditTeacher::route('/{record}/edit'),
-//            'view' => Pages\ViewTeacher::route('/{record}'),
         ];
     }
 }

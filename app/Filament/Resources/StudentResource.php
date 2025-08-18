@@ -16,48 +16,54 @@ class StudentResource extends Resource
 {
     protected static ?string $model = User::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-academic-cap';
+    protected static ?string $navigationIcon = 'heroicon-o-user-group';
 
-    protected static ?string $modelLabel = 'دانش آموز';
+    protected static ?string $modelLabel = 'Student';
 
-    protected static ?string $pluralModelLabel = 'دانش آموزان';
+    protected static ?string $navigationGroup = 'Users';
+
+    protected static ?string $pluralModelLabel = 'Students';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\Section::make('اطلاعات پایه')
+                Forms\Components\Section::make('Basic Information')
+                    ->icon('heroicon-o-identification')
                     ->schema([
                         Forms\Components\TextInput::make('name')
-                            ->label('نام کامل')
+                            ->label('Full Name')
                             ->required()
                             ->maxLength(255),
                         Forms\Components\TextInput::make('email')
-                            ->label('ایمیل')
+                            ->label('Email Address')
                             ->email()
                             ->required()
                             ->maxLength(255),
                         Forms\Components\TextInput::make('password')
-                            ->label('رمز عبور')
+                            ->label('Password')
                             ->password()
                             ->maxLength(255)
                             ->dehydrated(fn ($state) => filled($state))
                             ->required(fn (string $context): bool => $context === 'create'),
                     ]),
 
-                Forms\Components\Section::make('پروفایل دانش آموزی')
+                Forms\Components\Section::make('Student Profile')
+                    ->icon('heroicon-o-academic-cap')
                     ->relationship('studentProfile')
                     ->schema([
                         Forms\Components\Textarea::make('bio')
-                            ->label('بیوگرافی')
+                            ->label('Biography')
                             ->columnSpanFull(),
                         Forms\Components\TextInput::make('phone')
-                            ->label('تلفن'),
+                            ->label('Phone Number')
+                            ->icon('heroicon-o-phone'),
                         Forms\Components\DatePicker::make('birth_date')
-                            ->label('تاریخ تولد'),
+                            ->label('Date of Birth')
+                            ->icon('heroicon-o-cake'),
                         Forms\Components\TextInput::make('country')
-                            ->label('کشور'),
-                        // سایر فیلدهای پروفایل
+                            ->label('Country')
+                            ->icon('heroicon-o-globe'),
                     ]),
             ]);
     }
@@ -66,31 +72,45 @@ class StudentResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\ImageColumn::make('studentProfile.profile_photo_path')
+                    ->label('')
+                    ->circular(),
+
                 Tables\Columns\TextColumn::make('name')
-                    ->label('نام')
-                    ->searchable(),
+                    ->label('Name')
+                    ->searchable()
+                    ->icon('heroicon-o-user'),
+
                 Tables\Columns\TextColumn::make('email')
-                    ->label('ایمیل')
-                    ->searchable(),
+                    ->label('Email')
+                    ->searchable()
+                    ->icon('heroicon-o-envelope'),
+
                 Tables\Columns\TextColumn::make('studentProgress.level')
-                    ->label('سطح')
-                    ->numeric(),
+                    ->label('Level')
+                    ->numeric()
+                    ->icon('heroicon-o-chart-bar'),
+
                 Tables\Columns\TextColumn::make('courses_count')
-                    ->label('دوره‌ها')
-                    ->counts('courses'),
+                    ->label('Enrolled Courses')
+                    ->counts('courses')
+                    ->icon('heroicon-o-bookmark'),
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('level')
-                    ->label('سطح')
-                    ->relationship('studentProgress', 'level'),
+                    ->label('Proficiency Level')
+                    ->relationship('studentProgress', 'level')
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\ViewAction::make(),
+                Tables\Actions\EditAction::make()
+                    ->icon('heroicon-o-pencil'),
+                Tables\Actions\ViewAction::make()
+                    ->icon('heroicon-o-eye'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make()
+                        ->icon('heroicon-o-trash'),
                 ]),
             ]);
     }
@@ -101,7 +121,6 @@ class StudentResource extends Resource
             RelationManagers\CoursesRelationManager::class,
             RelationManagers\StudentProgressRelationManager::class,
             RelationManagers\TeachersRelationManager::class,
-//            RelationManagers\LearningStatsRelationManager::class,
         ];
     }
 

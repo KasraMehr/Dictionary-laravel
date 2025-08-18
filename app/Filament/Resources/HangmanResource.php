@@ -19,7 +19,10 @@ class HangmanResource extends Resource
 {
     protected static ?string $model = Hangman::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-puzzle-piece';
+
+    protected static ?string $navigationGroup = 'Games';
+
 
     public static function form(Form $form): Form
     {

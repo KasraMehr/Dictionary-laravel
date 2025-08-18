@@ -20,7 +20,10 @@ class SpellingBeeResource extends Resource
 {
     protected static ?string $model = SpellingBee::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-beaker';
+
+    protected static ?string $navigationGroup = 'Games';
+
 
     public static function form(Form $form): Form
     {

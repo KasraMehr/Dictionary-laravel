@@ -3,16 +3,20 @@
 namespace App\Filament\Widgets;
 
 use App\Models\Course;
+use App\Models\CourseLesson;
 use App\Models\Quiz;
 use App\Models\User;
 use Filament\Widgets\ChartWidget;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class GlobalStatsChart extends ChartWidget
 {
-    protected static ?string $heading = 'Chart';
+    protected static ?string $heading = 'Global Statistics';
 
     protected int|string|array $columnSpan = 'full';
+
+    public ?string $filter = 'day';
 
     protected function getFilters(): ?array
     {
@@ -25,12 +29,12 @@ class GlobalStatsChart extends ChartWidget
 
     protected function getData(): array
     {
-        $filter = $this->filter;
+        $filter = $this->filter ?? 'day';
 
         $labels = [];
         $userData = [];
         $courseData = [];
-        $testData = [];
+        $courseLesson = [];
 
         switch ($filter) {
             case 'day':
@@ -42,11 +46,12 @@ class GlobalStatsChart extends ChartWidget
                         ->whereDate('created_at', today())
                         ->count();
 
-                    $courseData[] = Course::whereHour('created_at', $hour)
+                    $courseData[] = DB::table('course_lesson_user')
+                        ->whereHour('created_at', $hour)
                         ->whereDate('created_at', today())
                         ->count();
 
-                    $testData[] = Quiz::whereHour('created_at', $hour)
+                    $courseLesson[] = CourseLesson::whereHour('created_at', $hour)
                         ->whereDate('created_at', today())
                         ->count();
                 }
@@ -54,12 +59,14 @@ class GlobalStatsChart extends ChartWidget
 
             case 'month':
                 foreach (range(29, 0) as $i) {
-                    $date = Carbon::today()->subDays($i)->format('m-d');
-                    $labels[] = $date;
+                    $date = Carbon::today()->subDays($i);
+                    $labels[] = $date->format('m-d');
 
                     $userData[] = User::whereDate('created_at', $date)->count();
-                    $courseData[] = Course::whereDate('created_at', $date)->count();
-                    $testData[] = Quiz::whereDate('created_at', $date)->count();
+                    $courseData[] = DB::table('course_lesson_user')
+                        ->whereDate('created_at', $date)
+                        ->count();
+                    $courseLesson[] = CourseLesson::whereDate('created_at', $date)->count();
                 }
                 break;
 
@@ -67,11 +74,13 @@ class GlobalStatsChart extends ChartWidget
             default:
                 foreach (range(6, 0) as $i) {
                     $date = Carbon::today()->subDays($i);
-                    $labels[] = $date->format('l'); // Saturday, Sunday, ...
+                    $labels[] = $date->format('D');
 
                     $userData[] = User::whereDate('created_at', $date)->count();
-                    $courseData[] = Course::whereDate('created_at', $date)->count();
-                    $testData[] = Quiz::whereDate('created_at', $date)->count();
+                    $courseData[] = DB::table('course_lesson_user')
+                        ->whereDate('created_at', $date)
+                        ->count();
+                    $courseLesson[] = CourseLesson::whereDate('created_at', $date)->count();
                 }
                 break;
         }
@@ -79,19 +88,25 @@ class GlobalStatsChart extends ChartWidget
         return [
             'datasets' => [
                 [
-                    'label' => 'Users',
+                    'label' => 'New Users',
                     'data' => $userData,
                     'borderColor' => '#3b82f6',
+                    'backgroundColor' => '#3b82f680',
+                    'tension' => 0.1,
                 ],
                 [
-                    'label' => 'Courses',
+                    'label' => 'User Activities',
                     'data' => $courseData,
                     'borderColor' => '#10b981',
+                    'backgroundColor' => '#10b98180',
+                    'tension' => 0.1,
                 ],
                 [
-                    'label' => 'Quizzes',
-                    'data' => $testData,
+                    'label' => 'New Lessons',
+                    'data' => $courseLesson,
                     'borderColor' => '#f59e0b',
+                    'backgroundColor' => '#f59e0b80',
+                    'tension' => 0.1,
                 ],
             ],
             'labels' => $labels,
@@ -101,5 +116,10 @@ class GlobalStatsChart extends ChartWidget
     protected function getType(): string
     {
         return 'line';
+    }
+
+    public function updatedFilter(): void
+    {
+        $this->dispatch('$refresh');
     }
 }

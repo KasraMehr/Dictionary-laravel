@@ -19,7 +19,10 @@ class WordleResource extends Resource
 {
     protected static ?string $model = Wordle::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-table-cells';
+
+    protected static ?string $navigationGroup = 'Games';
+
 
     public static function form(Form $form): Form
     {
