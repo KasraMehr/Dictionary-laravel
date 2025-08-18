@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Teacher extends Model
 {
@@ -49,11 +50,10 @@ class Teacher extends Model
         );
     }
 
-    public function students(): BelongsToMany
+    public function students(): HasMany
     {
-        return $this->belongsToMany(User::class, 'teacher_student', 'teacher_id', 'student_id');
+        return $this->hasMany(TeacherStudent::class, 'teacher_id');
     }
-
     protected function profilePhotoUrl(): Attribute
     {
         return Attribute::make(

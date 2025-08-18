@@ -159,11 +159,9 @@ class User extends Authenticatable
             ->withTimestamps();
     }
 
-    public function teachers(): BelongsToMany
+    public function teachers(): HasMany
     {
-        return $this->belongsToMany(User::class, 'teacher_student', 'student_id', 'teacher_id')
-            ->withPivot('level', 'notes')
-            ->withTimestamps();
+        return $this->hasMany(TeacherStudent::class, 'student_id');
     }
 
     public function savedWords(): BelongsToMany
