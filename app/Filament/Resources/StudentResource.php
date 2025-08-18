@@ -56,14 +56,12 @@ class StudentResource extends Resource
                             ->label('Biography')
                             ->columnSpanFull(),
                         Forms\Components\TextInput::make('phone')
-                            ->label('Phone Number')
-                            ->icon('heroicon-o-phone'),
+                            ->label('Phone Number'),
                         Forms\Components\DatePicker::make('birth_date')
                             ->label('Date of Birth')
                             ->icon('heroicon-o-cake'),
                         Forms\Components\TextInput::make('country')
-                            ->label('Country')
-                            ->icon('heroicon-o-globe'),
+                            ->label('Country'),
                     ]),
             ]);
     }
