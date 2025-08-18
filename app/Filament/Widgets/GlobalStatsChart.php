@@ -27,6 +27,19 @@ class GlobalStatsChart extends ChartWidget
         ];
     }
 
+    private function whereHourCrossDb($query, $column, $hour)
+    {
+        $driver = DB::getDriverName();
+
+        if ($driver === 'sqlite') {
+            // SQLite نیاز به strftime و ۰-padding داره
+            return $query->whereRaw("strftime('%H', {$column}) = ?", [str_pad($hour, 2, '0', STR_PAD_LEFT)]);
+        }
+
+        // MySQL/Postgres از HOUR() پشتیبانی می‌کنن
+        return $query->whereRaw("HOUR({$column}) = ?", [$hour]);
+    }
+
     protected function getData(): array
     {
         $filter = $this->filter ?? 'day';
@@ -42,19 +55,22 @@ class GlobalStatsChart extends ChartWidget
                     $time = Carbon::today()->addHours($hour);
                     $labels[] = $time->format('H:i');
 
-                    $userData[] = User::whereHour('created_at', $hour)
+                    // Users
+                    $userData[] = $this->whereHourCrossDb(DB::table('users'), 'created_at', $hour)
                         ->whereDate('created_at', today())
                         ->count();
 
-                    $courseData[] = DB::table('course_lesson_user')
-                        ->whereHour('created_at', $hour)
+                    // Course Lesson User pivot
+                    $courseData[] = $this->whereHourCrossDb(DB::table('course_lesson_user'), 'created_at', $hour)
                         ->whereDate('created_at', today())
                         ->count();
 
-                    $courseLesson[] = CourseLesson::whereHour('created_at', $hour)
+                    // Course Lessons
+                    $courseLesson[] = $this->whereHourCrossDb(DB::table('course_lessons'), 'created_at', $hour)
                         ->whereDate('created_at', today())
                         ->count();
                 }
+
                 break;
 
             case 'month':
