@@ -198,119 +198,119 @@ const aparatEmbedUrl = computed(() => {
 
             <!-- جدول برای دسکتاپ -->
             <div class="w-full overflow-x-auto xl:block hidden bg-white dark:bg-gray-900 rounded-lg shadow border border-gray-200 dark:border-gray-700">
-                <table class="min-w-full table-fixed divide-y divide-gray-200 dark:divide-gray-700">
-                    <thead class="bg-gray-50 dark:bg-gray-900">
-                    <tr>
-                        <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                            عنوان دوره
-                        </th>
-                        <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                            وضعیت
-                        </th>
-                        <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                            سطح
-                        </th>
-                        <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                            زبان‌آموزان
-                        </th>
-                        <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                            درس‌ها
-                        </th>
-                        <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                            اقدامات
-                        </th>
-                    </tr>
-                    </thead>
-                    <tbody class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700">
-                    <tr
-                        v-for="course in courses"
-                        :key="course.id"
-                        class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
+            <table class="min-w-full table-fixed divide-y divide-gray-200 dark:divide-gray-700">
+        <thead class="bg-gray-50 dark:bg-gray-900">
+            <tr>
+                <th scope="col" class="px-3 md:px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider min-w-[180px]">
+                    عنوان دوره
+                </th>
+                <th scope="col" class="px-3 md:px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider min-w-[100px]">
+                    وضعیت
+                </th>
+                <th scope="col" class="px-3 md:px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider min-w-[80px]">
+                    سطح
+                </th>
+                <th scope="col" class="px-3 md:px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider min-w-[100px]">
+                    زبان‌آموزان
+                </th>
+                <th scope="col" class="px-3 md:px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider min-w-[80px]">
+                    درس‌ها
+                </th>
+                <th scope="col" class="px-3 md:px-6 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider min-w-[200px]">
+                    اقدامات
+                </th>
+            </tr>
+        </thead>
+        <tbody class="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700">
+            <tr
+                v-for="course in courses"
+                :key="course.id"
+                class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
+            >
+                <td class="px-3 md:px-6 py-4">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0 h-10 w-10">
+                            <img class="h-10 w-10 rounded-lg object-cover border border-gray-200 dark:border-gray-600" :src="`/storage/${course.thumbnail}`"  alt="${course.thumbnail}" @error="setDefaultImage">
+                        </div>
+                        <div class="mr-4">
+                            <div class="text-sm font-medium text-gray-900 dark:text-gray-100 whitespace-normal">
+                                {{ course.title }}
+                            </div>
+                            <div class="text-sm text-gray-500 dark:text-gray-400 whitespace-normal">
+                                {{ course.topic }}
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td class="px-3 md:px-6 py-4">
+                    <span class="px-2 py-1 text-xs font-medium rounded-full whitespace-nowrap"
+                          :class="{
+                            'bg-green-100 text-green-800': course.status === 'published',
+                            'bg-yellow-100 text-yellow-800': course.status === 'draft',
+                            'bg-gray-100 text-gray-800': course.status === 'archived'
+                        }"
                     >
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="flex items-center">
-                                <div class="flex-shrink-0 h-10 w-10">
-                                    <img class="h-10 w-10 rounded-lg object-cover border border-gray-200 dark:border-gray-600" :src="`/storage/${course.thumbnail}`"  alt="${course.thumbnail}" @error="setDefaultImage">
-                                </div>
-                                <div class="mr-4">
-                                    <div class="text-sm font-medium text-gray-900 dark:text-gray-100">
-                                        {{ course.title }}
-                                    </div>
-                                    <div class="text-sm text-gray-500 dark:text-gray-400">
-                                        {{ course.topic }}
-                                    </div>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                                <span class="px-2 py-1 text-xs font-medium rounded-full"
-                                      :class="{
-                                        'bg-green-100 text-green-800': course.status === 'published',
-                                        'bg-yellow-100 text-yellow-800': course.status === 'draft',
-                                        'bg-gray-100 text-gray-800': course.status === 'archived'
-                                    }"
-                                >
-                                    {{ course.status === 'published' ? 'منتشر شده' :
-                                    course.status === 'draft' ? 'پیش‌نویس' :
-                                        'آرشیو' }}
-                                </span>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                                <span class="px-2 py-1 text-xs font-medium rounded-full"
-                                      :class="{
-                                        'bg-green-100 text-green-800': ['A1','A2'].includes(course.level),
-                                        'bg-yellow-100 text-yellow-800': ['B1','B2'].includes(course.level),
-                                        'bg-red-100 text-red-800': ['C1','C2'].includes(course.level)
-                                    }"
-                                >
-                                    {{ getLevelName(course.level) }}
-                                </span>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
-                            {{ course.users_count }} نفر
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
-                            {{ course.course_lessons_count }} درس
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                            <div class="flex justify-center gap-2">
-                                <SecondaryButton
-                                    @click="viewCourseDetails(course)"
-                                    size="sm"
-                                    class="gap-1"
-                                >
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                    </svg>
-                                    جزئیات
-                                </SecondaryButton>
-                                <Link
-                                    :href="route('teacher.courses.edit', course.id)"
-                                    as="button"
-                                >
-                                    <PrimaryButton size="sm" class="gap-1">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                                        </svg>
-                                        ویرایش
-                                    </PrimaryButton>
-                                </Link>
-                                <DangerButton
-                                    @click="deleteCourse(course)"
-                                    size="sm"
-                                    class="gap-1"
-                                >
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                    </svg>
-                                    حذف
-                                </DangerButton>
-                            </div>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+                        {{ course.status === 'published' ? 'منتشر شده' :
+                        course.status === 'draft' ? 'پیش‌نویس' :
+                            'آرشیو' }}
+                    </span>
+                </td>
+                <td class="px-3 md:px-6 py-4">
+                    <span class="px-2 py-1 text-xs font-medium rounded-full whitespace-nowrap"
+                          :class="{
+                            'bg-green-100 text-green-800': ['A1','A2'].includes(course.level),
+                            'bg-yellow-100 text-yellow-800': ['B1','B2'].includes(course.level),
+                            'bg-red-100 text-red-800': ['C1','C2'].includes(course.level)
+                        }"
+                    >
+                        {{ getLevelName(course.level) }}
+                    </span>
+                </td>
+                <td class="px-3 md:px-6 py-4 text-sm text-gray-500 dark:text-gray-400 whitespace-nowrap">
+                    {{ course.users_count }} نفر
+                </td>
+                <td class="px-3 md:px-6 py-4 text-sm text-gray-500 dark:text-gray-400 whitespace-nowrap">
+                    {{ course.course_lessons_count }} درس
+                </td>
+                <td class="px-3 md:px-6 py-4 text-sm font-medium">
+                    <div class="flex justify-center gap-2 flex-wrap">
+                        <SecondaryButton
+                            @click="viewCourseDetails(course)"
+                            size="sm"
+                            class="gap-1 my-1"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                            </svg>
+                            جزئیات
+                        </SecondaryButton>
+                        <Link
+                            :href="route('teacher.courses.edit', course.id)"
+                            as="button"
+                        >
+                            <PrimaryButton size="sm" class="gap-1 my-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                </svg>
+                                ویرایش
+                            </PrimaryButton>
+                        </Link>
+                        <DangerButton
+                            @click="deleteCourse(course)"
+                            size="sm"
+                            class="gap-1 my-1"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            </svg>
+                            حذف
+                        </DangerButton>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+            </table>
             </div>
             <!-- مودال جزئیات دوره -->
             <Modal
