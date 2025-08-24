@@ -31,15 +31,15 @@ const isMobileMenuOpen = ref(false)
 
 // Navigation Items
 const navItems = [
-    { icon: HomeIcon, label: 'داشبورد', to: '/student/dashboard' },
-    { icon: AcademicCapIcon, label: 'دوره‌های من', to: '/student/courses', badge: 3 },
-    { icon: BookOpenIcon, label: 'آزمون ها', to: '/student/quizzes' },
+    { icon: 'HomeIcon', label: 'داشبورد', to: '/student/dashboard' },
+    { icon: 'academic-cap', label: 'دوره‌های من', to: '/student/courses', badge: 3 },
+    { icon: 'book', label: 'آزمون ها', to: '/student/quizzes' },
 ]
 
 const mobileNavItems = [
-    { icon: HomeIcon, label: 'خانه', to: '/student/dashboard' },
-    { icon: AcademicCapIcon, label: 'دوره‌ها', to: '/student/courses' },
-    { icon: BookOpenIcon, label: 'آزمون ها', to: '/student/quizzes' },
+    { icon: 'HomeIcon', label: 'داشبورد', to: '/student/dashboard' },
+    { icon: 'academic-cap', label: 'دوره‌های من', to: '/student/courses', badge: 3 },
+    { icon: 'book', label: 'آزمون ها', to: '/student/quizzes' },
 ]
 
 // Sample data

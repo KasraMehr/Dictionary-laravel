@@ -15,15 +15,17 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 
-// آیکن‌ها
+// ایمپورت تمام آیکون‌های مورد نیاز
 import {
-  Home,
-  BookOpen,
-  Users,
-  FileText,
-  Settings,
-  MessageSquare
-} from 'lucide-vue-next'
+  HomeIcon,
+  AcademicCapIcon,
+  BookOpenIcon,
+  UsersIcon,
+  DocumentTextIcon,
+  CogIcon,
+  ChatBubbleLeftRightIcon,
+  FolderIcon
+} from '@heroicons/vue/24/outline'
 
 const props = defineProps({
   icon: {
@@ -40,16 +42,20 @@ const props = defineProps({
   },
 })
 
+// مپ کردن نام‌های ساده به کامپوننت‌های آیکون
 const icons = {
-  home: Home,
-  book: BookOpen,
-  users: Users,
-  quiz: FileText,
-  settings: Settings,
-  chat: MessageSquare,
+  home: HomeIcon,
+  'academic-cap': AcademicCapIcon,
+  book: BookOpenIcon,
+  users: UsersIcon,
+  'file-text': DocumentTextIcon,
+  quiz: DocumentTextIcon,
+  settings: CogIcon,
+  chat: ChatBubbleLeftRightIcon,
+  file: FolderIcon,
 }
 
-const iconComponent = computed(() => icons[props.icon] || Home)
+const iconComponent = computed(() => icons[props.icon] || HomeIcon)
 
 const isActive = ref(false)
 
